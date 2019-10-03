@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "backend\\env\\Scripts\\python.exe",
+    "git.ignoreLimitWarning": true,
+    "team.showWelcomeMessage": false,
+    "editor.formatOnSave": true,
+    "python.linting.pep8Enabled": false,
+    "python.linting.pylintPath": "backend\\env\\Scripts\\pylint.exe",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}
