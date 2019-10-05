@@ -1,0 +1,29 @@
+{
+    "python.pythonPath": "C:\\Users\\kaubin\\.virtualenvs\\backend-_Ug2QNM7\\Scripts\\python.exe",
+    "team.showWelcomeMessage": false,
+    "editor.formatOnSave": true,
+    "python.linting.pep8Enabled": true,
+    "python.linting.pylintPath": "${workspaceFolder}/backend/env/Scripts/pylint.exe",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.testing.pytestArgs": [
+        "backend"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.venvPath": "${workspaceFolder}/backend/env",
+    "files.exclude": {
+        "**/*.pyc": {
+            "when": "$(basename).py"
+        },
+        "**/__pycache__": true
+    },
+    "python.linting.pep8Args": [
+        "--ignore=E501"
+    ],
+
+}
