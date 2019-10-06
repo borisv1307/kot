@@ -50,23 +50,7 @@ Running migrations:
   Applying kot.0001_initial... OK
   Applying sessions.0001_initial... OK
 
-C:\Class\kot\backend\src>
 
-Databases created
-
-User table
-user_id (PK)
-username (UNIQUE NOT NULL)
-password (NOT NULL)
-date_created
-date_modified
-
-Game table
-game_id (COMPOSITE PK)
-user_id (COMPOSITE PK)
-date_created
-date_modified
-is_winner
 
 
 
