@@ -2,7 +2,7 @@
     "python.pythonPath": "${workspaceFolder}/backend/env/Scripts/python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
-    "python.linting.pep8Enabled": false,
+    "python.linting.pep8Enabled": true,
     "python.linting.pylintPath": "${workspaceFolder}/backend/env/Scripts/pylint.exe",
     "python.linting.pylintArgs": [
         "--load-plugins",
