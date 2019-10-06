@@ -62,4 +62,6 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
  `cd .\kot\backend\src\`
 
+ `python manage.py makemigrations`
+ 
  `python manage.py migrate`
