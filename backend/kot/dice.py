@@ -14,12 +14,10 @@ import random
 
 class Dice:
     def __init__(self):
-        """
 
-        """
-        self.values = [1, 2, 3, "attack", "heal", "energy"]
+        self.values = ["1", "2", "3", "attack", "heal", "energy"]
 
         return
 
-    def roll(self):
+    def roll(self) -> str:
         return random.choice(self.values)
