@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\kaubin\\.virtualenvs\\backend-_Ug2QNM7\\Scripts\\python.exe",
+    "python.pythonPath": "${workspaceFolder}/backend/env/Scripts/python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
     "python.linting.pep8Enabled": true,
@@ -23,7 +23,11 @@
         "**/__pycache__": true
     },
     "python.linting.pep8Args": [
-        "--ignore=E501"
+        "--ignore=E501",
+        "--ignore=E303"
     ],
-
+    "python.linting.enabled": true,
+    "[python]": {
+        "editor.formatOnSave": true
+    }
 }
