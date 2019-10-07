@@ -1,18 +1,16 @@
 """
 This is a class that keeps the state of a given player for the game King of
 Tokyo.
-
-
-
-
-Locations at the player can be:
-    - (blank): Denotes that the player is not on the game board.
-    - Tokyo: The player is in Tokyo
-    - Tokyo Bay: The player is in the alternative Tokyo location for 5+ players
 """
 
 
 class Player:
+    """
+    Locations at the player can be:
+    - (blank): Denotes that the player is not on the game board.
+    - Tokyo: The player is in Tokyo
+    - Tokyo Bay: The player is in the alternative Tokyo location for 5+ players
+    """
     def __init__(self):
 
         # These are the points that the player earns throughout the game.
