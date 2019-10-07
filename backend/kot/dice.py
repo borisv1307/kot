@@ -1,5 +1,5 @@
 """
-This is a dice class for the game King of Tokyo
+This is a dice module for the game King of Tokyo
 
 The dice can have the following face values:
     - 1 - 3: These are the amount of victory points earned
@@ -12,12 +12,8 @@ The dice can have the following face values:
 import random
 
 
-class Dice:
-    def __init__(self):
+DICE_VALUES = ["1", "2", "3", "attack", "heal", "energy"]
 
-        self.values = ["1", "2", "3", "attack", "heal", "energy"]
 
-        return
-
-    def roll(self) -> str:
-        return random.choice(self.values)
+def roll() -> str:
+    return random.choice(DICE_VALUES)
