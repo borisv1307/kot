@@ -1,11 +1,13 @@
+from django.core.validators import EmailValidator, validate_email, MinLengthValidator
 from django.db import models
 
 
 # Create your models here.
 
 class User(models.Model):
-    username = models.CharField(primary_key=True, max_length=30, default="sample")
-    password = models.CharField(max_length=30)
+    email = models.CharField(primary_key=True, max_length=50, default="sample@drexel.edu",
+                             validators=[validate_email])
+    password = models.CharField(max_length=30, validators=[MinLengthValidator(8)])
     date_created = models.DateTimeField()
     date_modified = models.DateTimeField()
 

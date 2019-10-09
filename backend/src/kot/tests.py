@@ -7,16 +7,14 @@ from .models import User, Game
 # Create your tests here.
 class ModelTest(TestCase):
 
-    id_counter = 0
-
     def setUp(self):
-        self.username = "kot_user"
+        self.email = "kot_user@drexel.edu"
         self.password = "testPassword"
         self.date_created = datetime.now(tz=timezone.utc)
         self.date_modified = datetime.now(tz=timezone.utc)
 
         self.test_user = User.objects.create(
-            username=self.username,
+            email=self.email,
             password=self.password,
             date_created=self.date_created,
             date_modified=self.date_modified
@@ -37,7 +35,7 @@ class ModelTest(TestCase):
     def test_user_model(self):
         user = self.test_user
         self.assertIsInstance(user, User)
-        self.assertEqual(user.username, self.username)
+        self.assertEqual(user.email, self.email)
         self.assertEqual(user.date_modified, self.date_modified)
         self.assertEqual(user.date_created, self.date_created)
         self.assertEqual(user.password, self.password)
@@ -49,5 +47,3 @@ class ModelTest(TestCase):
         self.assertEqual(game.user, self.user)
         self.assertEqual(game.date_created, self.date_created)
         self.assertEqual(game.date_modified, self.date_modified)
-
-
