@@ -14,6 +14,7 @@ class Player:
         self.maximum_health = constants.DEFAULT_HEALTH
         self.current_health = self.maximum_health
         self.location = Locations.OUTSIDE
+        self.is_alive = bool(0)
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
@@ -25,3 +26,5 @@ class Player:
         self.current_health += change_integer
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health
+        if self.current_health <= 0:
+            self.is_alive = bool(1)

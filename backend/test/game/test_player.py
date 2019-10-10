@@ -47,3 +47,8 @@ def test_player_got_hurt_by_three_and_healed_by_1(player):
 def test_player_health_can_not_exceed_max_health(player):
     player.change_health(1)
     assert player.current_health == player.maximum_health
+
+
+def test_player_dies_when_current_health_hits_zero(player):
+    player.change_health(-10)
+    assert player.is_alive == bool(1)
