@@ -51,7 +51,7 @@ def test_player_health_can_not_exceed_max_health(player):
 
 def test_player_dies_when_current_health_hits_zero(player):
     player.change_health(-10)
-    assert player.is_alive == bool(1)
+    assert player.is_alive == bool(0)
 
 
 def test_player_starts_with_zero_victory_points(player):
