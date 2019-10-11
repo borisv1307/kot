@@ -1,42 +1,17 @@
 import json
-from backend.src.game.cards.card_type import CardType
+from backend.src.game.cards.card import Card
+from pathlib import Path
 from typing import List
 
-with open('backend\\src\\game\\cards\\kot_cards.json', "r") as json_file:
+json_file_path = Path("backend/src/game/cards")
+
+# TODO the below open statement has a problem, one version makes running this file work, while the
+#  other version makes running the test work
+
+# with open('kot_cards.json', "r") as json_file:  #  this version makes running this file work
+with open('backend\\src\\game\\cards\\kot_cards.json', "r") as json_file:  # this makes the test work
+
     card_file = json.load(json_file)
-
-
-def set_card_type(card_type):
-    if str.lower(card_type) == "keep":
-        return CardType.keep
-    elif str.lower(card_type) == "discard":
-        return CardType.discard
-    else:
-        return CardType.invalid
-
-
-class Card(object):
-    def __init__(self, name, cost, card_type, effect, footnote):
-        self.name = name
-        self.cost = cost
-        self.effect = effect
-        self.footnote = footnote
-        self.card_type = set_card_type(card_type)
-
-    def card_details_str(self):
-        return "\nname: " + self.name + "\ncost: " + str(self.cost) + "\ntype: " + str(self.card_type) + \
-               "\neffect: " + self.effect + "\nfootnote: " + self.footnote
-
-    def is_valid(self):
-        try:
-            assert isinstance(self.name, str)
-            assert isinstance(self.cost, int)
-            assert isinstance(self.effect, str)
-            assert isinstance(self.card_type, CardType) and self.card_type != CardType.invalid
-        except AssertionError:
-            print("invalid card: " + self.card_details_str())
-            return False
-        return True
 
 
 def __deck_json_parser(json_deck):
@@ -54,3 +29,4 @@ def get_power_card_deck():
 
 
 __card_deck = __deck_json_parser(card_file)
+
