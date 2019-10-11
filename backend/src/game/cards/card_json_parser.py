@@ -1,15 +1,18 @@
 import json
-from enum import Enum
+from backend.src.game.cards.card_type import CardType
 from typing import List
 
-with open('backend\\src\\game\\cards\\KOTCards.json', "r") as json_file:
+with open('backend\\src\\game\\cards\\kot_cards.json', "r") as json_file:
     card_file = json.load(json_file)
 
 
-class CardType(Enum):
-    keep = 1
-    discard = 2
-    invalid = 99
+def set_card_type(card_type):
+    if str.lower(card_type) == "keep":
+        return CardType.keep
+    elif str.lower(card_type) == "discard":
+        return CardType.discard
+    else:
+        return CardType.invalid
 
 
 class Card(object):
@@ -18,12 +21,7 @@ class Card(object):
         self.cost = cost
         self.effect = effect
         self.footnote = footnote
-        if str.lower(card_type) == "keep":
-            self.card_type = CardType.keep
-        elif str.lower(card_type) == "discard":
-            self.card_type = CardType.discard
-        else:
-            self.card_type = CardType.invalid
+        self.card_type = set_card_type(card_type)
 
     def card_details_str(self):
         return "\nname: " + self.name + "\ncost: " + str(self.cost) + "\ntype: " + str(self.card_type) + \
@@ -31,7 +29,9 @@ class Card(object):
 
     def is_valid(self):
         try:
+            assert isinstance(self.name, str)
             assert isinstance(self.cost, int)
+            assert isinstance(self.effect, str)
             assert isinstance(self.card_type, CardType) and self.card_type != CardType.invalid
         except AssertionError:
             print("invalid card: " + self.card_details_str())
@@ -40,7 +40,7 @@ class Card(object):
 
 
 def __deck_json_parser(json_deck):
-    deck: List[Card] = []
+    deck: List[Card] = list()
     for json_obj in json_deck['kot_cards']:
         card = Card(json_obj['name'], json_obj['cost'], json_obj['card_type'],
                     json_obj['effect'], json_obj['footnote'])

@@ -1,5 +1,5 @@
 import pytest
-import backend.src.game.cards.Card_JSON_Parser as Parser
+import backend.src.game.cards.card_json_parser as Parser
 
 mock_json_card_train = {
     "kot_cards": [
