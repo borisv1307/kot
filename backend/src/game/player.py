@@ -4,8 +4,7 @@ from backend.src.game.locations import Locations
 
 class Player:
     def __init__(self):
-        self.maximum_health = constants.DEFAULT_HEALTH
-        self.current_health = self.maximum_health
+        self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
         self.victory_points = constants.ZERO
