@@ -1,79 +1,10 @@
 from backend.src.game.cards import card_json_parser as parser
 from backend.src.game.cards.card_type import CardType
-
-
-mock_json_card_train = {
-    "kot_cards": [
-        {
-            "name": "Commuter Train",
-            "cost": 4,
-            "card_type": "Discard",
-            "effect": "+ 2[Star]",
-            "footnote": ""
-        }
-    ]
-}
-
-mock_json_card_camo = {
-    "kot_cards": [
-        {
-            "name": "Camouflage",
-            "cost": 3,
-            "card_type": "Keep",
-            "effect": "If you lose [health], roll a die for each [health] you lost. "
-                      "Each [heart] reduces the loss by 1[heart]",
-            "footnote": "(applicable to damages from both [attack] and Card effect)"
-        }
-    ]
-}
-
-mock_json_bad_card_cost = {
-    "kot_cards": [
-        {
-            "name": "Commuter Train",
-            "cost": "99",
-            "card_type": "Discard",
-            "effect": "+ 2[Star]",
-            "footnote": ""
-        }
-    ]
-}
-
-mock_json_bad_card_type = {
-    "kot_cards": [
-        {
-            "name": "Commuter Train",
-            "cost": "99",
-            "card_type": "Discood",
-            "effect": "+ 2[Star]",
-            "footnote": ""
-        }
-    ]
-}
-
-mock_json_2_cards = {
-    "kot_cards": [
-        {
-            "name": "Commuter Train",
-            "cost": 4,
-            "card_type": "Discard",
-            "effect": "+ 2[Star]",
-            "footnote": ""
-        },
-        {
-            "name": "Camouflage",
-            "cost": 3,
-            "card_type": "Keep",
-            "effect": "If you lose [health], roll a die for each [health] you lost. "
-                      "Each [heart] reduces the loss by 1[heart]",
-            "footnote": "(applicable to damages from both [attack] and Card effect)"
-        }
-    ]
-}
+from . import mock_card_json as mock_cards
 
 
 def test_deck_multiple_cards():
-    test_deck = parser.__deck_json_parser(mock_json_2_cards)
+    test_deck = parser.__deck_json_parser(mock_cards.mock_json_2_cards)
     assert len(test_deck) == 2
 
     commuter_card = test_deck[0]
@@ -93,7 +24,7 @@ def test_deck_multiple_cards():
 
 
 def test_card_parse_train():
-    test_deck = parser.__deck_json_parser(mock_json_card_train)
+    test_deck = parser.__deck_json_parser(mock_cards.mock_json_card_train)
     test_card = test_deck[0]
     assert test_card.name == "Commuter Train"
     assert test_card.cost == 4
@@ -103,7 +34,7 @@ def test_card_parse_train():
 
 
 def test_card_parse_camo():
-    test_deck = parser.__deck_json_parser(mock_json_card_camo)
+    test_deck = parser.__deck_json_parser(mock_cards.mock_json_card_camo)
     test_card = test_deck[0]
     assert test_card.name == "Camouflage"
     assert test_card.cost == 3
@@ -115,10 +46,10 @@ def test_card_parse_camo():
 
 
 def test_parse_bad_cards():
-    test_deck = parser.__deck_json_parser(mock_json_bad_card_cost)
+    test_deck = parser.__deck_json_parser(mock_cards.mock_json_bad_card_cost)
     assert len(test_deck) == 0
 
-    test_deck = parser.__deck_json_parser(mock_json_bad_card_type)
+    test_deck = parser.__deck_json_parser(mock_cards.mock_json_bad_card_type)
     assert len(test_deck) == 0
 
 
