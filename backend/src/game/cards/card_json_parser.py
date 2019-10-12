@@ -1,15 +1,13 @@
 import json
+import os
+from backend.src.game.cards.definitions import CARDS_DIR
 from backend.src.game.cards.card import Card
-from pathlib import Path
 from typing import List
 
-json_file_path = Path("backend/src/game/cards")
 
-# TODO the below open statement has a problem, one version makes running this file work, while the
-#  other version makes running the test work
+json_file_path = os.path.join(CARDS_DIR, 'kot_cards.json')
 
-# with open('kot_cards.json', "r") as json_file:  #  this version makes running this file work
-with open('backend\\src\\game\\cards\\kot_cards.json', "r") as json_file:  # this makes the test work
+with open(json_file_path, "r") as json_file:
 
     card_file = json.load(json_file)
 
