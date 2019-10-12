@@ -1,0 +1,60 @@
+
+Winner: First to 20 Victory Points or last Monster standing.
+
+Start: 
+- Choose monster (one of 6), figure and Monster Card
+   ---UI: Combobox 
+   --- Item Format: Name(Victory Points: #, Life: #)
+- Life points to 10
+   ---UI: Text (readonly)
+- Victory points to 0
+   ---UI: Text (readonly)
+- Energy Tokens points to 0
+   ---UI: Text (readonly)
+- Set up "Tokyo board" represents "City of Tokyo":
+-- Tokyo City (4 or fewer)
+   ---UI: Red Circle, text "Tokyo City" 
+-- Tokyo Bay (5 or 6 players)
+   ---UI: Blue Circle, text "Tokyo Bay" 
+-- Shuffle Ability Cards
+-- Deal 3 Ability cards face above the board
+   ---UI: 3 images
+-- All players roll 6 black. Player with most attack (hand symbol) goes first
+--- UI: 6 images representing dice (black dashed outline)
+--- UI: 2 images representing special ability dice (green dashed outline)
+-- Order reemaing players at random to set game turns order
+
+Turn:
+-- Rolling 6 black dice three time, remove hand 
+--- UI: Black Button "Roll", 1-3, lightning, hand, heart (heal)
+-- Resolving the dice
+-- Buying cards (optional)
+-- End of turn
+
+
+Tripples:
+  1 1 1 = +1 VP
+  2 2 2 = +2 VP
+  3 3 3 = +3 VP
+  each additional of same type adds +1 VP, i.e. 3 3 3 3 = +4 VP
+
+if tokyo is unoccupied, first to roll claw moves into tokyo, 
+
+when monster in tokyo roles claws, hit all monsters
+
+all other monsters that roll claw, all damage its monster in tokyo
+
+
+Monster Cards: bottom left 
+>1* [+2*] dicesymbolheart
+take tokyo = +1vp 
+start turn in tokyo = +2vp
+dicesymbolheart = cant heal with heart roll
+
+heal: in tokyo only
+lighting: "energy tokens" to by abilities
+- spend 1: select one of 3 current, replace with top of Ability Deck
+- spend 2: replace all three, top three in Ability Deck 
+paw: damage, inside tokyo
+dice
+energy cubes
