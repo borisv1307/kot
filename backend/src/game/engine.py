@@ -17,12 +17,13 @@ class GameEngine():
         self.game_status = Status.ACTIVE
 
     def play_game(self):
-        for player in self.yield_next_player():
-            self.take_turn(player)
-            self.validate_if_winner(player)
-            if not game_status:
-                break
-            self.set_dead_players()
+        while self.game_status:
+            for player in self.yield_next_player():
+                self.take_turn(player)
+                self.validate_if_winner(player)
+                if not self.game_status:
+                    break
+                self.set_dead_players()
 
     def take_turn(self, player):
         pass
