@@ -25,6 +25,7 @@ class AppLayout extends Component {
     onCollapse = (collapsed) => {
         this.setState({ collapsed });
     }
+    
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,

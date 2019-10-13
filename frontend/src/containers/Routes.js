@@ -16,7 +16,7 @@ class Routes extends Component {
                     <div>
                         <Switch>
                             <Route exact path="/" component={AppLayout} />
-                            <Route component={NotFoundPage} />
+                            <Route component={AppLayout} />
                         </Switch>
                     </div>
                 </Router>
