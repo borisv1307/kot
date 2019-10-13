@@ -38,6 +38,5 @@ class GameEngine():
                 self.alive_players.remove(player)
 
     def yield_next_player(self):
-        while self.game_status:
-            for player in self.alive_players:
-                yield player
+        for player in self.alive_players:
+            yield player
