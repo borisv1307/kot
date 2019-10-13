@@ -1,0 +1,466 @@
+{
+ "kot_cards":[
+  {
+    "name": "Acid Attack",
+    "cost": 6,
+    "card_type": "Keep",
+    "effect": "Add [attack] to your roll",
+    "footnote": ""
+  },
+  {
+    "name": "Alien Metabolism",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "Buying Power cards costs you 1 less [Energy].",
+    "footnote": ""
+  },
+  {
+    "name": "Alpha Monster",
+    "cost": 5,
+    "card_type": "Keep",
+    "effect": "Gain 1[Star] when you Roll at least one [attack].",
+    "footnote": ""
+  },
+  {
+    "name": "Apartment Building",
+    "cost": 5,
+    "card_type": "Discard",
+    "effect": "+ 3[Star]",
+    "footnote": ""
+  },
+  {
+    "name": "Armor Plating",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "Do not lose 1[health] when you lose exactly 1[health]",
+    "footnote": "(Damages from [attack] and each Card effect are considered separately)"
+  },
+  {
+    "name": "Background Dweller",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "You can always reroll any [3] you have.",
+    "footnote": ""
+  },
+  {
+    "name": "Burrowing",
+    "cost": 5,
+    "card_type": "Keep",
+    "effect": "Add [attack] to your roll when you are in Tokyo. When you Yield Tokyo, the Monster taking it loses 1[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Camouflage",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "If you lose [health], roll a die for each [health] you lost. Each [heart] reduces the loss by 1[heart]",
+    "footnote": "(applicable to damages from both [attack] and Card effect)"
+  },
+  {
+    "name": "Commuter Train",
+    "cost": 4,
+    "card_type": "Discard",
+    "effect": "+ 2[Star]",
+    "footnote": ""
+  },
+  {
+    "name": "Complete Destruction",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "If you roll [1][2][3][Heart][Attack][Energy] gain 9[Star] in addition to the regular results.",
+    "footnote": ""
+  },
+  {
+    "name": "Corner Store",
+    "cost": 3,
+    "card_type": "Discard",
+    "effect": "+ 1[Star]",
+    "footnote": ""
+  },
+  {
+    "name": "Dedicated News Team",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "Gain 1[Star] whenever you buy a Power card.",
+    "footnote": ""
+  },
+  {
+    "name": "Drop from High Altitude",
+    "cost": 5,
+    "card_type": "Discard",
+    "effect": "+ 2[Star] and take control of Tokyo if you don't already control it.",
+    "footnote": "(player choose to take control either City & Bay if both are occupied)"
+  },
+  {
+    "name": "Eater of the Dead",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "Gain 3[Star] every time a monster's [Heart] goes to 0.",
+    "footnote": ""
+  },
+  {
+    "name": "Energize",
+    "cost": 8,
+    "card_type": "Discard",
+    "effect": "+ 9[Energy]",
+    "footnote": ""
+  },
+  {
+    "name": "Energy Hoarder",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "You gain 1[Star] for every 6[Energy] you have at the end of your turn.",
+    "footnote": ""
+  },
+  {
+    "name": "Evacuation Orders",
+    "cost": 7,
+    "card_type": "Discard",
+    "effect": "All other monsters lose 5[Star].",
+    "footnote": ""
+  },
+  {
+    "name": "Evacuation Orders",
+    "cost": 7,
+    "card_type": "Discard",
+    "effect": "All other monsters lose 5[Star].",
+    "footnote": ""
+  },
+  {
+    "name": "Even Bigger",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "+2[health] when you buy this card. Your maximum [health] is increased to 12 as long as you own this card",
+    "footnote": ""
+  },
+  {
+    "name": "Extra Head",
+    "cost": 7,
+    "card_type": "Keep",
+    "effect": "You get 1 extra die.",
+    "footnote": ""
+  },
+  {
+    "name": "Extra Head",
+    "cost": 7,
+    "card_type": "Keep",
+    "effect": "You get 1 extra die.",
+    "footnote": ""
+  },
+  {
+    "name": "Fire Blast",
+    "cost": 3,
+    "card_type": "Discard",
+    "effect": "All other monsters lose 2[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Fire Breathing",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "Your neighbors lose 1[health] when you roll at least one [attack]",
+    "footnote": "(neighbor Monsters lose[health] even if they are in the same place as you)"
+  },
+  {
+    "name": "Freeze Time",
+    "cost": 5,
+    "card_type": "Keep",
+    "effect": "On a turn where you roll [1][1][1] or more, you can take another turn with one less die.",
+    "footnote": ""
+  },
+  {
+    "name": "Frenzy",
+    "cost": 7,
+    "card_type": "Discard",
+    "effect": "Take another turn after this one",
+    "footnote": ""
+  },
+  {
+    "name": "Friend of Children",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "When you gain any [Energy] gain 1 extra [Energy].",
+    "footnote": "(applicable to [energy] gained from Roll or Card effects which gain [energy])"
+  },
+  {
+    "name": "Gas Refinery",
+    "cost": 6,
+    "card_type": "Discard",
+    "effect": "+2[star] and all other monsters lose 3[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Giant Brain",
+    "cost": 5,
+    "card_type": "Keep",
+    "effect": "You have 1 extra die roll each turn",
+    "footnote": ""
+  },
+  {
+    "name": "Gourmet",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "When rolling [1][1][1] or more gain 2 extra [Star].",
+    "footnote": ""
+  },
+  {
+    "name": "Heal",
+    "cost": 3,
+    "card_type": "Discard",
+    "effect": "+2[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Healing Ray",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "You can use your [heart] to make other monsters gain [health]. Each monster must pay you 2[energy] (or 1[energy] if it' their last one) for each [health] they gain this way]",
+    "footnote": "(can use it outside Tokyo to heal Monster inside Tokyo; can use it inside to heal Monster outside)"
+  },
+  {
+    "name": "Herbivore",
+    "cost": 5,
+    "card_type": "Keep",
+    "effect": "Gain 1[star] at the end of your turn if you don't make anyone lose [health]",
+    "footnote": ""
+  },
+  {
+    "name": "Herd Culler",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "You can change one of your dice to a [1] each turn.",
+    "footnote": ""
+  },
+  {
+    "name": "High Altitude Bombing",
+    "cost": 4,
+    "card_type": "Discard",
+    "effect": "All monsters (including you) lose 3[health]",
+    "footnote": ""
+  },
+  {
+    "name": "It Has a Child",
+    "cost": 7,
+    "card_type": "Keep",
+    "effect": "If you reach 0[health] discard all your cards and lose all you [star]. Gain 10[health] and continue playing outside Tokyo",
+    "footnote": "([energy] are retained)"
+  },
+  {
+    "name": "Jet Fighters",
+    "cost": 5,
+    "card_type": "Discard",
+    "effect": "+5[star] -4[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Jets",
+    "cost": 5,
+    "card_type": "Keep",
+    "effect": "You don't lose [health] if you decide to yield Tokyo",
+    "footnote": ""
+  },
+  {
+    "name": "Made in a Lab",
+    "cost": 2,
+    "card_type": "Keep",
+    "effect": "During the Buy Power cards step, you can peek at the top card of the deck and buy it or put it back on top of the deck.",
+    "footnote": ""
+  },
+  {
+    "name": "Metamorph",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "At the end of your turn you can discard any [keep] cards you have to gain their full cost in [energy].",
+    "footnote": ""
+  },
+  {
+    "name": "Mimic",
+    "cost": 8,
+    "card_type": "Keep",
+    "effect": "Choose a [keep] card any monster has in play and put a Mimic token on it. This card counts as a duplicate of that card as if you had just bought it. Spend 1[energy] at ther start of your turn to move the Mimic token and change the card you ar mimicking",
+    "footnote": "(Can mimic own card; take back mimic token if the copied Card is discarded)"
+  },
+  {
+    "name": "Battery Monster",
+    "cost": 2,
+    "card_type": "Keep",
+    "effect": "When you buy Battery Monster, put 6[energy] on it from the bank. At the start of each turn take 2[energy] off and add them to your pool. When there are no [energy] left discard this card.",
+    "footnote": ""
+  },
+  {
+    "name": "National Guard",
+    "cost": 3,
+    "card_type": "Discard",
+    "effect": "+2[star] -2[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Nova Breath",
+    "cost": 7,
+    "card_type": "Keep",
+    "effect": "your [attack] smash all other monsters",
+    "footnote": ""
+  },
+  {
+    "name": "Nuclear Power Plant",
+    "cost": 6,
+    "card_type": "Discard",
+    "effect": "+2[star] +3[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Omnivore",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "When you roll at least [1][2][3], gain 2[star]. You can use these dice in other combinations.",
+    "footnote": ""
+  },
+  {
+    "name": "Opportunist",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "Whenever a power card is revealed you have the option of buying it immediately",
+    "footnote": "(if card is mimic-ed, first Monster clockwise from current Player can choose whether to buy first"
+  },
+  {
+    "name": "Parasitic Tentacles",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "You can buy Power cards form other Monsters. Pay them the [energy] cost.",
+    "footnote": ""
+  },
+  {
+    "name": "Plot Twist",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "Before resolving your dice you may change one die to any result. Discard when used.",
+    "footnote": ""
+  },
+  {
+    "name": "Poison Quills",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "When you roll [2][2][2] or more, add [attack][attack] to your roll",
+    "footnote": ""
+  },
+  {
+    "name": "Poison Spit",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "Give Poison token to each monser you smash with your [attack]. At the end of their turn, Monsters lose 1[health] for each poison token they have on them. A poison token can be discarded by using a [heart] instead of gaining 1[health]",
+    "footnote": "(tokens stay w/ Monsters even if Card is diskcarded; Monster in Tokyo can't use [heart] to remove tokens)"
+  },
+  {
+    "name": "Psychic Probe",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "You can reroll a die of your choice after the last roll of each other monster. If you reroll [heart] discard this card.",
+    "footnote": ""
+  },
+  {
+    "name": "Rapid Healing",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "Spend 2[energy] at any time to gain 1[health]",
+    "footnote": "(allowed to use even after a Player completed 3 rolls and before the Roll is resolved; usable in Tokyo)"
+  },
+  {
+    "name": "Regeneration",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "When you gain [health], gain 1 extra [health]",
+    "footnote": ""
+  },
+  {
+    "name": "Rooting for the Underdog",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "At the end of a turn if you have the fewest [Star] gain 1 [Star].",
+    "footnote": "(no [star] if tied fewest; at the end of your turn)"
+  },
+  {
+    "name": "Shrink Ray",
+    "cost": 6,
+    "card_type": "Keep",
+    "effect": "Give a Shrink Ray token to each monseter you smash with your [attack]. Athe the beginning of their turn, Monsters roll 1 less dice for each Shrink Ray token they have on them. A Shrink ray token can be discarded by using a [heart] instead of gaining 1[health]",
+    "footnote": "(tokens stay even if Card is discarded; Monster in Tokyo can't use [heart] to remove tokens)"
+  },
+  {
+    "name": "Skyscraper",
+    "cost": 6,
+    "card_type": "Discard",
+    "effect": "+4[star]",
+    "footnote": ""
+  },
+  {
+    "name": "Smoke Cloud",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "Place 3 smoke tokens on this card. Spen 1 smoke token for an extra roll. Discard this card when all smoke counters are spent.",
+    "footnote": "(can use all 3 charges in one turn)"
+  },
+  {
+    "name": "Solar Powered",
+    "cost": 2,
+    "card_type": "Keep",
+    "effect": "At the end of your turn gain 1[Energy] if you have no [Energy].",
+    "footnote": ""
+  },
+  {
+    "name": "Spiked Tail",
+    "cost": 5,
+    "card_type": "Keep",
+    "effect": "If you roll at least one [attack], add [attack] to your roll",
+    "footnote": ""
+  },
+  {
+    "name": "Stretchy",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "Before resolving your dice, you can spend 2[energy] to change one of your dice to any result.",
+    "footnote": ""
+  },
+  {
+    "name": "Tanks",
+    "cost": 4,
+    "card_type": "Discard",
+    "effect": "+4[star] -3[health]",
+    "footnote": ""
+  },
+  {
+    "name": "Telepath",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "Spend 1[energy] to get 1 extra die roll",
+    "footnote": ""
+  },
+  {
+    "name": "Urbavore",
+    "cost": 4,
+    "card_type": "Keep",
+    "effect": "gain 1 extra [star] when beginning your turn in Tokyo. If your are in Tokyo and you roll at least one [attack] add [attack] to your roll",
+    "footnote": ""
+  },
+  {
+    "name": "Vast Storm",
+    "cost": 6,
+    "card_type": "Discard",
+    "effect": "+2[star] and all other monsters lose 1[energy] for every 2[energy] they have",
+    "footnote": ""
+  },
+  {
+    "name": "We're Only Making It Stronger",
+    "cost": 3,
+    "card_type": "Keep",
+    "effect": "When you lose 2[health] or more gain 1[energy]",
+    "footnote": ""
+  },
+  {
+    "name": "Wings",
+    "cost": 6,
+    "card_type": "Keep",
+    "effect": "Spend 2[energy] to not lose [health] this turn",
+    "footnote": "(allowed to use even after a Player completed 3 rolls and before the Roll is resolved)"
+  }
+]
+}
