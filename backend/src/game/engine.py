@@ -7,18 +7,19 @@ class GameEngine():
         self.players = []
         self.alive_players = []
         self.dead_players = []
+        self.game_status = Status.GAME_OVER
 
     def add_player(self, player):
         self.players.append(player)
 
     def begin_game(self):
         self.alive_players = self.players
+        self.game_status = Status.ACTIVE
 
     def play_game(self):
-        game_status = Status.ACTIVE
-        for player in self.yield_next_player(game_status):
+        for player in self.yield_next_player():
             self.take_turn(player)
-            game_status = self.validate_if_winner(player)
+            self.validate_if_winner(player)
             if not game_status:
                 break
             self.set_dead_players()
@@ -28,10 +29,7 @@ class GameEngine():
 
     def validate_if_winner(self, player):
         if player.victory_points == 20:
-            status = Status.GAME_OVER
-        else:
-            status = Status.ACTIVE
-        return status
+            self.game_status = Status.GAME_OVER
 
     def set_dead_players(self):
         for player in self.alive_players:
@@ -39,7 +37,7 @@ class GameEngine():
                 self.dead_players.append(player)
                 self.alive_players.remove(player)
 
-    def yield_next_player(self, game_status):
-        while game_status:
+    def yield_next_player(self):
+        while self.game_status:
             for player in self.alive_players:
                 yield player

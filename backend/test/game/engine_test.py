@@ -28,4 +28,5 @@ def test_begin_game(game_engine):
 
 def test_validate_if_winner(game_engine, player):
     player.change_victory_points(21)
-    assert game_engine.validate_if_winner(player) == Status.GAME_OVER
+    game_engine.validate_if_winner(player)
+    assert game_engine.game_status == Status.GAME_OVER
