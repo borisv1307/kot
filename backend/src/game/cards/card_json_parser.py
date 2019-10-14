@@ -1,9 +1,9 @@
 import json
 import os
-from backend.src.game.cards.definitions import CARDS_DIR
-from backend.src.game.cards.card import Card
 from typing import List
 
+from backend.src.game.cards.card import Card
+from backend.src.game.cards.definitions import CARDS_DIR
 
 json_file_path = os.path.join(CARDS_DIR, 'kot_cards.json')
 
@@ -23,7 +23,7 @@ def __deck_json_parser(json_deck):
 
 
 def get_power_card_deck():
-    return __card_deck
+    return __card_deck.copy()
 
 
 __card_deck = __deck_json_parser(card_file)

@@ -1,6 +1,6 @@
 from backend.src.game.cards import card_json_parser as parser
 from backend.src.game.cards.card_type import CardType
-from . import mock_card_json as mock_cards
+from backend.test.game.cards_test import mock_card_json as mock_cards
 
 
 def test_deck_multiple_cards():
