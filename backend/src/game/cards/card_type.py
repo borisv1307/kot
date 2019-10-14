@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class CARD_TYPE(Enum):
-    keep = 1
-    discard = 2
-    invalid = 99
+class CardType(Enum):
+    KEEP = 1
+    DISCARD = 2
+    INVALID = 99
