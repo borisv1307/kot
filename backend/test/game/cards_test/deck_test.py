@@ -1,6 +1,6 @@
 import pytest
 
-import backend.src.game.cards.definitions as definitions
+import backend.src.game.constants as constants
 from backend.src.game.cards.deck import Deck
 
 
@@ -13,7 +13,7 @@ def deck():
 def test_deck_init(deck):
     assert len(deck) == 0
     deck.get_new_deck()
-    assert len(deck) == definitions.JSON_CARD_COUNT
+    assert len(deck) == constants.JSON_CARD_COUNT
 
 
 def test_draw_card(deck):

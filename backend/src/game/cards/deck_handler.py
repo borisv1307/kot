@@ -1,6 +1,6 @@
 from typing import List
 
-import backend.src.game.cards.definitions as definitions
+import backend.src.game.constants as constants
 from backend.src.game.cards.card import Card
 from backend.src.game.cards.deck import Deck
 
@@ -44,12 +44,12 @@ class DeckHandler:
         if (len(self.draw_pile)) <= 0:
             # if discard pile is also empty, raise exception
             if len(self.discard_pile) <= 0:
-                raise Exception(definitions.OUT_OF_CARDS_MSG)
+                raise Exception(constants.OUT_OF_CARDS_MSG)
             self.shuffle_discard_pile_to_draw_pile()
         self.__card_store.append(self.__draw_pile.draw_from())
 
     def __fill_card_store(self):
-        while len(self.__card_store) < definitions.CARD_STORE_SIZE:
+        while len(self.__card_store) < constants.CARD_STORE_SIZE:
             self.get_top_draw_pile_card()
 
     def shuffle_discard_pile_to_draw_pile(self):
@@ -65,7 +65,6 @@ class DeckHandler:
 
     # optional second arg allows discard to handle removing card from origin as well
     def discard(self, card: Card, card_from_location: List[Card] = None):
-
         self.__discard_pile.append(card)
         if card_from_location is not None:
             card_from_location.remove(card)
