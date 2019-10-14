@@ -39,13 +39,16 @@ class DeckHandler:
     def discard_pile(self):
         return self.__discard_pile
 
+    def get_top_draw_pile_card(self):
+        if (len(self.draw_pile)) <= 0:
+            if len(self.discard_pile) <= 0:
+                raise Exception(definitions.OUT_OF_CARDS_MSG)
+            self.shuffle_discard_pile_to_draw_pile()
+        self.__card_store.append(self.__draw_pile.draw_from())
+
     def __fill_card_store(self):
         while len(self.__card_store) < definitions.CARD_STORE_SIZE:
-            if (len(self.draw_pile)) <= 0:
-                if len(self.discard_pile) <= 0:
-                    raise Exception(definitions.OUT_OF_CARDS_MSG)
-                self.shuffle_discard_pile_to_draw_pile()
-            self.__card_store.append(self.__draw_pile.draw_from())
+            self.get_top_draw_pile_card()
 
     def shuffle_discard_pile_to_draw_pile(self):
         self.__discard_pile.shuffle()
@@ -53,7 +56,7 @@ class DeckHandler:
             self.__draw_pile.append(self.discard_pile.draw_from())
         self.__discard_pile.clear()
 
-    def buy_card(self, index):
+    def buy_card_from_store(self, index):
         bought = self.__card_store.pop(index)
         self.__fill_card_store()
         return bought

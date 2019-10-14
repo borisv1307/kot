@@ -24,7 +24,7 @@ def test_buy_single_card(deck_handler):
     assert len(deck_handler.store) == definitions.CARD_STORE_SIZE
     assert len(deck_handler.draw_pile) == definitions.JSON_CARD_COUNT - definitions.CARD_STORE_SIZE
 
-    bought_card = deck_handler.buy_card(1)
+    bought_card = deck_handler.buy_card_from_store(1)
     assert len(deck_handler.store) == definitions.CARD_STORE_SIZE
     assert len(deck_handler.draw_pile) == definitions.JSON_CARD_COUNT - definitions.CARD_STORE_SIZE - 1
     assert not deck_handler.draw_pile.__contains__(bought_card)
@@ -32,7 +32,7 @@ def test_buy_single_card(deck_handler):
 
 def test_discard_card(deck_handler):
     assert len(deck_handler) == definitions.JSON_CARD_COUNT
-    card = deck_handler.buy_card(1)
+    card = deck_handler.buy_card_from_store(1)
     assert len(deck_handler) == definitions.JSON_CARD_COUNT - 1
     deck_handler.discard(card)
     assert len(deck_handler) == definitions.JSON_CARD_COUNT
@@ -44,7 +44,7 @@ def test_force_shuffle_discard_add_to_draw(deck_handler):
 
     # buy 5 cards
     for _ in range(5):
-        bought_cards.append(deck_handler.buy_card(1))
+        bought_cards.append(deck_handler.buy_card_from_store(1))
     assert len(bought_cards) == 5
     assert len(deck_handler) == definitions.JSON_CARD_COUNT - 5
 
@@ -66,7 +66,7 @@ def test_auto_reshuffle(deck_handler):
 
     # buy all cards but 10
     for _ in range(definitions.JSON_CARD_COUNT - 10):
-        bought_cards.append(deck_handler.buy_card(1))
+        bought_cards.append(deck_handler.buy_card_from_store(1))
     assert len(deck_handler) == 10
 
     # move discard all bought cards
@@ -78,7 +78,7 @@ def test_auto_reshuffle(deck_handler):
 
     # buy all cards but 10 again, forcing reshuffle discard to draw pile
     for _ in range(definitions.JSON_CARD_COUNT - 10):
-        bought_cards.append(deck_handler.buy_card(0))
+        bought_cards.append(deck_handler.buy_card_from_store(0))
     assert len(bought_cards) == definitions.JSON_CARD_COUNT - 10
     assert len(deck_handler.store) == definitions.CARD_STORE_SIZE
     assert len(deck_handler) == 10
@@ -87,11 +87,11 @@ def test_auto_reshuffle(deck_handler):
 def test_run_out_of_cards(deck_handler):
     # buy enough cards to empty draw pile
     for _ in range(definitions.JSON_CARD_COUNT - 3):
-        (deck_handler.buy_card(0))
+        (deck_handler.buy_card_from_store(0))
     assert len(deck_handler) == 3
     assert len(deck_handler.draw_pile) == 0
 
     # next card should raise an exception in deck_handler.fill_card_store
     with pytest.raises(Exception) as exception:
-        assert deck_handler.buy_card(0)
+        assert deck_handler.buy_card_from_store(0)
     assert str(exception.value) == definitions.OUT_OF_CARDS_MSG
