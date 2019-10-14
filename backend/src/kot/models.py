@@ -24,26 +24,6 @@ class User(models.Model):
     date_created = models.DateTimeField()
     date_modified = models.DateTimeField()
     
-class Game(models.Model):
-    GAME_RESULT = (
-        ('Y', 'Yes'),
-        ('N', 'No'),
-        ('I', 'In-Progress'),
-    )
-    MONSTER_POSITION = (
-        ('T', 'In-Tokyo'),
-        ('O', 'Outside-Tokyo'),
-    )
-    #game_id = models.IntegerField(primary_key=True)
-    # should cascade be applied below.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    position = models.CharField(max_length=1, choices=MONSTER_POSITION)
-    date_created = models.DateTimeField()
-    date_modified = models.DateTimeField()
-    is_winner = models.CharField(max_length=1, choices=GAME_RESULT)
-    #class Meta:
-    #    unique_together = (('game_id', 'user'),)
-
 class Dice(models.Model):
     DICE_VALUE = (
         ('1', 'One'),
@@ -74,12 +54,35 @@ class Dice(models.Model):
     date_created = models.DateTimeField()
     date_modified = models.DateTimeField()
     
+class Game(models.Model):
+    GAME_RESULT = (
+        ('Y', 'Yes'),
+        ('N', 'No'),
+        ('I', 'In-Progress'),
+    )
+    #game_id = models.IntegerField(primary_key=True)
+    # should cascade be applied below.
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_created = models.DateTimeField()
+    date_modified = models.DateTimeField()
+    is_winner = models.CharField(max_length=1, choices=GAME_RESULT)
+    #class Meta:
+    #    unique_together = (('game_id', 'user'),)   
     
 class Play(models.Model):
+    MONSTER_POSITION = (
+        ('T', 'In-Tokyo'),
+        ('O', 'Outside-Tokyo'),
+    )
     # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # should cascade be applied below.
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    # should cascade be applied below.
+    dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
+    # should cascade be applied below.
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    position = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
