@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify routes are reliable Verify root of site render correctly 1`] = `
+<div>
+  <BrowserRouter>
+    <div>
+      <Switch>
+        <Route
+          component={[Function]}
+          exact={true}
+          path="/"
+        />
+        <Route
+          component={[Function]}
+        />
+      </Switch>
+    </div>
+  </BrowserRouter>
+</div>
+`;

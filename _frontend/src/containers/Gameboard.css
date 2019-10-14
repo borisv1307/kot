@@ -1,0 +1,40 @@
+
+  
+.code-box-demo {
+  text-align: center;
+}
+.ant-layout-header,
+.ant-layout-footer {
+  background: #ced2d4;
+  color: #fff;
+}
+.ant-layout-footer {
+  line-height: 1.5;
+}
+.ant-layout-sider {
+  background: #7c7d7e;
+  color: #fff;
+  line-height: 120px;
+}
+.ant-layout-content {
+  background: rgb(171, 175, 179);
+  color: #fff;
+  min-height: 120px;
+  line-height: 120px;
+}
+ .code-box-demo > div > .ant-layout {
+  margin-bottom: 48px;
+}
+ .code-box-demo > div > .ant-layout:last-child {
+  margin: 0;
+}
+
+.ant-list-bordered .ant-list-item {
+  padding-right: 0px;
+  padding-left: 0px; 
+  border-bottom: 0px solid #e8e8e8;
+}
+
+.ant-list-item {
+  padding: 0px 0;
+}

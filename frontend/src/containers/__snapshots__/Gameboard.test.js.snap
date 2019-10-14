@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify gameboard layout template Gameboard should render correctly 1`] = `
+<div>
+  <Adapter>
+    <Adapter />
+    <Adapter>
+      <Sider />
+      <Adapter>
+        <GameLog />
+      </Adapter>
+      <Sider />
+    </Adapter>
+    <Adapter />
+  </Adapter>
+</div>
+`;

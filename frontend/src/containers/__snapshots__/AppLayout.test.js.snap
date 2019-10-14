@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify site layout template General layout should render correctly 1`] = `
+<BrowserRouter>
+  <div>
+    <Adapter
+      className="layout"
+    >
+      <Adapter>
+        <div
+          className="logo"
+        />
+        <Menu
+          defaultSelectedKeys={
+            Array [
+              "1",
+            ]
+          }
+          mode="horizontal"
+          style={
+            Object {
+              "lineHeight": "64px",
+            }
+          }
+          theme="dark"
+        >
+          <MenuItem
+            key="1"
+          >
+            <Icon
+              type="cluster"
+            />
+            <span>
+              Lobby
+            </span>
+            <Link
+              to="/lobby"
+            />
+          </MenuItem>
+          <MenuItem
+            key="2"
+          >
+            <Icon
+              type="desktop"
+            />
+            <span>
+              Play ToK
+            </span>
+            <Link
+              to="/game"
+            />
+          </MenuItem>
+        </Menu>
+      </Adapter>
+      <Adapter
+        style={
+          Object {
+            "background": "#fff",
+            "margin": "24px 16px",
+            "minHeight": 280,
+            "padding": 24,
+          }
+        }
+      >
+        <Switch>
+          <Route
+            component={[Function]}
+            exact={true}
+            path="/"
+          />
+          <Route
+            component={[Function]}
+            path="/game"
+          />
+          <Route
+            component={[Function]}
+            path="/lobby"
+          />
+          <Route
+            component={[Function]}
+          />
+        </Switch>
+      </Adapter>
+      <Adapter
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
+        SE691 Software Studio - ToK
+      </Adapter>
+    </Adapter>
+  </div>
+</BrowserRouter>
+`;

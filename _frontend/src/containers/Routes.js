@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import AppLayout from './AppLayout';
+import NotFoundPage from './../components/NotFoundPage/NotFoundPage'
 
 class Routes extends Component {
     render() {
