@@ -40,7 +40,9 @@ class DeckHandler:
         return self.__discard_pile
 
     def get_top_draw_pile_card(self):
+        # if draw pile is empty, shuffle the discard pile to become draw pile
         if (len(self.draw_pile)) <= 0:
+            # if discard pile is also empty, raise exception
             if len(self.discard_pile) <= 0:
                 raise Exception(definitions.OUT_OF_CARDS_MSG)
             self.shuffle_discard_pile_to_draw_pile()
@@ -61,8 +63,9 @@ class DeckHandler:
         self.__fill_card_store()
         return bought
 
+    # optional second arg allows discard to handle removing card from origin as well
     def discard(self, card: Card, card_from_location: List[Card] = None):
-        """optional second arg allows discard to handle removing card from origin as well"""
+
         self.__discard_pile.append(card)
         if card_from_location is not None:
             card_from_location.remove(card)
