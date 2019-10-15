@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import "./Gameboard.css";
 import { Layout } from 'antd';
 
-import GameConsole from './../components/Logs/GameConsole'
+import GameConsole from '../components/GameConsole/GameConsole'
 import DiceRoller from './../components/Dice/DiceRoller'
 
 const { Header, Footer, Sider, Content } = Layout;
