@@ -1,29 +1,28 @@
 from django.db import models
 
+
 # Create your models here.
 
 # Monsters tend to change so they will be lookup 
 class Monster(models.Model):
     monster_name = models.CharField(max_length=30)
     date_created = models.DateTimeField()
-    date_modified = models.DateTimeField()
-    
+
+
 # load all 66 Cards     
 class Card(models.Model):
-    card_details = models.CharField(max_length=30)
+    card_name = models.CharField(max_length=30)
     date_created = models.DateTimeField()
-    date_modified = models.DateTimeField()
+
 
 class User(models.Model):
-    #ids are better for realtionship and reference, they are auto created in all classes
-    #user_id = models.AutoField(primary_key=True)
     user_monster = models.ForeignKey(Monster, on_delete=models.CASCADE)
-    #the user can be an email or guest thus username 
+    # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
     date_created = models.DateTimeField()
-    date_modified = models.DateTimeField()
-    
+
+
 class Dice(models.Model):
     DICE_VALUE = (
         ('1', 'One'),
@@ -33,42 +32,44 @@ class Dice(models.Model):
         ('5', 'Attack'),
         ('6', 'Heal'),
     )
-    DICE_SELECT = (
+    DICE_SELECTED = (
         ('Y', 'Selected'),
         ('N', 'Not-Selected'),
     )
     # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dice1 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice1_selected = models.CharField(max_length=1, choices=DICE_SELECT)
+    dice1_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     Dice2 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice2_selected = models.CharField(max_length=1, choices=DICE_SELECT)
+    dice2_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     Dice3 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice3_selected = models.CharField(max_length=1, choices=DICE_SELECT)
+    dice3_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     Dice4 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice4_selected = models.CharField(max_length=1, choices=DICE_SELECT)
+    dice4_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     Dice5 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice5_selected = models.CharField(max_length=1, choices=DICE_SELECT)
+    dice5_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     Dice6 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice6_selected = models.CharField(max_length=1, choices=DICE_SELECT)
+    dice6_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     date_created = models.DateTimeField()
-    date_modified = models.DateTimeField()
-    
+
+
 class Game(models.Model):
     GAME_RESULT = (
         ('Y', 'Yes'),
         ('N', 'No'),
         ('I', 'In-Progress'),
     )
-    #game_id = models.IntegerField(primary_key=True)
+    # game_id = models.IntegerField(primary_key=True)
     # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField()
     date_modified = models.DateTimeField()
     is_winner = models.CharField(max_length=1, choices=GAME_RESULT)
-    #class Meta:
-    #    unique_together = (('game_id', 'user'),)   
-    
+    num_players = models.IntegerField()
+    player_position = models.IntegerField()
+    date_created = models.DateTimeField()
+
+
 class Play(models.Model):
     MONSTER_POSITION = (
         ('T', 'In-Tokyo'),
@@ -82,10 +83,8 @@ class Play(models.Model):
     dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
     # should cascade be applied below.
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    position = models.CharField(max_length=1, choices=MONSTER_POSITION)
+    location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
-    date_modified = models.DateTimeField() 
- 
