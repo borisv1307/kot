@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify site layout template General layout should render correctly 1`] = `
+<BrowserRouter>
+  <nav
+    className="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <a
+      className="navbar-brand"
+      href="#"
+    >
+      Game Room
+    </a>
+    <button
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      className="navbar-toggler"
+      data-target="#navbarNavDropdown"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse"
+      id="navbarNavDropdown"
+    >
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item active"
+        >
+          <a
+            className="nav-link"
+            href="/lobby"
+          >
+            Lobby 
+            <span
+              className="sr-only"
+            >
+              (current)
+            </span>
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/game"
+          >
+            Play ToK
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/login"
+          >
+            Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <Switch>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      path="/game"
+    />
+    <Route
+      component={[Function]}
+      path="/lobby"
+    />
+    <Route
+      component={[Function]}
+      path="/login"
+    />
+    <Route
+      component={[Function]}
+    />
+  </Switch>
+</BrowserRouter>
+`;

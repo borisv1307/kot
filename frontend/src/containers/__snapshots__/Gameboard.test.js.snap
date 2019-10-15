@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify gameboard layout template Gameboard should render correctly 1`] = `
+<div>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-sm"
+      >
+        <DiceRoller />
+      </div>
+      <div
+        className="col-sm"
+      >
+        <GameConsole />
+      </div>
+      <div
+        className="col-sm"
+      />
+    </div>
+  </div>
+</div>
+`;
