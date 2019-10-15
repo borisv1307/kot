@@ -1,29 +1,26 @@
 import React from 'react';
-import "antd/dist/antd.css";
 import "./Gameboard.css";
-import { Layout } from 'antd';
 
 import GameConsole from '../components/GameConsole/GameConsole'
 import DiceRoller from './../components/Dice/DiceRoller'
 
-const { Header, Footer, Sider, Content } = Layout;
-
 const GameboardLayout = (props) => {
     return (
         <div>
-            <Layout>
-                <Header></Header>
-                <Layout>
-                    <Sider>
+
+            <div className="container">
+                <div className="row">
+                    <div className="col-sm">
                         <DiceRoller />
-                    </Sider>
-                    <Content>
+                    </div>
+                    <div className="col-sm">
                         <GameConsole />
-                    </Content>
-                    <Sider></Sider>
-                </Layout>
-                <Footer></Footer>
-            </Layout>
+                    </div>
+                    <div className="col-sm">
+
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

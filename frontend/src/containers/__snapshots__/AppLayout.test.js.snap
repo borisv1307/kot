@@ -2,112 +2,94 @@
 
 exports[`Verify site layout template General layout should render correctly 1`] = `
 <BrowserRouter>
-  <div>
-    <Adapter
-      className="layout"
+  <nav
+    className="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <a
+      className="navbar-brand"
+      href="#"
     >
-      <Adapter>
-        <div
-          className="logo"
-        />
-        <Menu
-          defaultSelectedKeys={
-            Array [
-              "1",
-            ]
-          }
-          mode="horizontal"
-          style={
-            Object {
-              "lineHeight": "64px",
-            }
-          }
-          theme="dark"
+      Game Room
+    </a>
+    <button
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      className="navbar-toggler"
+      data-target="#navbarNavDropdown"
+      data-toggle="collapse"
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      className="collapse navbar-collapse"
+      id="navbarNavDropdown"
+    >
+      <ul
+        className="navbar-nav"
+      >
+        <li
+          className="nav-item active"
         >
-          <MenuItem
-            key="1"
+          <a
+            className="nav-link"
+            href="/lobby"
           >
-            <Icon
-              type="cluster"
-            />
-            <span>
-              Lobby
+            Lobby 
+            <span
+              className="sr-only"
+            >
+              (current)
             </span>
-            <Link
-              to="/lobby"
-            />
-          </MenuItem>
-          <MenuItem
-            key="2"
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/game"
           >
-            <Icon
-              type="desktop"
-            />
-            <span>
-              Play ToK
-            </span>
-            <Link
-              to="/game"
-            />
-          </MenuItem>
-          <MenuItem
-            key="3"
+            Play ToK
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/login"
           >
-            <Icon
-              type="login"
-            />
-            <span>
-              Login
-            </span>
-            <Link
-              to="/login"
-            />
-          </MenuItem>
-        </Menu>
-      </Adapter>
-      <Adapter
-        style={
-          Object {
-            "background": "#fff",
-            "margin": "24px 16px",
-            "minHeight": 280,
-            "padding": 24,
-          }
-        }
-      >
-        <Switch>
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/"
-          />
-          <Route
-            component={[Function]}
-            path="/game"
-          />
-          <Route
-            component={[Function]}
-            path="/lobby"
-          />
-          <Route
-            component={[Function]}
-            path="/login"
-          />
-          <Route
-            component={[Function]}
-          />
-        </Switch>
-      </Adapter>
-      <Adapter
-        style={
-          Object {
-            "textAlign": "center",
-          }
-        }
-      >
-        SE691 Software Studio - ToK
-      </Adapter>
-    </Adapter>
-  </div>
+            Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <Switch>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      path="/game"
+    />
+    <Route
+      component={[Function]}
+      path="/lobby"
+    />
+    <Route
+      component={[Function]}
+      path="/login"
+    />
+    <Route
+      component={[Function]}
+    />
+  </Switch>
 </BrowserRouter>
 `;

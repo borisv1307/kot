@@ -3,13 +3,16 @@ import "./GameConsole.css";
 
 import GameLog from './GameLog'
 
-var rollExample = [
-  'heart',
-  'energy',
-  'paw',
-  '1',
-  '2',
-  '3'
+const gameLogExample = [
+  '-- Sammy turn –',
+  'Rolled: E E H 1 2 3',
+  'Decision: keep E E',
+  'Rolled: E P 1 2 2',
+  'Decision: keep E',
+  'Rolled: 2 2 2 (TRIPPLE! +2 VP)',
+  ':: Gain: E E E +2 VP ::',
+  'Buy: Psychic Probe',
+  'End Turn'
 ];
 
 class GameConsole extends React.Component {
@@ -18,11 +21,11 @@ class GameConsole extends React.Component {
     super(props);
 
     this.state = {
-      log: rollExample, // this holds the name of each list
+      log: gameLogExample, // this holds the name of each list
       cmd: "enter cmd"
     };
 
-    this.OnChange = this.OnChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.SubmitGameCommand = this.SubmitGameCommand.bind(this);
   }
 
@@ -38,7 +41,7 @@ class GameConsole extends React.Component {
     })
   }
 
-  OnChange(e) {
+  handleChange(e) {
     this.setState({
       cmd: e.target.value
     })
@@ -48,10 +51,13 @@ class GameConsole extends React.Component {
     return (
       <div className="game_console">
         <GameLog data={this.state.log} />
-        <form
+
+        <form className="submit_game_command"
           onSubmit={this.SubmitGameCommand}
-          onChange={this.OnChange}
-          className="submit_game_command"></form>
+          onChange={this.handleChange}
+          className="submit_game_command">
+          <textarea value={this.state.value} onChange={this.handleChange}>Type Command [enter]</textarea>
+        </form>
         <button onClick={this.SubmitGameCommand}>
           Submit Comand
           </button>

@@ -2,18 +2,26 @@
 
 exports[`Verify gameboard layout template Gameboard should render correctly 1`] = `
 <div>
-  <Adapter>
-    <Adapter />
-    <Adapter>
-      <Sider>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-sm"
+      >
         <DiceRoller />
-      </Sider>
-      <Adapter>
+      </div>
+      <div
+        className="col-sm"
+      >
         <GameConsole />
-      </Adapter>
-      <Sider />
-    </Adapter>
-    <Adapter />
-  </Adapter>
+      </div>
+      <div
+        className="col-sm"
+      />
+    </div>
+  </div>
 </div>
 `;

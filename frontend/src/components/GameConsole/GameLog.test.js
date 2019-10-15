@@ -4,27 +4,19 @@ import { shallow } from 'enzyme';
 import GameLog from './GameLog';
 
 describe('Verify GameLog layout template', () => {
-    it('GameLog should render correctly', () => {
-        const errorPage = shallow(<GameLog />);
-        expect(errorPage).toMatchSnapshot();
-    });
-
     it('Verify parameter provided logs are rendered correctly', () => {
-        // class FaceValues(enum):
-        // One = 0
-        // Two = 1
-        // Three = 2
-        // Attack = 3
-        // Heart = 4
-        // Energy = 5
 
         const tLog = [
-            '1',
-            '2',
-            '3',
-            'attack',
-            'heal',
-            'energy',];
+            '-- Sammy turn –',
+            'Rolled: E E H 1 2 3',
+            'Decision: keep E E',
+            'Rolled: E P 1 2 2',
+            'Decision: keep E',
+            'Rolled: 2 2 2 (TRIPPLE! +2 VP)',
+            ':: Gain: E E E +2 VP ::',
+            'Buy: Psychic Probe',
+            'End Turn'
+        ];
 
         const component = shallow(<GameLog data={tLog} />);
         expect(component).toMatchSnapshot();

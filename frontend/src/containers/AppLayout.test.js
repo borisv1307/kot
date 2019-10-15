@@ -11,8 +11,6 @@ import {
     Switch
 } from 'react-router-dom';
 
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
-
 describe('Verify site layout template', () => {
     it('General layout should render correctly', () => {
         const errorPage = shallow(<AppLayout />);
@@ -21,29 +19,24 @@ describe('Verify site layout template', () => {
 
     it('renders lobby menu', () => {
         const wrapper = shallow(<AppLayout />);
-        const lobby_menu = <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['1']}
-            style={{ lineHeight: '64px' }}>
-            <Menu.Item key="1">
-                <Icon type="cluster" />
-                <span>Lobby</span>
-                <Link to="/lobby" />
-            </Menu.Item>
-            <Menu.Item key="2">
-                <Icon type="desktop" />
-                <span>Play ToK</span>
-                <Link to="/game" />
-            </Menu.Item>
-            <Menu.Item key="3">
-                <Icon type="login" />
-                <span>Login</span>
-                <Link to="/login" />
-            </Menu.Item>
-        </Menu>;
+
+        const lobby_menu =
+            <li className="nav-item active">
+                <a className="nav-link" href="/lobby">Lobby <span className="sr-only">(current)</span></a>
+            </li>;
+
+        const game_menu = <li className="nav-item">
+            <a className="nav-link" href="/game">Play ToK</a>
+        </li>
+
+        const login_menu = <li className="nav-item">
+            <a className="nav-link" href="/login">Login</a>
+        </li>
+
         // expect(wrapper.contains(welcome)).toBe(true);
         // expect(wrapper.contains(welcome)).toEqual(true);
         expect(wrapper).toContainReact(lobby_menu);
+        expect(wrapper).toContainReact(game_menu);
+        expect(wrapper).toContainReact(login_menu);
     });
 })

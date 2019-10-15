@@ -1,25 +1,17 @@
 import React from 'react';
-import { List } from 'antd';
 
 import "./DiceBoard.css";
 
 const DiceBoard = (props) => {
     return (
         <div>
-            <List
-                // header={<div>Header</div>}
-                // footer={<div>Footer</div>}
-                bordered
-                dataSource={props.data}
-                renderItem={item => (
-                    <List.Item>
-                        {item}
-                    </List.Item>
-                )}
-            />
+            {
+                props.data.map(dice =>
+                    <li key={dice}>{dice}</li>
+                )
+            }
         </div>
     );
-}
-
+};
 
 export default DiceBoard;

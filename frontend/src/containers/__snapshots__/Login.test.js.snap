@@ -1,17 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Verify lobby template Lobby should render correctly 1`] = `
-<div>
-  <Adapter>
-    <Adapter />
-    <Adapter>
-      <Sider />
-      <Adapter>
-        Your In the Lobby...
-      </Adapter>
-      <Sider />
-    </Adapter>
-    <Adapter />
-  </Adapter>
+<div
+  className="container"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-sm"
+    />
+    <div
+      className="col-sm"
+    >
+      Your In the Lobby...
+    </div>
+    <div
+      className="col-sm"
+    />
+  </div>
 </div>
 `;

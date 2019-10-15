@@ -1,14 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Verify DiceBoard layout template DiceBoard should render correctly 1`] = `
+exports[`Verify DiceBoard layout template Verify parameter provided dice are rendered correctly 1`] = `
 <div>
-  <List
-    bordered={true}
-    dataSource={Array []}
-    loading={false}
-    pagination={false}
-    renderItem={[Function]}
-    split={true}
-  />
+  <li
+    key="1"
+  >
+    1
+  </li>
+  <li
+    key="2"
+  >
+    2
+  </li>
+  <li
+    key="3"
+  >
+    3
+  </li>
+  <li
+    key="attack"
+  >
+    attack
+  </li>
+  <li
+    key="heal"
+  >
+    heal
+  </li>
+  <li
+    key="energy"
+  >
+    energy
+  </li>
 </div>
 `;

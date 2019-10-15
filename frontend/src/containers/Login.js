@@ -1,22 +1,20 @@
 import React from 'react';
-import "antd/dist/antd.css";
 import "./Login.css";
-import { Layout } from 'antd';
-
-const { Header, Footer, Sider, Content } = Layout;
 
 const LoginLayout = (props) => {
     return (
-        <div>
-            <Layout>
-                <Header></Header>
-                <Layout>
-                    <Sider></Sider>
-                    <Content>Login page</Content>
-                    <Sider></Sider>
-                </Layout>
-                <Footer></Footer>
-            </Layout>
+        <div className="container">
+            <div className="row">
+                <div className="col-sm">
+
+                </div>
+                <div className="col-sm">
+                    Login page
+                </div>
+                <div className="col-sm">
+
+                </div>
+            </div>
         </div>
     );
 }
