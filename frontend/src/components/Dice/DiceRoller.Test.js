@@ -9,7 +9,7 @@ describe('Verify DiceRoller layout template', () => {
         expect(errorPage).toMatchSnapshot();
     });
 
-    it('Verify parameter provided logs are rendered correctly', () => {
+    it('Verify parameter provided dice are rendered correctly', () => {
         // class FaceValues(enum):
         // One = 0
         // Two = 1

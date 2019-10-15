@@ -50,6 +50,19 @@ exports[`Verify site layout template General layout should render correctly 1`] 
               to="/game"
             />
           </MenuItem>
+          <MenuItem
+            key="3"
+          >
+            <Icon
+              type="login"
+            />
+            <span>
+              Login
+            </span>
+            <Link
+              to="/login"
+            />
+          </MenuItem>
         </Menu>
       </Adapter>
       <Adapter
@@ -75,6 +88,10 @@ exports[`Verify site layout template General layout should render correctly 1`] 
           <Route
             component={[Function]}
             path="/lobby"
+          />
+          <Route
+            component={[Function]}
+            path="/login"
           />
           <Route
             component={[Function]}

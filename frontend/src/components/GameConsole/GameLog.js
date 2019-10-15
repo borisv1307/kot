@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List, Typography } from 'antd';
+import { List } from 'antd';
 import "./GameLog.css";
 
 const GameLog = (props) => {

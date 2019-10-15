@@ -1,6 +1,6 @@
 import React from 'react';
+import { List } from 'antd';
 
-import { List, Typography } from 'antd';
 import "./DiceBoard.css";
 
 const DiceBoard = (props) => {

@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { List, Typography } from 'antd';
 import "./GameConsole.css";
 
 import GameLog from './GameLog'

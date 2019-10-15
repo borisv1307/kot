@@ -6,15 +6,16 @@ import {
     Switch
 } from 'react-router-dom';
 
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 
 import GameboardLayout from './Gameboard';
 import LobbyLayout from './Lobby';
+import LoginLayout from './Login';
 import NotFoundPage from './../components/NotFoundPage/NotFoundPage'
 
 import "./AppLayout.css";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 
 class AppLayout extends Component {
 
@@ -54,6 +55,11 @@ class AppLayout extends Component {
                                     <span>Play ToK</span>
                                     <Link to="/game" />
                                 </Menu.Item>
+                                <Menu.Item key="3">
+                                    <Icon type="login" />
+                                    <span>Login</span>
+                                    <Link to="/login" />
+                                </Menu.Item>
                             </Menu>
                         </Header>
                         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
@@ -61,6 +67,7 @@ class AppLayout extends Component {
                                 <Route exact path="/" component={LobbyLayout} />
                                 <Route path="/game" component={GameboardLayout} />
                                 <Route path="/lobby" component={LobbyLayout} />
+                                <Route path="/login" component={LoginLayout} />
                                 <Route component={NotFoundPage} />
                             </Switch>
                         </Content>

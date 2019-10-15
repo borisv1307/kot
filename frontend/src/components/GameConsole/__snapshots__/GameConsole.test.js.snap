@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify GameConsole layout template GameConsole should render correctly 1`] = `
+<div
+  className="game_console"
+>
+  <GameLog
+    data={
+      Array [
+        "heart",
+        "energy",
+        "paw",
+        "1",
+        "2",
+        "3",
+      ]
+    }
+  />
+  <form
+    className="submit_game_command"
+    onChange={[Function]}
+    onSubmit={[Function]}
+  />
+  <button
+    onClick={[Function]}
+  >
+    Submit Comand
+  </button>
+</div>
+`;

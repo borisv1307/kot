@@ -1,4 +1,8 @@
 [
   "backend/test_pytest.py::test_increment",
-  "backend/test_pytest.py::test_decrement"
+  "backend/test_pytest.py::test_decrement",
+  "backend/test/game/cards_test/card_parsing_test.py::test_deck_multiple_cards",
+  "backend/test/game/cards_test/card_parsing_test.py::test_card_parse_train",
+  "backend/test/game/cards_test/card_parsing_test.py::test_card_parse_camo",
+  "backend/test/game/cards_test/card_parsing_test.py::test_parse_bad_cards"
 ]

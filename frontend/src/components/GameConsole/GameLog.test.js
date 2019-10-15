@@ -26,7 +26,7 @@ describe('Verify GameLog layout template', () => {
             'heal',
             'energy',];
 
-        const component = shallow(<Gamelog data={tLog} />);
+        const component = shallow(<GameLog data={tLog} />);
         expect(component).toMatchSnapshot();
     });
 })

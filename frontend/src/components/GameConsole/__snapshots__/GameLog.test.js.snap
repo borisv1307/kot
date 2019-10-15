@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify GameLog layout template GameLog should render correctly 1`] = `
+<div>
+  <List
+    bordered={true}
+    dataSource={Array []}
+    loading={false}
+    pagination={false}
+    renderItem={[Function]}
+    split={true}
+  />
+</div>
+`;
+
+exports[`Verify GameLog layout template Verify parameter provided logs are rendered correctly 1`] = `
+<div>
+  <List
+    bordered={true}
+    dataSource={
+      Array [
+        "1",
+        "2",
+        "3",
+        "attack",
+        "heal",
+        "energy",
+      ]
+    }
+    loading={false}
+    pagination={false}
+    renderItem={[Function]}
+    split={true}
+  />
+</div>
+`;
