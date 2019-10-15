@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify DiceBoard layout template DiceBoard should render correctly 1`] = `
+<div>
+  <List
+    bordered={true}
+    dataSource={Array []}
+    loading={false}
+    pagination={false}
+    renderItem={[Function]}
+    split={true}
+  />
+</div>
+`;

@@ -4,6 +4,7 @@ import "./Gameboard.css";
 import { Layout } from 'antd';
 
 import GameLog from './../components/Logs/GameLog'
+import DiceRoller from './../components/Dice/DiceRoller'
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -13,7 +14,9 @@ const GameboardLayout = (props) => {
             <Layout>
                 <Header></Header>
                 <Layout>
-                    <Sider></Sider>
+                    <Sider>
+                        <DiceRoller />
+                    </Sider>
                     <Content>
                         <GameLog />
                     </Content>

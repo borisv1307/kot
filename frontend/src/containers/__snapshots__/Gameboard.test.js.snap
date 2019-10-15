@@ -5,7 +5,9 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
   <Adapter>
     <Adapter />
     <Adapter>
-      <Sider />
+      <Sider>
+        <DiceRoller />
+      </Sider>
       <Adapter>
         <GameLog />
       </Adapter>
