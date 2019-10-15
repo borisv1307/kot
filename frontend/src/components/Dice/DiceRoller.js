@@ -20,35 +20,29 @@ class DiceRoller extends React.Component {
     super(props);
 
     this.state = {
-      log: rollExample, // this holds the name of each list
+      rolledDice: rollExample, // this holds the name of each list
     };
 
     this.RequestRoll = this.RequestRoll.bind(this);
   }
 
   RequestRoll(e) {
-    let data = this.state.log;
 
-
-
-
-    // data.push(this.state.cmd);
+    let data = rollExample;
 
     // TO DO : Call dice REST endpoint requesting reroll.
     //this.props.sendMessage(this.state.message)
 
     this.setState({
-      log: data
+      rolledDice: data
     })
   }
 
   render() {
     return (
       <div className="DiceRoller">
-        <DiceBoard data={this.state.log} />
-        <button onClick={this.RequestRoll}>
-          Roll
-        </button>
+        <DiceBoard data={this.state.rolledDice} />
+        <button onClick={this.RequestRoll}>Roll</button>
       </div>
     )
   }

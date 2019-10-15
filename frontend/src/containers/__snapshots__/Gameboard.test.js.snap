@@ -9,7 +9,7 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
         <DiceRoller />
       </Sider>
       <Adapter>
-        <GameLog />
+        <GameConsole />
       </Adapter>
       <Sider />
     </Adapter>

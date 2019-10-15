@@ -21,7 +21,7 @@ describe('Verify DiceRoller layout template', () => {
         const tLog = [
             '1',
             '2',
-            '3'
+            '3',
             'attack',
             'heal',
             'energy',];
