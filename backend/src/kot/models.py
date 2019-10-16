@@ -2,21 +2,8 @@ from django.db import models
 
 
 # Create your models here.
-
-# Monsters tend to change so they will be lookup 
-class Monster(models.Model):
-    monster_name = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
-
-
-# load all 66 Cards     
-class Card(models.Model):
-    card_name = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
-
-
 class User(models.Model):
-    user_monster = models.ForeignKey(Monster, on_delete=models.CASCADE)
+    monster_name = models.CharField(max_length=30)
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
@@ -82,7 +69,7 @@ class Play(models.Model):
     # should cascade be applied below.
     dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
     # should cascade be applied below.
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    card_name = models.CharField(max_length=30)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
     energy_cube = models.IntegerField()
