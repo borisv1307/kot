@@ -1,28 +1,19 @@
-"""
-This is a dice module for the game King of Tokyo
-
-The dice can have the following face values:
-    - 1 - 3: These are the amount of victory points earned
-    - attack: Depending on the player's location, hurts either monsters
-    in or outside Tokyo
-    - heal: Heals the player up to a maximum of 10 points
-    - energy: Gives the player an energy cube to spend on upgrade cards
-"""
-
 import random
+from enum import Enum
 
-DICE_VALUES = ["1", "2", "3", "attack", "heal", "energy"]
+
+class DieValue(Enum):
+    ONE = 0
+    TWO = 1
+    THREE = 2
+    ATTACK = 3
+    HEAL = 4
+    ENERGY = 5
 
 
 def roll() -> str:
-    """
-    Returns back a randomly selected dice value.
-    """
-    return random.choice(DICE_VALUES)
+    return random.choice(list(DieValue))
 
 
-def rolls(num: int) -> [str]:
-    """
-    Returns back a number "num" of randomly selected dice values in a list
-    """
+def roll_many(num: int) -> [str]:
     return [roll() for _ in range(num)]
