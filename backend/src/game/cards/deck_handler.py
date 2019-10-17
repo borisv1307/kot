@@ -49,7 +49,7 @@ class DeckHandler:
         self.__card_store.append(self.__draw_pile.draw_from())
 
     def __fill_card_store(self):
-        while len(self.__card_store) < constants.CARD_STORE_SIZE:
+        while len(self.__card_store) < constants.CARD_STORE_SIZE_LIMITER:
             self.get_top_draw_pile_card()
 
     def shuffle_discard_pile_to_draw_pile(self):

@@ -17,17 +17,17 @@ def deck_handler():
 def test_deck_handler_init(deck_handler):
     print(len(deck_handler.store))
     print(len(deck_handler.draw_pile))
-    assert len(deck_handler.store) == constants.CARD_STORE_SIZE
-    assert len(deck_handler.draw_pile) == test_constants.JSON_CARD_COUNT - constants.CARD_STORE_SIZE
+    assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
+    assert len(deck_handler.draw_pile) == test_constants.JSON_CARD_COUNT - constants.CARD_STORE_SIZE_LIMITER
 
 
 def test_buy_single_card(deck_handler):
-    assert len(deck_handler.store) == constants.CARD_STORE_SIZE
-    assert len(deck_handler.draw_pile) == test_constants.JSON_CARD_COUNT - constants.CARD_STORE_SIZE
+    assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
+    assert len(deck_handler.draw_pile) == test_constants.JSON_CARD_COUNT - constants.CARD_STORE_SIZE_LIMITER
 
     bought_card = deck_handler.buy_card_from_store(1)
-    assert len(deck_handler.store) == constants.CARD_STORE_SIZE
-    assert len(deck_handler.draw_pile) == test_constants.JSON_CARD_COUNT - constants.CARD_STORE_SIZE - 1
+    assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
+    assert len(deck_handler.draw_pile) == test_constants.JSON_CARD_COUNT - constants.CARD_STORE_SIZE_LIMITER - 1
     assert not deck_handler.draw_pile.__contains__(bought_card)
 
 
@@ -81,7 +81,7 @@ def test_auto_reshuffle(deck_handler):
     for _ in range(test_constants.JSON_CARD_COUNT - 10):
         bought_cards.append(deck_handler.buy_card_from_store(0))
     assert len(bought_cards) == test_constants.JSON_CARD_COUNT - 10
-    assert len(deck_handler.store) == constants.CARD_STORE_SIZE
+    assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
     assert len(deck_handler) == 10
 
 
