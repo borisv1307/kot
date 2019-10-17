@@ -55,7 +55,7 @@ def test_player_dies_when_current_health_hits_zero(player):
 
 
 def test_player_starts_with_zero_victory_points(player):
-    assert player.victory_points == constants.ZERO
+    assert player.victory_points == constants.DEATH_HIT_POINT
 
 
 def test_player_can_gain_victory_points(player):
