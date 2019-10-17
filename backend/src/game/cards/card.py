@@ -3,11 +3,11 @@ from backend.src.game.cards.card_type import CardType
 
 def set_card_type(card_type):
     if str.lower(card_type) == "keep":
-        return CardType.keep
+        return CardType.KEEP
     elif str.lower(card_type) == "discard":
-        return CardType.discard
+        return CardType.DISCARD
     else:
-        return CardType.invalid
+        return CardType.INVALID
 
 
 class Card(object):
@@ -28,7 +28,7 @@ class Card(object):
             assert isinstance(self.name, str)
             assert isinstance(self.cost, int)
             assert isinstance(self.effect, str)
-            assert isinstance(self.card_type, CardType) and self.card_type != CardType.invalid
+            assert isinstance(self.card_type, CardType) and self.card_type != CardType.INVALID
         except AssertionError:
             print("invalid card: " + self.card_details_str())
             return False

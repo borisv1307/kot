@@ -1,6 +1,6 @@
 import pytest
 
-import backend.src.game.constants as constants
+import backend.test.game.cards_test.test_constants as constants
 from backend.src.game.cards.deck import Deck
 
 
