@@ -1,4 +1,10 @@
+dist: trusty
 language: python
+addons:
+  sonarcloud:
+    organization: "borisv13-github" # the key of the org you chose at step #3
+    token:
+      secure: $SONAR_TOKEN # encrypted value of your token
 python:
   - "3.6"
 
@@ -6,15 +12,11 @@ install:
   - pip install -r requirements.txt
 script:
   - pytest
+  - sonar-scanner
 services:
   - sqlite
   - sonar-scanner
 env:
   - DJANGO=2.2.6
-addons:
-  sonarcloud:
-    organization: "borisv13-github" # the key of the org you chose at step #3
-    token:
-      secure: $SONAR_TOKEN # encrypted value of your token
 
-dist: trusty
+
