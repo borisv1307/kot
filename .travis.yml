@@ -1,0 +1,15 @@
+language: python
+branches:
+  only:
+    - master
+python: 
+    - "3.6"
+
+install:
+    - pip install -r requirements.txt
+script:
+    - pytest
+services:
+  - sqlite  
+env:
+  - DJANGO=2.2.6
