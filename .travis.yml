@@ -1,12 +1,12 @@
 language: python
-python: 
-    - "3.6"
+python:
+  - "3.6"
 
 install:
-    - pip install ".[test]" .
+  - pip install -r requirements.txt
 script:
-    - pytest
+  - pytest
 services:
-  - sqlite  
+  - sqlite
 env:
   - DJANGO=2.2.6
