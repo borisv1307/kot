@@ -72,3 +72,5 @@ def test_player_can_lose_victory_points(player):
 def test_player_can_not_have_less_than_zero_victory_points(player):
     player.change_victory_points(-1)
     assert player.victory_points == 0
+
+    
