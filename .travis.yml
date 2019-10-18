@@ -18,5 +18,7 @@ services:
   - sonar-scanner
 env:
   - DJANGO=2.2.6
+after_success:
+  - coveralls
 
 
