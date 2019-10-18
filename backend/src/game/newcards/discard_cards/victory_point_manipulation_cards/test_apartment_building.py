@@ -17,4 +17,4 @@ def test_apartment_building_has_effect():
 
 
 def test_apartment_building_has_no_footnote():
-    assert False
+    assert not ApartmentBuilding().footnote
