@@ -5,7 +5,7 @@ from typing import List
 from backend.src.game.cards.card import Card
 from backend.src.game.constants import CARDS_DIRECTORY
 
-json_file_path = os.path.join(CARDS_DIRECTORY, 'cards\\kot_cards.json')
+json_file_path = os.path.join(CARDS_DIRECTORY, 'cards/kot_cards.json')
 
 with open(json_file_path, "r") as json_file:
 
