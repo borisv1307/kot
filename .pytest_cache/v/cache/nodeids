@@ -1,6 +1,6 @@
 [
-  "backend/test_pytest.py::test_increment",
-  "backend/test_pytest.py::test_decrement",
+
+  "backend/test/game/test_dice.py::test_roll",
   "backend/test/game/test_player.py::test_player_default_health",
   "backend/test/game/test_player.py::test_player_default_location",
   "backend/test/game/test_player.py::test_player_can_move_to_tokyo",

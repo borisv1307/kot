@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify 404 default error page NoFoundPage should render correctly 1`] = `
+<Status
+  code={404}
+>
+  <div
+    className="NotFoundPage"
+  >
+    <h1>
+      Oops!
+    </h1>
+    <div>
+      Looks like you're lost...
+    </div>
+    <div
+      className="action"
+    >
+      <a
+        className="btn btn-primary"
+        href="/"
+      >
+        Guide me to the right path!
+      </a>
+    </div>
+  </div>
+</Status>
+`;
