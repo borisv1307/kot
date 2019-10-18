@@ -1,5 +1,4 @@
 [
-
   "backend/test/game/test_dice.py::test_roll",
   "backend/test/game/test_player.py::test_player_default_health",
   "backend/test/game/test_player.py::test_player_default_location",
