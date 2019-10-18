@@ -15,8 +15,6 @@ def deck_handler():
 
 
 def test_deck_handler_init(deck_handler):
-    print(len(deck_handler.store))
-    print(len(deck_handler.draw_pile))
     assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
     assert len(deck_handler.draw_pile) == test_constants.JSON_CARD_COUNT - constants.CARD_STORE_SIZE_LIMITER
 
