@@ -1,5 +1,4 @@
 [
-
   "backend/test/game/dice_handler_test.py::test_start_turn",
   "backend/test/game/dice_handler_test.py::test_re_roll_one_die",
   "backend/test/game/dice_handler_test.py::test_re_roll_all_dice",
