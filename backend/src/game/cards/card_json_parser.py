@@ -27,4 +27,3 @@ def get_power_card_deck():
 
 
 __card_deck = __deck_json_parser(card_file)
-
