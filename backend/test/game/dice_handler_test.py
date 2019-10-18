@@ -16,15 +16,15 @@ def test_start_turn(dice_handler):
 
 def test_re_roll_one_die(dice_handler):
     dice_handler.start_turn()
-    start_values = dice_handler.dice_values.copy()
-    dice_handler.re_roll_dice(0)
-    all_elements_are_same = True
-    for i in range(0, len(dice_handler.dice_values)-1):
-        print("Start value {0}, end value {1}".format(start_values[i], dice_handler.dice_values[i]))
-        if not start_values[i] == dice_handler.dice_values[i]:
-            all_elements_are_same = False
+    start_value = dice_handler.dice_values[0]
+    roll_changed_value = False
+    # since technically possible re-roll returns same roll, run 10 times and quit on successful result
+    for _ in range(10):
+        dice_handler.re_roll_dice(0)
+        if not start_value == dice_handler.dice_values[0]:
+            roll_changed_value = True
             break
-    assert not all_elements_are_same
+    assert roll_changed_value
 
 
 def test_re_roll_all_dice(dice_handler):
@@ -33,7 +33,6 @@ def test_re_roll_all_dice(dice_handler):
     dice_handler.re_roll_dice([0, 1, 2, 3, 4, 5])
     all_elements_are_same = True
     for i in range(0, len(dice_handler.dice_values)-1):
-        print("Start value {0}, end value {1}".format(start_values[i], dice_handler.dice_values[i]))
         if not start_values[i] == dice_handler.dice_values[i]:
             all_elements_are_same = False
             break
@@ -52,12 +51,10 @@ def test_add_die(dice_handler):
     last_die_index = len(dice_handler.dice_values) - 1
     bonus_die_initial_val = dice_handler.dice_values[last_die_index]
     bonus_die_changed = False
-    for i in range(5):
+    # since technically possible re-roll returns same roll, run 10 times and quit on successful result
+    for i in range(10):
         dice_handler.re_roll_dice(last_die_index)
         if not dice_handler.dice_values[last_die_index] == bonus_die_initial_val:
             bonus_die_changed = True
             break
     assert bonus_die_changed
-
-
-
