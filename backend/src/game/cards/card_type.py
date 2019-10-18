@@ -2,6 +2,6 @@ from enum import Enum
 
 
 class CardType(Enum):
-    keep = 1
-    discard = 2
-    invalid = 99
+    KEEP = 1
+    DISCARD = 2
+    INVALID = 99
