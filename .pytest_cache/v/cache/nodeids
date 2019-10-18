@@ -16,5 +16,13 @@
   "backend/test/game/cards_test/card_parsing_test.py::test_deck_multiple_cards",
   "backend/test/game/cards_test/card_parsing_test.py::test_card_parse_train",
   "backend/test/game/cards_test/card_parsing_test.py::test_card_parse_camo",
-  "backend/test/game/cards_test/card_parsing_test.py::test_parse_bad_cards"
+  "backend/test/game/cards_test/card_parsing_test.py::test_parse_bad_cards",
+  "backend/test/game/cards_test/deck_handler_test.py::test_deck_handler_init",
+  "backend/test/game/cards_test/deck_handler_test.py::test_buy_single_card",
+  "backend/test/game/cards_test/deck_handler_test.py::test_discard_card",
+  "backend/test/game/cards_test/deck_handler_test.py::test_force_shuffle_discard_add_to_draw",
+  "backend/test/game/cards_test/deck_handler_test.py::test_auto_reshuffle",
+  "backend/test/game/cards_test/deck_handler_test.py::test_run_out_of_cards",
+  "backend/test/game/cards_test/deck_test.py::test_deck_init",
+  "backend/test/game/cards_test/deck_test.py::test_draw_card"
 ]
