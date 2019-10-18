@@ -33,4 +33,3 @@ class Card(object):
             print("invalid card: " + self.card_details_str())
             return False
         return True
-
