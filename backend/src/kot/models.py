@@ -69,7 +69,8 @@ class Play(models.Model):
     # should cascade be applied below.
     dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
     # should cascade be applied below.
-    card_name = models.CharField(max_length=30)
+    card_purchased = models.CharField(max_length=30)
+    card_used = models.CharField(max_length=30)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
     energy_cube = models.IntegerField()
