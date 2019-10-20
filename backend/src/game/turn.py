@@ -17,3 +17,10 @@ def resolve_victory_points_dice(dice_counter):
             if leftover_dice >= 0:
                 victory_points += (die.value + leftover_dice)
     return victory_points
+
+
+def resolve_energy_dice(dice_counter):
+    energy = 0
+    if DieValue.ENERGY in dice_counter:
+        energy = dice_counter[DieValue.ENERGY]
+    return energy
