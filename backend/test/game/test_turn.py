@@ -18,3 +18,7 @@ def test_resolve_victory_points_dice(dice_list):
 
 def test_resolve_energy_dice(dice_list):
     assert turn.resolve_energy_dice(dice_list) == 1
+
+
+def test_resolve_attack_dice(dice_list):
+    assert turn.resolve_attack_dice(dice_list) == 1

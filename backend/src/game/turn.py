@@ -24,3 +24,10 @@ def resolve_energy_dice(dice_counter):
     if DieValue.ENERGY in dice_counter:
         energy = dice_counter[DieValue.ENERGY]
     return energy
+
+
+def resolve_attack_dice(dice_counter):
+    attack = 0
+    if DieValue.ATTACK in dice_counter:
+        attack = dice_counter[DieValue.ATTACK]
+    return attack
