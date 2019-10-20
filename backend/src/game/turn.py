@@ -1,33 +1,41 @@
 import collections
 
 from backend.src.game import constants
-from backend.src.game.locations import Locations
 from backend.src.game.dice import DieValue
+from backend.src.game.locations import Locations
 
 
 def get_dice_count(dice):
-    return collections.counter(dice)
+    return collections.Counter(dice)
 
 
-def resolve_victory_points_dice(dice_counter):
+def calculate_victory_points_from_dice(dice_counter):
     victory_points = 0
-    for die, die_count in dice_counter.items():
-        if die in [DieValue.ONE, DieValue.TWO, DieValue.THREE]:
-            leftover_dice = die_count - 3
-            if leftover_dice >= 0:
-                victory_points += (die.value + leftover_dice)
+    victory_dice = [DieValue.ONE, DieValue.TWO, DieValue.THREE]
+    for victory_die in victory_dice:
+        die_count = dice_counter[victory_die]
+        leftover_dice = die_count - 3
+        if leftover_dice >= 0:
+            victory_points += (victory_die.value + leftover_dice)
     return victory_points
 
 
-def resolve_energy_dice(dice_counter):
-    energy = 0
-    if DieValue.ENERGY in dice_counter:
-        energy = dice_counter[DieValue.ENERGY]
-    return energy
+def calculate_energy_from_dice(dice_counter):
+    return dice_counter[DieValue.ENERGY]
 
 
-def resolve_attack_dice(dice_counter):
-    attack = 0
-    if DieValue.ATTACK in dice_counter:
-        attack = dice_counter[DieValue.ATTACK]
-    return attack
+def calculate_attack_from_dice(dice_counter):
+    return dice_counter[DieValue.ATTACK]
+
+
+def calculate_heal_from_dice(dice_counter):
+    return dice_counter[DieValue.HEAL]
+
+
+def dice_resolution(dice, player):
+    dice_counter = get_dice_count(dice)
+    victory_points = calculate_victory_points_from_dice(dice_counter)
+    health = calculate_heal_from_dice(dice_counter)
+    attack = calculate_attack_from_dice(dice_counter)
+    energy = calculate_energy_from_dice(dice_counter)
+    # TODO: Action on values
