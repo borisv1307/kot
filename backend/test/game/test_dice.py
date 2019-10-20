@@ -1,6 +1,4 @@
-import pytest
-
-import backend.src.game.dice as dice
+import backend.src.game.dice.dice as dice
 
 
 def test_roll():

@@ -1,4 +1,12 @@
 [
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_apartment_building.py::test_apartment_building_adds_3_victory_points",
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_apartment_building.py::test_apartment_building_costs_5_energy",
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_apartment_building.py::test_apartment_building_has_effect",
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_apartment_building.py::test_apartment_building_has_no_footnote",
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_commuter_train.py::test_commuter_train_adds_2_victory_points",
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_commuter_train.py::test_commuter_train_costs_4_energy",
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_commuter_train.py::test_commuter_train_has_effect",
+  "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_commuter_train.py::test_commuter_train_has_no_footnote",
   "backend/test/game/test_dice.py::test_roll",
   "backend/test/game/test_player.py::test_player_default_health",
   "backend/test/game/test_player.py::test_player_default_location",
