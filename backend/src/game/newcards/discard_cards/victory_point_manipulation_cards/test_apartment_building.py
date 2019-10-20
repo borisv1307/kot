@@ -9,12 +9,3 @@ def test_apartment_building_adds_3_victory_points(player):
 
 def test_apartment_building_costs_5_energy():
     assert ApartmentBuilding().cost == 5
-
-
-def test_apartment_building_has_effect():
-    effect = ApartmentBuilding().effect
-    assert effect and not effect.isspace()
-
-
-def test_apartment_building_has_no_footnote():
-    assert not ApartmentBuilding().footnote

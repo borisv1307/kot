@@ -8,12 +8,3 @@ def test_commuter_train_adds_2_victory_points(player):
 
 def test_commuter_train_costs_4_energy():
     assert CommuterTrain().cost == 4
-
-
-def test_commuter_train_has_effect():
-    effect = CommuterTrain().effect
-    assert effect and not effect.isspace()
-
-
-def test_commuter_train_has_no_footnote():
-    assert not CommuterTrain().footnote
