@@ -1,7 +1,7 @@
 import collections
 
 from backend.src.game import constants
-from backend.src.game.dice import DieValue
+from backend.src.game.dice.dice import DieValue
 from backend.src.game.locations import Locations
 
 
