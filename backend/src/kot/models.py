@@ -49,12 +49,11 @@ class Game(models.Model):
     # game_id = models.IntegerField(primary_key=True)
     # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_created = models.DateTimeField()
-    date_modified = models.DateTimeField()
     is_winner = models.CharField(max_length=1, choices=GAME_RESULT)
     num_players = models.IntegerField()
     player_position = models.IntegerField()
     date_created = models.DateTimeField()
+    date_modified = models.DateTimeField()
 
 
 class Play(models.Model):
@@ -62,17 +61,13 @@ class Play(models.Model):
         ('T', 'In-Tokyo'),
         ('O', 'Outside-Tokyo'),
     )
-    # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # should cascade be applied below.
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    # should cascade be applied below.
     dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
-    # should cascade be applied below.
     card_purchased = models.CharField(max_length=30)
     card_used = models.CharField(max_length=30)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
-    energy_cube = models.IntegerField()
+    energy_cubes = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
