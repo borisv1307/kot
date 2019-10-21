@@ -3,12 +3,12 @@ from enum import Enum
 
 
 class DieValue(Enum):
-    ONE = 0
-    TWO = 1
-    THREE = 2
-    ATTACK = 3
-    HEAL = 4
-    ENERGY = 5
+    ONE = 1
+    TWO = 2
+    THREE = 3
+    ATTACK = 4
+    HEAL = 5
+    ENERGY = 6
 
 
 def roll() -> str:
