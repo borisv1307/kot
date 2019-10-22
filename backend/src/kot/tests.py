@@ -1,18 +1,23 @@
-import datetime
-
+# import pytest
 from django.test import TestCase
 
-from .models import Monster
+from .models import User
 
 
-class MonsterModelTest(TestCase):
+class UserModelTest(TestCase):
 
+    # @pytest.fixture()
+    # @pytest.mark.django_db
     @classmethod
-    def set_up_monster_test_data(cls):
-        Monster.objects.create(monster_name="Godzilla")
-        Monster.objects.create(date_created=datetime.datetime.now())
+    def setUpUser(cls):
+        # super(UserModelTest, cls).setUpClass()
+        User.objects.create(monster_name='Godzilla')
+        User.objects.create(username='User1')
+        User.objects.create(password='Password1')
+        # User.objects.create(date_created=datetime.datetime.now())
+        # User.save()
 
-    def test_monster_content(self):
-        monster = Monster.objects.get(id=1)
-        expected_object_name = f'{monster.monster_name}'
+    def test_user_content(self):
+        user = User.objects.filter(monster_name='Godzilla')
+        expected_object_name = f'{user.monster_name}'
         self.assertEquals(expected_object_name, "Godzilla")

@@ -4,7 +4,6 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     monster_name = models.CharField(max_length=30)
-    # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
     date_created = models.DateTimeField()
@@ -27,15 +26,15 @@ class Dice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dice1 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice1_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice2 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice2 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice2_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice3 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice3 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice3_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice4 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice4 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice4_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice5 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice5 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice5_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice6 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice6 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice6_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     date_created = models.DateTimeField()
 
