@@ -3,10 +3,10 @@ from rest_framework import serializers
 from .models import Dice
 from .models import Game
 from .models import Play
-from .models import User
+from .models import Player
 
 
-class UserSerializer(serializers.ModelSerializer):
+class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
@@ -15,14 +15,14 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'date_created'
         )
-        model = User
+        model = Player
 
 
 class DiceSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
-            'user',
+            'player',
             'dice1',
             'dice1_selected',
             'dice2',
@@ -44,7 +44,7 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
-            'user',
+            'player',
             'is_winner',
             'num_players',
             'player_position',
@@ -58,7 +58,7 @@ class PlaySerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
-            'user',
+            'player',
             'game',
             'dice',
             'card_purchased',

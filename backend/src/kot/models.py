@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-class User(models.Model):
+class Player(models.Model):
     monster_name = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
@@ -23,7 +23,7 @@ class Dice(models.Model):
         ('N', 'Not-Selected'),
     )
     # should cascade be applied below.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
     dice1 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice1_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     dice2 = models.CharField(max_length=1, choices=DICE_VALUE)
@@ -47,7 +47,7 @@ class Game(models.Model):
     )
     # game_id = models.IntegerField(primary_key=True)
     # should cascade be applied below.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
     is_winner = models.CharField(max_length=1, choices=GAME_RESULT)
     num_players = models.IntegerField()
     player_position = models.IntegerField()
@@ -60,7 +60,7 @@ class Play(models.Model):
         ('T', 'In-Tokyo'),
         ('O', 'Outside-Tokyo'),
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
     card_purchased = models.CharField(max_length=30)

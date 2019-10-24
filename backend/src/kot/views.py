@@ -3,21 +3,21 @@ from rest_framework import generics
 from .models import Dice
 from .models import Game
 from .models import Play
-from .models import User
+from .models import Player
 from .serializers import DiceSerializer
 from .serializers import GameSerializer
 from .serializers import PlaySerializer
-from .serializers import UserSerializer
+from .serializers import PlayerSerializer
 
 
-class ListUser(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class ListPlayer(generics.ListCreateAPIView):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
 
 
-class DetailUser(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class DetailPlayer(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
 
 
 class ListDice(generics.ListCreateAPIView):
