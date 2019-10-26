@@ -1,0 +1,77 @@
+Below are the URLs at which the apis can be referenced and some api details (This will be updated with markup shortly)
+
+Player
+	http://127.0.0.1:7000/api/player
+	
+	to get player with id 1 		http://127.0.0.1:7000/api/player/1
+
+Sample Payload to add (id is auto created and incremented for Player)	
+{
+    "monster_name": "",
+    "username": "",
+    "password": "",
+    "date_created": null
+}
+
+
+Game
+	http://127.0.0.1:7000/api/game
+	
+	to get game with id 1	 		http://127.0.0.1:7000/api/game/1
+
+Sample Payload to add (id is auto created and incremented for Game)
+{
+    "player": null,
+    "is_winner": null,
+    "num_players": null,
+    "player_position": null,
+    "date_created": null,
+    "date_modified": null
+}
+
+
+Dice
+	http://127.0.0.1:7000/api/dice
+	
+	To get Dice roll with id 1		http://127.0.0.1:7000/api/dice/1 
+
+Sample Payload to add (id is auto created and incremented for Dice)	
+
+Sample Payload to add	
+{
+    "player": null,
+    "dice1": null,
+    "dice1_selected": null,
+    "dice2": null,
+    "dice2_selected": null,
+    "dice3": null,
+    "dice3_selected": null,
+    "dice4": null,
+    "dice4_selected": null,
+    "dice5": null,
+    "dice5_selected": null,
+    "dice6": null,
+    "dice6_selected": null,
+    "date_created": null
+}
+
+
+Play
+	http://127.0.0.1:7000/api/play
+	
+	To get Play with id 1			http://127.0.0.1:7000/api/play/1
+	
+Sample Payload to add (id is auto created and incremented for Play)
+
+{
+    "player": null,
+    "game": null,
+    "dice": null,
+    "card_purchased": "",
+    "card_used": "",
+    "location": null,
+    "victory_points": null,
+    "energy_cubes": null,
+    "life_points": null,
+    "date_created": null
+}	
