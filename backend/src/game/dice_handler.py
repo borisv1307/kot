@@ -2,7 +2,7 @@ import backend.src.game.dice as dice
 import backend.src.game.constants as constants
 
 
-class DiceHandler(object):
+class DiceHandler:
     dice_values = list()
     __re_rolls_left = constants.DEFAULT_RE_ROLL_COUNT
 

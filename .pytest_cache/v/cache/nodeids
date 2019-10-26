@@ -3,6 +3,7 @@
   "backend/test/game/dice_handler_test.py::test_re_roll_one_die",
   "backend/test/game/dice_handler_test.py::test_re_roll_all_dice",
   "backend/test/game/dice_handler_test.py::test_add_die",
+  "backend/test/game/dice_handler_test.py::test_roll_bonus_die",
   "backend/test/game/test_dice.py::test_roll",
   "backend/test/game/test_player.py::test_player_default_health",
   "backend/test/game/test_player.py::test_player_default_location",
