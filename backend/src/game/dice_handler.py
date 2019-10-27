@@ -1,5 +1,4 @@
-import backend.src.game.dice as dice
-import backend.src.game.constants as constants
+import backend.src.game.dice.dice as dice
 
 
 class DiceHandler:

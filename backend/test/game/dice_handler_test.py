@@ -1,6 +1,6 @@
 import pytest
 from backend.src.game.dice_handler import DiceHandler
-import backend.src.game.dice as dice
+import backend.src.game.dice.dice as dice
 from mock import Mock
 
 six_mock_dice_values_a = [dice.DieValue.ONE, dice.DieValue.TWO, dice.DieValue.THREE,
