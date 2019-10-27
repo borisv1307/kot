@@ -14,13 +14,16 @@ class DiceHandler:
         if self.re_rolls_left <= 0:
             return
 
-        if type(indexes_of_dice_to_re_roll) == int:
-            self.dice_values[indexes_of_dice_to_re_roll] = dice.roll()
-
-        elif type(indexes_of_dice_to_re_roll) == list:
+        try:
             for val in indexes_of_dice_to_re_roll:
                 self.dice_values[val] = dice.roll()
             self.re_rolls_left -= 1
+
+        except IndexError:
+            raise IndexError("Re-roll index outside of dice_values range")
+
+        except TypeError:
+            raise TypeError("Re-roll index must be passed as list of ints")
 
     def add_bonus_die(self):
         self.dice_values.append(dice.roll())

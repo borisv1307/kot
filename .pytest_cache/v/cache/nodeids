@@ -2,6 +2,8 @@
   "backend/test/game/dice_handler_test.py::test_start_turn",
   "backend/test/game/dice_handler_test.py::test_re_roll_one_die",
   "backend/test/game/dice_handler_test.py::test_re_roll_all_dice",
+  "backend/test/game/dice_handler_test.py::test_re_roll_out_of_bounds_throws_exception",
+  "backend/test/game/dice_handler_test.py::test_incorrect_type_passed_re_roll_throws_exception",
   "backend/test/game/dice_handler_test.py::test_add_die",
   "backend/test/game/dice_handler_test.py::test_roll_bonus_die",
   "backend/test/game/test_dice.py::test_roll",
