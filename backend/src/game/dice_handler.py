@@ -4,11 +4,11 @@ import backend.src.game.constants as constants
 
 class DiceHandler:
     dice_values = []
-    re_rolls_left = constants.DEFAULT_RE_ROLL_COUNT
+    re_rolls_left = 0
 
-    def start_turn(self):
-        self.dice_values = dice.roll_many(constants.DEFAULT_DICE_COUNT)
-        self.re_rolls_left = constants.DEFAULT_RE_ROLL_COUNT
+    def start_turn(self, starting_dice_count, re_roll_count):
+        self.dice_values = dice.roll_many(starting_dice_count)
+        self.re_rolls_left = re_roll_count
 
     def re_roll_dice(self, indexes_of_dice_to_re_roll):
         if self.re_rolls_left <= 0:
