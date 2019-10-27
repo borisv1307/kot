@@ -1,0 +1,56 @@
+Below is the output of the database model migration
+
+Microsoft Windows [Version 10.0.17763.740]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\taiwo.oyesanmi>cd C:\Class\kot\backend\src
+
+C:\Class\kot\backend\src>python manage.py startapp kot
+
+C:\Class\kot\backend\src>python manage.py makemigrations kot
+Migrations for 'kot':
+  kot\migrations\0001_initial.py
+    - Create model User
+    - Create model Game
+
+C:\Class\kot\backend\src>python manage.py sqlmigrate kot 0001
+BEGIN;
+--
+-- Create model User
+--
+CREATE TABLE "kot_user" ("user_id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "username" varchar(30) NOT NULL, "password" varchar(30) NOT NULL, "date_created" datetime NOT NULL, "date_modified" datetime NOT NULL);
+--
+-- Create model Game
+--
+CREATE TABLE "kot_game" ("game_id" integer NOT NULL PRIMARY KEY, "date_created" datetime NOT NULL, "date_modified" datetime NOT NULL, "is_winner" varchar(1) NOT NULL, "user_id" integer NOT NULL REFERENCES "kot_user" ("user_id") DEFERRABLE INITIALLY DEFERRED);
+CREATE UNIQUE INDEX "kot_game_game_id_user_id_283b393b_uniq" ON "kot_game" ("game_id", "user_id");
+CREATE INDEX "kot_game_user_id_78eb69b9" ON "kot_game" ("user_id");
+COMMIT;
+
+C:\Class\kot\backend\src>python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, kot, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying kot.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+
+
+
+

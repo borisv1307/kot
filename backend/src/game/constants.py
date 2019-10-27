@@ -5,7 +5,7 @@ CARDS_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
 # ints
 DEFAULT_HEALTH = 10
-ZERO = 0
+DEATH_HIT_POINT = 0
 CARD_STORE_SIZE_LIMITER = 3
 
 # strings

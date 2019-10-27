@@ -12,6 +12,7 @@ install:
   - pip install -r requirements.txt
 script:
   - py.test  --cov-report term --cov=.
+  - coverage xml
   - sonar-scanner
 services:
   - sqlite
