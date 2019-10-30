@@ -27,15 +27,15 @@ class Dice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dice1 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice1_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice2 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice2 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice2_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice3 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice3 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice3_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice4 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice4 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice4_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice5 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice5 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice5_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    Dice6 = models.CharField(max_length=1, choices=DICE_VALUE)
+    dice6 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice6_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     date_created = models.DateTimeField()
 
@@ -76,3 +76,18 @@ class Play(models.Model):
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
+
+
+class ToDo(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+
+    def __str__(self):
+        """A string representation of the model."""
+        return self.title
+
+    def create(self, validated_data):
+        """
+        Create and return a new `Snippet` instance, given the validated data.
+        """
+        return Todo.objects.create(**validated_data)

@@ -14,6 +14,7 @@ Project includes linting (pylint), code styling (pep8) and testing (pytest) setu
 
  `cd .\kot\backend\`
 
+python -m venv env
  `pip install -r requirements.txt`
 
 This will generate `kot\backend\env` containing the projects required python packages.
@@ -35,6 +36,10 @@ This will generate `kot\backend\env` containing the projects required python pac
  `pip freeze > requirements.txt`
 
 ## To Restore Virtual Env using requirements.txt
+
+ `cd .\kot\backend\`
+
+`py -m venv env`
 
 `pip install -r requirements.txt`
 
@@ -67,3 +72,56 @@ Launches the test runner running all pythong tests.
  `python manage.py makemigrations`
  
  `python manage.py migrate`
+
+
+
+127.0.0.1:8000/admin
+
+
+
+
+Clone kot
+
+`cd .\kot\backend\`
+
+`py -m venv env`
+
+`pip install -r requirements.txt`
+
+`.\env\Scripts\activate`
+
+`cd \backend\src`
+
+`./manage.py migrate`
+
+`./manage.py runserver`
+
+`pytest`
+
+
+`cd .\kot\frontend\`
+
+`npm install`
+`npm start`
+
+new shell 
+`npm test`
+
+
+
+
+Deployment
+
+'npm build' flow onscreen directions to deploy production build
+
+py -m venv env
+call env/scripts/activate
+
+
+create kot folder
+
+cd ./kot
+
+
+
+jango-admin startproject frontend
