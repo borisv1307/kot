@@ -38,6 +38,7 @@ class Dice(models.Model):
     dice6 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice6_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     date_created = models.DateTimeField()
+    allowReroll = models.BooleanField(default=True)
 
 
 class Game(models.Model):
@@ -78,16 +79,13 @@ class Play(models.Model):
     date_created = models.DateTimeField()
 
 
-class ToDo(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-
-    def __str__(self):
-        """A string representation of the model."""
-        return self.title
-
-    def create(self, validated_data):
-        """
-        Create and return a new `Snippet` instance, given the validated data.
-        """
-        return Todo.objects.create(**validated_data)
+class Message(models.Model):
+    MSG_TYPES = (
+        ('error', '1'),
+        ('command', '1'),
+        ('game', '1'),
+    )
+    # should cascade be applied below.
+    message_type = models.CharField(max_length=1, choices=MSG_TYPES)
+    message_string = models.CharField(max_length=30)
+    date_created = models.DateTimeField()

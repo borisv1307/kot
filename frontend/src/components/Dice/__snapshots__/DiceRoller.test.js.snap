@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`] = `
+<div
+  className="DiceRoller"
+>
+  <DiceBoard
+    callbackFromParent={[Function]}
+    data={Array []}
+  />
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Roll
+  </button>
+</div>
+`;

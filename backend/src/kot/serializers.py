@@ -12,26 +12,16 @@ class DiceSerializer(serializers.ModelSerializer):
         model = models.Dice
 
 
-# class TodoSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         fields = (
-#             'id',
-#             'title',
-#             'description',
-#         )
-#         model = models.Todo
-
-
 class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = (
             # 'id',
-            'title',
-            'description',
+            'message_type',
+            'message_string',
+            'date_created',
         )
-        model = models.ToDo
+        model = models.Message
 
 
 class RollSerializer(serializers.ModelSerializer):
@@ -52,5 +42,6 @@ class RollSerializer(serializers.ModelSerializer):
             'dice6',
             'dice6_selected',
             'date_created',
+            'allowReroll',
         )
         model = models.Dice
