@@ -1,5 +1,4 @@
-
-Python backend using Django.
+# Python backend using Django
 
 This directory contains the Django backend.
 
@@ -7,7 +6,7 @@ For primer on Python and Django using VS Code: https://code.visualstudio.com/doc
 
 Django Documentation: https://docs.djangoproject.com/en/2.2/intro/tutorial01/
 
-# Python Environment
+## Python Environment
 
 Project includes linting (pylint), code styling (pep8) and testing (pytest) setup via VS Code Settings. Python dependencies are setup within a virtual environment.
 
@@ -35,7 +34,11 @@ This will generate `kot\backend\env` containing the projects required python pac
 
  `pip freeze > requirements.txt`
 
-# Run Python Development Server
+## To Restore Virtual Env using requirements.txt
+
+`pip install -r requirements.txt`
+
+## Run Python Development Server
 
 First enable the python envionrment (if not started alrady). See "Python Envionrment" section above.
 
@@ -51,13 +54,13 @@ Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-# Testing Python
+## Testing Python
 
 `pytest`
 
 Launches the test runner running all pythong tests.
 
-# Apply DB Migrations
+## Apply DB Migrations
 
  `cd .\kot\backend\src\`
 

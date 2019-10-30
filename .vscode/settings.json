@@ -2,7 +2,7 @@
     "python.pythonPath": "${workspaceFolder}/backend/env/Scripts/python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
-    "python.linting.pep8Enabled": true,
+    "python.linting.pycodestyleEnabled": true,
     "python.linting.pylintPath": "${workspaceFolder}/backend/env/Scripts/pylint.exe",
     "python.linting.pylintArgs": [
         "--load-plugins",
@@ -22,7 +22,7 @@
         },
         "**/__pycache__": true
     },
-    "python.linting.pep8Args": [
+    "python.linting.pycodestyleArgs": [
         "--ignore=E501",
         "--ignore=E303"
     ],
