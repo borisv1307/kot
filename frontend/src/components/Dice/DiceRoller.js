@@ -37,8 +37,8 @@ class DiceRoller extends React.Component {
       if (result) {
         this.setState({ rolledDice: result });
       }
-    } catch (e) {
-      console.log(e);
+    } catch (exception) {
+      console.log(exception);
     }
   }
 

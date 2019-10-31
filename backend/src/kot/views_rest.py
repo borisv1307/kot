@@ -6,13 +6,10 @@ from . import serializers
 
 import random
 
-# from ..kot import roll
-
-# from backend.src.kot.game.dice.dice import roll
-
 # No UI views, see frontend for React UI.
 
 # REST Endpoint Views...
+
 
 @api_view(['GET'])
 def roll_dice(request):
