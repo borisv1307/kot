@@ -41,22 +41,22 @@ class AppLayout extends Component {
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
                             <li className="nav-item active">
+                                <a className="nav-link" href="/login">Login</a>
+                            </li>
+                            <li className="nav-item">
                                 <a className="nav-link" href="/lobby">Lobby <span className="sr-only">(current)</span></a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/game">Play ToK</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/login">Login</a>
                             </li>
                         </ul>
                     </div>
                 </nav>
                 <Switch>
                     <Route exact path="/" component={LobbyLayout} />
+                    <Route path="/login" component={LoginLayout} />
                     <Route path="/game" component={GameboardLayout} />
                     <Route path="/lobby" component={LobbyLayout} />
-                    <Route path="/login" component={LoginLayout} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </Router>
