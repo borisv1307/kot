@@ -1,22 +1,25 @@
 import React from 'react';
 import "./DiceRoller.css";
 
+import * as Constants from '../../constants'
+
 import DiceBoard from './DiceBoard'
 
 class DiceRoller extends React.Component {
 
   state = {
-    rolledDice: [], // this holds the name of each list
-    selectedDice: [], // this holds the name of each list
+    rolledDice: [],
+    selectedDice: [],
     allowReroll: true
   };
 
   constructor(props) {
     super(props);
-
-    // this.textInput = React.createRef();
-
     this.AttemptReroll = this.AttemptReroll.bind(this);
+  }
+
+  componentDidMount() {
+    // ... do something with fetchedData e.g. set the data
   }
 
   selectedDiceCallback = (selectedDice) => {
@@ -25,12 +28,12 @@ class DiceRoller extends React.Component {
     // console.log('total :', this.state.rolledDice.length);
   }
 
-  async AttemptReroll(e) {
+  async AttemptReroll(/*e*/) {
 
     try {
       // this.textInput.clearSelected();
 
-      let rerollThisMany = this.CalculateRerollCount(this.state);
+      let rerollThisMany = this.CalculateRerollCount();
 
       let result = await this.RequestDiceRoll(rerollThisMany);
 
@@ -42,14 +45,13 @@ class DiceRoller extends React.Component {
     }
   }
 
-  async CalculateRerollCount(selectedDice, rolledDice) {
-    if (selectedDice && rolledDice) {
-      let keptDice = selectedDice.length;
-      let totalDice = rolledDice.length;
+  CalculateRerollCount() {
+    if (this.state && this.state.selectedDice && this.state.rolledDice) {
+      let keptDice = this.state.selectedDice.length;
+      let totalDice = this.state.rolledDice.length;
       let reroll = totalDice - keptDice;
-      if (reroll > 0) {
+      if (reroll)
         return reroll;
-      }
     }
 
     return 0;
@@ -60,9 +62,9 @@ class DiceRoller extends React.Component {
 
       // TO DO: Provide rerollThisMany to server request
 
-      const res = await fetch('http://127.0.0.1:8000/api/dice/');
-
+      const res = await fetch(Constants.REST_ENDPOINT_DICE);
       const json_data = await res.json();
+
       var result = [];
 
       result.push([json_data.dice1, json_data.dice1_selected]);
@@ -83,7 +85,7 @@ class DiceRoller extends React.Component {
   render() {
     return (
       <div className="DiceRoller">
-        <DiceBoard ref={this.textInput} callbackFromParent={this.selectedDiceCallback} data={this.state.rolledDice} />
+        <DiceBoard ref={this.textInput} callbackSendDiceSelectionOut={this.selectedDiceCallback} data={this.state.rolledDice} />
         <button disabled={!this.state.allowReroll} onClick={this.AttemptReroll}>Roll</button>
       </div>
     )

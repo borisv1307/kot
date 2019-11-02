@@ -9,51 +9,39 @@ exports[`Verify DiceBoard layout template Verify parameter provided dice are ren
 >
   <ForwardRef
     key="0"
-    onChange={[Function]}
     value={1}
   >
     1
-    }
   </ForwardRef>
   <ForwardRef
     key="1"
-    onChange={[Function]}
     value={2}
   >
     2
-    }
   </ForwardRef>
   <ForwardRef
     key="2"
-    onChange={[Function]}
     value={3}
   >
     3
-    }
   </ForwardRef>
   <ForwardRef
     key="3"
-    onChange={[Function]}
     value={4}
   >
     a
-    }
   </ForwardRef>
   <ForwardRef
     key="4"
-    onChange={[Function]}
     value={5}
   >
     h
-    }
   </ForwardRef>
   <ForwardRef
     key="5"
-    onChange={[Function]}
     value={6}
   >
     e
-    }
   </ForwardRef>
 </ForwardRef>
 `;

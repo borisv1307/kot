@@ -5,7 +5,7 @@ exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`
   className="DiceRoller"
 >
   <DiceBoard
-    callbackFromParent={[Function]}
+    callbackSendDiceSelectionOut={[Function]}
     data={Array []}
   />
   <button
