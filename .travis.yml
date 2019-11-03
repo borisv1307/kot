@@ -23,7 +23,7 @@ jobs:
       env:
         - DJANGO=2.2.6
       after_success:
-        - codecov    
+        - codecov
 
     - stage: frontend_react
       language: node_js
@@ -36,10 +36,12 @@ jobs:
       install:
         - npm install
         - npm run build
-    #  script: 
-    #    - npm run test
+      #  script:
+      #    - npm run test
       after_success:
         - npm run coverage
+        - sonar-scanner
+        - codecov
     #  deploy:
     #    provider: surge
     #    skip_cleanup: true
@@ -47,4 +49,3 @@ jobs:
     #    project: ./build/
     # on:
     #    branch: master
-
