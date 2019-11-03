@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 
 import * as Constants from '../../constants'
 
+import fetch from 'isomorphic-fetch'
+
 import DiceRoller from './DiceRoller';
 
 describe('Verify DiceRoller layout template', () => {
@@ -22,7 +24,7 @@ test('default state expected to be..', (done) => {
             allowReroll: true
         }
     ); // passed
-    
+
     done();
 });
 

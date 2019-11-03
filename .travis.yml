@@ -38,8 +38,8 @@ jobs:
         - npm run build
     #  script: 
     #    - npm run test
-    #  after_success:
-    #    - npm run coverage
+      after_success:
+        - npm run coverage
     #  deploy:
     #    provider: surge
     #    skip_cleanup: true
