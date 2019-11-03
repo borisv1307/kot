@@ -5,6 +5,6 @@ def test_roll():
     assert dice.roll() in dice.DieValue
 
 
-def test_roll():
+def test_rolls():
     roll = dice.roll_many(2)
     assert roll.count == 2

@@ -4,6 +4,7 @@
   "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_commuter_train.py::test_commuter_train_adds_2_victory_points",
   "backend/src/game/newcards/discard_cards/victory_point_manipulation_cards/test_commuter_train.py::test_commuter_train_costs_4_energy",
   "backend/test/game/test_dice.py::test_roll",
+  "backend/test/game/test_dice.py::test_rolls",
   "backend/test/game/test_player.py::test_player_default_health",
   "backend/test/game/test_player.py::test_player_default_location",
   "backend/test/game/test_player.py::test_player_can_move_to_tokyo",
