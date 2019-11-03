@@ -1,7 +1,7 @@
 dist: trusty
 sudo: required
-jobs:
-include:  
+matrix:
+  include:
 - stage: backend_python
   language: python
   addons:
@@ -11,7 +11,7 @@ include:
         secure: $SONAR_TOKEN # encrypted value of your token
   python:
     - "3.6"
-
+    
   before_install:
     - cd backend
   install:
@@ -34,7 +34,7 @@ include:
   node_js: node
   before_script:
     - cd frontend
-  cache: npm
+  cache:
   directories:
     - "node_modules"
   install:
