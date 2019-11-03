@@ -1,3 +1,4 @@
+dist: trusty
 jobs:
   include:
     - stage: backend_python
@@ -27,7 +28,7 @@ jobs:
     - stage: frontend_react
       language: node_js
       node_js: node
-      before_script:
+      before_install:
         - cd frontend
       cache:
       directories:
