@@ -7,7 +7,7 @@ exports[`Verify site layout template General layout should render correctly 1`] 
   >
     <a
       className="navbar-brand"
-      href="#"
+      href="/lobby"
     >
       Game Room
     </a>
