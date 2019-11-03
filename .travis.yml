@@ -1,8 +1,9 @@
 dist: trusty
 sudo: required
-matrix:
-  include:
-    - language: python
+jobs:
+  include:  
+    - stage: backend_python
+      language: python
       addons:
         sonarcloud:
           organization: "borisv13-github" # the key of the org you chose at step #3
@@ -25,19 +26,19 @@ matrix:
       env:
         - DJANGO=2.2.6
       after_success:
-        - codecov
-    - language: node_js
-      node_js:
-        - "stable"
+        - codecov    
+    - stage: frontend_react
+      language: node_js
+      node_js: node
       before_script:
-        - cd client
+        - cd frontend
         - npm install
       cache:
         directories:
           - "node_modules"
+      install:
+        - npm run build
       script:
         - npm test
-        - npm run build
-        - npm run coverage
       after_success:
-        bash <(curl -s https://codecov.io/bash) -cF client
+        - npm run coverage
