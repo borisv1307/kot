@@ -28,19 +28,3 @@ matrix:
     - DJANGO=2.2.6
   after_success:
     - codecov
-
-- stage: frontend_react
-  language: node_js
-  node_js: node
-  before_script:
-    - cd frontend
-  cache:
-  directories:
-    - "node_modules"
-  install:
-    - npm install
-  script:
-    - npm run build
-    - npm test
-  after_success:
-    - npm run coverage
