@@ -1,5 +1,3 @@
-dist: trusty
-sudo: required
 jobs:
   include:  
     - stage: backend_python
@@ -12,11 +10,12 @@ jobs:
       python:
         - "3.6"
 
+      before_install:
+        - cd backend
       install:
         - pip install -r requirements.txt
         - npm install
       script:
-        - npm run coverage 
         - py.test  --cov-report term --cov=.
         - coverage xml
         - sonar-scanner
@@ -26,19 +25,4 @@ jobs:
       env:
         - DJANGO=2.2.6
       after_success:
-        - codecov    
-    - stage: frontend_react
-      language: node_js
-      node_js: node
-      before_script:
-        - cd frontend
-        - npm install
-      cache:
-        directories:
-          - "node_modules"
-      install:
-        - npm run build
-      script:
-        - npm test
-      after_success:
-        - npm run coverage
+        - codecov
