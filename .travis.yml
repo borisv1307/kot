@@ -35,10 +35,10 @@ jobs:
         - "node_modules"
       install:
         - npm install
-      script:
         - npm run build
+      script:
         - npm run test
-      after_success:
-        - npm run coverage
+    #  after_success:
+    #    - npm run coverage
 
 
