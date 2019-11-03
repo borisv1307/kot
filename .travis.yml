@@ -36,9 +36,15 @@ jobs:
       install:
         - npm install
         - npm run build
-      script:
-        - npm run test
+    #  script:
+    #    - npm run test
     #  after_success:
     #    - npm run coverage
-
+    #  deploy:
+    #    provider: surge
+    #    skip_cleanup: true
+    #    domain: <my_name_here>.surge.sh
+    #    project: ./build/
+    # on:
+    #    branch: master
 
