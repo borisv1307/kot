@@ -11,12 +11,9 @@ jobs:
         secure: $SONAR_TOKEN # encrypted value of your token
   python:
     - "3.6"
-    
-  before_install:
-    - cd backend
+
   install:
     - pip install -r requirements.txt
-    - npm install
   script:
     - py.test  --cov-report term --cov=.
     - coverage xml
@@ -27,7 +24,7 @@ jobs:
   env:
     - DJANGO=2.2.6
   after_success:
-    - codecov
+    - codecov    
 
 - stage: frontend_react
   language: node_js
