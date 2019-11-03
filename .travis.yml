@@ -36,7 +36,7 @@ jobs:
       install:
         - npm install
         - npm run build
-    #  script:
+    #  script: 
     #    - npm run test
     #  after_success:
     #    - npm run coverage
