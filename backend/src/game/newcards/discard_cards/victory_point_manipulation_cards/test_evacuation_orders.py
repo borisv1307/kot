@@ -10,5 +10,5 @@ def test_evacuation_orders_subtracts_5_victory_points(five_players):
                5 for other_players in five_players)
 
 
-def test_apartment_building_costs_7_energy():
+def test_evacuation_orders_costs_7_energy():
     assert EvacuationOrders().cost == 7
