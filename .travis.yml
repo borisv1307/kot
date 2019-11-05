@@ -11,6 +11,8 @@ jobs:
       python:
         - "3.6"
 
+      before_install:
+        - cd backend
       install:
         - pip install -r requirements.txt
       script:
