@@ -2,5 +2,7 @@
 exclude_lines =
     pragma: no cover
     raise NotImplementedError
+[paths]
+source = backend
 [xml]
 output = coverage.xml
