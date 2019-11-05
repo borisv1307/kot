@@ -6,10 +6,13 @@ from mock import Mock
 six_mock_dice_values_a = [dice.DieValue.ONE, dice.DieValue.TWO, dice.DieValue.THREE,
                           dice.DieValue.ATTACK, dice.DieValue.ENERGY, dice.DieValue.HEAL]
 
-six_mock_dice_values_b = [dice.DieValue.ATTACK, dice.DieValue.ENERGY, dice.DieValue.HEAL,
-                          dice.DieValue.ONE, dice.DieValue.TWO, dice.DieValue.THREE]
+six_mock_dice_values_after_reroll_die_one = [dice.DieValue.ATTACK,  dice.DieValue.TWO, dice.DieValue.THREE,
+                                             dice.DieValue.ATTACK, dice.DieValue.ENERGY, dice.DieValue.HEAL]
 
-dice.roll = Mock(return_value=dice.DieValue.ATTACK)
+mock_die_roll_result = dice.DieValue.ATTACK
+mock_die_roll_result_b = dice.DieValue.ENERGY
+
+dice.roll = Mock(return_value=mock_die_roll_result)
 dice.roll_many = Mock(return_value=six_mock_dice_values_a)
 
 
@@ -28,14 +31,13 @@ def test_start_turn(dice_handler):
 
 def test_re_roll_one_die(dice_handler):
     dice_handler.re_roll_dice([0])
-    assert dice_handler.dice_values == [dice.DieValue.ATTACK, dice.DieValue.TWO, dice.DieValue.THREE,
-                                        dice.DieValue.ATTACK, dice.DieValue.ENERGY, dice.DieValue.HEAL]
+    assert dice_handler.dice_values == six_mock_dice_values_after_reroll_die_one
 
 
 def test_re_roll_all_dice(dice_handler):
     dice_handler.re_roll_dice([0, 1, 2, 3, 4, 5])
     for i in range(0, len(dice_handler.dice_values)-1):
-        assert dice_handler.dice_values[i] == dice.DieValue.ATTACK
+        assert dice_handler.dice_values[i] == mock_die_roll_result
 
 
 def test_re_roll_out_of_bounds_throws_exception(dice_handler):
@@ -53,15 +55,15 @@ def test_add_die(dice_handler):
     dice_handler.add_bonus_die()
     assert len(dice_handler.dice_values) == start_die_count + 1
     last_die_index = len(dice_handler.dice_values) - 1
-    assert dice_handler.dice_values[last_die_index] == dice.DieValue.ATTACK
+    assert dice_handler.dice_values[last_die_index] == mock_die_roll_result
 
 
 def test_roll_bonus_die(dice_handler):
     dice_handler.add_bonus_die()
     last_die_index = len(dice_handler.dice_values) - 1
     bonus_die_initial_val = dice_handler.dice_values[last_die_index]
-    assert bonus_die_initial_val == dice.DieValue.ATTACK
+    assert bonus_die_initial_val == mock_die_roll_result
 
-    dice.roll = Mock(return_value=dice.DieValue.ENERGY)
+    dice.roll = Mock(return_value=mock_die_roll_result_b)
     dice_handler.re_roll_dice([last_die_index])
-    assert dice_handler.dice_values[last_die_index] == dice.DieValue.ENERGY
+    assert dice_handler.dice_values[last_die_index] == mock_die_roll_result_b
