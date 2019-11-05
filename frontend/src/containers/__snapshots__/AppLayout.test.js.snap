@@ -7,7 +7,7 @@ exports[`Verify site layout template General layout should render correctly 1`] 
   >
     <a
       className="navbar-brand"
-      href="#"
+      href="/lobby"
     >
       Game Room
     </a>
@@ -36,6 +36,16 @@ exports[`Verify site layout template General layout should render correctly 1`] 
         >
           <a
             className="nav-link"
+            href="/login"
+          >
+            Login
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
             href="/lobby"
           >
             Lobby 
@@ -56,16 +66,6 @@ exports[`Verify site layout template General layout should render correctly 1`] 
             Play ToK
           </a>
         </li>
-        <li
-          className="nav-item"
-        >
-          <a
-            className="nav-link"
-            href="/login"
-          >
-            Login
-          </a>
-        </li>
       </ul>
     </div>
   </nav>
@@ -77,15 +77,15 @@ exports[`Verify site layout template General layout should render correctly 1`] 
     />
     <Route
       component={[Function]}
+      path="/login"
+    />
+    <Route
+      component={[Function]}
       path="/game"
     />
     <Route
       component={[Function]}
       path="/lobby"
-    />
-    <Route
-      component={[Function]}
-      path="/login"
     />
     <Route
       component={[Function]}

@@ -1,17 +1,45 @@
 import React from 'react';
+// import Select, { components } from 'react-select';
+import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
 import "./DiceBoard.css";
 
-const DiceBoard = (props) => {
-    return (
-        <div>
-            {
-                props.data.map(dice =>
-                    <li key={dice}>{dice}</li>
-                )
-            }
-        </div>
-    );
-};
+class DiceBoard extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+
+        this.handleChange = this.handleChange.bind(this);
+        this.clearSelected = this.clearSelected.bind(this);
+
+        this.state = {
+            value: []
+        };
+    }
+
+    handleChange(e) {
+        this.setState({ value: e });
+        this.props.callbackSendDiceSelectionOut(e);
+    }
+
+    clearSelected(e) {
+        this.setState({ value: [] });
+    }
+
+    render() {
+        return (
+            <ToggleButtonGroup
+                vertical
+                type="checkbox"
+                value={this.state.value}
+                onChange={this.handleChange}>
+                {
+                    this.props.data.map((entry, index) => (
+                        <ToggleButton key={index} value={index + 1}>{entry[0]}</ToggleButton>
+                    ))
+                }
+            </ToggleButtonGroup>
+        );
+    }
+}
 
 export default DiceBoard;

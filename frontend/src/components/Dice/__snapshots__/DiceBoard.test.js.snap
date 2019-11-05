@@ -1,36 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Verify DiceBoard layout template Verify parameter provided dice are rendered correctly 1`] = `
-<div>
-  <li
-    key="1"
+<ForwardRef
+  onChange={[Function]}
+  type="checkbox"
+  value={Array []}
+  vertical={true}
+>
+  <ForwardRef
+    key="0"
+    value={1}
   >
     1
-  </li>
-  <li
-    key="2"
+  </ForwardRef>
+  <ForwardRef
+    key="1"
+    value={2}
   >
     2
-  </li>
-  <li
-    key="3"
+  </ForwardRef>
+  <ForwardRef
+    key="2"
+    value={3}
   >
     3
-  </li>
-  <li
-    key="attack"
+  </ForwardRef>
+  <ForwardRef
+    key="3"
+    value={4}
   >
-    attack
-  </li>
-  <li
-    key="heal"
+    a
+  </ForwardRef>
+  <ForwardRef
+    key="4"
+    value={5}
   >
-    heal
-  </li>
-  <li
-    key="energy"
+    h
+  </ForwardRef>
+  <ForwardRef
+    key="5"
+    value={6}
   >
-    energy
-  </li>
-</div>
+    e
+  </ForwardRef>
+</ForwardRef>
 `;

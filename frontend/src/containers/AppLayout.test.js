@@ -20,23 +20,20 @@ describe('Verify site layout template', () => {
     it('renders lobby menu', () => {
         const wrapper = shallow(<AppLayout />);
 
-        const lobby_menu =
-            <li className="nav-item active">
-                <a className="nav-link" href="/lobby">Lobby <span className="sr-only">(current)</span></a>
-            </li>;
+        const login_menu = <li className="nav-item active">
+            <a className="nav-link" href="/login">Login</a>
+        </li>
+
+        const lobby_menu = <li className="nav-item">
+            <a className="nav-link" href="/lobby">Lobby <span className="sr-only">(current)</span></a>
+        </li>;
 
         const game_menu = <li className="nav-item">
             <a className="nav-link" href="/game">Play ToK</a>
         </li>
 
-        const login_menu = <li className="nav-item">
-            <a className="nav-link" href="/login">Login</a>
-        </li>
-
-        // expect(wrapper.contains(welcome)).toBe(true);
-        // expect(wrapper.contains(welcome)).toEqual(true);
+        expect(wrapper).toContainReact(login_menu);
         expect(wrapper).toContainReact(lobby_menu);
         expect(wrapper).toContainReact(game_menu);
-        expect(wrapper).toContainReact(login_menu);
     });
 })

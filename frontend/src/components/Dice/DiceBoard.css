@@ -3,5 +3,14 @@
   
   flex-direction: column;
   font-family: 'Open Sans', sans-serif;
- 
-  }
+}
+
+.selected {
+  background: green;
+  color: black;
+}
+
+.unselected {
+  background: transparent;
+  color: black;
+}
