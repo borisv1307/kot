@@ -13,7 +13,7 @@ class Dice(models.Model):
     DICE_VALUE = (
         ('1', 'One'),
         ('2', 'Two'),
-        ('3', 'Two'),
+        ('3', 'Three'),
         ('4', 'Energy'),
         ('5', 'Attack'),
         ('6', 'Heal'),
