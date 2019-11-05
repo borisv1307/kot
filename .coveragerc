@@ -1,6 +1,8 @@
-[report]
-exclude_lines =
-    pragma: no cover
-    raise NotImplementedError
-[xml]
-output = coverage.xml
+# must be unique in a given SonarQube instance
+sonar.projectKey=borisv13_King-Of-Tokyo
+# Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
+# This property is optional if sonar.modules is set.
+sonar.sources=.
+# Encoding of the source code. Default is default system encoding
+#sonar.sourceEncoding=UTF-8
+sonar.python.coverage.reportPaths=coverage.xml
