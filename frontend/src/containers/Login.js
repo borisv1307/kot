@@ -15,6 +15,20 @@ const LoginLayout = (props) => {
 
                 </div>
             </div>
+            <div className="row">
+                <div className="col-sm">
+
+                </div>
+                <div className="col-sm">
+                    <br></br>
+                    <a className="b" href="/lobby">
+                        <button type="button" class="btn btn-primary">Play as Guest</button>
+                    </a>
+                </div>
+                <div className="col-sm">
+
+                </div>
+            </div>
         </div>
     );
 }
