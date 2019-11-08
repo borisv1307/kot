@@ -1,4 +1,4 @@
-from backend.src.game.newcards.discard_cards.victory_point_manipulation_cards.evacuation_orders import \
+from game.newcards.discard_cards.victory_point_manipulation_cards.evacuation_orders import \
     EvacuationOrders
 
 

@@ -1,5 +1,5 @@
-from backend.src.game.newcards.discard_card import DiscardCard
-from backend.src.game.newcards.new_card import NewCard
+from game.newcards.discard_card import DiscardCard
+from game.newcards.new_card import NewCard
 
 
 class CornerStore(DiscardCard):
