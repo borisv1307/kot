@@ -1,53 +1,23 @@
 dist: trusty
-jobs:
-  include:
-    - stage: backend_python
-      language: python
-      addons:
-        sonarcloud:
-          organization: "borisv13-github" # the key of the org you chose at step #3
-          token:
-            secure: $SONAR_TOKEN # encrypted value of your token
-      python:
-        - "3.6"
+language: python
+addons:
+  sonarcloud:
+    organization: "borisv13-github" # the key of the org you chose at step #3
+    token:
+      secure: $SONAR_TOKEN # encrypted value of your token
+python:
+  - "3.6"
 
-      #before_install:
-      #  - cd backend
-      install:
-        - pip install -r requirements.txt
-      script:
-        - py.test  --cov-report term --cov=.
-        - coverage xml
-        - sonar-scanner
-      services:
-        - sqlite
-        - sonar-scanner
-      env:
-        - DJANGO=2.2.6
-      after_success:
-        - codecov
-
-    - stage: frontend_react
-      language: node_js
-      node_js: node
-      before_install:
-        - cd frontend
-      cache:
-      directories:
-        - "node_modules"
-      install:
-        - npm install
-        - npm run build
-      #  script:
-      #    - npm run test
-      after_success:
-        - npm run coverage
-        - sonar-scanner
-        - codecov
-    #  deploy:
-    #    provider: surge
-    #    skip_cleanup: true
-    #    domain: <my_name_here>.surge.sh
-    #    project: ./build/
-    # on:
-    #    branch: master
+install:
+  - pip install -r requirements.txt
+script:
+  - py.test  --cov-report term --cov=.
+  - coverage xml
+  - sonar-scanner
+services:
+  - sqlite
+  - sonar-scanner
+env:
+  - DJANGO=2.2.6
+after_success:
+  - codecov
