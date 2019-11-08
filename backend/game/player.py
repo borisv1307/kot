@@ -8,6 +8,7 @@ class Player:
         self.location = Locations.OUTSIDE
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
+        self.energy_cube = 0
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
@@ -26,3 +27,8 @@ class Player:
         self.victory_points += change_integer
         if self.victory_points < constants.DEATH_HIT_POINT:
             self.victory_points = constants.DEATH_HIT_POINT
+
+    def update_energy_cube_by(self, change_integer):
+        self.energy_cube += change_integer
+        if self.energy_cube < constants.DEATH_HIT_POINT:
+            self.energy_cube = constants.DEATH_HIT_POINT
