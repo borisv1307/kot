@@ -69,6 +69,27 @@ def test_player_can_lose_victory_points(player):
     assert player.victory_points == 5
 
 
+def test_player_starts_with_zero_energy(player):
+    assert player.energy == constants.DEFAULT_ENERGY_CUBE
+
+
+def test_player_can_gain_energy(player):
+    player.update_energy_by(3)
+    assert player.energy == 3
+
+
+def test_player_can_lose_energy(player):
+    player.update_energy_by(7)
+    player.update_energy_by(-3)
+    assert player.energy == 4
+
+
+def test_player_energy_cannot_go_below_zero(player):
+    player.update_energy_by(2)
+    player.update_energy_by(-5)
+    assert player.energy == 0
+
+
 def test_player_can_not_have_less_than_zero_victory_points(player):
     player.update_victory_points_by(-1)
     assert player.victory_points == 0
