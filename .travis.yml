@@ -4,7 +4,7 @@ addons:
   sonarcloud:
     organization: "borisv13-github" # the key of the org you chose at step #3
     token:
-      secure: $SONAR_TOKEN # encrypted value of your token
+      secure: $SONAR_TOKEN2 # encrypted value of your token
 python:
   - "3.6"
 
@@ -21,5 +21,3 @@ env:
   - DJANGO=2.2.6
 after_success:
   - codecov
-
-
