@@ -4,7 +4,7 @@ from game.newcards.new_card import NewCard
 
 class Tanks(DiscardCard):
     def __init__(self):
-        NewCard.__init__(self, "Tanks", 4, "+ 4[Star] - 3[Health]")
+        NewCard.__init__(self, "Tanks", 4, "+ 4[Star] - 3[Health]", "")
 
     def immediate_effect(self, player_that_bought_the_card, other_players):
         player_that_bought_the_card.update_victory_points_by(4)
