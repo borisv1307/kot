@@ -1,4 +1,4 @@
-import backend.src.game.dice.dice as dice
+import game.dice.dice as dice
 
 
 class DiceHandler:
