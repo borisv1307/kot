@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',  # new
-	
-	'game',
+    'channels',
+    'game',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +136,6 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = ['https://localhost:3000', 'http://localhost:3000',
                          'https://127.0.0.1:3000', 'http://127.0.0.1:3000']
+
+# Channels
+ASGI_APPLICATION = 'kot.routing.application'
