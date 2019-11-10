@@ -1,5 +1,5 @@
-from game import constants
-from game.locations import Locations
+from game.definitions import constants
+from game.definitions.locations import Locations
 
 
 class Player:

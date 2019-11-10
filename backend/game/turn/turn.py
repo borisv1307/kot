@@ -1,8 +1,6 @@
 import collections
 
-from game import constants
 from game.dice.dice import DieValue
-from game.locations import Locations
 
 
 def get_dice_count(dice):

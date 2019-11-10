@@ -1,6 +1,6 @@
 import pytest
 
-import game.test_constants as constants
+import game.definitions.test_constants as constants
 from game.deck.deck import Deck
 
 
