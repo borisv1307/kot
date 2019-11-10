@@ -1,7 +1,7 @@
 import collections
 import pytest
 
-import game.turn as turn
+import game.turn.turn as turn
 from game.dice.dice import DieValue
 from game.player.player import Player
 

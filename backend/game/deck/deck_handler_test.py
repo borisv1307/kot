@@ -4,7 +4,7 @@ import pytest
 
 import game.definitions.constants as constants
 import game.definitions.test_constants as test_constants
-from game.cards_old_dir.card import Card
+from game.cards_old_dir.old_card import Old_Card
 from game.deck.deck_handler import DeckHandler
 
 
@@ -39,7 +39,7 @@ def test_discard_card(deck_handler):
 
 
 def test_force_shuffle_discard_add_to_draw(deck_handler):
-    bought_cards: List[Card] = list()
+    bought_cards: List[Old_Card] = list()
 
     # buy 5 cards_old_dir
     for _ in range(5):
