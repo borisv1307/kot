@@ -1,1 +1,0 @@
-JSON_CARD_COUNT = 66
