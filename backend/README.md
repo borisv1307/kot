@@ -17,7 +17,7 @@ Python dependencies are setup within a virtual environment.
 
  `python -m venv env`
 
-This will generate `kot\backend\env` containing the projects required python packages.
+This will generate `kot\backend\env` containing the projects required python packages. If CLI suggests upgrading PIP or other, use suggested command to do so. Not upgrading can cause isses later.
 
 ## To enable the virtual environment (activate.bat provided as convenience)
 
