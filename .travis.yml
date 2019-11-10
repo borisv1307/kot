@@ -13,10 +13,8 @@ install:
 script:
   - py.test  --cov-report term --cov=.
   - coverage xml
-  - sonar-scanner
 services:
   - sqlite
-  - sonar-scanner
 env:
   - DJANGO=2.2.6
 after_success:
