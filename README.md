@@ -66,8 +66,12 @@ Frontend documentation see \kot\frontend\README.md.
 * Testing Python
       > `pytest`</br>
 
-      > `cd \kot\frontend\`</br>
+* Testing React
+      > `cd \kot\frontend\` </br>
       > `npm test`
-
-      Launches the test runner in the interactive watch mode.<br /> See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
       
+      Launches the test runner in the interactive watch mode.<br /> See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+* Testing React w/ Coverage details
+      > `cd \kot\frontend\` </br>
+      > `npm run coverage`
