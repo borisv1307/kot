@@ -1,5 +1,5 @@
 import pytest
-import game.turn_actions.attack_actions as attack_actions
+import game.turn_actions.attack as attack_actions
 from game.player.player import Player
 
 
