@@ -13,6 +13,13 @@ Frontend documentation see \kot\frontend\README.md.
 * Production: React website hosted via Django server
 * Development: run React ('npm start') and Python ("python manage.py runserver") seperately. Allows for React and python to auto watch and reload.
 
+## Site Map
+
+* <http://localhost:8000/>
+* <http://localhost:8000/api/v1/dice/>
+* <http://localhost:8000/admin/>
+* <http://localhost:8000/users/>
+
 ## Quick Start
 
 * Install dependencies then build production React build
@@ -25,7 +32,10 @@ Frontend documentation see \kot\frontend\README.md.
 
 > `cd \kot\backend\` </br>
 > `pip install -r requirements.txt`</br>
+
+* Run the web app using the Python Server
 > `.\kot\backend\python manage.py runserver` </br>
+
 
 ## Setup Details
 
@@ -54,7 +64,7 @@ Frontend documentation see \kot\frontend\README.md.
 * Running Python Server
       > `python manage.py runserver`</br>
 
-      Runs the app in the development mode.<br /> Open a browser, go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view python root.
+      Runs the app in the development mode.<br /> Open a browser, go to [http://localhost:8000/](http://localhost:8000/) to view python root.
 
 * Running React Server
       > `npm start`</br>

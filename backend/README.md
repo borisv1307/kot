@@ -40,7 +40,7 @@ Then start the server:
  `python manage.py runserver`
 
 Runs the app in the development mode.<br />
-Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view it in the browser.
+Open [http://localhost:8000/](http://localhost:8000/) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
@@ -79,7 +79,4 @@ Launches the test runner running all pythong tests.
  `python manage.py makemigrations`
  
  `python manage.py migrate`
-
-
-
-127.0.0.1:8000/admin
+ 
