@@ -3,14 +3,13 @@ import glob
 from typing import List
 
 from game.cards.card import Card
-from game.cards.discard_card import DiscardCard
 
 
-def get_class( kls ):
-    parts = kls.split('.')
-    module = ".".join(parts[:-1])
-    m = __import__( module )
-    for comp in parts[1:]:
+def get_class(class_string_name_and_path):
+    parsed_class_string = class_string_name_and_path.split('.')
+    module = ".".join(parsed_class_string[:-1])
+    m = __import__(module)
+    for comp in parsed_class_string[1:]:
         m = getattr(m, comp)
     return m
 
