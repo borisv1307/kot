@@ -10,9 +10,8 @@ Frontend documentation see \kot\frontend\README.md.
 
 ## Hosting Options
 
-* Producution: React website hosted via Django server
+* Production: React website hosted via Django server
 * Development: run React ('npm start') and Python ("python manage.py runserver") seperately. Allows for React and python to auto watch and reload.
-
 
 ## Quick Start
 
@@ -71,3 +70,4 @@ Frontend documentation see \kot\frontend\README.md.
       > `npm test`
 
       Launches the test runner in the interactive watch mode.<br /> See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+      
