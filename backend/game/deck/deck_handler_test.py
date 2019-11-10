@@ -2,8 +2,8 @@ from typing import List
 
 import pytest
 
-import game.definitions.constants as constants
-import game.definitions.test_constants as test_constants
+import game.values.constants as constants
+import game.values.test_constants as test_constants
 from game.cards_old_dir.old_card import Old_Card
 from game.deck.deck_handler import DeckHandler
 

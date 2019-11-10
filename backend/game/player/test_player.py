@@ -1,7 +1,7 @@
 import pytest
 
-from game.definitions import constants
-from game.definitions.locations import Locations
+from game.values import constants
+from game.values.locations import Locations
 from game.player.player import Player
 
 

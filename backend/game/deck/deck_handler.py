@@ -1,6 +1,6 @@
 from typing import List
 
-import game.definitions.constants as constants
+import game.values.constants as constants
 from game.cards_old_dir.old_card import Old_Card
 from game.deck.deck import Deck
 
