@@ -26,8 +26,6 @@ Frontend documentation see \kot\frontend\README.md.
 ## Running
 
  * Running Python Server
-      > `cd .\kot\backend\src\`</br>
-      > `.\kot\env\Scripts\activate` </br>
       > `python manage.py runserver`</br>
 
       Runs the app in the development mode.<br /> Open a browser, go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to view python root.
@@ -40,8 +38,6 @@ Frontend documentation see \kot\frontend\README.md.
 ## Testing
 
  * Testing Python
-      > `.\kot\env\Scripts\activate` </br>
-      > `cd \kot\backend\`</br>
       > `pytest`</br>
 
 
