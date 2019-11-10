@@ -1,12 +1,5 @@
-import pytest
 import game.turn_actions.attack as attack_actions
 from game.player.player import Player
-
-
-@pytest.fixture(autouse=True)
-def player():
-    player = Player()
-    return player
 
 
 def test_if_attackable_in_same_locations():
@@ -36,7 +29,6 @@ def test_gets_all_attackable_players_in_different_location():
 
 
 def test_attacking_players_by_three():
-    attack_player = Player()
     player_two = Player()
     player_three = Player()
     attackable_players = [player_two, player_three]
