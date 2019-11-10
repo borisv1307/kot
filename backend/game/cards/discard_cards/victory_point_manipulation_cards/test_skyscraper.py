@@ -1,4 +1,4 @@
-from game.newcards.discard_cards.victory_point_manipulation_cards.skyscraper import \
+from game.cards.discard_cards.victory_point_manipulation_cards.skyscraper import \
     Skyscraper
 
 

@@ -1,8 +1,8 @@
 import random
 from typing import List
 
-from game.cards import card_json_parser
-from game.cards.card import Card
+from game.cards_old_dir import card_json_parser
+from game.cards_old_dir.card import Card
 
 
 class Deck:
@@ -23,7 +23,7 @@ class Deck:
         random.shuffle(self.__card_deck)
 
     def draw_from(self):
-        return self.__card_deck.pop(0)  # take first item so appending "puts cards on the bottom of the pile"
+        return self.__card_deck.pop(0)  # take first item so appending "puts cards_old_dir on the bottom of the pile"
 
     def append(self, card: Card):
         self.__card_deck.append(card)

@@ -1,4 +1,4 @@
-from game.newcards.discard_cards.victory_point_manipulation_cards.commuter_train import CommuterTrain
+from game.cards.discard_cards.victory_point_manipulation_cards.commuter_train import CommuterTrain
 
 
 def test_commuter_train_adds_2_victory_points(player):

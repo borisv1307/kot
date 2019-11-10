@@ -1,17 +1,17 @@
 from typing import List
 
 import game.constants as constants
-from game.cards.card import Card
-from game.cards.deck import Deck
+from game.cards_old_dir.card import Card
+from game.deck.deck import Deck
 
 
 class DeckHandler:
     """
     DeckHandler manages the draw, discard, and store pile interactions.
 
-    Use this to purchase power cards from the store and discard used cards.
+    Use this to purchase power cards_old_dir from the store and discard used cards_old_dir.
     creating a DeckHandler object automatically populates the draw pile from the kot_cards.json.
-    The draw pile is automatically re-populated with discarded cards upon running out.
+    The draw pile is automatically re-populated with discarded cards_old_dir upon running out.
     """
     __draw_pile: Deck = Deck()
     __discard_pile: Deck = Deck()

@@ -1,6 +1,5 @@
-from game.cards import card_json_parser as parser
-from game.cards.card_type import CardType
-from test.cards_test import mock_card_json as mock_cards
+from game.cards_old_dir import card_json_parser as parser, mock_card_json as mock_cards
+from game.cards_old_dir.card_type import CardType
 
 
 def test_deck_multiple_cards():

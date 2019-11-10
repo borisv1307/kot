@@ -1,7 +1,7 @@
 import pytest
 
-import test.cards_test.test_constants as constants
-from game.cards.deck import Deck
+import game.test_constants as constants
+from game.deck.deck import Deck
 
 
 @pytest.fixture(autouse=True)

@@ -2,10 +2,10 @@ import json
 import os
 from typing import List
 
-from game.cards.card import Card
+from game.cards_old_dir.card import Card
 from game.constants import CARDS_DIRECTORY
 
-json_file_path = os.path.join(CARDS_DIRECTORY, 'cards/kot_cards.json')
+json_file_path = os.path.join(CARDS_DIRECTORY, 'cards_old_dir/kot_cards.json')
 
 with open(json_file_path, "r") as json_file:
 

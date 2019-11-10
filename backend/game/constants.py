@@ -10,4 +10,4 @@ DEFAULT_ENERGY_CUBE = 0
 CARD_STORE_SIZE_LIMITER = 3
 
 # strings
-OUT_OF_CARDS_MSG = "No more cards available to shuffle"
+OUT_OF_CARDS_MSG = "No more cards_old_dir available to shuffle"

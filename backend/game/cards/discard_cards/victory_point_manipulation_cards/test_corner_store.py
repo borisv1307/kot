@@ -1,4 +1,4 @@
-from game.newcards.discard_cards.victory_point_manipulation_cards.corner_store import CornerStore
+from game.cards.discard_cards.victory_point_manipulation_cards.corner_store import CornerStore
 
 
 def test_corner_store_adds_1_victory_points(player):

@@ -1,5 +1,5 @@
-from game.newcards.discard_card import DiscardCard
-from game.newcards.new_card import NewCard
+from game.cards.discard_card import DiscardCard
+from game.cards.new_card import NewCard
 
 
 class GasRefinery(DiscardCard):

@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from game.newcards.new_card import NewCard
+from game.cards.new_card import NewCard
 
 
 class DiscardCard(NewCard):

@@ -1,4 +1,4 @@
-from game.cards.card_type import CardType
+from game.cards_old_dir.card_type import CardType
 
 
 def set_card_type(card_type):
