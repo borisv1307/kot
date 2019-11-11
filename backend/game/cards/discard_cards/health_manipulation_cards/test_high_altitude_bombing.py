@@ -1,4 +1,4 @@
-from game.cards.discard_cards.health_point_manipulation_cards.high_altitude_bombing import HighAltitudeBombing
+from game.cards.discard_cards.health_manipulation_cards.high_altitude_bombing import HighAltitudeBombing
 
 
 def test_high_altitude_bombing_subtracts_3_health(player, five_players):
