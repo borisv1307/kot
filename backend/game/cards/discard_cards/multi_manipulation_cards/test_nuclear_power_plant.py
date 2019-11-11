@@ -1,4 +1,4 @@
-from game.cards.discard_cards.victory_point_manipulation_cards.nuclear_power_plant import NuclearPowerPlant
+from game.cards.discard_cards.multi_manipulation_cards.nuclear_power_plant import NuclearPowerPlant
 
 
 def test_jet_fighters_adds_2_victory_points(player):
