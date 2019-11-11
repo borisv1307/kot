@@ -1,4 +1,4 @@
-from game.cards.discard_cards.multi_point_manipulation_cards.jet_fighters import JetFighters
+from game.cards.discard_cards.multi_manipulation_cards.jet_fighters import JetFighters
 
 
 def test_jet_fighters_adds_5_victory_points(player):
