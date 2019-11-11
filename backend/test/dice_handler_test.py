@@ -19,7 +19,7 @@ dice.roll_many = Mock(return_value=MOCK_SIX_DIE_VALUES_A)
 @pytest.fixture(autouse=True)
 def dice_handler():
     dice_handler = DiceHandler()
-    dice_handler.start_turn(6, 3)
+    dice_handler.roll_initial(6, 3)
     return dice_handler
 
 
