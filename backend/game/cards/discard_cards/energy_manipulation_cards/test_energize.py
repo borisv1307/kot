@@ -1,4 +1,4 @@
-from game.cards.discard_cards.energy_point_manipulation_cards.energize import Energize
+from game.cards.discard_cards.energy_manipulation_cards.energize import Energize
 
 
 def test_energize_adds_9_energy_cubes(player):
