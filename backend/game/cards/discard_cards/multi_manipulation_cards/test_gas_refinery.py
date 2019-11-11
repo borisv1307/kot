@@ -1,4 +1,4 @@
-from game.cards.discard_cards.victory_point_manipulation_cards.gas_refinery import \
+from game.cards.discard_cards.multi_manipulation_cards.gas_refinery import \
     GasRefinery
 
 
