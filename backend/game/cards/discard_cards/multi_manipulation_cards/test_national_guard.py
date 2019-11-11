@@ -1,4 +1,4 @@
-from game.cards.discard_cards.multi_point_manipulation_cards.national_guard import NationalGuard
+from game.cards.discard_cards.multi_manipulation_cards.national_guard import NationalGuard
 
 
 def test_jet_fighters_adds_2_victory_points(player):
