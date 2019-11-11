@@ -4,18 +4,35 @@ from game.player.player import Player
 
 
 @pytest.fixture(autouse=True)
-def player():
-    player: Player = Player()
-    return player
+def hurt_player():
+    hurt_player: Player = Player()
+    hurt_player.update_health_by(-3)
+    return hurt_player
 
 
-def test_heal_only_in_tokyo(player):
-    player.leave_tokyo()
-    starting_health = player.current_health
-    player.update_health_by(-3)
-    heal.heal_self(player, 1)
-    assert player.current_health == starting_health - 2
+def test_heal_from_dice_out_of_tokyo(hurt_player):
+    hurt_player.leave_tokyo()
+    starting_health = hurt_player.current_health
+    heal.heal_self_from_dice(hurt_player, 1)
+    assert hurt_player.current_health == starting_health + 1
 
-    player.move_to_tokyo()
-    heal.heal_self(player, 1)
-    assert player.current_health == starting_health - 2
+
+def test_no_heal_from_dice_in_tokyo(hurt_player):
+    hurt_player.move_to_tokyo()
+    starting_health = hurt_player.current_health
+    heal.heal_self_from_dice(hurt_player, 1)
+    assert hurt_player.current_health == starting_health
+
+
+def test_heal_from_dice_out_of_tokyo(hurt_player):
+    hurt_player.leave_tokyo()
+    starting_health = hurt_player.current_health
+    heal.heal_self_no_tokyo_restriction(hurt_player, 1)
+    assert hurt_player.current_health == starting_health + 1
+
+
+def test_heal_from_dice_in_tokyo(hurt_player):
+    hurt_player.move_to_tokyo()
+    starting_health = hurt_player.current_health
+    heal.heal_self_no_tokyo_restriction(hurt_player, 1)
+    assert hurt_player.current_health == starting_health + 1
