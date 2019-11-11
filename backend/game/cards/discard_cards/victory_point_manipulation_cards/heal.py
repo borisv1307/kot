@@ -1,5 +1,5 @@
-from game.cards.discard_card import DiscardCard
 from game.cards.card import Card
+from game.cards.discard_card import DiscardCard
 
 
 class Heal(DiscardCard):
