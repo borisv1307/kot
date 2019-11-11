@@ -7,7 +7,7 @@ def test_vast_storm_adds_2_victory_points(player):
 
 
 def test_vast_storm_subtracts_3_health(player):
-    player.update_health_by(10)
+    player.current_health = 8
     VastStorm().immediate_effect(player, None)
     assert player.current_health == 7
 
