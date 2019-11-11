@@ -1,4 +1,4 @@
-from game.cards.discard_cards.health_point_manipulation_cards.fire_blast import FireBlast
+from game.cards.discard_cards.health_manipulation_cards.fire_blast import FireBlast
 
 
 def test_fire_blast_subtracts_2_health(player, five_players):
