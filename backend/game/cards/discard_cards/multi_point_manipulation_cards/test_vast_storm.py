@@ -1,4 +1,4 @@
-from game.cards.discard_cards.victory_point_manipulation_cards.vast_storm import VastStorm
+from game.cards.discard_cards.multi_point_manipulation_cards.vast_storm import VastStorm
 
 
 def test_vast_storm_adds_2_victory_points(player):
