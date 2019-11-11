@@ -1,4 +1,4 @@
-from game.cards.discard_cards.health_point_manipulation_cards.heal import Heal
+from game.cards.discard_cards.health_manipulation_cards.heal import Heal
 
 
 def test_heal_adds_2_health(player):
