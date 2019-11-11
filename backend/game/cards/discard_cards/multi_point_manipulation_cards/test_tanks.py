@@ -1,4 +1,4 @@
-from game.cards.discard_cards.victory_point_manipulation_cards.tanks import Tanks
+from game.cards.discard_cards.multi_point_manipulation_cards.tanks import Tanks
 
 
 def test_jet_fighters_adds_4_victory_points(player):
