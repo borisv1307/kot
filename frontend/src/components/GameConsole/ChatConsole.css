@@ -1,0 +1,12 @@
+.chat_console {
+  display:flex;
+  
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+ 
+  color: black;
+  }
+
+  .submit_game_command{
+    color: black;
+  }
