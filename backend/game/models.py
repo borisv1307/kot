@@ -1,5 +1,7 @@
-from django.db import models
+import uuid
 
+from django.core.exceptions import ValidationError
+from django.db import models
 
 # Create your models here.
 class User(models.Model):
@@ -9,6 +11,25 @@ class User(models.Model):
     password = models.CharField(max_length=30)
     date_created = models.DateTimeField()
 
+    last_read_date = models.DateTimeField(
+        auto_now_add=True,
+        blank=False,
+        null=False
+    )
+    online = models.BooleanField(null=False, blank=False, default=False)
+
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.username
+
+    def read(self):
+        self.last_read_date = timezone.now()
+        self.save()
+
+    def unread_messages(self):
+        return Message.objects.filter(created_at__gt=self.last_read_date) \
+                              .count()
 
 class Dice(models.Model):
     DICE_VALUE = (
@@ -79,13 +100,44 @@ class Play(models.Model):
     date_created = models.DateTimeField()
 
 
+# class Message(models.Model):
+#     MSG_TYPES = (
+#         ('error', '1'),
+#         ('command', '1'),
+#         ('game', '1'),
+#     )
+#     # should cascade be applied below.
+#     message_type = models.CharField(max_length=1, choices=MSG_TYPES)
+#     message_string = models.CharField(max_length=30)
+#     date_created = models.DateTimeField()
+
+
+def validate_message_content(content):
+    if content is None or content == "" or content.isspace():
+        raise ValidationError(
+            'Content is empty/invalid',
+            code='invalid',
+            params={'content': content},
+        )
+
+
 class Message(models.Model):
-    MSG_TYPES = (
-        ('error', '1'),
-        ('command', '1'),
-        ('game', '1'),
+
+    id = models.UUIDField(
+        primary_key=True,
+        null=False,
+        default=uuid.uuid4,
+        editable=False
     )
-    # should cascade be applied below.
-    message_type = models.CharField(max_length=1, choices=MSG_TYPES)
-    message_string = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
+    author = models.ForeignKey(
+        'User',
+        blank=False,
+        null=False,
+        related_name='author_messages',
+        on_delete=models.CASCADE
+    )
+    content = models.TextField(validators=[validate_message_content])
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def last_50_messages():
+        return Message.objects.order_by('-created_at').all()[:50]
