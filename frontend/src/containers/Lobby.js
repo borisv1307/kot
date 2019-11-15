@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import "./Lobby.css";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 export default class LobbyLayout extends Component {
 
@@ -42,23 +44,26 @@ export default class LobbyLayout extends Component {
         })
     }
 
+
     render() {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-sm">
-                        {/* something in the future */}
+                    <div className="col-sm p-4">
+                       <br></br>
+                        <p>TO DO: <br />Add list of channels. MT to add a list of game rooms to be provided to this page via websocket.
+                            <br /> This also implies backend must managing channel groups.</p>
+
                     </div>
-                    <div className="col-sm">
-                        <br></br>
-                        <p>TO DO: <br />Add list of channels. MT to add a list of game rooms to be provided to this page via websocket.<br /> This also implies backend must managing channel groups.</p>
+                    <div className="col-sm p-4">
+
 
                         <label>Enter a room name (eventually select existing):
                                 <input
                                 id="room_input"
                                 name="room_name"
                                 type="text"
-                                size="100"
+                                size="40"
                                 onChange={this.roomChangeHandler}
                                 placeholder="What chat room would you like to enter?"
                                 value={this.state.gameRoom}
@@ -67,12 +72,28 @@ export default class LobbyLayout extends Component {
 
                         <a className="b" href="/game">
                             {this.renderRedirect()}
-                            <button onClick={this.setRedirect} className="btn btn-primary" type="button">Hi {this.state.username}, please click to enter room {this.state.gameRoom}</button>
+                            <button onClick={this.setRedirect} className="btn btn-secondary" type="button">Hi {this.state.username}, please click to enter room {this.state.gameRoom}</button>
                         </a>
 
                     </div>
-                    <div className="col-sm">
-                        {/* something in the future */}
+
+                    <div className="col-sm p-4">
+                        <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                        <th>User Name</th>
+                        <th>Room ID</th>
+                        <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        <td>{this.state.username}</td>
+                        <td>{this.state.gameRoom}</td>
+                        <td><Button onClick={this.setRedirect} className="btn btn-secondary">Join Room {this.state.gameRoom}</Button></td>
+                        </tr>
+                        </tbody>
+                        </Table>
                     </div>
                 </div>
             </div>

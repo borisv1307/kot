@@ -1,5 +1,6 @@
 import React from 'react';
 import "./DiceRoller.css";
+import Button from "react-bootstrap/Button";
 
 import * as Constants from '../../constants'
 
@@ -86,7 +87,7 @@ class DiceRoller extends React.Component {
     return (
       <div className="DiceRoller">
         <DiceBoard ref={this.textInput} callbackSendDiceSelectionOut={this.selectedDiceCallback} data={this.state.rolledDice} />
-        <button disabled={!this.state.allowReroll} onClick={this.AttemptReroll}>Roll</button>
+        <Button className="btn btn-secondary" disabled={!this.state.allowReroll} onClick={this.AttemptReroll}>Roll</Button>
       </div>
     )
   }

@@ -1,9 +1,11 @@
 import React from 'react';
 import "./ChatConsole.css";
+import Button from "react-bootstrap/Button";
 
 // import GameLog from './GameLog'
 
 import ChatInstance from './../../services/chatService'
+
 
 const chatLogExample = [
   '-- Sammy turn –',
@@ -147,9 +149,9 @@ class ChatConsole extends React.Component {
               value={this.state.message}
               placeholder='Type a Message'
               required />
-            <button className='submit' type='submit' value='Submit'>
+            <Button variant="btn btn-secondary" className='submit' type='submit' value='Submit'>
               Send
-            </button>
+            </Button>
           </form>
         </div>
       </div>

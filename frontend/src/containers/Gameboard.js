@@ -27,7 +27,8 @@ export default class GameboardLayout extends Component {
     render() {
         return (
             <div>
-                <p>{this.state.gameRoom}</p>
+                <br/>
+                <h4>{this.state.gameRoom}</h4>
                 <div className="container">
                     {
                         this.state.loggedIn ?
