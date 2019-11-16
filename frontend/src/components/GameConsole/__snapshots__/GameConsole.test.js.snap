@@ -31,9 +31,10 @@ exports[`Verify GameConsole layout template GameConsole should render correctly 
     </textarea>
   </form>
   <button
+    className="btn btn-secondary"
     onClick={[Function]}
   >
-    Submit Comand
+    Submit Command
   </button>
 </div>
 `;

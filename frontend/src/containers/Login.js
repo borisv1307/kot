@@ -9,9 +9,16 @@ export default class LoginLayout extends Component {
 
     constructor(props) {
         super(props);
+
+        let user = 'Guest_1234';
+        let room = 'Room_1234';
+        if (props.location && props.location.state) {
+            user = 'Guest_' + Math.floor((Math.random() * 10000) + 1)
+        }
+
         this.state = {
             redirect: false,
-            username: 'Guest_' + Math.floor((Math.random() * 10000) + 1)
+            username: user
         };
     }
 

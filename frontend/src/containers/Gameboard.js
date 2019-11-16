@@ -11,9 +11,9 @@ export default class GameboardLayout extends Component {
     constructor(props) {
         super(props);
 
-        let userName = 'Guest_' + Math.floor((Math.random() * 10000) + 1);
-        let roomName = 'Room_' + Math.floor((Math.random() * 10000) + 1);
-        if (props.location.state) {
+        let userName = 'Guest_1234';
+        let roomName = 'Room_1234';
+        if (props.location && props.location.state) {
             userName = userName;
             roomName = roomName;
         }

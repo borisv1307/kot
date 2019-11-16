@@ -8,13 +8,17 @@ export default class LobbyLayout extends Component {
 
     constructor(props) {
         super(props);
-        let user = 'Guest_' + Math.floor((Math.random() * 10000) + 1);
-        if (props.location.state)
+        let user = 'Guest_1234';
+        let room = 'Room_1234';
+        if (props.location && props.location.state) {
             user = props.location.state.username;
+            room = 'Room_' + Math.floor((Math.random() * 10000) + 1);
+        }
+
         this.state = {
             redirect: false,
             username: user,
-            gameRoom: 'Room_' + Math.floor((Math.random() * 10000) + 1)
+            gameRoom: room
         };
     }
 
@@ -50,7 +54,7 @@ export default class LobbyLayout extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-sm p-4">
-                       <br></br>
+                        <br></br>
                         <p>TO DO: <br />Add list of channels. MT to add a list of game rooms to be provided to this page via websocket.
                             <br /> This also implies backend must managing channel groups.</p>
 
@@ -79,20 +83,20 @@ export default class LobbyLayout extends Component {
 
                     <div className="col-sm p-4">
                         <Table striped bordered hover>
-                        <thead>
-                        <tr>
-                        <th>User Name</th>
-                        <th>Room ID</th>
-                        <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                        <td>{this.state.username}</td>
-                        <td>{this.state.gameRoom}</td>
-                        <td><Button onClick={this.setRedirect} className="btn btn-secondary">Join Room {this.state.gameRoom}</Button></td>
-                        </tr>
-                        </tbody>
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Room ID</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{this.state.username}</td>
+                                    <td>{this.state.gameRoom}</td>
+                                    <td><Button onClick={this.setRedirect} className="btn btn-secondary">Join Room {this.state.gameRoom}</Button></td>
+                                </tr>
+                            </tbody>
                         </Table>
                     </div>
                 </div>
