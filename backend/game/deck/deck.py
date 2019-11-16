@@ -1,9 +1,9 @@
 import random
 from typing import List
 
-#from game.cards_old_dir import card_json_parser
 from game.cards.card import Card
 import game.cards.master_card_list as master_card_list
+
 
 class Deck:
 
