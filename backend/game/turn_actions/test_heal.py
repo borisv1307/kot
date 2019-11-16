@@ -22,17 +22,3 @@ def test_no_heal_from_dice_in_tokyo(hurt_player):
     starting_health = hurt_player.current_health
     heal.heal_self_from_dice(hurt_player, 1)
     assert hurt_player.current_health == starting_health
-
-
-def test_heal_from_dice_out_of_tokyo(hurt_player):
-    hurt_player.leave_tokyo()
-    starting_health = hurt_player.current_health
-    heal.heal_self_no_tokyo_restriction(hurt_player, 1)
-    assert hurt_player.current_health == starting_health + 1
-
-
-def test_heal_from_dice_in_tokyo(hurt_player):
-    hurt_player.move_to_tokyo()
-    starting_health = hurt_player.current_health
-    heal.heal_self_no_tokyo_restriction(hurt_player, 1)
-    assert hurt_player.current_health == starting_health + 1
