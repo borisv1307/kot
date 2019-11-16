@@ -1,4 +1,5 @@
 from game.cards.discard_cards.multi_manipulation_cards.national_guard import NationalGuard
+from game.values import constants
 
 
 def test_jet_fighters_adds_2_victory_points(player):
@@ -8,7 +9,7 @@ def test_jet_fighters_adds_2_victory_points(player):
 
 def test_jet_fighters_subtracts_2_health(player):
     NationalGuard().immediate_effect(player, None)
-    assert player.current_health == 8
+    assert player.current_health == constants.DEFAULT_HEALTH - 2
 
 
 def test_jet_fighters_costs_3_energy():
