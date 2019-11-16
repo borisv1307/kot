@@ -8,9 +8,8 @@ def test_vast_storm_adds_2_victory_points(player):
 
 
 def test_vast_storm_subtracts_3_health(player):
-    player.current_health = constants.DEFAULT_HEALTH
     VastStorm().immediate_effect(player, None)
-    assert player.current_health == 9
+    assert player.current_health == constants.DEFAULT_HEALTH - 1
 
 
 def test_vast_storm_costs_6_energy():
