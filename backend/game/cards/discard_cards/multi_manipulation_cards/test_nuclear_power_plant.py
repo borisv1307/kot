@@ -1,4 +1,5 @@
 from game.cards.discard_cards.multi_manipulation_cards.nuclear_power_plant import NuclearPowerPlant
+from game.values import constants
 
 
 def test_jet_fighters_adds_2_victory_points(player):
@@ -8,7 +9,7 @@ def test_jet_fighters_adds_2_victory_points(player):
 
 def test_jet_fighters_adds_3_health(player):
     NuclearPowerPlant().immediate_effect(player, None)
-    assert player.current_health == 10
+    assert player.current_health == constants.DEFAULT_HEALTH
 
 
 def test_jet_fighters_costs_6_energy():
