@@ -9,6 +9,7 @@ from game.values.constants import DEFAULT_HEALTH
 
 MOCK_DICE_VALUES = [DieValue.ATTACK, DieValue.ATTACK, DieValue.HEAL, DieValue.HEAL, DieValue.HEAL, DieValue.HEAL]
 
+
 @pytest.fixture(autouse=True)
 def main_player():
     player_main = Player()
@@ -53,3 +54,11 @@ def test_first_attack_roll_forces_move_to_tokyo(main_player, other_players):
 def test_first_attack_roll_does_not_hurt_anyone(main_player, other_players):
     dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
     assert all(others.current_health == DEFAULT_HEALTH for others in other_players)
+
+
+def test_yield_on_death(main_player, other_players):
+    player_a = other_players[0]
+    player_a.location = Locations.TOKYO
+    player_a.current_health = 1
+    dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
+    assert main_player.location == Locations.TOKYO and not player_a.is_alive

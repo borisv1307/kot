@@ -32,5 +32,5 @@ def test_attacking_players_by_three():
     player_two = Player()
     player_three = Player()
     attackable_players = [player_two, player_three]
-    attack_actions.attack_players(attackable_players, -3)
+    attack_actions.attack_players(Player(), attackable_players, 3)
     assert player_two.current_health == 7 and player_three.current_health == 7

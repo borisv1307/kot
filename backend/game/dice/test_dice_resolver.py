@@ -3,6 +3,7 @@ import collections
 from game.dice.dice import DieValue
 import game.dice.dice_resolver as dice_resolver
 
+
 def test_less_than_three_twos_rolled_no_victory_points_awarded():
     dice = collections.Counter([DieValue.TWO, DieValue.TWO,
                                 DieValue.HEAL, DieValue.ATTACK,

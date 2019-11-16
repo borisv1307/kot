@@ -38,7 +38,7 @@ def dice_resolution(dice, player, other_players):
 
     attack = calculate_attack_from_dice(dice_counter)
     attackable_players = get_attackable_players(player, other_players)
-    attack_players(attackable_players, attack)
+    attack_players(player, attackable_players, attack)
 
     energy = calculate_energy_from_dice(dice_counter)
     return victory_points, health, attack, energy

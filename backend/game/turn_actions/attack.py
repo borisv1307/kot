@@ -1,5 +1,5 @@
 from game.values.locations import Locations
-from game.turn_actions.player_movement import move_to_tokyo_if_empty
+from game.turn_actions.player_movement import move_to_tokyo_if_empty, yield_tokyo
 
 
 def is_attackable(attacking_player_location, other_player):
@@ -21,6 +21,8 @@ def get_attackable_players(attacking_player, other_players):
     return attackable_players
 
 
-def attack_players(attackable_players, attack_value=-1):
+def attack_players(attacking_player, attackable_players, attack_value=1):
     for attacked_player in attackable_players:
-        attacked_player.update_health_by(attack_value)
+        attacked_player.update_health_by(attack_value * -1)
+        if attacked_player.is_alive is False and attacked_player.location == Locations.TOKYO:
+            yield_tokyo(attacked_player, attacking_player)
