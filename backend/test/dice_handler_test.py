@@ -42,7 +42,8 @@ def test_re_roll_all_dice(dice_handler):
 
 def test_re_roll_out_of_bounds_does_nothing(dice_handler):
     starting_dice_values = dice_handler.dice_values
-    dice_handler.re_roll_dice(9)
+    with pytest.raises(ValueError):
+        dice_handler.re_roll_dice(9)
     assert dice_handler.dice_values == starting_dice_values
 
 
@@ -54,24 +55,27 @@ def test_re_roll_costs_re_roll_count(dice_handler):
 
 def test_re_roll_fail_does_not_cost_re_roll_count(dice_handler):
     starting_re_roll_count = dice_handler.re_rolls_left
-    dice_handler.re_roll_dice(20)
+    with pytest.raises(ValueError):
+        dice_handler.re_roll_dice(20)
     assert dice_handler.re_rolls_left == starting_re_roll_count
 
 
 def test_re_roll_bad_middle_index_still_re_rolls_others(dice_handler):
-    dice_handler.re_roll_dice([1, 30, 2])
+    with pytest.raises(ValueError):
+        dice_handler.re_roll_dice([1, 30, 2])
     assert dice_handler.dice_values[1] == dice_handler.dice_values[2] == MOCK_DIE_ROLL_RESULT
 
 
 def test_re_roll_bad_middle_index_still_costs_re_roll(dice_handler):
     starting_re_roll_count = dice_handler.re_rolls_left
-    dice_handler.re_roll_dice([1, 30, 40, 5])
+    with pytest.raises(ValueError):
+        dice_handler.re_roll_dice([1, 30, 40, 5])
     assert dice_handler.re_rolls_left == starting_re_roll_count - 1
 
 
 def test_bad_value_throws_exception(dice_handler):
-    with pytest.raises(TypeError):
-        assert dice_handler.re_roll_dice("BAD_VALUE")
+    with pytest.raises(ValueError):
+        assert dice_handler.re_roll_dice(99)
 
 
 def test_add_one_bonus_die(dice_handler):

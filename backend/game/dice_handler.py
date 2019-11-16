@@ -17,17 +17,20 @@ class DiceHandler:
         if isinstance(indexes_of_dice_to_re_roll, int):
             indexes_of_dice_to_re_roll = [indexes_of_dice_to_re_roll]
 
-        temp_values = self.dice_values.copy()
+        dice_modified = False
+        invalid_indexes = []
         for i in indexes_of_dice_to_re_roll:
             try:
-                temp_values[i] = dice.roll()
+                self.dice_values[i] = dice.roll()
+                dice_modified = True
             except IndexError:
-                continue
-        if self.dice_values != temp_values:
-            self.dice_values = temp_values
+                invalid_indexes.append(i)
+        if dice_modified:
             self.re_rolls_left -= 1
+        if invalid_indexes.__len__() > 0:
+            raise ValueError("Unable to re-roll dice with given indexes: {0}, max index value is {1}"
+                             .format(invalid_indexes, self.dice_values.__len__() - 1))
 
     def add_bonus_die(self, count_to_add=1):
         for _ in range(count_to_add):
             self.dice_values.append(dice.roll())
-
