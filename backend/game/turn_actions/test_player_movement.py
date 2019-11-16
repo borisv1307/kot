@@ -39,11 +39,25 @@ def test_stay_out_occupied_tokyo(main_player, other_players):
     assert main_player.location == Locations.OUTSIDE
 
 
+def test_move_to_empty_tokyo_gives_victory_point(main_player, other_players):
+    starting_victory_points = main_player.victory_points
+    player_movement.move_to_tokyo_if_empty(main_player, other_players)
+    assert main_player.victory_points == starting_victory_points + 1
+
+
 def test_yield_tokyo(main_player, other_players):
     main_player.location = Locations.TOKYO
     player_a = other_players[0]
     player_movement.yield_tokyo(main_player, player_a)
     assert main_player.location == Locations.OUTSIDE and player_a.location == Locations.TOKYO
+
+
+def test_yield_tokyo_gives_victory_point_to_attacker(main_player, other_players):
+    main_player.location = Locations.TOKYO
+    starting_victory_points = main_player.victory_points
+    player_a = other_players[0]
+    player_movement.yield_tokyo(main_player, player_a)
+    assert player_a.victory_points == starting_victory_points + 1
 
 
 def test_first_attack_roll_forces_move_to_tokyo(main_player, other_players):
@@ -62,3 +76,4 @@ def test_yield_on_death(main_player, other_players):
     player_a.current_health = 1
     dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
     assert main_player.location == Locations.TOKYO and not player_a.is_alive
+
