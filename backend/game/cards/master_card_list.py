@@ -19,6 +19,8 @@ def get_all_cards():
                                         EvacuationOrders(), GasRefinery(), Skyscraper()]
 
     full_list_of_cards = []
+
     full_list_of_cards.extend(health_point_manipulation_cards)
     full_list_of_cards.extend(victory_point_manipulation_cards)
+
     return full_list_of_cards
