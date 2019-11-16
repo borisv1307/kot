@@ -1,10 +1,10 @@
 import pytest
 
-import game.values.test_constants as constants
 from game.deck.deck import Deck
 import game.cards.master_card_list as master_card_list
 
 NUMBER_OF_CARDS_IN_GAME = master_card_list.get_all_cards().__len__()
+
 
 @pytest.fixture(autouse=True)
 def deck():

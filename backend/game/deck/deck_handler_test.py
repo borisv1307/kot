@@ -3,13 +3,13 @@ from typing import List
 import pytest
 
 import game.values.constants as constants
-import game.values.test_constants as test_constants
 from game.cards.card import Card
 from game.deck.deck_handler import DeckHandler
 
 import game.cards.master_card_list as master_card_list
 
 NUMBER_OF_CARDS_IN_GAME = master_card_list.get_all_cards().__len__()
+
 
 @pytest.fixture(autouse=True)
 def deck_handler():
@@ -49,7 +49,6 @@ def test_force_shuffle_discard_add_to_draw(deck_handler):
         bought_cards.append(deck_handler.buy_card_from_store(1))
     assert len(bought_cards) == NUMBER_OF_CARDS_IN_GAME - 3
 
-
     # discard the 5 cards_old_dir
     for card in bought_cards:
         deck_handler.discard(card)
@@ -77,8 +76,6 @@ def test_auto_reshuffle(deck_handler):
     bought_cards.clear()
     assert len(deck_handler) == NUMBER_OF_CARDS_IN_GAME
     assert len(deck_handler.draw_pile) == 1
-
-
 
     # buy all card but 1 and the store again, forcing reshuffle discard to draw pile
     for _ in range(NUMBER_OF_CARDS_IN_GAME - (1 + constants.CARD_STORE_SIZE_LIMITER)):

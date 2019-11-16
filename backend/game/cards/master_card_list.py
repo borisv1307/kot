@@ -1,15 +1,24 @@
-import game.cards.discard_cards.victory_point_manipulation_cards.card_collector as vpm_card_collector
-from typing import List
-from game.cards.card import Card
-
-
-DIRECTORIES_TO_SEARCH_FOR_CARDS = "game.cards.discard_cards.victory_point_manipulation_cards"
+from game.cards.discard_cards.victory_point_manipulation_cards.apartment_building import ApartmentBuilding
+from game.cards.discard_cards.victory_point_manipulation_cards.commuter_train import CommuterTrain
+from game.cards.discard_cards.victory_point_manipulation_cards.corner_store import CornerStore
+from game.cards.discard_cards.victory_point_manipulation_cards.evacuation_orders import EvacuationOrders
+from game.cards.discard_cards.victory_point_manipulation_cards.gas_refinery import GasRefinery
+from game.cards.discard_cards.victory_point_manipulation_cards.skyscraper import Skyscraper
 
 
 def get_all_cards():
+    """
+    Serves as the master list of all cards to add to the deck.
 
-    master_card_list: List[Card] = []
+    Create lists to reflect package structure and add individual cards to each list.
+    If a new list is created extend it onto the full_list_of_cards
+    """
+    health_point_manipulation_cards = []
 
-    master_card_list.extend(vpm_card_collector.get_list_vpm_cards(DIRECTORIES_TO_SEARCH_FOR_CARDS))
+    victory_point_manipulation_cards = [ApartmentBuilding(), CommuterTrain(), CornerStore(),
+                                        EvacuationOrders(), GasRefinery(), Skyscraper()]
 
-    return master_card_list
+    full_list_of_cards = []
+    full_list_of_cards.extend(health_point_manipulation_cards)
+    full_list_of_cards.extend(victory_point_manipulation_cards)
+    return full_list_of_cards
