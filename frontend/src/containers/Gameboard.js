@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import "./Gameboard.css";
 
 import GameConsole from '../components/GameConsole/GameConsole'
-import ChatConsole from '../components/GameConsole/ChatConsole'
 import DiceRoller from './../components/Dice/DiceRoller'
+
+import GameInstance from './../services/gameService'
 
 export default class GameboardLayout extends Component {
 
@@ -22,25 +23,27 @@ export default class GameboardLayout extends Component {
             gameRoom: roomName,
             loggedIn: true
         };
+
+        GameInstance.connect(this.state.gameRoom);
     }
 
     render() {
         return (
             <div>
-                <br/>
+                <br />
                 <h4>{this.state.gameRoom}</h4>
                 <div className="container">
                     {
                         this.state.loggedIn ?
                             <div className="row">
                                 <div className="col-sm">
-                                    <DiceRoller />
+                                    <DiceRoller currentUser={this.state.username} currentRoom={this.state.gameRoom} />
                                 </div>
                                 <div className="col-sm">
                                     <GameConsole />
                                 </div>
                                 <div className="col-sm">
-                                    <ChatConsole username={this.state.username} gameRoom={this.state.gameRoom} />
+                                    <p>Chatroom Placeholder</p>
                                 </div>
                             </div>
                             :

@@ -1,34 +1,55 @@
 import config from './config';
 
-class ChatService {
+class GameService {
     static instance = null;
     callbacks = {};
 
     static getInstance() {
-        if (!ChatService.instance) {
-            ChatService.instance = new ChatService();
+        if (!GameService.instance) {
+            GameService.instance = new GameService();
         }
-        return ChatService.instance;
+        return GameService.instance;
     }
 
     constructor() {
         this.socketRef = null;
     }
 
-    connect(room) {
-        // const path = config.CHAT_SOCKET_API_PATH;
-        const path = 'ws://localhost:8000/ws/chat';
+    // sends dice back to server formatted as an array of 2d arrays.
+    // first index: the roll value
+    // second index: selected or not
+    // [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
+    sendSelectedDice(envelope) {
+        this.sendMessage({ command: 'selected_dice', from: envelope.from, message: envelope.data });
+    }
+
+    requestRollDice(username) {
+        this.sendMessage({ command: 'roll_dice', username: username });
+    }
+
+    connect(roomName) {
+        // this.socketRef = new WebSocket(
+        //     'ws://' + 'localhost:8000' +
+        //     '/ws/lobby/' + roomName + '/');
+
+        const path = config.GAME_SOCKET_API_PATH + roomName + '/';
         this.socketRef = new WebSocket(path);
+
+
         this.socketRef.onopen = () => {
             console.log('WebSocket open');
         };
+
         this.socketRef.onmessage = e => {
-            this.socketNewMessage(e.data);
+            let data = e.data;
+            this.socketNewMessage(data);
+            console.log(data);
         };
 
         this.socketRef.onerror = e => {
             console.log(e.message);
         };
+
         this.socketRef.onclose = (e) => {
             console.log("WebSocket closed let's reopen");
             this.connect();
@@ -47,18 +68,6 @@ class ChatService {
         if (command === 'new_message') {
             this.callbacks[command](parsedData.message);
         }
-    }
-
-    initChatUser(username) {
-        this.sendMessage({ command: 'init_chat', username: username });
-    }
-
-    fetchMessages(username) {
-        this.sendMessage({ command: 'fetch_messages', username: username });
-    }
-
-    newChatMessage(message) {
-        this.sendMessage({ command: 'new_message', from: message.from, text: message.text });
     }
 
     addCallbacks(messagesCallback, newMessageCallback) {
@@ -100,6 +109,6 @@ class ChatService {
 
 }
 
-const ChatInstance = ChatService.getInstance();
+const GameInstance = GameService.getInstance();
 
-export default ChatInstance;
+export default GameInstance;

@@ -1,5 +1,5 @@
-const CHAT_SOCKET_API_PATH = 'ws://localhost:8000/ws/lobby';
+const GAME_SOCKET_API_PATH = 'ws://localhost:8000/ws/lobby/';
 
 export default {
-    CHAT_SOCKET_API_PATH
+    GAME_SOCKET_API_PATH
 };

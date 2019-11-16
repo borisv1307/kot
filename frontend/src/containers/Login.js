@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import "./Login.css";
 
-import ChatInstance from './../services/chatService'
 import Form from "react-bootstrap/Form";
 
 export default class LoginLayout extends Component {
@@ -24,7 +23,6 @@ export default class LoginLayout extends Component {
     }
 
     setRedirect = () => {
-        ChatInstance.connect();
         this.setState({
             redirect: true
         })
@@ -49,7 +47,7 @@ export default class LoginLayout extends Component {
 
                     </div>
                     <div className="col-sm">
-                </div>
+                    </div>
                     <div className="col-sm">
 
                     </div>
@@ -60,21 +58,21 @@ export default class LoginLayout extends Component {
                     </div>
                     <div className="col-sm p-4">
                         <h2>Welcome to KoT</h2>
-                        <br/>
+                        <br />
                         <div className="login">
-                        <Form class="login">
-                        <Form.Group href="/lobby" onSubmit={() => this.props.onSubmit(this.state.username)}>
-                        <Form.Label>Login to Join a Game</Form.Label>
-                            <Form.Control type="text"
-                                 onChange={this.usernameChangeHandler}
-                                  placeholder="Enter your Username"
-                                 value={this.state.username}
-                                    required />
-                                {this.renderRedirect()}
-                        </Form.Group>
-                    <Button variant="btn btn-secondary" onClick={this.setRedirect} className="submit" type="submit" value="Submit">Login</Button>
-                </Form>
-                    </div>
+                            <Form class="login">
+                                <Form.Group href="/lobby" onSubmit={() => this.props.onSubmit(this.state.username)}>
+                                    <Form.Label>Login to Join a Game</Form.Label>
+                                    <Form.Control type="text"
+                                        onChange={this.usernameChangeHandler}
+                                        placeholder="Enter your Username"
+                                        value={this.state.username}
+                                        required />
+                                    {this.renderRedirect()}
+                                </Form.Group>
+                                <Button variant="btn btn-secondary" onClick={this.setRedirect} className="submit" type="submit" value="Submit">Login</Button>
+                            </Form>
+                        </div>
 
                         {/* <br></br>
                         <a className="b" href="/lobby">
