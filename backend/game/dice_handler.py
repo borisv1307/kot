@@ -12,24 +12,25 @@ class DiceHandler:
 
     def re_roll_dice(self, indexes_of_dice_to_re_roll):
         if self.re_rolls_left <= 0:
-            return
+            raise Exception("No re-rolls left")
 
         if isinstance(indexes_of_dice_to_re_roll, int):
             indexes_of_dice_to_re_roll = [indexes_of_dice_to_re_roll]
 
-        dice_modified = False
         invalid_indexes = []
+        temp_values = self.dice_values.copy()
+
         for i in indexes_of_dice_to_re_roll:
             try:
-                self.dice_values[i] = dice.roll()
-                dice_modified = True
+                temp_values[i] = dice.roll()
             except IndexError:
                 invalid_indexes.append(i)
-        if dice_modified:
-            self.re_rolls_left -= 1
-        if invalid_indexes.__len__() > 0:
-            raise ValueError("Unable to re-roll dice with given indexes: {0}, max index value is {1}"
-                             .format(invalid_indexes, self.dice_values.__len__() - 1))
+
+        if len(invalid_indexes) > 0:
+            raise ValueError(f'Invalid indexes: {", ".join(invalid_indexes)}')
+
+        self.re_rolls_left -= 1
+        self.dice_values = temp_values
 
     def add_bonus_die(self, count_to_add=1):
         for _ in range(count_to_add):
