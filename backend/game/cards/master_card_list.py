@@ -17,7 +17,6 @@ from game.cards.discard_cards.victory_point_manipulation_cards.evacuation_orders
 from game.cards.discard_cards.victory_point_manipulation_cards.skyscraper import Skyscraper
 
 
-
 def get_all_cards():
     """
     Serves as the master list of all cards to add to the deck.
