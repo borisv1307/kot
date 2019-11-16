@@ -60,17 +60,12 @@ def test_re_roll_fail_does_not_cost_re_roll_count(dice_handler):
     assert dice_handler.re_rolls_left == starting_re_roll_count
 
 
-def test_re_roll_bad_middle_index_still_re_rolls_others(dice_handler):
-    with pytest.raises(ValueError):
-        dice_handler.re_roll_dice([1, 30, 2])
-    assert dice_handler.dice_values[1] == dice_handler.dice_values[2] == MOCK_DIE_ROLL_RESULT
-
-
-def test_re_roll_bad_middle_index_still_costs_re_roll(dice_handler):
+def test_re_roll_bad_middle_index_cancels_re_roll(dice_handler):
+    initial_vals = dice_handler.dice_values
     starting_re_roll_count = dice_handler.re_rolls_left
     with pytest.raises(ValueError):
-        dice_handler.re_roll_dice([1, 30, 40, 5])
-    assert dice_handler.re_rolls_left == starting_re_roll_count - 1
+        dice_handler.re_roll_dice([1, 30, 2])
+    assert initial_vals == dice_handler.dice_values and dice_handler.re_rolls_left == starting_re_roll_count
 
 
 def test_bad_value_throws_exception(dice_handler):

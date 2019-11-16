@@ -27,7 +27,7 @@ class DiceHandler:
                 invalid_indexes.append(i)
 
         if len(invalid_indexes) > 0:
-            raise ValueError(f'Invalid indexes: {", ".join(invalid_indexes)}')
+            raise ValueError(f'Invalid indexes: {", ".join(str(i) for i in invalid_indexes)}')
 
         self.re_rolls_left -= 1
         self.dice_values = temp_values
