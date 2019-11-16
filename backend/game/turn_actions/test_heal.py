@@ -1,6 +1,7 @@
 import pytest
 import game.turn_actions.heal as heal
 from game.player.player import Player
+from game.values.locations import Locations
 
 
 @pytest.fixture(autouse=True)
@@ -11,7 +12,7 @@ def hurt_player():
 
 
 def test_heal_from_dice_out_of_tokyo(hurt_player):
-    hurt_player.leave_tokyo()
+    hurt_player.location = Locations.OUTSIDE
     starting_health = hurt_player.current_health
     heal.heal_self_from_dice(hurt_player, 1)
     assert hurt_player.current_health == starting_health + 1
