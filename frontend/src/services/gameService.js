@@ -23,10 +23,6 @@ class GameService {
         this.sendMessage({ command: 'selected_dice', from: envelope.from, message: envelope.data });
     }
 
-    requestRollDice(username) {
-        this.sendMessage({ command: 'roll_dice', username: username });
-    }
-
     connect(roomName) {
         // this.socketRef = new WebSocket(
         //     'ws://' + 'localhost:8000' +
