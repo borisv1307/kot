@@ -10,3 +10,4 @@ def move_to_tokyo_if_empty(attacking_player, other_players):
 def yield_tokyo(yielding_player, attacking_player):
     yielding_player.leave_tokyo()
     attacking_player.move_to_tokyo()
+

@@ -1,6 +1,7 @@
 import collections
 
 from game.dice.dice import DieValue
+from game.turn_actions.attack import get_attackable_players, attack_players
 
 
 def get_dice_count(dice):
@@ -30,11 +31,15 @@ def calculate_heal_from_dice(dice_counter):
     return dice_counter[DieValue.HEAL]
 
 
-def dice_resolution(dice, player):
+def dice_resolution(dice, player, other_players):
     dice_counter = get_dice_count(dice)
     victory_points = calculate_victory_points_from_dice(dice_counter)
     health = calculate_heal_from_dice(dice_counter)
+
     attack = calculate_attack_from_dice(dice_counter)
+    attackable_players = get_attackable_players(player, other_players)
+    attack_players(attackable_players, attack)
+
     energy = calculate_energy_from_dice(dice_counter)
     return victory_points, health, attack, energy
 
