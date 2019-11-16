@@ -4,7 +4,9 @@ import itertools
 class GamePlayers():
 
     def __init__(self):
-        self.all_players = self.dead_players = self.alive_players = []
+        self.all_players = []
+        self.dead_players = []
+        self.alive_players = []
         self.current_player = None
 
     def _add_initial_player(self, player):
