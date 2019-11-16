@@ -7,9 +7,8 @@ def test_jet_fighters_adds_5_victory_points(player):
 
 
 def test_jet_fighters_subtracts_4_health(player):
-    player.current_health = 9
     JetFighters().immediate_effect(player, None)
-    assert player.current_health == 5
+    assert player.current_health == 6
 
 
 def test_jet_fighters_costs_5_energy():
