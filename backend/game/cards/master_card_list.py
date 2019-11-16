@@ -13,14 +13,17 @@ def get_all_cards():
     Create lists to reflect package structure and add individual cards to each list.
     If a new list is created extend it onto the full_list_of_cards
     """
-    health_point_manipulation_cards = []
+    energy_manipulation_cards = []
+
+    multi_manipulation_cards = []
 
     victory_point_manipulation_cards = [ApartmentBuilding(), CommuterTrain(), CornerStore(),
                                         EvacuationOrders(), GasRefinery(), Skyscraper()]
 
     full_list_of_cards = []
 
-    full_list_of_cards.extend(health_point_manipulation_cards)
+    full_list_of_cards.extend(energy_manipulation_cards)
+    full_list_of_cards.extend(multi_manipulation_cards)
     full_list_of_cards.extend(victory_point_manipulation_cards)
 
     return full_list_of_cards
