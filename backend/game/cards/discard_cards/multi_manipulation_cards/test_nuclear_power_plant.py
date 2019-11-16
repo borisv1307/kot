@@ -8,6 +8,7 @@ def test_jet_fighters_adds_2_victory_points(player):
 
 
 def test_jet_fighters_adds_3_health(player):
+    player.current_health = player.current_health - 3
     NuclearPowerPlant().immediate_effect(player, None)
     assert player.current_health == constants.DEFAULT_HEALTH
 
