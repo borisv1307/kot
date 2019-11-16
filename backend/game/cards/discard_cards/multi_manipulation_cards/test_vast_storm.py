@@ -1,4 +1,5 @@
 from game.cards.discard_cards.multi_manipulation_cards.vast_storm import VastStorm
+from game.values import constants
 
 
 def test_vast_storm_adds_2_victory_points(player):
@@ -7,9 +8,9 @@ def test_vast_storm_adds_2_victory_points(player):
 
 
 def test_vast_storm_subtracts_3_health(player):
-    player.current_health = 8
+    player.current_health = constants.DEFAULT_HEALTH
     VastStorm().immediate_effect(player, None)
-    assert player.current_health == 7
+    assert player.current_health == 9
 
 
 def test_vast_storm_costs_6_energy():
