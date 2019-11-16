@@ -2,16 +2,16 @@ from game.cards.discard_cards.multi_manipulation_cards.nuclear_power_plant impor
 from game.values import constants
 
 
-def test_jet_fighters_adds_2_victory_points(player):
+def test_nuclear_power_adds_2_victory_points(player):
     NuclearPowerPlant().immediate_effect(player, None)
     assert player.victory_points == 2
 
 
-def test_jet_fighters_adds_3_health(player):
+def test_nuclear_power_adds_3_health(player):
     player.current_health = player.current_health - 3
     NuclearPowerPlant().immediate_effect(player, None)
     assert player.current_health == constants.DEFAULT_HEALTH
 
 
-def test_jet_fighters_costs_6_energy():
+def test_nuclear_power_costs_6_energy():
     assert NuclearPowerPlant().cost == 6
