@@ -9,6 +9,7 @@ class Player:
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
+        self.card_on_hand = {}
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
@@ -32,3 +33,9 @@ class Player:
         self.energy += change_integer
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
+
+    def add_card(self, card):
+        self.card_on_hand[card.name] = card.effect
+
+    def remove_card(self, card):
+        self.card_on_hand.pop(card.name)
