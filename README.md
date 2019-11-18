@@ -46,7 +46,7 @@ Frontend documentation see \kot\frontend\README.md.
 * Option 1: Use Setup Python Virtual Environment (recommended)
       > `cd \kot\backend\` </br>
       > `python -m venv env` </br>
-      > `.\env\Scripts\activate` </br>
+      > `\env\Scripts\activate` </br>
       > `pip install -r requirements.txt`
 
 * Option 2: Use Pythons Global Enviornment
