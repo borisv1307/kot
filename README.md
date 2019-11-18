@@ -28,14 +28,15 @@ Frontend documentation see \kot\frontend\README.md.
 > `npm install` </br>
 > `npm run build` </br>
 
-* Install then run Python Server
+* Install Virtual Enviornment then run Python Server (Note: the second pip install after upgrading PIP is not a typo)
 
 > `cd \kot\backend\` </br>
+> `python -m venv env` </br>
+> `.\env\Scripts\activate` </br>
 > `pip install -r requirements.txt`</br>
-
-* Run the web app using the Python Server
-> `.\kot\backend\python manage.py runserver` </br>
-
+> `python -m pip install --upgrade pip`</br>
+> `pip install -r requirements.txt`</br>
+> `python manage.py runserver` </br>
 
 ## Setup Details
 
