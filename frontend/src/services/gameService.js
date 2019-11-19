@@ -48,7 +48,7 @@ class GameService {
 
         this.socketRef.onclose = (e) => {
             console.log("WebSocket closed let's reopen");
-            this.connect();
+            this.connect(roomName);
         };
     }
 
