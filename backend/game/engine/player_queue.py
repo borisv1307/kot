@@ -30,6 +30,13 @@ class GamePlayers():
     def get_next_player(self):
         self.current_player = self._cycle_next_alive_player()
 
+    def get_alive_player(self):
+        return self.alive_players
+
+    def get_all_other_alive_player(self):
+        return [player for player in self.alive_players if
+                self.current_player != player]
+
     def _cycle_next_alive_player(self):
         for player in self.player_cycle:
             if player in self.alive_players:
