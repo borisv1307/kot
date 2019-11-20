@@ -1,5 +1,9 @@
+from game.cards import card
+from game.cards.keep_cards.victory_points_manipulation_cards.eater_of_the_dead import EaterOfTheDead
 from game.values import constants
 from game.values.locations import Locations
+from game.cards.card import Card
+from typing import List
 
 
 class Player:
@@ -9,7 +13,7 @@ class Player:
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
-        self.card_on_hand = {}
+        self.card_on_hand: List[Card] = []
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
@@ -35,7 +39,13 @@ class Player:
             self.energy = constants.DEFAULT_ENERGY_CUBE
 
     def add_card(self, card):
-        self.card_on_hand[card.name] = card.effect
+        self.card_on_hand.append(card)
 
-    def remove_card(self, card):
-        self.card_on_hand.pop(card.name)
+    def remove_card(self, index):
+        self.card_on_hand.pop(index)
+
+    def get_card_at_index(self, index):
+        return self.card_on_hand.pop(index)
+
+    def get_current_hand(self):
+        return self.card_on_hand
