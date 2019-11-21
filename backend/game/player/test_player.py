@@ -100,7 +100,8 @@ def test_player_add_keep_card(player):
     card = EvenBigger()
     player.add_card(card)
     assert player.card_on_hand.get(
-        "Even Bigger") == "+2[health] when you buy this card.maximum [health] increased to 12 as long as you own this card"
+        "Even Bigger") == "+2[health] when you buy this card.maximum [health] " \
+                          "increased to 12 as long as you own this card"
 
 
 def test_player_remove_keep_card(player):
