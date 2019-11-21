@@ -1,5 +1,6 @@
 from game.cards.card import Card
 from game.cards.keep_card import KeepCard
+from game.values import constants
 
 
 class EnergyHoarder(KeepCard):
@@ -12,5 +13,5 @@ class EnergyHoarder(KeepCard):
         player_that_bought_the_card.add_card(card)
 
     def special_effect(self, player_that_bought_the_card, other_players):
-        num_stars = player_that_bought_the_card.energy // 6
+        num_stars = player_that_bought_the_card.energy // constants.ENERGY_HOARDER_DIVIDER
         player_that_bought_the_card.update_victory_points_by(num_stars)
