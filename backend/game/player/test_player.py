@@ -1,6 +1,6 @@
 import pytest
 
-from game.cards.card import Card
+from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.player.player import Player
 from game.values import constants
 from game.values.locations import Locations
@@ -97,19 +97,14 @@ def test_player_can_not_have_less_than_zero_victory_points(player):
 
 
 def test_player_add_keep_card(player):
-    Card.name = "Acid Attack"
-    Card.cost = 6
-    Card.footnote = ""
-    Card.effect = "Add [attack] to your roll"
-    player.add_keep_card(Card)
-    assert player.card_on_hand.get("Acid Attack") == "Add [attack] to your roll"
+    card = EvenBigger()
+    player.add_card(card)
+    assert player.card_on_hand.get(
+        "Even Bigger") == "+2[health] when you buy this card.maximum [health] increased to 12 as long as you own this card"
 
 
 def test_player_remove_keep_card(player):
-    Card.name = "Acid Attack"
-    Card.cost = 6
-    Card.footnote = ""
-    Card.effect = "Add [attack] to your roll"
-    player.add_keep_card(Card)
-    player.remove_keep_card(Card)
-    assert player.card_on_hand.get("Acid Attack", "Not-Found") == "Not-Found"
+    card = EvenBigger()
+    player.add_card(card)
+    player.remove_card(card)
+    assert player.card_on_hand.get("Even Bigger", "Not-Found") == "Not-Found"

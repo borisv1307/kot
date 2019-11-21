@@ -37,8 +37,14 @@ class Player:
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
 
-    def add_keep_card(self, card):
+    def add_card(self, card):
         self.card_on_hand[card.name] = card.effect
 
-    def remove_keep_card(self, card):
+    def remove_card(self, card):
         self.card_on_hand.pop(card.name)
+
+    def get_card_at_index(self, index):
+        return self.card_on_hand.pop(index)
+
+    def get_current_hand(self):
+        return self.card_on_hand
