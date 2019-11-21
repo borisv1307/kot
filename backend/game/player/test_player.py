@@ -1,8 +1,8 @@
 import pytest
 
+from game.player.player import Player
 from game.values import constants
 from game.values.locations import Locations
-from game.player.player import Player
 
 
 @pytest.fixture(autouse=True)
