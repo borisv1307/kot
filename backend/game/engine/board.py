@@ -16,28 +16,26 @@ class BoardGame():
         self.players.set_player_order()
         self.STATUS = status.ACTIVE
 
-    def check_if_winner(self, player):
-        if player.victory_points == constants.VICTORY_POINTS_TO_WIN or all(
-                alive_player == player for alive_player
-                in self.players.get_alive_player()):
-            self.WINNER = player
+    def check_if_winner(self, potential_winner):
+        if (potential_winner.victory_points == constants.VICTORY_POINTS_TO_WIN or
+                players.if_last_player_alive(potential_winner)):
+            self.WINNER = potential_winner
             self.end_game()
 
     def end_game(self):
         self.STATUS = status.COMPLETED
 
-    def turn(self, current_player):
-        # roll dice & dice_resoultion method
-        pass
+    def turn(self, active_player):
+        if active_player == self.players.get_current_player():
+            self.turn_actions(active_player)
+            self.check_if_winner(active_player)
+        else:
+            # TODO player object should have a name property here
+            raise Exception("It is not %s's turn" % (id(active_player)))
 
     def is_game_active(self):
-        if self.STATUS == status.ACTIVE:
-            return True
-        else:
-            return False
+        return self.STATUS == status.ACTIVE
 
-    def play_game(self):
-        while self.is_game_active():
-            current_player = self.players.get_current_player()
-            self.turn(current_player)
-            self.check_if_winner(current_player)
+    def turn_actions(self, turn_player):
+        # roll dice & dice_resoultion method
+        pass
