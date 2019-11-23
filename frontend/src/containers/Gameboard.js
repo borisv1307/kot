@@ -5,6 +5,7 @@ import GameConsole from '../components/GameConsole/GameConsole'
 import DiceRoller from './../components/Dice/DiceRoller'
 
 import GameInstance from './../services/gameService'
+import CardStore from "../components/Cards/CardStore";
 
 export default class GameboardLayout extends Component {
 
@@ -32,6 +33,11 @@ export default class GameboardLayout extends Component {
             <div>
                 <br />
                 <h4>{this.state.gameRoom}</h4>
+                <div>
+                    <div className="col">
+                        <CardStore/>
+                </div>
+                    </div>
                 <div className="container">
                     {
                         this.state.loggedIn ?
