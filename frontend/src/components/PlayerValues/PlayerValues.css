@@ -1,0 +1,11 @@
+.player-border {
+    border: 2px solid;
+}
+
+.player-values {
+    margin: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+    text-align: left;
+    color: black;
+}
