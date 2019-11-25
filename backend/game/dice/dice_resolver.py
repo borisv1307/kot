@@ -2,6 +2,7 @@ import collections
 
 from game.dice.dice import DieValue
 from game.turn_actions.attack import get_attackable_players, attack_players
+from game.turn_actions.player_movement import move_to_tokyo_if_empty
 
 
 def get_dice_count(dice):
@@ -39,6 +40,8 @@ def dice_resolution(dice, player, other_players):
     attack = calculate_attack_from_dice(dice_counter)
     attackable_players = get_attackable_players(player, other_players)
     attack_players(player, attackable_players, attack)
+    if attack > 1:
+        move_to_tokyo_if_empty(player, other_players)
 
     energy = calculate_energy_from_dice(dice_counter)
     return victory_points, health, attack, energy

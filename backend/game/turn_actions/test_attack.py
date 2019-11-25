@@ -5,14 +5,14 @@ from game.player.player import Player
 def test_if_attackable_in_same_locations():
     player_one = Player()
     player_two = Player()
-    assert not attack_actions.is_attackable(player_one.location, player_two)
+    assert not attack_actions.is_attackable(player_one, player_two)
 
 
 def test_if_attackable_in_different_locations():
     player_one = Player()
     player_two = Player()
     player_two.move_to_tokyo()
-    assert attack_actions.is_attackable(player_one.location, player_two)
+    assert attack_actions.is_attackable(player_one, player_two)
 
 
 def test_gets_all_attackable_players_in_different_location():

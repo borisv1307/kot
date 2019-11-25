@@ -67,3 +67,4 @@ def test_three_attacks_rolled_three_attacks_award():
                                 DieValue.ATTACK, DieValue.ATTACK,
                                 ])
     assert dice_resolver.calculate_attack_from_dice(dice) == 3
+

@@ -45,11 +45,18 @@ def test_move_to_empty_tokyo_gives_victory_point(main_player, other_players):
     assert main_player.victory_points == starting_victory_points + 1
 
 
-def test_yield_tokyo(main_player, other_players):
+def test_yield_tokyo_player_leaves_tokyo(main_player, other_players):
     main_player.location = Locations.TOKYO
     player_a = other_players[0]
     player_movement.yield_tokyo(main_player, player_a)
-    assert main_player.location == Locations.OUTSIDE and player_a.location == Locations.TOKYO
+    assert main_player.location == Locations.OUTSIDE
+
+
+def test_yield_tokyo_player_attacker_enters_tokyo(main_player, other_players):
+    main_player.location = Locations.TOKYO
+    player_a = other_players[0]
+    player_movement.yield_tokyo(main_player, player_a)
+    assert player_a.location == Locations.TOKYO
 
 
 def test_yield_tokyo_gives_victory_point_to_attacker(main_player, other_players):
@@ -70,10 +77,26 @@ def test_first_attack_roll_does_not_hurt_anyone(main_player, other_players):
     assert all(others.current_health == DEFAULT_HEALTH for others in other_players)
 
 
-def test_yield_on_death(main_player, other_players):
+def test_yield_on_death_causes_death(main_player, other_players):
     player_a = other_players[0]
     player_a.location = Locations.TOKYO
     player_a.current_health = 1
     dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
-    assert main_player.location == Locations.TOKYO and not player_a.is_alive
+    assert not player_a.is_alive
 
+
+def test_yield_on_death_moves_attacker_from_outside_to_tokyo(main_player, other_players):
+    player_a = other_players[0]
+    player_a.location = Locations.TOKYO
+    player_a.current_health = 1
+    dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
+    assert main_player.location == Locations.TOKYO
+
+
+def test_yield_on_death_leaves_attacker_in_tokyo(main_player, other_players):
+    player_a = other_players[0]
+    player_a.location = Locations.OUTSIDE
+    player_a.current_health = 1
+    main_player.location = Locations.TOKYO
+    dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
+    assert main_player.location == Locations.TOKYO
