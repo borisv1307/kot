@@ -3,6 +3,8 @@ import "./Gameboard.css";
 
 import GameConsole from '../components/GameConsole/GameConsole'
 import DiceRoller from './../components/Dice/DiceRoller'
+import PlayerValues from './../components/PlayerValues/PlayerValues';
+
 
 import GameInstance from './../services/gameService'
 
@@ -36,6 +38,11 @@ export default class GameboardLayout extends Component {
                     {
                         this.state.loggedIn ?
                             <div className="row">
+                                <div className="col-sm">
+                                    <PlayerValues player_name={this.state.username} />
+                                    <br />
+                                    <PlayerValues player_name="B" />
+                                </div>
                                 <div className="col-sm">
                                     <DiceRoller currentUser={this.state.username} currentRoom={this.state.gameRoom} />
                                 </div>
