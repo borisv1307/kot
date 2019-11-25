@@ -3,6 +3,7 @@ import collections
 from game.dice.dice import DieValue
 from game.turn_actions.attack import get_attackable_players, attack_players
 from game.turn_actions.player_movement import move_to_tokyo_if_empty
+from game.turn_actions.heal import heal_self_from_dice
 
 
 def get_dice_count(dice):
@@ -36,6 +37,7 @@ def dice_resolution(dice, player, other_players):
     dice_counter = get_dice_count(dice)
     victory_points = calculate_victory_points_from_dice(dice_counter)
     health = calculate_heal_from_dice(dice_counter)
+    heal_self_from_dice(player, health)
 
     attack = calculate_attack_from_dice(dice_counter)
     attackable_players = get_attackable_players(player, other_players)
