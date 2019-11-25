@@ -39,7 +39,9 @@ export default class GameboardLayout extends Component {
                         this.state.loggedIn ?
                             <div className="row">
                                 <div className="col-sm">
-                                    <PlayerValues />
+                                    <PlayerValues player_name={this.state.username} />
+                                    <br />
+                                    <PlayerValues player_name="B" />
                                 </div>
                                 <div className="col-sm">
                                     <DiceRoller currentUser={this.state.username} currentRoom={this.state.gameRoom} />

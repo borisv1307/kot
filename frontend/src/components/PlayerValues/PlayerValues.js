@@ -18,7 +18,7 @@ class PlayerValues extends React.Component {
         return (
             <div>
                 <div className="player-border">
-                    <h2>Player A </h2>
+                    <h2>Player {this.props.player_name}</h2>
                     <div className="player-values">
                         <p>Victory Points: <span className="badge badge-light">{this.state.victory_points}</span><img src={Star}></img></p>
                         <p>Health: <span className="badge badge-light">{this.state.health}</span><img src={Heart}></img></p>
