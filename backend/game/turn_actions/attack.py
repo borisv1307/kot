@@ -3,13 +3,10 @@ from game.turn_actions.player_movement import take_tokyo_on_kill
 
 
 def is_attackable(attacking_player, other_player):
-    if Locations.OUTSIDE in {attacking_player.location, other_player.location}:
-        if attacking_player.location != other_player.location:
+    if attacking_player.location != other_player.location:
+        if Locations.OUTSIDE in {attacking_player.location, other_player.location}:
             return True
-        else:
-            return False
-    else:
-        return False
+
 
 
 def get_attackable_players(attacking_player, other_players):
