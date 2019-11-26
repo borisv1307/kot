@@ -37,7 +37,10 @@ def dice_resolution(dice, player):
     health = calculate_heal_from_dice(dice_counter)
     heal_self_from_dice(player, health)
     attack = calculate_attack_from_dice(dice_counter)
+
     energy = calculate_energy_from_dice(dice_counter)
+    player.update_energy_by(energy)
+
     return victory_points, health, attack, energy
 
 
