@@ -15,7 +15,13 @@ class CardStore extends React.Component {
             username: props.currentUser,
             gameRoom: props.currentRoom,
             value: [],
-            selectedCard: []
+            selectedCard: [],
+            cardName: 'Card Name',
+            cardCost: 3,
+            cardType: 'keep',
+            cardEffect: 'lose two hearts, gain 4 energy',
+            cardFootnote: 'footnote description',
+
         };
     }
 
@@ -58,43 +64,39 @@ class CardStore extends React.Component {
             <div id='card'>
             <Card>
                 <Card.Body>
-                <Card.Title>Card One {this.cardName}</Card.Title>
-                 <Card.Subtitle className="mb-2 text-muted">Cost (3) {this.cardCost}</Card.Subtitle>
-                    <Card.Text>Type (keep){this.cardType}</Card.Text>
-                    <Card.Text>
-                        Description of the effects of the card {this.cardEffect}
-                     </Card.Text>
-                    <Card.Text>{this.cardFootnote}</Card.Text>
+                <Card.Title>{this.state.cardName}</Card.Title>
+                 <Card.Subtitle className="mb-2 text-muted">{this.state.cardCost}</Card.Subtitle>
+                    <Card.Text>{this.state.cardType}</Card.Text>
+                    <Card.Text>{this.state.cardEffect}</Card.Text>
+                    <Card.Text>{this.state.cardFootnote}</Card.Text>
                     </Card.Body>
             </Card>
 
             <Card>
                 <Card.Body>
-                <Card.Title>Card One {this.cardName}</Card.Title>
-                 <Card.Subtitle className="mb-2 text-muted">Cost (2) {this.cardCost}</Card.Subtitle>
-                    <Card.Text>Type (discard){this.cardType}</Card.Text>
-                    <Card.Text>
-                        Description of the effects of the card {this.cardEffect}
-                     </Card.Text>
-                    <Card.Text>{this.cardFootnote}</Card.Text>
+                <Card.Title>{this.state.cardName}</Card.Title>
+                 <Card.Subtitle className="mb-2 text-muted">{this.state.cardCost}</Card.Subtitle>
+                    <Card.Text>{this.state.cardType}</Card.Text>
+                    <Card.Text>{this.state.cardEffect}</Card.Text>
+                    <Card.Text>{this.state.cardFootnote}</Card.Text>
                     </Card.Body>
             </Card>
 
             <Card>
                 <Card.Body>
-                <Card.Title>Card One {this.cardName}</Card.Title>
-                 <Card.Subtitle className="mb-2 text-muted">Cost (5) {this.cardCost}</Card.Subtitle>
-                    <Card.Text>Type (keep){this.cardType}</Card.Text>
-                    <Card.Text>
-                        Description of the effects of the card {this.cardEffect}
-                     </Card.Text>
-                    <Card.Text>{this.cardFootnote}</Card.Text>
+                <Card.Title>{this.state.cardName}</Card.Title>
+                 <Card.Subtitle className="mb-2 text-muted">{this.state.cardCost}</Card.Subtitle>
+                    <Card.Text>{this.state.cardType}</Card.Text>
+                    <Card.Text>{this.state.cardEffect}</Card.Text>
+                    <Card.Text>{this.state.cardFootnote}</Card.Text>
                     </Card.Body>
             </Card>
             </div>
-                  <Button onClick={this.setRedirect} className="btn btn-secondary">Card Store {this.state.CardStore}</Button>
+                <Button onClick={this.setRedirect} className="btn btn-secondary">Card Store{this.state.CardStore}</Button>
+                 &nbsp;&nbsp;&nbsp;
+                <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
             </div>
-             </div>
+            </div>
             </container>
 
         );
