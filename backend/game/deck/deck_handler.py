@@ -3,6 +3,7 @@ from typing import List
 import game.values.constants as constants
 from game.cards.card import Card
 from game.deck.deck import Deck
+from game.player.player import Player
 
 
 class DeckHandler:
@@ -68,3 +69,12 @@ class DeckHandler:
         self.__discard_pile.append(card)
         if card_from_location is not None:
             card_from_location.remove(card)
+
+    def sweep_store(self, player_invoking_sweep: Player):
+        if player_invoking_sweep.energy < constants.SWEEP_CARD_STORE_COST:
+            raise Exception(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
+        else:
+            player_invoking_sweep.update_energy_by(-constants.SWEEP_CARD_STORE_COST)
+            for _ in range(3):
+                self.discard(self.store.pop())
+            self.__fill_card_store()
