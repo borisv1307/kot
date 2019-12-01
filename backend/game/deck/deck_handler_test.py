@@ -68,8 +68,9 @@ def test_cards_bought_are_added_to_player(deck_handler, rich_player):
 def test_force_shuffle_discard_add_to_draw(deck_handler, rich_player):
     bought_cards: List[Card] = list()
 
-    # buy all cards but the 3 in the store
+    # buy all cards but the 3 in the store, reset energy to never run out for test
     for _ in range(NUMBER_OF_CARDS_IN_GAME - 3):
+        rich_player.energy = 100
         bought_cards.append(deck_handler.buy_card_from_store(1, rich_player))
     assert len(bought_cards) == NUMBER_OF_CARDS_IN_GAME - 3
 
@@ -91,6 +92,7 @@ def test_auto_reshuffle(deck_handler, rich_player):
 
     # buy all cards but 1 and the store
     for _ in range(NUMBER_OF_CARDS_IN_GAME - (1 + constants.CARD_STORE_SIZE_LIMITER)):
+        rich_player.energy = 100
         # bought_cards.append(deck_handler.buy_card_from_store(1, rich_player))
         deck_handler.buy_card_from_store(1, rich_player)
     assert len(deck_handler) == 1 + constants.CARD_STORE_SIZE_LIMITER
@@ -103,8 +105,9 @@ def test_auto_reshuffle(deck_handler, rich_player):
     assert len(deck_handler) == NUMBER_OF_CARDS_IN_GAME
     assert len(deck_handler.draw_pile) == 1
 
-    # buy all card but 1 and the store again, forcing reshuffle discard to draw pile
+    # buy all card but 1 and the store again, forcing reshuffle discard to draw pile, reset energy to never run out
     for _ in range(NUMBER_OF_CARDS_IN_GAME - (1 + constants.CARD_STORE_SIZE_LIMITER)):
+        rich_player.energy = 100
         deck_handler.buy_card_from_store(0, rich_player)
     assert len(rich_player.cards) == NUMBER_OF_CARDS_IN_GAME - (1 + constants.CARD_STORE_SIZE_LIMITER)
     assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
