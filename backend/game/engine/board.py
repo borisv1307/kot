@@ -1,20 +1,20 @@
 
 import game.dice.dice_resolver as dice_resolver
 from game.engine.player_queue import GamePlayers
+from game.values.status import Status
 import game.values.constants as constants
-import game.values.status as status
 
 
 class BoardGame():
 
     def __init__(self):
         self.players = GamePlayers()
-        self.status = status.SETUP
+        self.status = Status.SETUP
         self.winner = None
 
     def start_game(self):
         self.players.set_player_order()
-        self.status = status.ACTIVE
+        self.status = Status.ACTIVE
 
     def check_if_winner(self, potential_winner):
         if (potential_winner.victory_points == constants.VICTORY_POINTS_TO_WIN or
@@ -23,7 +23,7 @@ class BoardGame():
             self.end_game()
 
     def end_game(self):
-        self.status = status.COMPLETED
+        self.status = Status.COMPLETED
 
     def turn(self, active_player):
         if active_player != self.players.get_current_player():
@@ -32,7 +32,7 @@ class BoardGame():
         self.check_if_winner(active_player)
 
     def is_game_active(self):
-        return self.status == status.ACTIVE
+        return self.status == Status.ACTIVE
 
     def turn_actions(self, dice, turn_player):
         others = self.players.get_all_alive_players_minus_current_player()
