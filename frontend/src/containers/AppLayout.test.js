@@ -20,16 +20,16 @@ describe('Verify site layout template', () => {
     it('renders lobby menu', () => {
         const wrapper = shallow(<AppLayout />);
 
-        const login_menu = <li className="nav-item active">
+        const login_menu = <li className="nav-item">
             <a className="nav-link" href="/login">Login</a>
         </li>
 
         const lobby_menu = <li className="nav-item">
             <a className="nav-link" href="/lobby">Lobby <span className="sr-only">(current)</span></a>
-        </li>;
+        </li>
 
         const game_menu = <li className="nav-item">
-            <a className="nav-link" href="/game">Play ToK</a>
+            <a className="nav-link" href="/game">Play KoT</a>
         </li>
 
         expect(wrapper).toContainReact(login_menu);

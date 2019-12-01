@@ -1,20 +1,26 @@
 import React from 'react';
 import "./DiceRoller.css";
+import Button from "react-bootstrap/Button";
 
 import * as Constants from '../../constants'
 
 import DiceBoard from './DiceBoard'
 
-class DiceRoller extends React.Component {
+import GameInstance from './../../services/gameService'
 
-  state = {
-    rolledDice: [],
-    selectedDice: [],
-    allowReroll: true
-  };
+class DiceRoller extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      username: props.currentUser,
+      gameRoom: props.currentRoom,
+      rolledDice: [],
+      selectedDice: [],
+      allowReroll: true
+    };
+
     this.AttemptReroll = this.AttemptReroll.bind(this);
   }
 
@@ -31,7 +37,8 @@ class DiceRoller extends React.Component {
   async AttemptReroll(/*e*/) {
 
     try {
-      // this.textInput.clearSelected();
+
+      this.sendSelectedDice();
 
       let rerollThisMany = this.CalculateRerollCount();
 
@@ -42,6 +49,23 @@ class DiceRoller extends React.Component {
       }
     } catch (exception) {
       console.log(exception);
+    }
+  }
+
+  sendSelectedDice() {
+
+    let selected = this.state.rolledDice;
+
+    if (selected && selected.length > 0) {
+      const messageObject = {
+        from: this.props.currentUser,
+        data: selected
+      };
+
+      GameInstance.sendSelectedDice(messageObject);
+      this.setState({
+        message: ''
+      })
     }
   }
 
@@ -85,8 +109,8 @@ class DiceRoller extends React.Component {
   render() {
     return (
       <div className="DiceRoller">
-        <DiceBoard ref={this.textInput} callbackSendDiceSelectionOut={this.selectedDiceCallback} data={this.state.rolledDice} />
-        <button disabled={!this.state.allowReroll} onClick={this.AttemptReroll}>Roll</button>
+        <DiceBoard ref={this.textInput} callbackSendDiceSelectionOut={this.selectedDiceCallback} data={this.state.rolledDice} currentUser={this.state.username} currentRoom={this.state.gameRoom} />
+        <Button className="btn btn-secondary" disabled={!this.state.allowReroll} onClick={this.AttemptReroll}>Roll</Button>
       </div>
     )
   }

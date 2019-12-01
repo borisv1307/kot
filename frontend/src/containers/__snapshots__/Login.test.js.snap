@@ -8,16 +8,93 @@ exports[`Verify lobby template Lobby should render correctly 1`] = `
     className="row"
   >
     <div
-      className="col-sm"
-    />
-    <div
-      className="col-sm"
+      className="col-sm p-4"
     >
-      Your In the Lobby...
+      <br />
+      <p>
+        TO DO: 
+        <br />
+        Add list of channels. MT to add a list of game rooms to be provided to this page via websocket.
+        <br />
+         This also implies backend must managing channel groups.
+      </p>
     </div>
     <div
-      className="col-sm"
-    />
+      className="col-sm p-4"
+    >
+      <label>
+        Enter a room name (eventually select existing):
+        <input
+          id="room_input"
+          name="room_name"
+          onChange={[Function]}
+          placeholder="What chat room would you like to enter?"
+          required={true}
+          size="40"
+          type="text"
+          value="Room_1234"
+        />
+      </label>
+      <a
+        className="b"
+        href="/game"
+      >
+        <button
+          className="btn btn-secondary"
+          onClick={[Function]}
+          type="button"
+        >
+          Hi 
+          Guest_1234
+          , please click to enter room 
+          Room_1234
+        </button>
+      </a>
+    </div>
+    <div
+      className="col-sm p-4"
+    >
+      <Bootstrap(Table)
+        bordered={true}
+        hover={true}
+        striped={true}
+      >
+        <thead>
+          <tr>
+            <th>
+              User Name
+            </th>
+            <th>
+              Room ID
+            </th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Guest_1234
+            </td>
+            <td>
+              Room_1234
+            </td>
+            <td>
+              <Button
+                active={false}
+                className="btn btn-secondary"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+                variant="primary"
+              >
+                Join Room 
+                Room_1234
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </Bootstrap(Table)>
+    </div>
   </div>
 </div>
 `;

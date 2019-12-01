@@ -3,13 +3,13 @@
 exports[`Verify site layout template General layout should render correctly 1`] = `
 <BrowserRouter>
   <nav
-    className="navbar navbar-expand-lg navbar-light bg-light"
+    className="navbar navbar-expand-lg navbar-dark bg-dark"
   >
     <a
       className="navbar-brand"
-      href="/lobby"
+      href="/login"
     >
-      Game Room
+      Home
     </a>
     <button
       aria-controls="navbarNavDropdown"
@@ -32,7 +32,7 @@ exports[`Verify site layout template General layout should render correctly 1`] 
         className="navbar-nav"
       >
         <li
-          className="nav-item active"
+          className="nav-item"
         >
           <a
             className="nav-link"
@@ -63,7 +63,7 @@ exports[`Verify site layout template General layout should render correctly 1`] 
             className="nav-link"
             href="/game"
           >
-            Play ToK
+            Play KoT
           </a>
         </li>
       </ul>
