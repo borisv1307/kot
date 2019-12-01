@@ -1,7 +1,7 @@
 from typing import List
 
 import game.values.constants as constants
-from game.cards_old_dir.old_card import Old_Card
+from game.cards.card import Card
 from game.deck.deck import Deck
 
 
@@ -15,7 +15,7 @@ class DeckHandler:
     """
     __draw_pile: Deck = Deck()
     __discard_pile: Deck = Deck()
-    __card_store: List[Old_Card] = list()
+    __card_store: List[Card] = list()
 
     def __init__(self):
         self.store.clear()
@@ -64,7 +64,7 @@ class DeckHandler:
         return bought
 
     # optional second arg allows discard to handle removing card from origin as well
-    def discard(self, card: Old_Card, card_from_location: List[Old_Card] = None):
+    def discard(self, card: Card, card_from_location: List[Card] = None):
         self.__discard_pile.append(card)
         if card_from_location is not None:
             card_from_location.remove(card)

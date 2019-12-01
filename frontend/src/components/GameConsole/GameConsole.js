@@ -57,8 +57,8 @@ class GameConsole extends React.Component {
           onChange={this.handleChange}>
           <textarea value={this.state.value} onChange={this.handleChange}>Type Command [enter]</textarea>
         </form>
-        <button onClick={this.SubmitGameCommand}>
-          Submit Comand
+        <button className="btn btn-secondary" onClick={this.SubmitGameCommand}>
+          Submit Command
           </button>
       </div>
     )

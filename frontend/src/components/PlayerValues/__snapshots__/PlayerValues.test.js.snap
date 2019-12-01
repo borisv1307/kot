@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify player value template Player values should be rendered correctly 1`] = `
+<div>
+  <div
+    className="player-border"
+  >
+    <h2>
+      Player 
+    </h2>
+    <div
+      className="player-values"
+    >
+      <p>
+        Victory Points: 
+        <span
+          className="badge badge-light"
+        >
+          0
+        </span>
+        <img
+          src="Star.png"
+        />
+      </p>
+      <p>
+        Health: 
+        <span
+          className="badge badge-light"
+        >
+          10
+        </span>
+        <img
+          src="Heart.gif"
+        />
+      </p>
+      <p>
+        Energy: 
+        <span
+          className="badge badge-light"
+        >
+          0
+        </span>
+        <img
+          src="Energy.png"
+        />
+      </p>
+      <p>
+        In/Out of Tokyo: 
+        <span
+          className="badge badge-warning"
+        >
+          Out
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;
