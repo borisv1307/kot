@@ -34,5 +34,11 @@ class BoardGame():
     def is_game_active(self):
         return self.status == status.ACTIVE
 
-    def turn_actions(self, turn_player):
-        pass
+    def turn_actions(self, dice, turn_player):
+        others = self.players.get_all_alive_players_minus_current_player()
+        dice_resolver.dice_resolution(dice, turn_player, others)
+
+    def get_next_player_turn(self):
+        if self.is_game_active():
+            self.players.get_next_player()
+            return self.players.current_player
