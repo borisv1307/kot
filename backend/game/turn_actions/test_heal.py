@@ -31,5 +31,6 @@ def test_no_heal_from_dice_in_tokyo(hurt_player):
 
 def test_resolve_dice_and_heal(hurt_player):
     initial_health = hurt_player.current_health
-    dice_resolution(MOCK_DICE_RESULTS, hurt_player)
+    other_players = []
+    dice_resolution(MOCK_DICE_RESULTS, hurt_player, other_players)
     assert hurt_player.current_health == initial_health + MOCK_DICE_RESULTS.count(DieValue.HEAL)
