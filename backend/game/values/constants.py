@@ -11,3 +11,4 @@ CARD_STORE_SIZE_LIMITER = 3
 
 # strings
 OUT_OF_CARDS_MSG = "No more cards available to shuffle"
+INSUFFICIENT_FUNDS_MSG = "Insufficient energy to purchase card"
