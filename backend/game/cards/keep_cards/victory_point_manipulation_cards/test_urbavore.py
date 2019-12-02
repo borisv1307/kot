@@ -11,9 +11,8 @@ def test_urbavore_costs_4_energy():
     assert Urbavore().cost == 4
 
 
-def test_urbavore_gain_2_star(player):
-    player.victory_points = 4
+def test_urbavore_gain_1_star_when_in_tokyo(player):
     player.location = locations.Locations.TOKYO
     Urbavore().immediate_effect(player, None)
     Urbavore().special_effect(player, None)
-    assert player.victory_points == 5
+    assert player.victory_points == 1

@@ -8,5 +8,6 @@ class KeepCard(Card):
     def immediate_effect(self, player_that_bought_the_card, other_players):
         raise NotImplementedError
 
+    @abstractmethod
     def special_effect(self, player_that_bought_the_card, other_players):
         raise NotImplementedError
