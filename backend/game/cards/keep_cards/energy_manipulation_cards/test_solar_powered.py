@@ -12,7 +12,7 @@ def test_solar_powered_costs_4_energy():
 
 
 def test_solar_powered_gain_1_star_when_energy_is_0(player):
-    player.energy = constants.DEATH_HIT_POINT
+    player.energy = constants.ZERO_ENERGY
     SolarPowered().immediate_effect(player, None)
     SolarPowered().special_effect(player, None)
     assert player.energy == 1
