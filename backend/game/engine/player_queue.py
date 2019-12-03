@@ -36,7 +36,7 @@ class GamePlayers():
         return [player for player in self.get_alive_players() if
                 self.current_player != player]
 
-    def if_last_player_alive(self, possible_last_player):
+    def is_last_player_alive(self, possible_last_player):
         return [possible_last_player] == self.get_alive_players()
 
     def _cycle_next_alive_player(self):
