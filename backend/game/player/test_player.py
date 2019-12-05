@@ -15,6 +15,10 @@ def test_player_default_health(player):
     assert player.maximum_health == constants.DEFAULT_HEALTH
 
 
+def test_player_default_current_at_max_health(player):
+    assert player.current_health == player.maximum_health
+
+
 def test_player_default_location(player):
     assert player.location == Locations.OUTSIDE
 
@@ -93,3 +97,13 @@ def test_player_energy_cannot_go_below_zero(player):
 def test_player_can_not_have_less_than_zero_victory_points(player):
     player.update_victory_points_by(-1)
     assert player.victory_points == 0
+
+
+def test_player_health_cannot_exceed_decreased_max_health(player):
+    player.update_max_health_by(-1)
+    assert player.current_health == player.maximum_health
+
+
+def test_player_health_less_than_increased_max_health(player):
+    player.update_max_health_by(1)
+    assert player.current_health < player.maximum_health
