@@ -1,11 +1,14 @@
 import datetime
 
+import pytest
 from django.test import TestCase
 from django.utils import timezone
 from game.models import User
 
 
-class PlayerModelTest(TestCase):
+
+@pytest.mark.django_db
+class test_PlayerModelTest(TestCase):
 
     @classmethod
     def setUp(cls):
