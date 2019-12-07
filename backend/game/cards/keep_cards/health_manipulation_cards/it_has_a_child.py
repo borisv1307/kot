@@ -5,7 +5,7 @@ from game.values import constants
 
 class ItHasAChild(KeepCard):
     def __init__(self):
-        Card.__init__(self, "It Has a Child", 7,
+        super(KeepCard, self).__init__("It Has a Child", 7,
                       "If you reach 0[health] discard all your cards and lose all you [star]. Gain 10[health] and continue playing outside Tokyo",
                       "")
 
