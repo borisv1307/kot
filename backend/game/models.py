@@ -92,7 +92,7 @@ class Play(models.Model):
     card_used = models.CharField(max_length=30)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
-    energy_cube = models.IntegerField()
+    energy_cubes = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
 
