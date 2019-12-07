@@ -1,6 +1,7 @@
 import datetime
 
 from django.test import TestCase
+from django.utils import timezone
 
 from game.models import Dice
 from game.models import User
@@ -13,7 +14,7 @@ class PlayerModelTest(TestCase):
         player = User.objects.create(monster_name='Godzilla',
                                        username='User1',
                                        password='Password1',
-                                       date_created=datetime.datetime.now())
+                                       date_created=timezone.now())
 
         Dice.objects.create(user=player,
                             dice1='1',
@@ -28,7 +29,7 @@ class PlayerModelTest(TestCase):
                             dice5_selected='Y',
                             dice6='1',
                             dice6_selected='Y',
-                            date_created=datetime.datetime.now())
+                            date_created=timezone.now())
 
     def test_user_content(self):
         dice = Dice.objects.get(user=1)
