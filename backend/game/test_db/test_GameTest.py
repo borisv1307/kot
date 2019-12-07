@@ -9,7 +9,7 @@ import pytest
 
 
 @pytest.mark.django_db
-class test_PlayerModelTest(TestCase):
+class PlayerModelTest(TestCase):
 
     @classmethod
     def setUp(cls):
