@@ -30,6 +30,7 @@ class User(models.Model):
         return Message.objects.filter(created_at__gt=self.last_read_date) \
                               .count()
 
+
 class Dice(models.Model):
     DICE_VALUE = (
         ('1', 'One'),

@@ -28,4 +28,4 @@ class PlayerModelTest(TestCase):
     def test_user_content(self):
         game = Game.objects.get(user=1)
         expected_object_name = f'{game.is_winner}'
-        self.assertEquals(expected_object_name, 'Y')
+        self.assertEqual(expected_object_name, 'Y')

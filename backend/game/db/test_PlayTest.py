@@ -55,4 +55,4 @@ class PlayerModelTest(TestCase):
     def test_user_content(self):
         play = Play.objects.get(user=1)
         expected_object_name = f'{play.location}'
-        self.assertEquals(expected_object_name, 'T')
+        self.assertEqual(expected_object_name, 'T')
