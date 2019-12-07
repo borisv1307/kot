@@ -10,7 +10,7 @@ from game.models import Play
 from game.models import User
 
 @pytest.mark.django_db
-class test_PlayerModel(TestCase):
+class PlayerModelTest(TestCase):
 
     @classmethod
     def setUp(cls):
