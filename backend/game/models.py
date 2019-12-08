@@ -28,7 +28,7 @@ class User(models.Model):
 
     def unread_messages(self):
         return Message.objects.filter(created_at__gt=self.last_read_date) \
-                              .count()
+            .count()
 
 
 class Dice(models.Model):
@@ -45,7 +45,7 @@ class Dice(models.Model):
         ('N', 'Not-Selected'),
     )
     # should cascade be applied below.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE) TODO associate dice roll to user somehow
     dice1 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice1_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     dice2 = models.CharField(max_length=1, choices=DICE_VALUE)

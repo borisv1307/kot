@@ -1,17 +1,10 @@
-from game.models import Dice
-from game.player.player import Player
-from game.models import User
 from django.utils import timezone
+
+from game.models import Dice
 
 
 def dice_roll_to_db(dice: [Dice], indexes_to_re_roll: [int]):
-    dummy_user = User.objects.create(monster_name='Godzilla',
-                               username='User1',
-                               password='Password1',
-                               date_created=timezone.now())
-
-    Dice.objects.create(user=dummy_user,
-                        dice1=dice[0],
+    Dice.objects.create(dice1=dice[0],
                         dice1_selected='Y',
                         dice2=dice[1],
                         dice2_selected='Y',

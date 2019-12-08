@@ -2,7 +2,7 @@ import pytest
 from django.test import TestCase
 from django.utils import timezone
 
-from game.db.db_action import dice_roll_to_db
+from game.db.dice_roll_to_db import dice_roll_to_db
 from game.dice_handler import DiceHandler
 from game.models import Dice
 from game.models import User
