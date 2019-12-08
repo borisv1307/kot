@@ -58,23 +58,10 @@ export default class LoginLayout extends Component {
 
         return (
             <div className="container">
+                <h1>Welcome to KoT</h1>
+                 <br />
                 <div className="row">
-                    <div className="col-sm">
-
-                    </div>
-                    <div className="col-sm">
-                    </div>
-                    <div className="col-sm">
-
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-sm">
-
-                    </div>
                     <div className="col-sm p-4">
-                        <h2>Welcome to KoT</h2>
-                        <br />
                         <div className="login">
                             <Form class="login">
                                 <h5>Login to Join a Game</h5>
@@ -97,10 +84,6 @@ export default class LoginLayout extends Component {
                             </Form>
                         </div>
 
-                        {/* <br></br>
-                        <a className="b" href="/lobby">
-                            <button type="button" class="btn btn-primary">Play as Guest</button>
-                        </a> */}
                     </div>
                     <div className="col-sm">
                         <RegisterUser/>
@@ -111,38 +94,5 @@ export default class LoginLayout extends Component {
     }
 }
 
-// const LoginLayout = (props) => {
-//     return (
-//         <div className="container">
-//             <div className="row">
-//                 <div className="col-sm">
-
-//                 </div>
-//                 <div className="col-sm">
-//                     Login page
-//                 </div>
-//                 <div className="col-sm">
-
-//                 </div>
-//             </div>
-//             <div className="row">
-//                 <div className="col-sm">
-
-//                 </div>
-//                 <div className="col-sm">
-//                     <br></br>
-//                     <a className="b" href="/lobby">
-//                         <button type="button" class="btn btn-primary">Play as Guest</button>
-//                     </a>
-//                 </div>
-//                 <div className="col-sm">
-
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
-//export default LoginLayout;
 
 

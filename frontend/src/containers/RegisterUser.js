@@ -66,7 +66,7 @@ class RegisterUser extends Component {
              />
              {this.renderRedirect()}
             </Form.Group>
-            <Button variant="btn btn-secondary" onClick={this.setRedirect} className="submit" type="submit" value="Submit">Login</Button>
+            <Button variant="btn btn-secondary" onClick={this.setRedirect} className="submit" type="submit" value="Submit">Register</Button>
          </Form>
       </div>
     );
