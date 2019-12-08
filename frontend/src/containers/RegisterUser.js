@@ -8,14 +8,36 @@ class RegisterUser extends Component {
   constructor(props){
     super(props);
     this.state={
-      first_name:'',
-      last_name:'',
+      username:'',
       email:'',
       password:''
     }
   }
 
+   usernameChangeHandler = (event) => {
+        this.setState({
+            username: event.target.value,
+            redirect: false
+        })
+    }
+
+    emailChangeHandler = (event) => {
+        this.setState({
+            email: event.target.value,
+            redirect: false
+        })
+    }
+
+    passwordChangeHandler = (event) => {
+        this.setState({
+            password: event.target.value,
+            redirect: false
+        })
+    }
+
   setRedirect = () => {
+      /* Add async exchange to determine login availability and eventually success/failure.
+      Suggest using Auth0... example: https://auth0.com/blog/handling-authentication-in-react-with-context-and-hooks/ */
         this.setState({
             redirect: true
         })
@@ -38,31 +60,25 @@ class RegisterUser extends Component {
         <Form>
             <h2>Register</h2>
             <Form.Group href="/lobby" onSubmit={() => this.props.onSubmit(this.state.username)}>
-            <Form.Label>First Name</Form.Label>
+            <Form.Label>User Name</Form.Label>
            <Form.Control
-             placeholder="Enter your First Name"
-             floatingLabelText="First Name"
-             onChange = {(event,newValue) => this.setState({first_name:newValue})}
-             />
-             <Form.Label>Last Name</Form.Label>
-           <Form.Control
-             placeholder="Enter your Last Name"
-             floatingLabelText="Last Name"
-             onChange = {(event,newValue) => this.setState({last_name:newValue})}
+             placeholder="Enter a Username"
+             value={this.state.username}
+             onChange = {this.usernameChangeHandler}
              />
              <Form.Label>Email</Form.Label>
            <Form.Control
              placeholder="Enter your Email"
              type="email"
-             floatingLabelText="Email"
-             onChange = {(event,newValue) => this.setState({email:newValue})}
+             value={this.state.email}
+             onChange = {this.emailChangeHandler}
              />
              <Form.Label>Password</Form.Label>
            <Form.Control
              type = "password"
              placeholder="Enter your Password"
-             floatingLabelText="Password"
-             onChange = {(event,newValue) => this.setState({password:newValue})}
+             value={this.state.password}
+             onChange = {this.passwordChangeHandler}
              />
              {this.renderRedirect()}
             </Form.Group>
@@ -71,5 +87,6 @@ class RegisterUser extends Component {
       </div>
     );
   }
+
 }
 export default RegisterUser

@@ -64,7 +64,7 @@ export default class LoginLayout extends Component {
                     <div className="col-sm p-4">
                         <div className="login">
                             <Form class="login">
-                                <h5>Login to Join a Game</h5>
+                                <h2>Login to Join a Game</h2>
                                 <Form.Group href="/lobby" onSubmit={() => this.props.onSubmit(this.state.username)}>
                                     <Form.Label>Username</Form.Label>
                                     <Form.Control type="text"
