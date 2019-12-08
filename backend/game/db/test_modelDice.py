@@ -1,31 +1,22 @@
-import datetime
-
 import pytest
 from django.test import TestCase
 from django.utils import timezone
 
+from game.db.db_action import dice_roll_to_db
 from game.dice_handler import DiceHandler
 from game.models import Dice
 from game.models import User
-
-from game.db.db_action import dice_roll_to_db
-
-from mock import Mock
-
-from game.player.player import Player
 
 
 @pytest.mark.django_db
 class PlayerModelTest(TestCase):
 
-
-
     @classmethod
     def setUp(cls):
         user = User.objects.create(monster_name='Godzilla',
-                                       username='User1',
-                                       password='Password1',
-                                       date_created=timezone.now())
+                                   username='User1',
+                                   password='Password1',
+                                   date_created=timezone.now())
 
         # Dice.objects.create(user=user,
         #                     dice1='1',
@@ -47,22 +38,22 @@ class PlayerModelTest(TestCase):
         expected_object_name = f'{dice.dice1}'
         self.assertEqual(expected_object_name, '1')
 
-
-    def test_mid_tier_hookup(self):
+    def test_three_dice_rolls_to_db(self):
         test_dice_handler = DiceHandler()
         test_dice_handler.roll_initial(6, 3)
         initial_dice_values = test_dice_handler.dice_values
         dice_roll_to_db(initial_dice_values, [])
 
-        second_dice_viles = test_dice_handler.re_roll_dice()
+        dice_to_re_roll_indexes = [0, 1, 2]
 
+        test_dice_handler.re_roll_dice(dice_to_re_roll_indexes)
+        second_dice_values = test_dice_handler.dice_values
+        dice_roll_to_db(second_dice_values, dice_to_re_roll_indexes)
 
+        test_dice_handler.re_roll_dice(dice_to_re_roll_indexes)
+        third_dice_values = test_dice_handler.dice_values
+        dice_roll_to_db(third_dice_values, dice_to_re_roll_indexes)
 
-
-        results = Dice.objects.get()
-
-        assert (results.dice1 == str(initial_dice_values[0]))
-
-
-
-
+        results = Dice.objects.all()
+        self.assertTrue(len(results) == 3)
+        self.assertEqual(results[0].dice1, str(initial_dice_values[0]))
