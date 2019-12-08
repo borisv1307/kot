@@ -1,11 +1,9 @@
-import datetime
-
+import pytest
 from django.test import TestCase
 from django.utils import timezone
 
 from game.models import Game
 from game.models import User
-import pytest
 
 
 @pytest.mark.django_db
@@ -14,9 +12,9 @@ class PlayerModelTest(TestCase):
     @classmethod
     def setUp(cls):
         player = User.objects.create(monster_name='Godzilla',
-                                       username='User1',
-                                       password='Password1',
-                                       date_created=timezone.now())
+                                     username='User1',
+                                     password='Password1',
+                                     date_created=timezone.now())
 
         Game.objects.create(user=player,
                             is_winner='Y',
