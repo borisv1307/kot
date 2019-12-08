@@ -57,5 +57,6 @@ class PlayerModelTest(TestCase):
         dice_roll_to_db(third_dice_values, dice_to_re_roll_indexes)
 
         results = Dice.objects.all()
+
         self.assertTrue(len(results) == 3 + starting_db_length)
         self.assertEqual(results[starting_db_length].dice1, str(initial_dice_values[0]))
