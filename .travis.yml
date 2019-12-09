@@ -14,6 +14,7 @@ script:
   - cd backend
   - export PYTHONPATH="$(pwd)"
   - export DJANGO_SETTINGS_MODULE=kot.settings
+  - python manage.py startapp game
   - py.test --cov-report term --cov=.
   - coverage xml
 services:
