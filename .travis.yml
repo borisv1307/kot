@@ -11,7 +11,7 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - py.test backend --cov-report term --cov=.
+  - py.test --cov-report term --cov=.
   - coverage xml
 services:
   - sqlite
