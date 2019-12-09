@@ -16,6 +16,6 @@ script:
 services:
   - sqlite
 env:
-  - DJANGO=2.2.6 DJANGO_SETTINGS_MODULE=backend\kot\settings.py
+  - DJANGO=2.2.6 DJANGO_SETTINGS_MODULE=backend.kot.settings
 after_success:
   - codecov
