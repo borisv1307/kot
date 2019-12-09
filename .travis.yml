@@ -14,9 +14,7 @@ script:
   - cd backend
   - export PYTHONPATH="$(pwd)"
   - export DJANGO_SETTINGS_MODULE=kot.settings
-  - python manage.py makemigrations
-  - python manage.py migrate
-  #  - python manage.py startapp game
+  - python django_setup_script.py
   - py.test --cov-report term --cov=.
   - coverage xml
 services:
