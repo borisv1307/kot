@@ -6,20 +6,19 @@ addons:
     token:
       secure: $SONAR_TOKEN2 # encrypted value of your token
 python:
-  - "3.6"
+  - "3.7.4"
 
 install:
   - pip install -r requirements.txt
 before_script:
   - cd backend
 script:
-  - pytest
-#  - py.test --cov-report term --cov=.
-#  - coverage xml
+  - py.test --cov-report term --cov=.
+  - coverage xml
 services:
   - sqlite
 env:
-  - DJANGO=2.2.6 DJANGO_SETTINGS_MODULE=kot.settings PYTHONPATH="$(pwd)"
+  - DJANGO=2.2.6 DJANGO_SETTINGS_MODULE=kot.settings PYTHONPATH="$(pwd)/backend"
 after_success:
   - codecov
 
