@@ -13,13 +13,13 @@ install:
 before_script:
   - cd backend
 script:
-  - pytest
+  - pytest backend
 #  - py.test --cov-report term --cov=.
 #  - coverage xml
 services:
   - sqlite
 env:
-  - DJANGO=2.2.6 DJANGO_SETTINGS_MODULE=backend.kot.settings
+  - DJANGO=2.2.6 DJANGO_SETTINGS_MODULE=backend.kot.settings PYTHONPATH=.
 after_success:
   - codecov
 
