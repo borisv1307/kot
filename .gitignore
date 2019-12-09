@@ -102,6 +102,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+backend/.coverage
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
