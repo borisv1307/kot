@@ -13,8 +13,9 @@ install:
 before_script:
   - cd backend
 script:
-  - py.test --cov-report term --cov=.
-  - coverage xml
+  - pytest
+#  - py.test --cov-report term --cov=.
+#  - coverage xml
 services:
   - sqlite
 env:
