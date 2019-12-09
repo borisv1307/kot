@@ -18,6 +18,7 @@ script:
   - export PYTHONPATH="$(pwd)"
   - export DJANGO_SETTINGS_MODULE=kot.settings
   - python django_setup_script.py
+  - python manage.py migrate
   - py.test --cov-report term --cov=.
   - coverage xml
 #services:
