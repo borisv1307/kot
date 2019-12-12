@@ -1,20 +1,37 @@
-from channels.generic.websocket import WebsocketConsumer
-import json
+from channels.generic.websocket import JsonWebsocketConsumer
+import pprint
+import random
 
 
-class GameConsumer(WebsocketConsumer):
+class GameConsumer(JsonWebsocketConsumer):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.player_name = f"guest_{random.randint(1000,9999)}"
+        self.msg_count = 0
+
     def connect(self):
+        print(f"A new connection was made!")
+
         self.accept()
 
+        self.send_json({
+            'message': f"Welcome, {self.player_name}!"
+        })
+
     def disconnect(self, close_code):
-        pass
+        print(f"A connection was closed with code: {close_code}")
 
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+    def receive_json(self, content, **kwargs):
 
-        print(message)
+        self.msg_count += 1
 
-        self.send(text_data=json.dumps({
-            'message': message
-        }))
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(content)
+
+        message = content['message']
+
+        self.send_json({
+            'message': f"{message}, message count: {self.msg_count}"
+        })

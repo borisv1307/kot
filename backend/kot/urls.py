@@ -48,6 +48,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('game.urls')),
     path("python/lobby/", include('lobby.urls')),
-    # path("lobby/", include('lobby.urls')), react side has a /lobby which this would collide, leaving for posterity
-    url(r'^', include('game.urls'))
+    path("lobby/", include('lobby.urls')),
+    # url(r'^', include('game.urls'))
 ]

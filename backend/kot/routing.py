@@ -5,7 +5,7 @@ import lobby.routing
 application = ProtocolTypeRouter({
     'websocket': AuthMiddlewareStack(
         URLRouter(
-            lobby.routing.websocket_urlpatterns
+            lobby
         )
     ),
 })
