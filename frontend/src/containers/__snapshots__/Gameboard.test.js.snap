@@ -6,6 +6,13 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
   <h4>
     Room_1234
   </h4>
+  <div>
+    <div
+      className="col"
+    >
+      <CardStore />
+    </div>
+  </div>
   <div
     className="container"
   >
@@ -34,7 +41,10 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
       <div
         className="col-sm"
       >
-        <GameConsole />
+        <GameConsole
+          currentRoom="Room_1234"
+          currentUser="Guest_1234"
+        />
       </div>
       <div
         className="col-sm"
