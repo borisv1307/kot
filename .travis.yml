@@ -1,34 +1,21 @@
-dist: xenial
+dist: trusty
 language: python
 addons:
   sonarcloud:
     organization: "borisv13-github" # the key of the org you chose at step #3
     token:
       secure: $SONAR_TOKEN2 # encrypted value of your token
-  apt:
-    packages:
-      - sqlite3
 python:
   - "3.6"
 
-before_install:
-  - cd backend
-
 install:
-  - pip install -r ../requirements.txt
-
+  - pip install -r requirements.txt
 script:
-  #- export PYTHONPATH="$(pwd)"
-  - export DJANGO_SETTINGS_MODULE=kot.settings
-  #- python django_setup_script.py
-  #- python manage.py migrate
-
-  - py.test --cov-report term --cov=.
+  - py.test  --cov-report term --cov=.
   - coverage xml
-#services:
-#  - sqlite3
+services:
+  - sqlite
 env:
   - DJANGO=2.2.6
 after_success:
   - codecov
-
