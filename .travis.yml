@@ -13,12 +13,15 @@ python:
 
 install:
   - pip install -r requirements.txt
+
+before_script:
+  - cd backend
 script:
   #- export PYTHONPATH="$(pwd)"
   - export DJANGO_SETTINGS_MODULE=kot.settings
   #- python django_setup_script.py
   #- python manage.py migrate
-  - py.test backend --cov-report term --cov=.
+  - py.test --cov-report term --cov=.
   - coverage xml
 #services:
 #  - sqlite3
