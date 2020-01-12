@@ -82,23 +82,23 @@ class Migration(migrations.Migration):
                 ('life_points', models.IntegerField()),
                 ('date_created', models.DateTimeField()),
                 ('dice', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE, to='kot.Dice')),
+                    on_delete=django.db.models.deletion.CASCADE, to='game.Dice')),
                 ('game', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE, to='kot.Game')),
+                    on_delete=django.db.models.deletion.CASCADE, to='game.Game')),
                 ('user', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE, to='kot.User')),
+                    on_delete=django.db.models.deletion.CASCADE, to='game.User')),
             ],
         ),
         migrations.AddField(
             model_name='game',
             name='user',
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to='kot.User'),
+                on_delete=django.db.models.deletion.CASCADE, to='game.User'),
         ),
         migrations.AddField(
             model_name='dice',
             name='user',
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to='kot.User'),
+                on_delete=django.db.models.deletion.CASCADE, to='game.User'),
         ),
     ]

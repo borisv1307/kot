@@ -21,8 +21,9 @@ class GameService {
   // payload format: [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
   sendSelectedDice(envelope) {
     this.sendMessage({
-      command: "selected_dice",
+      command: "selected_dice_request",
       from: envelope.from,
+      room: envelope.room,
       payload: envelope.data
     });
   }
@@ -30,8 +31,18 @@ class GameService {
   // payload format: [['text entered by user']
   sendGameLogCommand(envelope) {
     this.sendMessage({
-      command: "gamelog_send",
+      command: "gamelog_send_request",
       from: envelope.from,
+      room: envelope.room,
+      payload: envelope.data
+    });
+  }
+
+  initUser(envelope) {
+    this.sendMessage({
+      command: "init_chat_request",
+      from: envelope.from,
+      room: envelope.room,
       payload: envelope.data
     });
   }

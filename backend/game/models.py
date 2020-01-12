@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class User(models.Model):
@@ -8,11 +9,6 @@ class User(models.Model):
     password = models.CharField(max_length=30)
     date_created = models.DateTimeField()
 
-    last_read_date = models.DateTimeField(
-        auto_now_add=True,
-        blank=False,
-        null=False
-    )
     online = models.BooleanField(null=False, blank=False, default=False)
 
     REQUIRED_FIELDS = []
@@ -20,13 +16,6 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
-    def read(self):
-        self.last_read_date = timezone.now()
-        self.save()
-
-    def unread_messages(self):
-        return Message.objects.filter(created_at__gt=self.last_read_date) \
-                              .count()
 
 class Dice(models.Model):
     DICE_VALUE = (

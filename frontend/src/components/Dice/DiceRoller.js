@@ -59,6 +59,7 @@ class DiceRoller extends React.Component {
     if (selected && selected.length > 0) {
       const messageObject = {
         from: this.props.currentUser,
+        room: this.props.gameRoom,
         data: selected
       };
 
