@@ -1,13 +1,14 @@
 from django.db import models
 from django.utils import timezone
 
+
 # Create your models here.
 class User(models.Model):
     monster_name = models.CharField(max_length=30)
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
+    date_created = models.DateTimeField(default=timezone.now, blank=True)
 
     online = models.BooleanField(null=False, blank=False, default=False)
 
@@ -85,14 +86,13 @@ class Play(models.Model):
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
 
-
-class Message(models.Model):
-    MSG_TYPES = (
-        ('error', '1'),
-        ('command', '1'),
-        ('game', '1'),
-    )
-    # should cascade be applied below.
-    message_type = models.CharField(max_length=1, choices=MSG_TYPES)
-    message_string = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
+# class Message(models.Model):
+#     MSG_TYPES = (
+#         ('error', '1'),
+#         ('command', '1'),
+#         ('game', '1'),
+#     )
+#     # should cascade be applied below.
+#     message_type = models.CharField(max_length=1, choices=MSG_TYPES)
+#     message_string = models.CharField(max_length=30)
+#     date_created = models.DateTimeField()

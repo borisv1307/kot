@@ -22,7 +22,7 @@ class GameService {
   sendSelectedDice(envelope) {
     this.sendMessage({
       command: "selected_dice_request",
-      from: envelope.from,
+      user: envelope.user,
       room: envelope.room,
       payload: envelope.data
     });
@@ -32,7 +32,7 @@ class GameService {
   sendGameLogCommand(envelope) {
     this.sendMessage({
       command: "gamelog_send_request",
-      from: envelope.from,
+      user: envelope.user,
       room: envelope.room,
       payload: envelope.data
     });
@@ -41,7 +41,7 @@ class GameService {
   initUser(envelope) {
     this.sendMessage({
       command: "init_chat_request",
-      from: envelope.from,
+      user: envelope.user,
       room: envelope.room,
       payload: envelope.data
     });
@@ -85,12 +85,13 @@ class GameService {
   socketNewMessage(data) {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
+    const action = parsedData.action;
     if (Object.keys(this.callbacks).length === 0) {
       return;
     }
 
     if (command === "server_response") {
-      this.callbacks[command](parsedData.message);
+      this.callbacks[command](action);
     }
     // else if (command === "messages") {
     //   this.callbacks[command](parsedData.messages);

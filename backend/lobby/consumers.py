@@ -31,42 +31,45 @@ class GameConsumer(WebsocketConsumer):
     def send_to_clients(self, message):
         self.send(text_data=json.dumps(message))
 
-    # def create_message_json(self, id, username, game_room, content):
-    #     return {
-    #         'id': str(id),
-    #         'user': username,
-    #         'game_session_id': game_room,
-    #         'content': content
-    #     }
 
-    def send_server_response_to_client(self, username, room, payload):
+    def send_server_response_to_client(self, action, username, room, payload):
         content = {
             'command': 'server_response',
-            'message': self.create_message_json(1, username, room, 'HRoom_1234', payload)
+            'action': {
+                'actionType': action,
+                'user': username,
+                'room': room,
+                'content': {
+                    'user': username,
+                    'room': room,
+                    'content': payload
+                }
+            }
         }
         self.send_to_clients(content)
 
     def init_chat_handler(self, data):
-        username = data['from']
+        username = data['user']
         room = data['room']
         user, created = User.objects.get_or_create(username=username)
-        content = {
-            'command': 'init_chat_response'
-        }
-        if not user:
-            content['error'] = 'Unable to get or create User with username: ' + username
-            self.send_server_response_to_client(username, room, content)
-        content['success'] = 'Chatting in with success with username: ' + username
-        self.send_server_response_to_client(username, room, content)
 
-    def selected_dice_handler(self, text_data):
-        player_username = text_data['from']
+        if not user:
+            error = 'Unable to get or create User with username: ' + username
+            self.send_server_response_to_client('GAMECONSOLE_ERROR', username, room, error)
+
+        success = 'Chatting in with success with username: ' + username
+        self.send_server_response_to_client('GAMECONSOLE_MESSAGE', username, room, success)
+
+    def selected_dice_handler(self, data):
+        username = data['user']
+        room = data['room']
 
         # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
-        payload = text_data['payload']
+        payload = data['payload']
 
-        print(player_username)
-        print(payload)
+        formatted_payload = username + " rolled :" + ','.join(str(item) for innerlist in payload for item in innerlist)
+
+        self.send_server_response_to_client('GAMECONSOLE_DECISION', username, room, formatted_payload)
 
         # TO DO:
         # use payload to update player_username
@@ -74,7 +77,7 @@ class GameConsumer(WebsocketConsumer):
         # Respond with client updates, so UI can be reset
 
     def gamelog_send_handler(self, text_data):
-        player_username = text_data['from']
+        player_username = text_data['user']
 
         # [['text entered by user']
         mud_gamelog_input = text_data['payload']

@@ -30,14 +30,13 @@ class GameConsole extends React.Component {
 
     this.waitForSocketConnection(() => {
       const userObject = {
-        from: this.state.username,
+        user: this.state.username,
         room: this.state.gameRoom,
         data: this.state.cmd
       };
 
       GameInstance.initUser(userObject);
       GameInstance.addCallbacks(this.serverResponseHandler.bind(this));
-      // GameInstance.fetchMessages(this.state.username);
     });
 
     this.handleChange = this.handleChange.bind(this);
@@ -45,8 +44,7 @@ class GameConsole extends React.Component {
   }
 
   serverResponseHandler(messages) {
-    this.appendStateCmdToLog(messages);
-    // this.setState({ messages: messages.reverse() });
+    this.appendStateCmdToLog(messages.content);
   }
 
   waitForSocketConnection(callback) {
@@ -65,23 +63,41 @@ class GameConsole extends React.Component {
   }
 
   appendStateCmdToLog(message) {
-    // let data = this.state.log;
-    // data.push(message);
+    const action = message.actionType;
+    // const room = message.room;
+    // const user = message.user;
+    const content = message.content;
 
-    this.setState({ log: [...this.state.log, message] });
+    if (content === undefined || content == "") return;
 
-    // this.setState({
-    //   log: data
-    // })
+    switch (action) {
+      case "GAMECONSOLE_ERROR":
+        break;
+      case "GAMECONSOLE_MESSAGE":
+        break;
+      case "GAMECONSOLE_DECISION":
+        break;
+
+      default:
+        return;
+    }
+
+    this.setState({ log: [...this.state.log, content] });
 
     return this.state.log;
   }
 
   SubmitGameCommand(e) {
-    let appendedLog = this.appendStateCmdToLog(this.state.cmd);
+    const cmd = {
+      user: this.state.username,
+      room: this.state.gameRoom,
+      content: this.state.cmd
+    };
+
+    this.appendStateCmdToLog(cmd);
 
     const messageObject = {
-      from: this.state.username,
+      user: this.state.username,
       room: this.state.gameRoom,
       data: this.state.cmd
     };

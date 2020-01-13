@@ -12,16 +12,16 @@ class DiceSerializer(serializers.ModelSerializer):
         model = models.Dice
 
 
-class MessageSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        fields = (
-            # 'id',
-            'message_type',
-            'message_string',
-            'date_created',
-        )
-        model = models.Message
+# class MessageSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         fields = (
+#             # 'id',
+#             'message_type',
+#             'message_string',
+#             'date_created',
+#         )
+#         model = models.Message
 
 
 class RollSerializer(serializers.ModelSerializer):

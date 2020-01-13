@@ -35,11 +35,7 @@ class GameLog extends React.Component {
       //     <li key={entry}>{entry}</li>
       // )
       return messages.map((message, i) => (
-        <li
-          key={message.id}
-          className={message.user === currentUser ? "me" : "him"}
-        >
-          <h4 className="author">{message.author} </h4>
+        <li key={i} className={message.user === currentUser ? "me" : "him"}>
           <p>{message.content}</p>
         </li>
       ));
@@ -50,7 +46,7 @@ class GameLog extends React.Component {
   }
 
   render() {
-    const game_messages = this.state.log;
+    const game_messages = this.props.data;
     return (
       <div className="">
         <div className="">
@@ -73,22 +69,3 @@ class GameLog extends React.Component {
 }
 
 export default GameLog;
-
-// import React from 'react';
-
-// import "./GameLog.css";
-
-// const GameLog = (props) => {
-
-//     return (
-//         <div>
-//             {
-//                 props.data.map(entry =>
-//                     <li key={entry}>{entry}</li>
-//                 )
-//             }
-//         </div>
-//     );
-// }
-
-// export default GameLog;

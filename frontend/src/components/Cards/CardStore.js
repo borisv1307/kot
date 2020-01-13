@@ -35,7 +35,7 @@ class CardStore extends React.Component {
 
     if (selected && selected.length > 0) {
       const messageObject = {
-        from: this.props.currentUser,
+        user: this.props.currentUser,
         data: selected
       };
 
