@@ -14,9 +14,7 @@ exports[`Verify GameConsole layout template GameConsole should render correctly 
   >
     <textarea
       onChange={[Function]}
-    >
-      Type Command [enter]
-    </textarea>
+    />
   </form>
   <button
     className="btn btn-secondary"

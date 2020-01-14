@@ -31,18 +31,12 @@ class GameLog extends React.Component {
   renderMessages(messages) {
     if (messages && messages.length > 0) {
       const currentUser = this.state.username;
-      // return messages.map(entry =>
-      //     <li key={entry}>{entry}</li>
-      // )
       return messages.map((message, i) => (
         <li key={i} className={message.user === currentUser ? "me" : "him"}>
-          <p>{message.content}</p>
+          <p>{message}</p>
         </li>
       ));
     }
-
-    // return (<li key={1} className='me'>
-    //     <h4 className='author'>{"asfasfasf"} </h4><p>{"asdfsdf"}</p></li>)
   }
 
   render() {

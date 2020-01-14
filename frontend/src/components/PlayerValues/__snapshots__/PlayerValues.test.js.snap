@@ -12,40 +12,47 @@ exports[`Verify player value template Player values should be rendered correctly
       className="player-values"
     >
       <p>
-        Victory Points: 
+        Victory Points:
+         
         <span
           className="badge badge-light"
         >
           0
         </span>
         <img
+          alt="Your current star count"
           src="Star.png"
         />
       </p>
       <p>
-        Health: 
+        Health:
+         
         <span
           className="badge badge-light"
         >
           10
         </span>
         <img
+          alt="Your heart count"
           src="Heart.gif"
         />
       </p>
       <p>
-        Energy: 
+        Energy:
+         
         <span
           className="badge badge-light"
         >
           0
         </span>
         <img
+          alt="Your current energy count"
           src="Energy.png"
         />
       </p>
       <p>
-        In/Out of Tokyo: 
+        In/Out of Tokyo:
+         
         <span
           className="badge badge-warning"
         >

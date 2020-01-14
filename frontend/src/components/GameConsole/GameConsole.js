@@ -5,18 +5,6 @@ import GameLog from "./GameLog";
 
 import GameInstance from "./../../services/gameService";
 
-const gameLogExample = [
-  // '-- Sammy turn –',
-  // 'Rolled: E E H 1 2 3',
-  // 'Decision: keep E E',
-  // 'Rolled: E P 1 2 2',
-  // 'Decision: keep E',
-  // 'Rolled: 2 2 2 (TRIPPLE! +2 VP)',
-  // ':: Gain: E E E +2 VP ::',
-  // 'Buy: Psychic Probe',
-  // 'End Turn'
-];
-
 class GameConsole extends React.Component {
   constructor(props) {
     super(props);
@@ -25,17 +13,15 @@ class GameConsole extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       log: [], // this holds the name of each list
-      cmd: "enter cmd"
+      cmd: ""
     };
 
     this.waitForSocketConnection(() => {
-      const userObject = {
-        user: this.state.username,
-        room: this.state.gameRoom,
-        data: this.state.cmd
-      };
-
-      GameInstance.initUser(userObject);
+      const initCmd = this.createInitUserCommand(
+        this.state.username,
+        this.state.gameRoom
+      );
+      GameInstance.sendMessage(initCmd);
       GameInstance.addCallbacks(this.serverResponseHandler.bind(this));
     });
 
@@ -43,8 +29,16 @@ class GameConsole extends React.Component {
     this.SubmitGameCommand = this.SubmitGameCommand.bind(this);
   }
 
+  createInitUserCommand(user, room) {
+    return {
+      command: "init_chat_request",
+      user: user,
+      room: room
+    };
+  }
+
   serverResponseHandler(messages) {
-    this.appendStateCmdToLog(messages.content);
+    this.appendStateCmdToLog(messages);
   }
 
   waitForSocketConnection(callback) {
@@ -68,7 +62,7 @@ class GameConsole extends React.Component {
     // const user = message.user;
     const content = message.content;
 
-    if (content === undefined || content == "") return;
+    if (content === undefined || content === "") return;
 
     switch (action) {
       case "GAMECONSOLE_ERROR":
@@ -88,21 +82,26 @@ class GameConsole extends React.Component {
   }
 
   SubmitGameCommand(e) {
-    const cmd = {
-      user: this.state.username,
-      room: this.state.gameRoom,
-      content: this.state.cmd
+    if (this.state.cmd === undefined || this.state.cmd === "") return;
+
+    const command = this.createGameLogCommand(
+      this.state.username,
+      this.state.gameRoom,
+      this.state.cmd
+    );
+
+    GameInstance.sendMessage(command);
+  }
+
+  createGameLogCommand(user, room, cmd) {
+    return {
+      command: "gamelog_send_request",
+      user: user,
+      room: room,
+
+      // payload format: [['text entered by user']
+      payload: cmd
     };
-
-    this.appendStateCmdToLog(cmd);
-
-    const messageObject = {
-      user: this.state.username,
-      room: this.state.gameRoom,
-      data: this.state.cmd
-    };
-
-    GameInstance.sendGameLogCommand(messageObject);
   }
 
   handleChange(e) {
@@ -125,9 +124,10 @@ class GameConsole extends React.Component {
           onSubmit={this.SubmitGameCommand}
           onChange={this.handleChange}
         >
-          <textarea value={this.state.value} onChange={this.handleChange}>
-            Type Command [enter]
-          </textarea>
+          <textarea
+            value={this.state.value}
+            onChange={this.handleChange}
+          ></textarea>
         </form>
         <button className="btn btn-secondary" onClick={this.SubmitGameCommand}>
           Submit Command

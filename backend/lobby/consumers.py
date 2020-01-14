@@ -31,7 +31,6 @@ class GameConsumer(WebsocketConsumer):
     def send_to_clients(self, message):
         self.send(text_data=json.dumps(message))
 
-
     def send_server_response_to_client(self, action, username, room, payload):
         content = {
             'command': 'server_response',
@@ -39,11 +38,7 @@ class GameConsumer(WebsocketConsumer):
                 'actionType': action,
                 'user': username,
                 'room': room,
-                'content': {
-                    'user': username,
-                    'room': room,
-                    'content': payload
-                }
+                'content': payload
             }
         }
         self.send_to_clients(content)
@@ -72,19 +67,22 @@ class GameConsumer(WebsocketConsumer):
         self.send_server_response_to_client('GAMECONSOLE_DECISION', username, room, formatted_payload)
 
         # TO DO:
-        # use payload to update player_username
+        # use payload to update 'user'
         # Game determine next actions: use payload to update player_username
         # Respond with client updates, so UI can be reset
 
-    def gamelog_send_handler(self, text_data):
-        player_username = text_data['user']
+    def gamelog_send_handler(self, data):
+        username = data['user']
+        room = data['room']
 
         # [['text entered by user']
-        mud_gamelog_input = text_data['payload']
+        mud_gamelog_input = data['payload']
 
-        print(mud_gamelog_input)
+        # TO DO:
+        # parse mud_gamelog_input
+        # apply input effects to game state
 
-        # TO DO: parse mud_gamelog_input, determine command. Handle to update game state.
+        self.send_server_response_to_client('GAMECONSOLE_DECISION', username, room, mud_gamelog_input)
 
     commands = {
         'init_chat_request': init_chat_handler,

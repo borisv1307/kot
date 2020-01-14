@@ -15,38 +15,6 @@ class GameService {
     this.socketRef = null;
   }
 
-  // sends dice back to server formatted as an array of 2d arrays.
-  // first index: the roll value
-  // second index: selected or not
-  // payload format: [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
-  sendSelectedDice(envelope) {
-    this.sendMessage({
-      command: "selected_dice_request",
-      user: envelope.user,
-      room: envelope.room,
-      payload: envelope.data
-    });
-  }
-
-  // payload format: [['text entered by user']
-  sendGameLogCommand(envelope) {
-    this.sendMessage({
-      command: "gamelog_send_request",
-      user: envelope.user,
-      room: envelope.room,
-      payload: envelope.data
-    });
-  }
-
-  initUser(envelope) {
-    this.sendMessage({
-      command: "init_chat_request",
-      user: envelope.user,
-      room: envelope.room,
-      payload: envelope.data
-    });
-  }
-
   // Format: [['COMMAND_TOKEN', 'COMMAND_OPTION', 'COMMAND_OPTIONS']]
   // payload example: [['cmd', 'init_player'], #]
   // payload example: [['cmd', 'refresh_player'], #]
@@ -55,10 +23,6 @@ class GameService {
   // payload example: [['cmd', 'chat_send'], #]
 
   connect(roomName) {
-    // this.socketRef = new WebSocket(
-    //     'ws://' + 'localhost:8000' +
-    //     '/ws/lobby/' + roomName + '/');
-
     const path = config.GAME_SOCKET_API_PATH + roomName + "/";
     this.socketRef = new WebSocket(path);
 
@@ -69,15 +33,15 @@ class GameService {
     this.socketRef.onmessage = e => {
       let data = e.data;
       this.socketNewMessage(data);
-      console.log(data);
+      console.log("Socket OnMessage: " + data);
     };
 
     this.socketRef.onerror = e => {
-      console.log(e.message);
+      console.log("Socket OnError: " + e.message);
     };
 
     this.socketRef.onclose = e => {
-      console.log("WebSocket closed let's reopen");
+      console.log("Socket OnClosed, Reopening...");
       this.connect(roomName);
     };
   }
@@ -93,17 +57,10 @@ class GameService {
     if (command === "server_response") {
       this.callbacks[command](action);
     }
-    // else if (command === "messages") {
-    //   this.callbacks[command](parsedData.messages);
-    // } else if (command === "new_message") {
-    //   this.callbacks[command](parsedData.message);
-    // }
   }
 
   addCallbacks(serverResponseCallback) {
     this.callbacks["server_response"] = serverResponseCallback;
-    // this.callbacks["messages"] = messagesCallback;
-    // this.callbacks["new_message"] = newMessageCallback;
   }
 
   sendMessage(data) {
