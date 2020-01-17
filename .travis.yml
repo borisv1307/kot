@@ -11,6 +11,8 @@ python:
 install:
   - pip install -r requirements.txt
 script:
+  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
 # - py.test  --cov-report term --cov=.
   - py.test  --cov-report term --cov=./backend/
   - coverage xml
