@@ -59,10 +59,15 @@ class DeckHandler:
             self.__draw_pile.append(self.discard_pile.draw_from())
         self.__discard_pile.clear()
 
-    def buy_card_from_store(self, index):
-        bought = self.__card_store.pop(index)
-        self.__fill_card_store()
-        return bought
+    def buy_card_from_store(self, index, purchasing_player: Player):
+        card_to_buy: Card = self.__card_store[index]
+        if purchasing_player.energy < card_to_buy.cost:
+            raise Exception(constants.INSUFFICIENT_FUNDS_MSG)
+        else:
+            purchasing_player.update_energy_by(-card_to_buy.cost)
+            purchasing_player.add_card(card_to_buy)
+            self.__card_store.remove(card_to_buy)
+            self.__fill_card_store()
 
     # optional second arg allows discard to handle removing card from origin as well
     def discard(self, card: Card, card_from_location: List[Card] = None):
