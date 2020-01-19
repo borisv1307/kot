@@ -12,3 +12,4 @@ VICTORY_POINTS_TO_WIN = 20
 
 # strings
 OUT_OF_CARDS_MSG = "No more cards available to shuffle"
+INSUFFICIENT_FUNDS_MSG = "Insufficient energy to purchase card"
