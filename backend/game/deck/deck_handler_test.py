@@ -126,10 +126,48 @@ def test_run_out_of_cards(deck_handler, rich_player):
         assert deck_handler.buy_card_from_store(0, rich_player)
     assert str(exception.value) == constants.OUT_OF_CARDS_MSG
 
-
 def test_do_not_sell_card_to_player_with_no_energy(deck_handler):
     poor_player = Player()
     poor_player.energy = 0
     with pytest.raises(Exception) as raised_exception:
         deck_handler.buy_card_from_store(1, poor_player)
     assert constants.INSUFFICIENT_FUNDS_MSG in str(raised_exception.value)
+    
+
+def test_sweep_store_not_allowed_with_insufficient_energy(deck_handler):
+    test_player = Player()
+    test_player.energy = 0
+    with pytest.raises(Exception) as exception:
+        deck_handler.sweep_store(test_player)
+    assert str(exception.value) == constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG
+
+
+def test_sweep_store_takes_current_cards_from_store(deck_handler):
+    test_player = Player()
+    test_player.energy = constants.SWEEP_CARD_STORE_COST
+    initial_cards_in_store = [deck_handler.store[0], deck_handler.store[1], deck_handler.store[2]]
+    deck_handler.sweep_store(test_player)
+    for card in initial_cards_in_store:
+        assert not deck_handler.store.__contains__(card)
+
+
+def test_sweep_store_puts_current_cards_in_discard(deck_handler):
+    test_player = Player()
+    test_player.energy = constants.SWEEP_CARD_STORE_COST
+    initial_cards_in_store = [deck_handler.store[0], deck_handler.store[1], deck_handler.store[2]]
+    deck_handler.sweep_store(test_player)
+    for card in initial_cards_in_store:
+        assert deck_handler.discard_pile.__contains__(card)
+
+
+def test_sweep_store_costs_energy(deck_handler):
+    test_player = Player()
+    test_player.energy = constants.SWEEP_CARD_STORE_COST
+    deck_handler.sweep_store(test_player)
+    assert test_player.energy == 0
+
+
+def test_store_refills_after_sweep(deck_handler):
+    test_sweep_store_costs_energy(deck_handler)
+    assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
+
