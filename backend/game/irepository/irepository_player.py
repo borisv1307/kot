@@ -28,7 +28,7 @@ class IRepositoryPlayer:
         self.player = player
         user = User()
         user.objects.get(monster_name=player.monster_name)
-        user.objects
+        return user
 
     def update_player_db(self, player: Player):
         self.player = player
