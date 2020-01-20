@@ -79,20 +79,20 @@ class CardStore extends React.Component {
               <Card>
                 <Card.Body>
                   <Card.Title>{this.state.cardName}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">{this.state.cardCost}</Card.Subtitle>
-                  <Card.Text>{this.state.cardType}</Card.Text>
-                  <Card.Text>{this.state.cardEffect}</Card.Text>
-                  <Card.Text>{this.state.cardFootnote}</Card.Text>
+                  <Card.Subtitle className="mb-2 text-muted">Cost: {this.state.cardCost}</Card.Subtitle>
+                  <Card.Text>Card Type: {this.state.cardType}</Card.Text>
+                  <Card.Text>Effect: {this.state.cardEffect}</Card.Text>
+                  <Card.Text>Footnote: {this.state.cardFootnote}</Card.Text>
                 </Card.Body>
               </Card>
 
               <Card>
                 <Card.Body>
                   <Card.Title>{this.state.cardName}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">{this.state.cardCost}</Card.Subtitle>
-                  <Card.Text>{this.state.cardType}</Card.Text>
-                  <Card.Text>{this.state.cardEffect}</Card.Text>
-                  <Card.Text>{this.state.cardFootnote}</Card.Text>
+                  <Card.Subtitle className="mb-2 text-muted">Cost: {this.state.cardCost}</Card.Subtitle>
+                  <Card.Text>Card Type: {this.state.cardType}</Card.Text>
+                  <Card.Text>Effect: {this.state.cardEffect}</Card.Text>
+                  <Card.Text>Footnote: {this.state.cardFootnote}</Card.Text>
                 </Card.Body>
               </Card>
             </div>
