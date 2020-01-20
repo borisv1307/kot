@@ -1,5 +1,14 @@
-from game.irepository.test_irepository_player import IRepositoryPlayer
+import pytest
+
+from game.irepository.irepository_player import IRepositoryPlayer
+from game.player.player import Player
 
 
+@pytest.mark.django_db(transaction=True)
 def test_irepository_player():
-    IRepositoryPlayer.save_player_db()
+    irepositoryplayer = IRepositoryPlayer()
+    player = Player()
+    player.set_monster_name('Godzilla')
+    player.set_username('Test')
+    player.set_password('Test')
+    irepositoryplayer.save_player_db(player)

@@ -6,8 +6,7 @@ from game.player.player import Player
 
 class IRepositoryPlayer:
     def __init__(self):
-        self.player = None
-        self.player_id = None
+        self.player = Player()
 
     """
     CRUD function for Player below
@@ -15,18 +14,35 @@ class IRepositoryPlayer:
 
     def save_player_db(self, player: Player):
         self.player = player
-        User.monster_name = 'Test'
-        User.username = 'Test'
-        User.password = 'Test'
-        User.date_created = datetime.datetime.now()
-        User.save()
-        pass
+        user = User(monster_name=player.monster_name,
+                    username=player.username,
+                    password=player.password,
+                    date_created=datetime.datetime.now())
+        # user.monster_name = player.monster_name
+        # user.username = player.username
+        # user.password = player.password
+        # user.date_created = datetime.datetime.now()
+        user.save()
 
-    def get_player_db(self, player_id):
-        pass
+    def get_player_db(self, player: Player):
+        self.player = player
+        user = User()
+        user.objects.get(monster_name=player.monster_name)
+        user.objects
 
-    def update_player_db(self, player, player_id):
-        pass
+    def update_player_db(self, player: Player):
+        self.player = player
+        user = User()
+        user.objects.get(monster_name=player.monster_name)
+        user_update = User(monster_name=player.monster_name,
+                           username=player.username,
+                           password=player.password,
+                           date_created=datetime.datetime.now())
+        user = user_update
+        user.save()
 
-    def delete_player_db(self, player_id):
-        pass
+    def delete_player_db(self, player: Player):
+        self.player = player
+        user = User()
+        user.objects.get(monster_name=player.monster_name)
+        user.delete()

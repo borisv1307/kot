@@ -4,11 +4,23 @@ from game.values.locations import Locations
 
 class Player:
     def __init__(self):
+        self.monster_name = None
+        self.username = None
+        self.password = None
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
+
+    def set_monster_name(self, monster_name):
+        self.monster_name = monster_name
+
+    def set_username(self, username):
+        self.username = username
+
+    def set_password(self, password):
+        self.password = password
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO

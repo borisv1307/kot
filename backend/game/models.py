@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from django.db import models
+
 
 # Create your models here.
 class User(models.Model):
@@ -21,12 +24,13 @@ class User(models.Model):
         return self.username
 
     def read(self):
-        self.last_read_date = timezone.now()
+        self.last_read_date = datetime.datetime.now()
         self.save()
 
     def unread_messages(self):
         return Message.objects.filter(created_at__gt=self.last_read_date) \
-                              .count()
+            .count()
+
 
 class Dice(models.Model):
     DICE_VALUE = (
