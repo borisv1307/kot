@@ -18,3 +18,14 @@ class GameConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({
             'message': message
         }))
+
+    def randomcards_deck_handler(self, data):
+        username = data['user']
+        room = data['room']
+        cards_required = data['payload']
+        self.send_server_response_to_client('GAMECONSOLE_DECISION', username, room, cards)
+
+    commands = {
+        'randomcards_send_request': randomcards_deck_handler
+        #To modify the command with backend class that handles this
+    }
