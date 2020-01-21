@@ -47,7 +47,12 @@ class CardStore extends React.Component {
   }
 
   randomCardsCommand(user, room, cmd) {
-
+    return {
+      command: "randomcards_send_request",
+      user: user,
+      room: room,
+      payload: 3
+    };
   }
 
   handleChange(e) {
