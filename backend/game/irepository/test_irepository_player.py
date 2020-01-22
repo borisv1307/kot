@@ -14,13 +14,13 @@ def test_save_player():
     irepositoryplayer.save_player_db(player)
 
 
-def test_get_player():
-    pass
+#def test_get_player():
+#    pass
 
 
-def test_update_player():
-    pass
+#def test_update_player():
+#    pass
 
 
-def test_delete_player():
-    pass
+#def test_delete_player():
+#    pass

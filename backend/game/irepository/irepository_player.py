@@ -18,10 +18,6 @@ class IRepositoryPlayer:
                     username=player.username,
                     password=player.password,
                     date_created=datetime.datetime.now())
-        # user.monster_name = player.monster_name
-        # user.username = player.username
-        # user.password = player.password
-        # user.date_created = datetime.datetime.now()
         user.save()
 
     def get_player_db(self, player: Player):
