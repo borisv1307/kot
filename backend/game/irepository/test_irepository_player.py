@@ -5,7 +5,7 @@ from game.player.player import Player
 
 
 @pytest.mark.django_db(transaction=True)
-def tests_save_player():
+def testSavePlayer():
     irepositoryplayer = IRepositoryPlayer()
     player = Player()
     player.set_monster_name('Godzilla')
