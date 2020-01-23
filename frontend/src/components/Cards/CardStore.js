@@ -12,21 +12,15 @@ class CardStore extends React.Component {
     this.clearSelected = this.clearSelected.bind(this);
 
     this.state = {
-      index: [3],
       username: props.currentUser,
       gameRoom: props.currentRoom,
       value: [],
       selectedCard: [],
       card: [
-        {
-          name: 'Card Name',
-          cost: 3,
-          type: 'keep',
-          effect: 'lose two hearts, gain 4 energy',
-          footnote: 'footnote description'
-        }
+        { name: 'Armor Plating', cost: 4, type: 'Keep', effect: 'Ignore damage of 1', footnote: ' ' },
+        { name: 'Commuter Train', cost: 4, type: 'Discard', effect: 'Gain 2 victory points', footnote: ' ' },
+        { name: 'Giant Brain', cost: 5, type: 'Keep', effect: 'You have one extra reroll each turn', footnote: ' ' }
       ]
-
     };
   }
 
@@ -63,25 +57,30 @@ class CardStore extends React.Component {
 
   render() {
     return (
-      <div>
-        <Card className="card">
-          {
-            this.state.card.map((card, key) => (
-              <div key={key}>
-                <div>{card.name}</div>
-                <div>{card.cost}</div>
-                <div>{card.type}</div>
-                <div>{card.footnote}</div>
-              </div>
-            )
-
-            )}
-        </Card>
-
-        <Button onClick={this.setRedirect} className="btn btn-secondary">Card Store{this.state.CardStore}</Button>
-        &nbsp;&nbsp;
-        <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
-      </div>
+      <container className="card">
+        <div className="row">
+          <div className="col-sm">
+            <div className="card" type="checkbox">
+              {
+                this.state.card.map((entry, index) => (
+                  <Card key={index}>
+                    <Card.Body>
+                      <Card.Title>Card: {entry.name}</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">Cost: {entry.cost}</Card.Subtitle>
+                      <Card.Text>Type: {entry.type}</Card.Text>
+                      <Card.Text>Effect: {entry.effect}</Card.Text>
+                      <Card.Text>{entry.footnote}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                ))
+              }
+            </div>
+            <Button onClick={this.setRedirect} className="btn btn-secondary">Card Store{this.state.cardStore}</Button>
+            &nbsp;&nbsp;&nbsp;
+                <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
+          </div>
+        </div>
+      </container>
     );
   }
 }
