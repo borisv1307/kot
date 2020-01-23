@@ -1,13 +1,14 @@
-
 import game.dice.dice_resolver as dice_resolver
+import game.values.constants as constants
+from game.deck.deck_handler import DeckHandler
 from game.engine.player_queue import GamePlayers
 from game.values.status import Status
-import game.values.constants as constants
 
 
 class BoardGame():
 
     def __init__(self):
+        self.deck_handler = DeckHandler()
         self.players = GamePlayers()
         self.status = Status.SETUP
         self.winner = None
