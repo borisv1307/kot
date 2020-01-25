@@ -1,8 +1,9 @@
 from typing import List
 
 import game.values.constants as constants
-from game.cards_old_dir.old_card import Old_Card
+from game.cards.card import Card
 from game.deck.deck import Deck
+from game.player.player import Player
 
 
 class DeckHandler:
@@ -15,7 +16,7 @@ class DeckHandler:
     """
     __draw_pile: Deck = Deck()
     __discard_pile: Deck = Deck()
-    __card_store: List[Old_Card] = list()
+    __card_store: List[Card] = list()
 
     def __init__(self):
         self.store.clear()
@@ -58,13 +59,27 @@ class DeckHandler:
             self.__draw_pile.append(self.discard_pile.draw_from())
         self.__discard_pile.clear()
 
-    def buy_card_from_store(self, index):
-        bought = self.__card_store.pop(index)
-        self.__fill_card_store()
-        return bought
+    def buy_card_from_store(self, index, purchasing_player: Player):
+        card_to_buy: Card = self.__card_store[index]
+        if purchasing_player.energy < card_to_buy.cost:
+            raise Exception(constants.INSUFFICIENT_FUNDS_MSG)
+        else:
+            purchasing_player.update_energy_by(-card_to_buy.cost)
+            purchasing_player.add_card(card_to_buy)
+            self.__card_store.remove(card_to_buy)
+            self.__fill_card_store()
 
     # optional second arg allows discard to handle removing card from origin as well
-    def discard(self, card: Old_Card, card_from_location: List[Old_Card] = None):
+    def discard(self, card: Card, card_from_location: List[Card] = None):
         self.__discard_pile.append(card)
         if card_from_location is not None:
             card_from_location.remove(card)
+
+    def sweep_store(self, player_invoking_sweep: Player):
+        if player_invoking_sweep.energy < constants.SWEEP_CARD_STORE_COST:
+            raise Exception(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
+        else:
+            player_invoking_sweep.update_energy_by(-constants.SWEEP_CARD_STORE_COST)
+            for _ in range(3):
+                self.discard(self.store.pop())
+            self.__fill_card_store()

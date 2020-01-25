@@ -12,6 +12,8 @@ class DiceBoard extends React.Component {
         this.clearSelected = this.clearSelected.bind(this);
 
         this.state = {
+            username: props.currentUser,
+            gameRoom: props.currentRoom,
             value: []
         };
     }
