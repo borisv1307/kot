@@ -42,3 +42,9 @@ class Player:
 
     def remove_card(self, card: Card):
         self.cards.remove(card)
+
+    def has_instance_of_card(self, card: Card):
+        for player_card in self.cards:
+            if type(player_card) == type(card):
+                return True
+        return False
