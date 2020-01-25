@@ -1,32 +1,71 @@
-import React from 'react';
+import React from "react";
 import "./GameConsole.css";
 
-import GameLog from './GameLog'
+import GameLog from "./GameLog";
 
-const gameLogExample = [
-  '-- Sammy turn –',
-  'Rolled: E E H 1 2 3',
-  'Decision: keep E E',
-  'Rolled: E P 1 2 2',
-  'Decision: keep E',
-  'Rolled: 2 2 2 (TRIPPLE! +2 VP)',
-  ':: Gain: E E E +2 VP ::',
-  'Buy: Psychic Probe',
-  'End Turn'
-];
+import GameInstance from "./../../services/gameService";
 
 class GameConsole extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      log: gameLogExample, // this holds the name of each list
-      cmd: "enter cmd"
+      username: props.currentUser,
+      gameRoom: props.currentRoom,
+      log: [], // this holds the name of each list
+      cmd: ""
     };
+
+    this.waitForSocketConnection(() => {
+      const initCmd = this.createInitUserCommand(
+        this.state.username,
+        this.state.gameRoom
+      );
+      GameInstance.sendMessage(initCmd);
+      GameInstance.addCallbacks(this.serverResponseHandler.bind(this));
+    });
 
     this.handleChange = this.handleChange.bind(this);
     this.SubmitGameCommand = this.SubmitGameCommand.bind(this);
+  }
+
+  createInitUserCommand(user, room) {
+    return {
+      command: "init_user_request",
+      user: user,
+      room: room
+    };
+  }
+
+  serverResponseHandler(messages) {
+    this.appendStateCmdToLog(messages);
+  }
+
+  waitForSocketConnection(callback) {
+    const component = this;
+    setTimeout(function() {
+      // Check if websocket state is OPEN
+      if (GameInstance.state() === 1) {
+        console.log("Connection is made");
+        callback();
+        return;
+      } else {
+        console.log("wait for connection...");
+        component.waitForSocketConnection(callback);
+      }
+    }, 100); // wait 100 milisecond for the connection...
+  }
+
+  appendStateCmdToLog(message) {
+    // const room = message.room;
+    // const user = message.user;
+    const content = message.content;
+
+    if (content === undefined || content === "") return;
+
+    this.setState({ log: [...this.state.log, content] });
+
+    return this.state.log;
   }
 
   SubmitGameCommand(e) {
@@ -38,13 +77,13 @@ class GameConsole extends React.Component {
 
     this.setState({
       log: data
-    })
+    });
   }
 
   handleChange(e) {
     this.setState({
       cmd: e.target.value
-    })
+    });
   }
 
   render() {
@@ -52,16 +91,20 @@ class GameConsole extends React.Component {
       <div className="game_console">
         <GameLog data={this.state.log} />
 
-        <form className="submit_game_command"
+        <form
+          className="submit_game_command"
           onSubmit={this.SubmitGameCommand}
-          onChange={this.handleChange}>
-          <textarea value={this.state.value} onChange={this.handleChange}>Type Command [enter]</textarea>
+          onChange={this.handleChange}
+        >
+          <textarea value={this.state.value} onChange={this.handleChange}>
+            Type Command [enter]
+          </textarea>
         </form>
         <button className="btn btn-secondary" onClick={this.SubmitGameCommand}>
           Submit Command
-          </button>
+        </button>
       </div>
-    )
+    );
   }
 }
 
