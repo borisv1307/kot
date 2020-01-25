@@ -19,26 +19,23 @@ class IRepositoryPlayer:
                     password=player.password,
                     date_created=datetime.datetime.now())
         user.save()
+        return user
 
     def get_player_db(self, player: Player):
         self.player = player
-        user = User()
-        user.objects.get(monster_name=player.monster_name)
+        user = User.objects.get(monster_name=player.monster_name)
         return user
 
     def update_player_db(self, player: Player):
         self.player = player
-        user = User()
-        user.objects.get(monster_name=player.monster_name)
-        user_update = User(monster_name=player.monster_name,
-                           username=player.username,
-                           password=player.password,
-                           date_created=datetime.datetime.now())
-        user = user_update
+        user = User.objects.get(monster_name=player.monster_name)
+        user.username = player.username
+        user.password = player.password
         user.save()
+        return user
 
     def delete_player_db(self, player: Player):
         self.player = player
-        user = User()
-        user.objects.get(monster_name=player.monster_name)
+        user = User.objects.get(monster_name=player.monster_name)
         user.delete()
+        return None
