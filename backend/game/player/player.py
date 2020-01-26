@@ -37,7 +37,7 @@ class Player:
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
 
-   def lose_all_stars(self):
+    def lose_all_stars(self):
         self.victory_points = constants.DEATH_HIT_POINT
 
     def add_card(self, card: Card):
