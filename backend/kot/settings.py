@@ -31,16 +31,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'game.apps.GameConfig',
+    'lobby.apps.LobbyConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'corsheaders',  # new
 	
-	'game',
+	# 3rd Party
+    'rest_framework',
+    'corsheaders',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +128,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+REACT_APP_DIR = os.path.join(BASE_DIR, '../frontend')
+
+STATICFILES_DIRS = (
+    # os.path.join(os.path.join(REACT_APP_DIR, 'frontend'), 'build', 'static'),
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+)
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -135,4 +145,24 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = ['https://localhost:3000', 'http://localhost:3000',
-                         'https://127.0.0.1:3000', 'http://127.0.0.1:3000']
+                         'https://127.0.0.1:3000', 'http://127.0.0.1:3000',
+                         'https://localhost:8000', 'http://localhost:8000',
+                         'https://127.0.0.1:8000', 'http://127.0.0.1:8000']
+
+ASGI_APPLICATION = 'kot.routing.application'
+
+CHANNEL_LAYERS={
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+# future
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": ['redis://localhost:6379/4']
+#         }
+#     },
+# }

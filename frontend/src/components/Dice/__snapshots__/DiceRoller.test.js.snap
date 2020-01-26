@@ -8,11 +8,15 @@ exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`
     callbackSendDiceSelectionOut={[Function]}
     data={Array []}
   />
-  <button
+  <Button
+    active={false}
+    className="btn btn-secondary"
     disabled={false}
     onClick={[Function]}
+    type="button"
+    variant="primary"
   >
     Roll
-  </button>
+  </Button>
 </div>
 `;
