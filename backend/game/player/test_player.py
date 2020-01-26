@@ -100,5 +100,5 @@ def test_player_can_not_have_less_than_zero_victory_points(player):
 def test_player_has_instance_of_card_sees_basic_card(player):
     player.add_card(Energize())
     # check player has Energize but not FireBlast to prove method isn't matching to Card or DiscardCard
-    assert player.has_instance_of_card(Energize()) and not player.has_instance_of_card(FireBlast())
-
+    assert player.has_instance_of_card(
+        Energize()) and not player.has_instance_of_card(FireBlast())
