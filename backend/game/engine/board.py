@@ -1,17 +1,21 @@
-
 import game.dice.dice_resolver as dice_resolver
+import game.values.constants as constants
+from game.deck.deck_handler import DeckHandler
 from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
 from game.engine.player_queue import GamePlayers
 from game.values.status import Status
-import game.values.constants as constants
 
 
-class BoardGame():
+class BoardGame:
 
     def __init__(self):
         self.players = GamePlayers()
         self.status = Status.SETUP
         self.winner = None
+        self.deck_handler = DeckHandler()
+
+    def add_player(self, player):
+        self.players.add_player_to_game(player)
 
     def start_game(self):
         self.players.set_player_order()
@@ -19,7 +23,7 @@ class BoardGame():
 
     def check_if_winner(self, potential_winner):
         if (potential_winner.victory_points == constants.VICTORY_POINTS_TO_WIN or
-                players.is_last_player_alive(potential_winner)):
+                self.players.is_last_player_alive(potential_winner)):
             self.winner = potential_winner
             self.end_game()
 
