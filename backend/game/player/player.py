@@ -3,8 +3,6 @@ from typing import List
 from game.cards.card import Card
 from game.values import constants
 from game.values.locations import Locations
-from game.cards.card import Card
-from typing import List
 
 
 class Player:
