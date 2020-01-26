@@ -12,7 +12,7 @@ class SolarPowered(KeepCard):
         player_that_bought_the_card.add_card(card)
 
     def special_effect(self, player_that_bought_the_card, other_players):
-        if player_that_bought_the_card.energy == constants.ZERO_ENERGY:
+        if player_that_bought_the_card.energy == 0:
             player_that_bought_the_card.update_energy_by(1)
 
 # TODO Turn related logic for trigger
