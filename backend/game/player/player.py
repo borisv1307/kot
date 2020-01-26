@@ -37,20 +37,6 @@ class Player:
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
 
-
-<< << << < HEAD
-   def add_card(self, card):
-        self.card_on_hand[card.name] = card.effect
-
-    def remove_card(self, card):
-        self.card_on_hand.pop(card.name)
-
-    def get_card_at_index(self, index):
-        return self.card_on_hand.pop(index)
-
-    def get_current_hand(self):
-        return self.card_on_hand
-== =====
    def lose_all_stars(self):
         self.victory_points = constants.DEATH_HIT_POINT
 
@@ -65,4 +51,3 @@ class Player:
             if type(player_card) == type(card):
                 return True
         return False
->>>>>> > fb60511167054cbc7c97b0821c375e80830bf74c
