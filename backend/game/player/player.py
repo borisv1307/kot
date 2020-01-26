@@ -1,3 +1,6 @@
+from typing import List
+
+from game.cards.card import Card
 from game.values import constants
 from game.values.locations import Locations
 
@@ -9,7 +12,7 @@ class Player:
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
-        self.card_on_hand = {}
+        self.cards: List[Card] = []
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
@@ -38,13 +41,19 @@ class Player:
         self.energy += change_integer
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
+            
+    def add_card(self, card: Card):
+        self.cards.append(card)
 
-    def add_card(self, card):
-        self.card_on_hand[card.name] = card.effect
+    def remove_card(self, card: Card):
+        self.cards.remove(card)
 
-    def remove_card(self, card):
-        self.card_on_hand.pop(card.name)
-
+    def has_instance_of_card(self, card: Card):
+        for player_card in self.cards:
+            if type(player_card) == type(card):
+                return True
+        return False
+  
     def get_card_at_index(self, index):
         return self.card_on_hand.pop(index)
 
@@ -56,3 +65,4 @@ class Player:
 
     def lose_all_stars(self):
         self.victory_points = constants.DEATH_HIT_POINT
+
