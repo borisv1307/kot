@@ -1,5 +1,6 @@
-from game.cards import card
-from game.cards.keep_cards.victory_points_manipulation_cards.eater_of_the_dead import EaterOfTheDead
+from typing import List
+
+from game.cards.card import Card
 from game.values import constants
 from game.values.locations import Locations
 from game.cards.card import Card
@@ -13,7 +14,7 @@ class Player:
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
-        self.card_on_hand: List[Card] = []
+        self.cards: List[Card] = []
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
@@ -33,19 +34,22 @@ class Player:
         if self.victory_points < constants.DEATH_HIT_POINT:
             self.victory_points = constants.DEATH_HIT_POINT
 
-    def update_energy_by(self, change_integer):
+    def update_energy_by(self, c e_integer):
         self.energy += change_integer
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
 
-    def add_card(self, card):
-        self.card_on_hand.append(card)
+    def lose_all_stars(self):
+        self.victory_points = constants.DEATH_HIT_POINT
 
-    def remove_card(self, index):
-        self.card_on_hand.pop(index)
+    def add_card(self, card: Card):
+        self.cards.append(card)
 
-    def get_card_at_index(self, index):
-        return self.card_on_hand.pop(index)
+    def remove_card(self, card: Card):
+        self.cards.remove(card)
 
-    def get_current_hand(self):
-        return self.card_on_hand
+    def has_instance_of_card(self, card: Card):
+        for player_card in self.cards:
+            if type(player_card) == type(card):
+                return True
+        return False

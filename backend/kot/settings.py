@@ -31,17 +31,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'game.apps.GameConfig',
+    'lobby.apps.LobbyConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	
+	# 3rd Party
     'rest_framework',
     'corsheaders',
-    'game',
-    'lobby',
-    'channels'
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +150,19 @@ CORS_ORIGIN_WHITELIST = ['https://localhost:3000', 'http://localhost:3000',
                          'https://127.0.0.1:8000', 'http://127.0.0.1:8000']
 
 ASGI_APPLICATION = 'kot.routing.application'
+
+CHANNEL_LAYERS={
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+# future
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": ['redis://localhost:6379/4']
+#         }
+#     },
+# }

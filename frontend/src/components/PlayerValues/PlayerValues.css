@@ -1,0 +1,16 @@
+.player-border {
+    border: 2px solid;
+    border-radius: 20px
+}
+
+.player-values {
+    margin: 7px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+    text-align: left;
+    color: black;
+}
+img {
+    margin: 3px;
+    height: 15px    
+}

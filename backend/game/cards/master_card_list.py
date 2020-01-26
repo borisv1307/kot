@@ -8,6 +8,11 @@ from game.cards.discard_cards.health_manipulation_cards.high_altitude_bombing im
 # Multi-Manipulation Cards
 from game.cards.discard_cards.multi_manipulation_cards.gas_refinery import GasRefinery
 from game.cards.discard_cards.multi_manipulation_cards.jet_fighters import JetFighters
+from game.cards.discard_cards.multi_manipulation_cards.national_guard import NationalGuard
+from game.cards.discard_cards.multi_manipulation_cards.nuclear_power_plant import NuclearPowerPlant
+from game.cards.discard_cards.multi_manipulation_cards.tanks import Tanks
+from game.cards.discard_cards.multi_manipulation_cards.vast_storm import VastStorm
+
 
 # Victory Point Manipulation Cards
 from game.cards.discard_cards.victory_point_manipulation_cards.apartment_building import ApartmentBuilding
@@ -28,15 +33,19 @@ def get_all_cards():
 
     health_manipulation_cards = [FireBlast(), HighAltitudeBombing()]
 
-    multi_manipulation_cards = [GasRefinery(), JetFighters()]
+    multi_manipulation_cards = [GasRefinery(), JetFighters(), NationalGuard(), NuclearPowerPlant(), Tanks(),
+                                VastStorm()]
 
     victory_point_manipulation_cards = [ApartmentBuilding(), CommuterTrain(), CornerStore(),
                                         EvacuationOrders(), Skyscraper()]
 
+    discard_cards = []
+    discard_cards.extend(health_manipulation_cards)
+    discard_cards.extend(energy_manipulation_cards)
+    discard_cards.extend(multi_manipulation_cards)
+    discard_cards.extend(victory_point_manipulation_cards)
+
     full_list_of_cards = []
-    full_list_of_cards.extend(energy_manipulation_cards)
-    full_list_of_cards.extend(health_manipulation_cards)
-    full_list_of_cards.extend(multi_manipulation_cards)
-    full_list_of_cards.extend(victory_point_manipulation_cards)
+    full_list_of_cards.extend(discard_cards)
 
     return full_list_of_cards

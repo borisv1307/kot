@@ -1,6 +1,7 @@
 import pytest
 
-from game.cards.keep_cards.victory_points_manipulation_cards.eater_of_the_dead import EaterOfTheDead
+from game.cards.discard_cards.energy_manipulation_cards.energize import Energize
+from game.cards.discard_cards.health_manipulation_cards.fire_blast import FireBlast
 from game.values import constants
 from game.values.locations import Locations
 from game.player.player import Player
@@ -96,12 +97,8 @@ def test_player_can_not_have_less_than_zero_victory_points(player):
     assert player.victory_points == 0
 
 
-def test_player_add_card_and_retrieve(player):
-    player.add_card(card=EaterOfTheDead())
-    assert player.get_card_at_index(0).name == "Eater of the Dead"
-
-
-def test_player_remove_card(player):
-    player.add_card(card=EaterOfTheDead())
-    player.remove_card(0)
-    assert len(player.get_current_hand()) == 0
+def test_player_has_instance_of_card_sees_basic_card(player):
+    player.add_card(Energize())
+    # check player has Energize but not FireBlast to prove method isn't matching to Card or DiscardCard
+    assert player.has_instance_of_card(
+        Energize()) and not player.has_instance_of_card(FireBlast())
