@@ -10,6 +10,7 @@
     "flow-bin": "^0.109.0",
     "isomorphic-fetch": "^2.2.1",
     "jest-enzyme": "^7.1.1",
+    "node-sass": "^4.13.1",
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
