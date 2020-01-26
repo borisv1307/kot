@@ -1,7 +1,6 @@
 import pytest
 
 from game.irepository.irepository_player import IRepositoryPlayer
-from game.models import User
 from game.player.player import Player
 
 
