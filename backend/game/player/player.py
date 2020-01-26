@@ -1,3 +1,6 @@
+from typing import List
+
+from game.cards.card import Card
 from game.values import constants
 from game.values.locations import Locations
 
@@ -12,6 +15,7 @@ class Player:
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
+        self.cards: List[Card] = []
 
     def set_monster_name(self, monster_name):
         self.monster_name = monster_name
