@@ -59,7 +59,7 @@ def test_get_next_player_turn_consistent_order():
     player2 = game.get_next_player_turn()
     player3 = game.get_next_player_turn()
 
-    for _ in range(50):
+    for _ in range(5):
         assert player1 is game.get_next_player_turn()
         assert player2 is game.get_next_player_turn()
         assert player3 is game.get_next_player_turn()
