@@ -1,4 +1,4 @@
-from game.cards.keep_cards.victory_points_manipulation_cards.eater_of_the_dead import EaterOfTheDead
+from game.cards.keep_cards.victory_point_manipulation_cards.eater_of_the_dead import EaterOfTheDead
 
 
 def test_eater_of_the_dead_player_add_card(player):
