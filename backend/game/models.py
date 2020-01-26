@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+
 
 # Create your models here.
 class User(models.Model):
@@ -6,13 +8,8 @@ class User(models.Model):
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
+    date_created = models.DateTimeField(default=timezone.now, blank=True)
 
-    last_read_date = models.DateTimeField(
-        auto_now_add=True,
-        blank=False,
-        null=False
-    )
     online = models.BooleanField(null=False, blank=False, default=False)
 
     REQUIRED_FIELDS = []
@@ -20,13 +17,6 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
-    def read(self):
-        self.last_read_date = timezone.now()
-        self.save()
-
-    def unread_messages(self):
-        return Message.objects.filter(created_at__gt=self.last_read_date) \
-                              .count()
 
 class Dice(models.Model):
     DICE_VALUE = (
@@ -94,16 +84,4 @@ class Play(models.Model):
     victory_points = models.IntegerField()
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
-    date_created = models.DateTimeField()
-
-
-class Message(models.Model):
-    MSG_TYPES = (
-        ('error', '1'),
-        ('command', '1'),
-        ('game', '1'),
-    )
-    # should cascade be applied below.
-    message_type = models.CharField(max_length=1, choices=MSG_TYPES)
-    message_string = models.CharField(max_length=30)
     date_created = models.DateTimeField()

@@ -1,9 +1,9 @@
 {
-    "python.pythonPath": "backend\\env\\Scripts\\python.exe",
+    "python.pythonPath": "c:\\Users\\kaubin\\Documents\\Drexel\\SE691 Software Studio\\dev\\backend-command-base\\env\\Scripts\\python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
-    "python.linting.pycodestyleEnabled": true,
-    "python.linting.pylintPath": "${workspaceFolder}/backend/env/Scripts/pylint.exe",
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.pylintPath": "${workspaceFolder}/env/Scripts/pylint.exe",
     "python.linting.pylintArgs": [
         "--load-plugins",
         "pylint_django"
@@ -15,7 +15,7 @@
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.venvPath": "${workspaceFolder}/backend/env",
+    "python.venvPath": "${workspaceFolder}/env",
     "files.exclude": {
         "**/*.pyc": {
             "when": "$(basename).py"
@@ -26,7 +26,7 @@
         "--ignore=E501",
         "--ignore=E303"
     ],
-    "python.linting.enabled": true,
+    "python.linting.enabled": false,
     "[python]": {
         "editor.formatOnSave": true
     }
