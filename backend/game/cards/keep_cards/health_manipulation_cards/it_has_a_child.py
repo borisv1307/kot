@@ -14,9 +14,8 @@ class ItHasAChild(KeepCard):
         player_that_bought_the_card.add_card(card)
 
     def special_effect(self, player_that_bought_the_card, other_players):
-        if player_that_bought_the_card.energy == constants.ZERO_ENERGY:
+        if player_that_bought_the_card.current_health == constants.DEATH_HIT_POINT:
             player_that_bought_the_card.discard_all_cards()
             player_that_bought_the_card.lose_all_stars()
+            player_that_bought_the_card.leave_tokyo()
             player_that_bought_the_card.update_health_by(10)
-
-# TODO Turn related logic for trigger
