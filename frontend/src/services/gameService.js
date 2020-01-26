@@ -15,17 +15,6 @@ class GameService {
     this.socketRef = null;
   }
 
-  // sends dice back to server formatted as an array of 2d arrays.
-  // first index: the roll value
-  // second index: selected or not
-  // [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
-  sendSelectedDice(envelope) {
-    this.sendMessage({
-      command: "selected_dice",
-      from: envelope.from,
-      message: envelope.data
-    });
-  }
 
   connect(roomName) {
     const path = config.GAME_SOCKET_API_PATH + roomName + "/";

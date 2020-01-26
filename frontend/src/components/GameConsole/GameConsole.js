@@ -69,15 +69,26 @@ class GameConsole extends React.Component {
   }
 
   SubmitGameCommand(e) {
-    let data = this.state.log;
-    data.push(this.state.cmd);
+    if (this.state.cmd === undefined || this.state.cmd === "") return;
 
-    // TO DO : Call dice REST endpoint requesting reroll.
-    //this.props.sendMessage(this.state.message)
+    const command = this.createGameLogCommand(
+      this.state.username,
+      this.state.gameRoom,
+      this.state.cmd
+    );
 
-    this.setState({
-      log: data
-    });
+    GameInstance.sendMessage(command);
+  }
+
+  createGameLogCommand(user, room, cmd) {
+    return {
+      command: "gamelog_send_request",
+      user: user,
+      room: room,
+
+      // payload format: [['text entered by user']
+      payload: cmd
+    };
   }
 
   handleChange(e) {
@@ -89,16 +100,21 @@ class GameConsole extends React.Component {
   render() {
     return (
       <div className="game_console">
-        <GameLog data={this.state.log} />
+        <GameLog
+          data={this.state.log}
+          currentUser={this.state.username}
+          currentRoom={this.state.gameRoom}
+        />
 
         <form
           className="submit_game_command"
           onSubmit={this.SubmitGameCommand}
           onChange={this.handleChange}
         >
-          <textarea value={this.state.value} onChange={this.handleChange}>
-            Type Command [enter]
-          </textarea>
+          <textarea
+            value={this.state.value}
+            onChange={this.handleChange}
+          ></textarea>
         </form>
         <button className="btn btn-secondary" onClick={this.SubmitGameCommand}>
           Submit Command
