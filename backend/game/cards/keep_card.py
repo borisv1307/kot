@@ -7,11 +7,11 @@ class KeepCard(Card):
         super().__init__(name, cost, effect)
 
     def immediate_effect(self, player_that_bought_the_card, other_players):
-        player_that_bought_the_card.add_card(self)
+        raise NotImplementedError
 
     @abstractmethod
     def special_effect(self, player_that_bought_the_card, other_players):
         raise NotImplementedError
 
     def discard_effect(self, player_that_bought_the_card, other_players):
-        player_that_bought_the_card.remove_card(self)
+        raise NotImplementedError

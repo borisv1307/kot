@@ -9,11 +9,9 @@ class EvenBigger(KeepCard):
                                          "")
 
     def immediate_effect(self, player_that_bought_the_card, other_players):
-        player_that_bought_the_card.add_card(self)
         EvenBigger().special_effect(player_that_bought_the_card, None)
 
     def discard_effect(self, player_that_bought_the_card, other_players):
-        player_that_bought_the_card.remove_card(self)
         player_that_bought_the_card.update_max_health_by(-2)
 
     def special_effect(self, player_that_bought_the_card, other_players):
