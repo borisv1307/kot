@@ -6,7 +6,7 @@ import * as Constants from '../../constants'
 
 import DiceBoard from './DiceBoard'
 
-import GameInstance from './../../services/gameService'
+import GameInstance from '../../services/gameService'
 
 class DiceRoller extends React.Component {
 
@@ -35,10 +35,8 @@ class DiceRoller extends React.Component {
   }
 
   async AttemptReroll(/*e*/) {
-
     try {
-
-      this.sendSelectedDice();
+      this.determineSelectedDice();
 
       let rerollThisMany = this.CalculateRerollCount();
 
@@ -52,30 +50,41 @@ class DiceRoller extends React.Component {
     }
   }
 
-  sendSelectedDice() {
-
+  determineSelectedDice() {
     let selected = this.state.rolledDice;
 
     if (selected && selected.length > 0) {
       const messageObject = {
-        from: this.props.currentUser,
+        user: this.state.username,
+        room: this.state.gameRoom,
         data: selected
       };
 
-      GameInstance.sendSelectedDice(messageObject);
+      this.sendSelectedDice(messageObject);
       this.setState({
-        message: ''
-      })
+        message: ""
+      });
     }
+  }
+
+  // sends dice back to server formatted as an array of 2d arrays.
+  // first index: the roll value
+  // second index: selected or not
+  // payload format: [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
+  sendSelectedDice(envelope) {
+    GameInstance.sendMessage({
+      command: "selected_dice_request",
+      user: envelope.user,
+      room: envelope.room,
+      payload: envelope.data
+    });
   }
 
   CalculateRerollCount() {
     if (this.state && this.state.selectedDice && this.state.rolledDice) {
       let keptDice = this.state.selectedDice.length;
       let totalDice = this.state.rolledDice.length;
-      let reroll = totalDice - keptDice;
-      if (reroll)
-        return reroll;
+      return totalDice - keptDice;
     }
 
     return 0;
@@ -109,10 +118,22 @@ class DiceRoller extends React.Component {
   render() {
     return (
       <div className="DiceRoller">
-        <DiceBoard ref={this.textInput} callbackSendDiceSelectionOut={this.selectedDiceCallback} data={this.state.rolledDice} currentUser={this.state.username} currentRoom={this.state.gameRoom} />
-        <Button className="btn btn-secondary" disabled={!this.state.allowReroll} onClick={this.AttemptReroll}>Roll</Button>
+        <DiceBoard
+          ref={this.textInput}
+          callbackSendDiceSelectionOut={this.selectedDiceCallback}
+          data={this.state.rolledDice}
+          currentUser={this.state.username}
+          currentRoom={this.state.gameRoom}
+        />
+        <Button
+          className="btn btn-secondary"
+          disabled={!this.state.allowReroll}
+          onClick={this.AttemptReroll}
+        >
+          Roll
+        </Button>
       </div>
-    )
+    );
   }
 }
 
