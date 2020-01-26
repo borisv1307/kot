@@ -1,10 +1,7 @@
 import game.dice.dice_resolver as dice_resolver
-
 import game.values.constants as constants
 from game.deck.deck_handler import DeckHandler
-
 from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
-
 from game.engine.player_queue import GamePlayers
 from game.values.status import Status
 
