@@ -38,7 +38,8 @@ class BoardGame:
             raise Exception("It is not %s's turn" % (id(active_player)))
         # TODO, refactor to other method
         if active_player.has_instance_of_card(Urbavore()):
-            Urbavore.start_of_turn_special_effect(active_player)
+            Urbavore.special_effect(
+                active_player, self.players.get_all_alive_players_minus_current_player())
         self.turn_actions(active_player)
         # TODO, refactor to other method
         if active_player.has_instance_of_card(EnergyHoarder()):
