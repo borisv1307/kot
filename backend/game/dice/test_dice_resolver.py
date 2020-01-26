@@ -5,6 +5,7 @@ import game.dice.dice_resolver as dice_resolver
 from game.player.player import Player
 
 
+
 def test_less_than_three_twos_rolled_no_victory_points_awarded():
     dice = collections.Counter([DieValue.TWO, DieValue.TWO,
                                 DieValue.HEAL, DieValue.ATTACK,
@@ -72,10 +73,10 @@ def test_three_attacks_rolled_three_attacks_award():
 
 def test_roll_energy_updates_player():
     player = Player()
+    other_players = [Player(), Player()]
     starting_energy = player.energy
     dice = [DieValue.ENERGY, DieValue.ENERGY,
             DieValue.ENERGY, DieValue.ENERGY,
             DieValue.ENERGY, DieValue.ENERGY]
-    dice_resolver.dice_resolution(dice, player)
+    dice_resolver.dice_resolution(dice, player, other_players)
     assert player.energy == starting_energy + 6
-
