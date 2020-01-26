@@ -10,7 +10,7 @@ class GamePlayers():
         self.current_player = None
         self.player_cycle = []
 
-    def _add_player_to_game(self, new_player):
+    def add_player_to_game(self, new_player):
         if not isinstance(new_player, Player):
             raise TypeError("Object passed in was not an instance of Player")
         self.players.append(new_player)

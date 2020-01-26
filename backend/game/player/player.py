@@ -44,3 +44,18 @@ class Player:
         self.energy += change_integer
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
+
+    def lose_all_stars(self):
+        self.victory_points = constants.DEATH_HIT_POINT
+
+    def add_card(self, card: Card):
+        self.cards.append(card)
+
+    def remove_card(self, card: Card):
+        self.cards.remove(card)
+
+    def has_instance_of_card(self, card: Card):
+        for player_card in self.cards:
+            if type(player_card) == type(card):
+                return True
+        return False
