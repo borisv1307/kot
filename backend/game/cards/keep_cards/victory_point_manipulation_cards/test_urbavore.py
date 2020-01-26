@@ -20,23 +20,27 @@ def test_urbavore_gains_no_stars_when_not_in_tokyo(player):
 
 def test_urbavore_adding_to_attack_when_in_tokyo_and_attack_greater_than_one(player):
     player.location = locations.Locations.TOKYO
-    attack = Urbavore().attack_dice_special_effect(player, 3)
-    assert attack == 4
+    attack_rolled = 3
+    attack = Urbavore().attack_dice_special_effect(player, attack_rolled)
+    assert attack == attack_rolled + 1
 
 
 def test_urbavore_adding_to_attack_when_in_tokyo_and_attack_is_zero(player):
     player.location = locations.Locations.TOKYO
-    attack = Urbavore().attack_dice_special_effect(player, 0)
-    assert attack == 0
+    attack_rolled = 0
+    attack = Urbavore().attack_dice_special_effect(player, attack_rolled)
+    assert attack == attack_rolled
 
 
-def test_urbavore_adding_to_attack_when_in_tokyo_and_attack_greater_than_one(player):
-    player.location = locations.Locations.TOKYO
-    attack = Urbavore().attack_dice_special_effect(player, 3)
-    assert attack == 4
-
-
-def test_urbavore_adding_to_attack_when_not_in_tokyo_and_attack_is_greater_than_one(player):
+def test_urbavore_adding_to_attack_whe_not_in_tokyo_and_attack_greater_than_one(player):
     player.location = locations.Locations.OUTSIDE
-    attack = Urbavore().attack_dice_special_effect(player, 2)
-    assert attack == 2
+    attack_rolled = 2
+    attack = Urbavore().attack_dice_special_effect(player, attack_rolled)
+    assert attack == attack_rolled
+
+
+def test_urbavore_adding_to_attack_when_not_in_tokyo_and_attack_is_zero(player):
+    player.location = locations.Locations.OUTSIDE
+    attack_rolled = 0
+    attack = Urbavore().attack_dice_special_effect(player, attack_rolled)
+    assert attack == attack_rolled
