@@ -3,7 +3,6 @@ from game.cards.card import Card
 
 
 class KeepCard(Card):
-
     def __init__(self, name, cost, effect):
         super().__init__(name, cost, effect)
 
