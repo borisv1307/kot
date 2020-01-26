@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from django.db import models
+from django.utils import timezone
+
 
 
 # Create your models here.
@@ -9,13 +11,8 @@ class User(models.Model):
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
+    date_created = models.DateTimeField(default=timezone.now, blank=True)
 
-    last_read_date = models.DateTimeField(
-        auto_now_add=True,
-        blank=False,
-        null=False
-    )
     online = models.BooleanField(null=False, blank=False, default=False)
 
     REQUIRED_FIELDS = []
@@ -111,3 +108,4 @@ class Message(models.Model):
     message_type = models.CharField(max_length=1, choices=MSG_TYPES)
     message_string = models.CharField(max_length=30)
     date_created = models.DateTimeField()
+
