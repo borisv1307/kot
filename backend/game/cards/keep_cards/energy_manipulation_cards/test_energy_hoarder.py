@@ -6,7 +6,7 @@ def test_energy_hoarder_player_add_card(player):
     assert player.has_instance_of_card(EnergyHoarder())
 
 
-def test_energy_hoarder_costs_4_energy():
+def test_energy_hoarder_costs_3_energy():
     assert EnergyHoarder().cost == 3
 
 
