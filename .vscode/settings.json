@@ -1,6 +1,5 @@
 {
-    //"python.pythonPath": "C:\\Users\\gpfai\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
-    "python.pythonPath": "C:\\Users\\gpfai\\Documents\\GitHub\\kot\\backend\\env\\Scripts\\python.exe",
+    "python.pythonPath": "c:\\Users\\kaubin\\Documents\\Drexel\\SE691 Software Studio\\dev\\backend-command-base\\env\\Scripts\\python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
     "python.linting.pycodestyleEnabled": false,
