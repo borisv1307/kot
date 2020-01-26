@@ -31,7 +31,7 @@ class BoardGame():
             raise Exception("It is not %s's turn" % (id(active_player)))
         self.turn_actions(active_player)
         if active_player.has_instance_of_card(SolarPowered()):
-            SolarPowered.special_effect()
+            SolarPowered.special_effect(active_player, self.players.get_all_alive_players_minus_current_player())
         self.check_if_winner(active_player)
 
     def is_game_active(self):
