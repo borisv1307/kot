@@ -8,5 +8,6 @@ class Card(ABC):
         self.effect = effect
         self.footnote = footnote
 
-    def immediate_effect(self, player_that_bought_the_card, other_players):
-        raise NotImplementedError
+    # Card is a user defined object. Provided comparison context other than object reference.
+    def __eq__(self, other):
+        return self is other or self.name == other.name
