@@ -34,7 +34,7 @@ class Player:
         if self.victory_points < constants.DEATH_HIT_POINT:
             self.victory_points = constants.DEATH_HIT_POINT
 
-    def update_energy_by(self, c e_integer):
+    def update_energy_by(self, change_integer):
         self.energy += change_integer
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
