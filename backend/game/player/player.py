@@ -40,9 +40,6 @@ class Player:
     def lose_all_stars(self):
         self.victory_points = constants.DEATH_HIT_POINT
 
-    def discard_all_cards(self):
-        self.cards = []
-
     def add_card(self, card: Card):
         self.cards.append(card)
 
