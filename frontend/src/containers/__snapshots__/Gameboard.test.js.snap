@@ -34,7 +34,10 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
       <div
         className="col-sm"
       >
-        <GameConsole />
+        <GameConsole
+          currentRoom="Room_1234"
+          currentUser="Guest_1234"
+        />
       </div>
       <div
         className="col-sm"
