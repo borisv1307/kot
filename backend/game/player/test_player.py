@@ -113,6 +113,7 @@ def test_player_has_instance_of_card_sees_basic_card(player):
     assert player.has_instance_of_card(
         Energize()) and not player.has_instance_of_card(FireBlast())
 
+
 def test_discard_all_cards_removes_all_cards(player):
     player.add_card(Energize())
     player.add_card(FireBlast())
@@ -127,6 +128,12 @@ def test_lose_all_stars_zeros_out_stars(player):
     player.discard_all_cards()
     assert not player.has_instance_of_card(
         Energize()) and not player.has_instance_of_card(FireBlast())
+
+
+def test_remove_card(player):
+    player.add_card(Energize())
+    player.remove_card(Energize())
+    assert not player.has_instance_of_card(Energize())
 
 
 def lose_all_stars(self):
