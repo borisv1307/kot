@@ -15,12 +15,7 @@ class CardStore extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       value: [],
-      selectedCard: [],
-      card: [
-        { name: 'Armor Plating', cost: 4, type: 'Keep', effect: 'Ignore damage of 1', footnote: ' ' },
-        { name: 'Commuter Train', cost: 4, type: 'Discard', effect: 'Gain 2 victory points', footnote: ' ' },
-        { name: 'Giant Brain', cost: 5, type: 'Keep', effect: 'You have one extra reroll each turn', footnote: ' ' }
-      ]
+      selectedCard: []
     };
   }
 
@@ -62,7 +57,7 @@ class CardStore extends React.Component {
           <div className="col-sm">
             <div className="card" type="checkbox">
               {
-                this.state.card.map((entry, index) => (
+                this.state.selectedCard.map((entry, index) => (
                   <Card key={index}>
                     <Card.Body>
                       <Card.Title>Card: {entry.name}</Card.Title>
@@ -75,9 +70,9 @@ class CardStore extends React.Component {
                 ))
               }
             </div>
-            <Button onClick={this.setRedirect} className="btn btn-secondary">Card Store{this.state.cardStore}</Button>
+            <Button onClick={this.selectCard} className="btn btn-secondary">Card Store{this.state.cardStore}</Button>
             &nbsp;&nbsp;&nbsp;
-                <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
+                  <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
           </div>
         </div>
       </container>
