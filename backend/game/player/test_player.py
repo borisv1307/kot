@@ -113,7 +113,6 @@ def test_player_has_instance_of_card_sees_basic_card(player):
     assert player.has_instance_of_card(
         Energize()) and not player.has_instance_of_card(FireBlast())
 
-
 def test_discard_all_cards_removes_all_cards(player):
     player.add_card(Energize())
     player.add_card(FireBlast())
