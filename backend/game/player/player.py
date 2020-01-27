@@ -24,20 +24,20 @@ class Player:
         self.current_health += change_integer
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health
-        if self.current_health <= constants.DEATH_HIT_POINT:
+        if self.current_health <= 0:
             self.is_alive = False
 
     def update_max_health_by(self, change_integer):
         self.maximum_health += change_integer
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health
-        if self.maximum_health < constants.DEATH_HIT_POINT:
-            self.maximum_health = constants.DEATH_HIT_POINT
+        if self.maximum_health < 0:
+            self.maximum_health = 0
 
     def update_victory_points_by(self, change_integer):
         self.victory_points += change_integer
-        if self.victory_points < constants.DEATH_HIT_POINT:
-            self.victory_points = constants.DEATH_HIT_POINT
+        if self.victory_points < 0:
+            self.victory_points = 0
 
     def update_energy_by(self, change_integer):
         self.energy += change_integer
@@ -45,7 +45,7 @@ class Player:
             self.energy = constants.DEFAULT_ENERGY_CUBE
 
     def lose_all_stars(self):
-        self.victory_points = constants.DEATH_HIT_POINT
+        self.victory_points = 0
 
     def add_card(self, card: Card):
         self.cards.append(card)
@@ -61,6 +61,3 @@ class Player:
 
     def discard_all_cards(self):
         self.cards.clear()
-
-    def lose_all_stars(self):
-        self.victory_points = constants.DEATH_HIT_POINT
