@@ -68,6 +68,7 @@ class DeckHandler:
             purchasing_player.add_card(card_to_buy)
             self.__card_store.remove(card_to_buy)
             self.__fill_card_store()
+        return card_to_buy
 
     # optional second arg allows discard to handle removing card from origin as well
     def discard(self, card: Card, card_from_location: List[Card] = None):
