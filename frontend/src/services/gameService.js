@@ -15,7 +15,6 @@ class GameService {
     this.socketRef = null;
   }
 
-
   connect(roomName) {
     const path = config.GAME_SOCKET_API_PATH + roomName + "/";
     this.socketRef = new WebSocket(path);
@@ -48,13 +47,15 @@ class GameService {
       return;
     }
 
-    if (command === "server_response") {
-      this.callbacks[command](action);
-    }
+    this.callbacks[command](action);
   }
 
   addCallbacks(serverResponseCallback) {
     this.callbacks["server_response"] = serverResponseCallback;
+  }
+
+  addDiceCallback(diceRollCallback) {
+    this.callbacks["dice_rolls_response"] = diceRollCallback;
   }
 
   sendMessage(data) {

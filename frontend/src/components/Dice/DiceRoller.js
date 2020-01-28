@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 import "./DiceRoller.css";
 import Button from "react-bootstrap/Button";
 
-import * as Constants from '../../constants'
+import * as Constants from "../../constants";
 
-import DiceBoard from './DiceBoard'
+import DiceBoard from "./DiceBoard";
 
-import GameInstance from '../../services/gameService'
+import GameInstance from "../../services/gameService";
 
 class DiceRoller extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -22,19 +21,64 @@ class DiceRoller extends React.Component {
     };
 
     this.AttemptReroll = this.AttemptReroll.bind(this);
+    this.AttemptReroll_via_REST = this.AttemptReroll_via_REST.bind(this);
+    GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
   }
 
   componentDidMount() {
     // ... do something with fetchedData e.g. set the data
   }
 
-  selectedDiceCallback = (selectedDice) => {
+  selectedDiceCallback = selectedDice => {
     this.setState({ selectedDice: selectedDice });
     // console.log('selected :', selectedDice);
     // console.log('total :', this.state.rolledDice.length);
+  };
+
+  // sends dice back to server formatted as an array of 2d arrays.
+  // first index: the roll value
+  // second index: selected or not
+  // payload format: [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
+  sendRollRequest(envelope) {
+    GameInstance.sendMessage({
+      command: "roll_dice_request",
+      user: envelope.user,
+      room: envelope.room,
+      payload: envelope.number_to_reroll
+    });
+  }
+
+  diceRollerHandler(message) {
+    // const room = message.room;
+    // const user = message.user;
+    const content = message.content;
+
+    if (content === undefined || content === "") return;
+
+    this.setState({ rolledDice: content });
+
+    return this.state.log;
   }
 
   async AttemptReroll(/*e*/) {
+    try {
+      this.determineSelectedDice();
+
+      let rerollThisMany = this.CalculateRerollCount();
+
+      const messageObject = {
+        user: this.state.username,
+        room: this.state.gameRoom,
+        number_to_reroll: rerollThisMany
+      };
+
+      this.sendRollRequest(messageObject);
+    } catch (exception) {
+      console.log(exception);
+    }
+  }
+
+  async AttemptReroll_via_REST(/*e*/) {
     try {
       this.determineSelectedDice();
 
@@ -92,7 +136,6 @@ class DiceRoller extends React.Component {
 
   async RequestDiceRoll(rerollThisMany) {
     try {
-
       // TO DO: Provide rerollThisMany to server request
 
       const res = await fetch(Constants.REST_ENDPOINT_DICE);
