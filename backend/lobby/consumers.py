@@ -5,6 +5,7 @@ import json
 import django
 import os
 
+from game.engine.board import BoardGame
 from game.models import User
 
 
@@ -47,28 +48,42 @@ class GameConsumer(WebsocketConsumer):
         # Send message to WebSocket
         self.send(text_data=json.dumps(message))
 
-    def send_server_response_to_client(self, username, room, payload):
+    def create_send_response_to_client(self, command, username, room, payload):
         content = {
-            'command': 'server_response',
+            'command': command,
             'action': {
                 'user': username,
                 'room': room,
                 'content': payload
             }
         }
+        return content
+
+    def send_server_response_to_client(self, username, room, payload):
+        content = self.create_send_response_to_client('server_response', username, room, payload);
+        self.send_group_message(content)
+
+    def send_rolls_to_client(self, username, room, payload):
+        content = self.create_send_response_to_client('dice_rolls_response', username, room, payload);
         self.send_group_message(content)
 
     def init_chat_handler(self, data):
         username = data['user']
         room = data['room']
-        user, created = User.objects.get_or_create(username=username)
+        # user, created = User.objects.get_or_create(username=username)
+        #
+        # if not user:
+        #     error = 'Unable to get or create User with username: ' + username
+        #     self.send_server_response_to_client(username, room, error)
 
-        if not user:
-            error = 'Unable to get or create User with username: ' + username
-            self.send_server_response_to_client(username, room, error)
+        if "gameboard" not in self.scope["session"]:
+            game = BoardGame()
+            json_str = json.dumps(game, indent=4)
+            self.scope["session"]["gameboard"] = json_str
+            self.scope["session"].save()
 
-        success = 'Chatting in with success with username: ' + username
-        self.send_server_response_to_client(username, room, success)
+        # success = 'Chatting in with success with username: ' + username
+        # self.send_server_response_to_client(username, room, success)
 
     def selected_dice_handler(self, data):
         username = data['user']
@@ -78,6 +93,12 @@ class GameConsumer(WebsocketConsumer):
 
         # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
         payload = data['payload']
+
+        #TO DO: Create BoardGame serializer https://www.twilio.com/blog/2017/08/json-serialization-in-python-using-serpy.html
+        # this errors at the moment because there is no serializer
+        # json_str = self.scope["session"]["gameboard"]
+        # game = json.loads(json_str)
+        # print(game.is_winner)
 
         formatted_payload = username + " rolled :" + ','.join(str(item) for innerlist in payload for item in innerlist)
 
@@ -101,8 +122,28 @@ class GameConsumer(WebsocketConsumer):
 
         self.send_server_response_to_client(username, room, mud_gamelog_input)
 
+    def roll_dice_handler(self, data):
+        username = data['user']
+        room = data['room']
+        number_of_dice = data['payload']
+
+        print("roll_dice_handler")
+
+        # roll dice
+        # send back to client...
+
+        # roll dice, send back to client formatted:
+        #   [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
+
+        # TEMPORARY..
+        rolled_dice = [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
+
+        self.send_rolls_to_client(username, room, rolled_dice)
+        pass
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
-        'selected_dice_request': selected_dice_handler
+        'selected_dice_request': selected_dice_handler,
+        'roll_dice_request': roll_dice_handler
     }
