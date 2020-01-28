@@ -21,7 +21,7 @@ class DiceRoller extends React.Component {
     };
 
     this.AttemptReroll = this.AttemptReroll.bind(this);
-    this.AttemptReroll_via_REST = this.AttemptReroll_via_REST.bind(this);
+    //this.AttemptReroll_via_REST = this.AttemptReroll_via_REST.bind(this);
     GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
   }
 
@@ -78,21 +78,21 @@ class DiceRoller extends React.Component {
     }
   }
 
-  async AttemptReroll_via_REST(/*e*/) {
-    try {
-      this.determineSelectedDice();
+  // async AttemptReroll_via_REST(/*e*/) {
+  //   try {
+  //     this.determineSelectedDice();
 
-      let rerollThisMany = this.CalculateRerollCount();
+  //     let rerollThisMany = this.CalculateRerollCount();
 
-      let result = await this.RequestDiceRoll(rerollThisMany);
+  //     let result = await this.RequestDiceRoll(rerollThisMany);
 
-      if (result) {
-        this.setState({ rolledDice: result });
-      }
-    } catch (exception) {
-      console.log(exception);
-    }
-  }
+  //     if (result) {
+  //       this.setState({ rolledDice: result });
+  //     }
+  //   } catch (exception) {
+  //     console.log(exception);
+  //   }
+  // }
 
   determineSelectedDice() {
     let selected = this.state.rolledDice;
