@@ -105,7 +105,7 @@ def test_roll_bonus_die(dice_handler):
     assert dice_handler.dice_values[last_die_index] == MOCK_DIE_ROLL_RESULT_B
 
 
-def test_serialize():
+def test_serialize_dice_handler():
     dh = DiceHandler()
     dh.roll_initial(6, 3)
     print("\n\n")

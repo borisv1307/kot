@@ -1,12 +1,9 @@
-from django.conf import settings
+import json
+
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-import json
-import django
-import os
 
 from game.engine.board import BoardGame
-from game.models import User
 
 
 class GameConsumer(WebsocketConsumer):
@@ -94,7 +91,7 @@ class GameConsumer(WebsocketConsumer):
         # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
         payload = data['payload']
 
-        #TO DO: Create BoardGame serializer https://www.twilio.com/blog/2017/08/json-serialization-in-python-using-serpy.html
+        # TO DO: Create BoardGame serializer https://www.twilio.com/blog/2017/08/json-serialization-in-python-using-serpy.html
         # this errors at the moment because there is no serializer
         # json_str = self.scope["session"]["gameboard"]
         # game = json.loads(json_str)
