@@ -35,3 +35,7 @@ class DiceHandler:
     def add_bonus_die(self, count_to_add=1):
         for _ in range(count_to_add):
             self.dice_values.append(dice.roll())
+
+    def serialize_kot_obj(self):
+        return dict(
+            dice_handler=dict(dice_values=self.dice_values, re_rolls_left=self.re_rolls_left))
