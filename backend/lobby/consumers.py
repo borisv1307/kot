@@ -1,9 +1,13 @@
 import json
+import pickle
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 from game.engine.board import BoardGame
+from game.player.player import Player
+
+from game.models import User, GameState
 
 
 class GameConsumer(WebsocketConsumer):
@@ -27,7 +31,7 @@ class GameConsumer(WebsocketConsumer):
 
     def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
-        status = self.commands[data['command']](self, data)
+        self.commands[data['command']](self, data)
 
     def send_group_message(self, message):
         # Send message to room group
@@ -64,20 +68,45 @@ class GameConsumer(WebsocketConsumer):
         content = self.create_send_response_to_client('dice_rolls_response', username, room, payload);
         self.send_group_message(content)
 
+    def get_or_create_user(self, username, room):
+        user, created = User.objects.get_or_create(username=username)
+
+        if not user:
+            error = 'Unable to get or create User with username: ' + username
+            self.send_server_response_to_client(username, room, error)
+
+        success = 'Chatting in with success with username: ' + username
+        self.send_server_response_to_client(username, room, success)
+        return user
+
+    def get_or_create_game(self, username, room):
+        game, created = GameState.objects.get_or_create(room_name=room)
+
+        if not game:
+            error = 'Unable to get or create Game with room: ' + room
+            self.send_server_response_to_client(username, room, error)
+
+        success = 'Chatting in with success within room: ' + room
+        self.send_server_response_to_client(username, room, success)
+        return game
+
     def init_chat_handler(self, data):
         username = data['user']
         room = data['room']
-        # user, created = User.objects.get_or_create(username=username)
-        #
-        # if not user:
-        #     error = 'Unable to get or create User with username: ' + username
-        #     self.send_server_response_to_client(username, room, error)
+        # self.get_or_create_user(username, room)
+        self.get_or_create_game(username, room)
 
-        if "gameboard" not in self.scope["session"]:
-            game = BoardGame()
-            json_str = json.dumps(game, indent=4)
-            self.scope["session"]["gameboard"] = json_str
-            self.scope["session"].save()
+        game = GameState.objects.get(room_name=room)
+        if not game.board:
+            state = BoardGame()
+        else:
+            state = pickle.loads(game.board)
+
+        player = Player()
+        state.add_player(player)
+
+        game.board = pickle.dumps(state)
+        game.save()
 
         # success = 'Chatting in with success with username: ' + username
         # self.send_server_response_to_client(username, room, success)
@@ -86,20 +115,31 @@ class GameConsumer(WebsocketConsumer):
         username = data['user']
         room = data['room']
 
-        print("selected dice handler")
-
         # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
         payload = data['payload']
 
-        # TO DO: Create BoardGame serializer https://www.twilio.com/blog/2017/08/json-serialization-in-python-using-serpy.html
-        # this errors at the moment because there is no serializer
-        # json_str = self.scope["session"]["gameboard"]
-        # game = json.loads(json_str)
-        # print(game.is_winner)
+        game = GameState.objects.get(room_name=room)
+        # deserialize then store GameState object
+        state = pickle.loads(game.board)
 
-        formatted_payload = username + " rolled :" + ','.join(str(item) for innerlist in payload for item in innerlist)
+        # temp code, replace with actual usage of dice_handler code
+        if state.is_game_active():
+            state.end_game()
+            print("game not active")
+        else:
+            state.start_game()
+            print("game is active")
+        # ^temp code, replace with actual usage of dice_handler code
 
-        self.send_server_response_to_client(username, room, formatted_payload)
+        # serialize then store modified GameState object
+        game.board = pickle.dumps(state)
+        game.save()
+
+        print(game.board)
+
+        # formatted_payload = username + " rolled :" + ','.join(str(item) for innerlist in payload for item in innerlist)
+        #
+        # self.send_server_response_to_client(username, room, formatted_payload)
 
         # TO DO:
         # use payload to update 'user'
@@ -123,8 +163,6 @@ class GameConsumer(WebsocketConsumer):
         username = data['user']
         room = data['room']
         number_of_dice = data['payload']
-
-        print("roll_dice_handler")
 
         # roll dice
         # send back to client...
