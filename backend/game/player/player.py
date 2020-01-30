@@ -1,3 +1,4 @@
+import random
 from typing import List
 
 from game.cards.card import Card
@@ -7,12 +8,16 @@ from game.values.locations import Locations
 
 class Player:
     def __init__(self):
+        self.id = random.randint(1000, 9999)  # TODO need a much better unique id
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
         self.cards: List[Card] = []
+
+    def __eq__(self, other):
+        return self.id == other.id
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
