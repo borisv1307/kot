@@ -21,8 +21,10 @@ class DiceRoller extends React.Component {
     };
 
     this.AttemptReroll = this.AttemptReroll.bind(this);
+    this.EndTurn = this.EndTurn.bind(this);
     //this.AttemptReroll_via_REST = this.AttemptReroll_via_REST.bind(this);
     GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
+    GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
   }
 
   componentDidMount() {
@@ -58,6 +60,40 @@ class DiceRoller extends React.Component {
     this.setState({ rolledDice: content });
 
     return this.state.log;
+  }
+
+  beginTurnHandler(message) {
+    // const room = message.room;
+    // const user = message.user;
+    const username_whos_turn_it_is = message.content;
+
+    if (
+      username_whos_turn_it_is === undefined ||
+      username_whos_turn_it_is === ""
+    )
+      return;
+
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    this.setState({ allowReroll: its_my_turn });
+
+    if (!its_my_turn) {
+      // clear dice display
+      this.setState({ rolledDice: [] });
+    }
+  }
+
+  EndTurn(/*e*/) {
+    try {
+      GameInstance.sendMessage({
+        command: "end_turn_request",
+        user: this.state.username,
+        room: this.state.gameRoom,
+        payload: this.state.username
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
   }
 
   async AttemptReroll(/*e*/) {
@@ -150,7 +186,8 @@ class DiceRoller extends React.Component {
       result.push([json_data.dice5, json_data.dice5_selected]);
       result.push([json_data.dice6, json_data.dice6_selected]);
 
-      this.state.allowReroll = json_data.allowReroll;
+      this.setState({ allowReroll: json_data.allowReroll });
+      // this.state.allowReroll = json_data.allowReroll;
 
       return result;
     } catch (err) {
@@ -174,6 +211,14 @@ class DiceRoller extends React.Component {
           onClick={this.AttemptReroll}
         >
           Roll
+        </Button>
+
+        <Button
+          className="btn btn-secondary"
+          disabled={!this.state.allowReroll}
+          onClick={this.EndTurn}
+        >
+          End Turn
         </Button>
       </div>
     );

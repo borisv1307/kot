@@ -29,5 +29,6 @@
     "python.linting.enabled": false,
     "[python]": {
         "editor.formatOnSave": true
-    }
+    },
+    "eslint.enable": false
 }

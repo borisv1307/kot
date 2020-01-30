@@ -1,8 +1,30 @@
 import config from "./config";
 
+// we'll omit error handling and complex stuff for simplicity
+const EventEmitter = {
+  events: {}, // dictionary with our events
+  on(event, listener) {
+    // add event listeners
+    if (!this.events[event]) {
+      this.events[event] = { listeners: [] };
+    }
+    this.events[event].listeners.push(listener);
+  },
+  off(event) {
+    // remove listeners
+    delete this.events[event];
+  },
+  emit(name, ...payload) {
+    // trigger events
+    for (const listener of this.events[name].listeners) {
+      listener.apply(this, payload);
+    }
+  }
+};
+
 class GameService {
   static instance = null;
-  callbacks = {};
+  //callbacks = {};
 
   static getInstance() {
     if (!GameService.instance) {
@@ -43,19 +65,30 @@ class GameService {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
     const action = parsedData.action;
-    if (Object.keys(this.callbacks).length === 0) {
-      return;
-    }
+    //if (Object.keys(this.callbacks).length === 0) {
+    //  return;
+    //}
 
-    this.callbacks[command](action);
+    //if ("begin_turn_response" == command) {
+    EventEmitter.emit(command, action);
+    //} else {
+    //  this.callbacks[command](action);
+    //}
   }
 
-  addCallbacks(serverResponseCallback) {
-    this.callbacks["server_response"] = serverResponseCallback;
+  addCallback(serverResponseCallback) {
+    EventEmitter.on("server_response", serverResponseCallback);
+    //this.callbacks["server_response"] = serverResponseCallback;
   }
 
   addDiceCallback(diceRollCallback) {
-    this.callbacks["dice_rolls_response"] = diceRollCallback;
+    EventEmitter.on("dice_rolls_response", diceRollCallback);
+    //this.callbacks["dice_rolls_response"] = diceRollCallback;
+  }
+
+  addBeginTurnCallback(beginTurnCallback) {
+    EventEmitter.on("begin_turn_response", beginTurnCallback);
+    //this.callbacks["begin_turn_response"] = beginTurnCallback;
   }
 
   sendMessage(data) {

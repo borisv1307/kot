@@ -59,6 +59,10 @@ class GameConsumer(WebsocketConsumer):
         }
         return content
 
+    def send_begin_turn_response_to_client(self, username, room, payload):
+        content = self.create_send_response_to_client('begin_turn_response', username, room, payload);
+        self.send_group_message(content)
+
     def send_server_response_to_client(self, username, room, payload):
         content = self.create_send_response_to_client('server_response', username, room, payload);
         self.send_group_message(content)
@@ -101,14 +105,18 @@ class GameConsumer(WebsocketConsumer):
         else:
             state = pickle.loads(game.board)
 
-        player = Player()
+        player: Player = Player(username)
         state.add_player(player)
 
-        player2 = Player()
-        state.add_player(player2)
-
-        state.start_game()
-        state.start_turn_actions(state.players.current_player)
+        # hack to start game after 2 players join
+        temp_max_players = 2
+        if state.players.players.count == temp_max_players:
+            state.start_game()
+            state.start_turn_actions(state.players.current_player)
+            self.send_server_response_to_client(username, room, "Game started..")
+        else:
+            self.send_server_response_to_client(username, room, username + "Joined, waiting on additional players")
+        # hack to start game after 2 players join
 
         game.board = pickle.dumps(state)
         game.save()
@@ -150,16 +158,9 @@ class GameConsumer(WebsocketConsumer):
         game.board = pickle.dumps(state)
         game.save()
 
-        print(game.board)
-
         # formatted_payload = username + " rolled :" + ','.join(str(item) for innerlist in payload for item in innerlist)
         #
         # self.send_server_response_to_client(username, room, formatted_payload)
-
-        # TO DO:
-        # use payload to update 'user'
-        # Game determine next actions: use payload to update player_username
-        # Respond with client updates, so UI can be reset
 
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
@@ -172,12 +173,16 @@ class GameConsumer(WebsocketConsumer):
 
         state: BoardGame = pickle.loads(game.board)
 
-        state.get_next_player_turn()
+        next_player: Player = state.get_next_player_turn() # Hi, Chris this always appears to return None?
 
         game.board = pickle.dumps(state)
         game.save()
 
         # TODO self.actually_send_this_end_of_turn_to_the_UI_somehow
+        if next_player is not None:
+            self.send_begin_turn_response_to_client(username, room, next_player.username + "turn...")
+        else:
+            self.send_begin_turn_response_to_client(username, room, "None")
 
     def gamelog_send_handler(self, data):
         username = data['user']
