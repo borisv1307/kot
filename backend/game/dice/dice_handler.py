@@ -12,7 +12,7 @@ class DiceHandler:
 
     def re_roll_dice(self, indexes_of_dice_to_re_roll):
         if self.re_rolls_left <= 0:
-            raise Exception("No re-rolls left")
+            raise ValueError("No re-rolls left")
 
         if isinstance(indexes_of_dice_to_re_roll, int):
             indexes_of_dice_to_re_roll = [indexes_of_dice_to_re_roll]

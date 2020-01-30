@@ -3,7 +3,7 @@ import itertools
 from game.player.player import Player
 
 
-class GamePlayers():
+class GamePlayers:
 
     def __init__(self):
         self.players = []
