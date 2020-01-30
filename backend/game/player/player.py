@@ -7,8 +7,11 @@ from game.values.locations import Locations
 
 
 class Player:
-    def __init__(self):
-        self.id = random.randint(1000, 9999)  # TODO need a much better unique id
+    def __init__(self, username="guest"):
+        if username == "guest":
+            self.username = "guest_{}".format(random.randint(1000, 9999))
+        else:
+            self.username = username
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
@@ -17,7 +20,7 @@ class Player:
         self.cards: List[Card] = []
 
     def __eq__(self, other):
-        return self.id == other.id
+        return self.username == other.username
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
