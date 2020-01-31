@@ -7,8 +7,8 @@ from game.values.locations import Locations
 
 
 class Player:
-    def __init__(self, username="guest"):
-        if username == "guest":
+    def __init__(self, username=None):
+        if username is None:
             self.username = "guest_{}".format(random.randint(1000, 9999))
         else:
             self.username = username
