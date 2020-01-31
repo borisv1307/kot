@@ -99,6 +99,8 @@ class GameConsumer(WebsocketConsumer):
         # self.get_or_create_user(username, room)
         self.get_or_create_game(username, room)
 
+        print("init_chat_handler")
+
         game = GameState.objects.get(room_name=room)
         if not game.board:
             state = BoardGame()
@@ -110,12 +112,14 @@ class GameConsumer(WebsocketConsumer):
 
         # hack to start game after 2 players join
         temp_max_players = 2
-        if state.players.players.count == temp_max_players:
+        if len(state.players.players) == temp_max_players:
             state.start_game()
-            state.start_turn_actions(state.players.current_player)
             self.send_server_response_to_client(username, room, "Game started..")
+            print("Game started..")
         else:
-            self.send_server_response_to_client(username, room, username + "Joined, waiting on additional players")
+            msg = "Joined, waiting on additional players"
+            self.send_server_response_to_client(username, room, username + msg)
+            print(msg)
         # hack to start game after 2 players join
 
         game.board = pickle.dumps(state)
@@ -132,6 +136,8 @@ class GameConsumer(WebsocketConsumer):
         payload = data['payload']
 
         print(payload)
+
+        print("selected_dice_handler")
 
         game = GameState.objects.get(room_name=room)
         # deserialize then store GameState object
@@ -171,15 +177,14 @@ class GameConsumer(WebsocketConsumer):
         room = data['room']
         payload = data['payload']
 
+        print("end_turn_handler")
+
         game = GameState.objects.get(room_name=room)
 
         state: BoardGame = pickle.loads(game.board)
 
-        # print(state.players.current_player)
-
-        state.start_game()
-
         next_player: Player = state.get_next_player_turn()
+        print(next_player.username)
 
         game.board = pickle.dumps(state)
         game.save()
@@ -203,6 +208,8 @@ class GameConsumer(WebsocketConsumer):
         # [['text entered by user']
         mud_gamelog_input = data['payload']
 
+        print("gamelog_send_handler")
+
         # TO DO:
         # parse mud_gamelog_input
         # apply input effects to game state
@@ -213,6 +220,8 @@ class GameConsumer(WebsocketConsumer):
         username = data['user']
         room = data['room']
         number_of_dice = data['payload']
+
+        print("roll_dice_handler")
 
         # roll dice
         # send back to client...

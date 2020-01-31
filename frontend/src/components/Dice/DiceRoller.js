@@ -75,12 +75,12 @@ class DiceRoller extends React.Component {
 
     let its_my_turn = username_whos_turn_it_is === this.state.username;
 
-    // this.setState({ allowReroll: its_my_turn });
+    this.setState({ allowReroll: its_my_turn });
 
-    // if (!its_my_turn) {
-    //   // clear dice display
-    //   this.setState({ rolledDice: [] });
-    // }
+    if (!its_my_turn) {
+      // clear dice display
+      this.setState({ rolledDice: [] });
+    }
   }
 
   EndTurn(/*e*/) {
