@@ -156,6 +156,8 @@ class GameConsumer(WebsocketConsumer):
         game.board = pickle.dumps(state)
         game.save()
 
+        print(state.dice_handler.dice_values)
+
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
         self.send_rolls_to_client(username, room, rolled_dice_ui_message)
