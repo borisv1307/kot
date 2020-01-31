@@ -5,7 +5,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 from game.engine.board import BoardGame
-from game.engine.selected_dice_index_translator import decode_selected_dice_indexes
+from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
 from game.player.player import Player
 
@@ -144,12 +144,6 @@ class GameConsumer(WebsocketConsumer):
         # deserialize then store GameState object
         state: BoardGame = pickle.loads(game.board)
 
-        # temp code, replace with actual usage of dice_handler code
-        # TODO payload should just be a list of indexes:
-        # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
-        # assuming this would be re-rolling "e,h, and 3"
-        # DiceHandler expects this in the format [0,2,4]
-
         selected_dice = decode_selected_dice_indexes(payload)
 
         try:
@@ -158,28 +152,19 @@ class GameConsumer(WebsocketConsumer):
             # TODO handle the no re-rolls message gracefully
             pass
 
-        # if state.is_game_active():
-        #     state.end_game()
-        #     print("game not active")
-        # else:
-        #     state.start_game()
-        #     print("game is active")
-        # ^temp code, replace with actual usage of dice_handler code
-
         # serialize then store modified GameState object
         game.board = pickle.dumps(state)
         game.save()
 
-        # formatted_payload = username + " rolled :" + ','.join(str(item) for innerlist in payload for item in innerlist)
-        #
-        # self.send_server_response_to_client(username, room, formatted_payload)
+        values = state.dice_handler.dice_values
+        rolled_dice_ui_message = dice_values_message_create(values)
+        self.send_rolls_to_client(username, room, rolled_dice_ui_message)
 
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
-        # TODO FIX ME TO WORK!
+
         username = data['user']
         room = data['room']
-        payload = data['payload']
 
         print("end_turn_handler")
 
@@ -190,20 +175,26 @@ class GameConsumer(WebsocketConsumer):
         next_player: Player = state.get_next_player_turn()
         print(next_player.username)
 
+        state.dice_handler.roll_initial(6, 2)
+
+        values = state.dice_handler.dice_values
+        rolled_dice_ui_message = dice_values_message_create(values)
+
         game.board = pickle.dumps(state)
         game.save()
 
-        for p in state.players.players:
-            print(p.username)
+        # for p in state.players.players:
+        #     print(p.username)
 
-        print("next player: " + next_player.username)
+        # print("next player: " + next_player.username)
         # print(state.players.current_player.username)
 
-        # TODO self.actually_send_this_end_of_turn_to_the_UI_somehow
         if next_player is not None:
             self.send_begin_turn_response_to_client(username, room, next_player.username)
         else:
             self.send_begin_turn_response_to_client(username, room, "None")
+
+        self.send_rolls_to_client(next_player, room, rolled_dice_ui_message)
 
     def gamelog_send_handler(self, data):
         username = data['user']
