@@ -69,6 +69,77 @@ def test_get_next_player_turn_consistent_order():
 
 def test_board_pickling():
     game = BoardGame()
+    game.add_player(Player("Awesome_player_1"))
+    game.add_player(Player("Please don't pickle me"))
+    game.start_game()
+    player_whos_turn_it_is = game.players.get_current_player()
+    assert game.is_game_active()
+
     serial_game = pickle.dumps(game)
     de_pickled_game: BoardGame = pickle.loads(serial_game)
+    players = de_pickled_game.players
+    assert player_whos_turn_it_is == de_pickled_game.players.get_current_player()
 
+    assert de_pickled_game.is_game_active()
+    assert len(players.players) == 2
+
+
+def test_full_turns():
+    player1 = Player("I AM NUMBER UNO!")
+    player2 = Player("PLAYEER ONE SUX")
+    game = BoardGame()
+    game.add_player(player1)
+    game.add_player(player2)
+    game.start_game()
+
+    for _ in range(10):
+        print("CURRENT PLAYER:" + game.get_next_player_turn().username)
+
+    game.dice_handler.roll_initial(6, 2)
+
+    num_players = len(game.players.get_alive_players())
+
+    print("\n\nDEBUG OUTPUT:\n")
+    print("CURRENT PLAYER:" + game.players.get_current_player().username)
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice([1, 2, 3])
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice([1, 2, 3])
+
+    print(game.dice_handler.dice_values)
+    try:
+        game.dice_handler.re_roll_dice([1, 2, 3])
+    except ValueError:
+        print("failed too many rerolls")
+    returned_Player = game.get_next_player_turn()
+
+    print("CURRENT PLAYER = " + returned_Player.username)
+
+    game.dice_handler.roll_initial(6, 2)
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice([1, 2, 3])
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice([1, 2, 3])
+
+    print(game.dice_handler.dice_values)
+    try:
+        game.dice_handler.re_roll_dice([1, 2, 3])
+    except ValueError:
+        print("failed too many rerolls")
+    returned_Player = game.get_next_player_turn()
+    print("CURRENT PLAYER = " + returned_Player.username)
+
+
+def test_decode_selected_dice_indexes():
+    payload = [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
+    i = 0
+    indexes = []
+    for item in payload:
+        if item[1] == True:
+            indexes.append(i)
+        i += 1
+    assert indexes == [0, 2, 4]

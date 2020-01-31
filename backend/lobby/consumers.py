@@ -5,6 +5,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 from game.engine.board import BoardGame
+from game.engine.selected_dice_index_translator import decode_selected_dice_indexes
 from game.models import User, GameState
 from game.player.player import Player
 
@@ -148,8 +149,11 @@ class GameConsumer(WebsocketConsumer):
         # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
         # assuming this would be re-rolling "e,h, and 3"
         # DiceHandler expects this in the format [0,2,4]
+
+        selected_dice = decode_selected_dice_indexes(payload)
+
         try:
-            state.dice_handler.re_roll_dice(payload)
+            state.dice_handler.re_roll_dice(selected_dice)
         except ValueError:
             # TODO handle the no re-rolls message gracefully
             pass
