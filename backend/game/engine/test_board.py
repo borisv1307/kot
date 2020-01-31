@@ -1,3 +1,5 @@
+import pickle
+
 from game.engine.board import BoardGame
 from game.player.player import Player
 from game.values.constants import VICTORY_POINTS_TO_WIN
@@ -63,3 +65,10 @@ def test_get_next_player_turn_consistent_order():
         assert player1 is game.get_next_player_turn()
         assert player2 is game.get_next_player_turn()
         assert player3 is game.get_next_player_turn()
+
+
+def test_board_pickling():
+    game = BoardGame()
+    serial_game = pickle.dumps(game)
+    de_pickled_game: BoardGame = pickle.loads(serial_game)
+

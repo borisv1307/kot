@@ -20,7 +20,7 @@ class Player:
         self.cards: List[Card] = []
 
     def __eq__(self, other):
-        return self.username == other.username
+        return isinstance(other, Player) and self.username == other.username
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO

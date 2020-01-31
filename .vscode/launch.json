@@ -12,6 +12,13 @@
       "webRoot": "${workspaceRoot}"
     },
     {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Chrome Attach 3000",
+      "port": 3000,
+      "webRoot": "${workspaceRoot}"
+    },
+    {
       "name": "Python: Current File (Integrated Terminal)",
       "type": "python",
       "request": "launch",

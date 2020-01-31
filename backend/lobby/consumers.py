@@ -131,6 +131,8 @@ class GameConsumer(WebsocketConsumer):
         # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
         payload = data['payload']
 
+        print(payload)
+
         game = GameState.objects.get(room_name=room)
         # deserialize then store GameState object
         state: BoardGame = pickle.loads(game.board)
@@ -173,14 +175,24 @@ class GameConsumer(WebsocketConsumer):
 
         state: BoardGame = pickle.loads(game.board)
 
-        next_player: Player = state.get_next_player_turn() # Hi, Chris this always appears to return None?
+        # print(state.players.current_player)
+
+        state.start_game()
+
+        next_player: Player = state.get_next_player_turn()
 
         game.board = pickle.dumps(state)
         game.save()
 
+        for p in state.players.players:
+            print(p.username)
+
+        print("next player: " + next_player.username)
+        # print(state.players.current_player.username)
+
         # TODO self.actually_send_this_end_of_turn_to_the_UI_somehow
         if next_player is not None:
-            self.send_begin_turn_response_to_client(username, room, next_player.username + "turn...")
+            self.send_begin_turn_response_to_client(username, room, next_player.username)
         else:
             self.send_begin_turn_response_to_client(username, room, "None")
 
