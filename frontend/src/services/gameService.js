@@ -65,30 +65,20 @@ class GameService {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
     const action = parsedData.action;
-    //if (Object.keys(this.callbacks).length === 0) {
-    //  return;
-    //}
 
-    //if ("begin_turn_response" == command) {
     EventEmitter.emit(command, action);
-    //} else {
-    //  this.callbacks[command](action);
-    //}
   }
 
   addCallback(serverResponseCallback) {
     EventEmitter.on("server_response", serverResponseCallback);
-    //this.callbacks["server_response"] = serverResponseCallback;
   }
 
   addDiceCallback(diceRollCallback) {
     EventEmitter.on("dice_rolls_response", diceRollCallback);
-    //this.callbacks["dice_rolls_response"] = diceRollCallback;
   }
 
   addBeginTurnCallback(beginTurnCallback) {
     EventEmitter.on("begin_turn_response", beginTurnCallback);
-    //this.callbacks["begin_turn_response"] = beginTurnCallback;
   }
 
   sendMessage(data) {

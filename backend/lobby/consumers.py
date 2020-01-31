@@ -8,6 +8,7 @@ from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
 from game.player.player import Player
+from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
 
 
 class GameConsumer(WebsocketConsumer):
@@ -116,6 +117,7 @@ class GameConsumer(WebsocketConsumer):
         if len(state.players.players) == temp_max_players:
             state.start_game()
             self.send_server_response_to_client(username, room, "Game started..")
+            state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL,DEFAULT_RE_ROLL_COUNT)
             print("Game started..")
         else:
             msg = "Joined, waiting on additional players"
@@ -136,6 +138,7 @@ class GameConsumer(WebsocketConsumer):
         # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
         payload = data['payload']
 
+        print("incoming")
         print(payload)
 
         print("selected_dice_handler")
@@ -147,20 +150,20 @@ class GameConsumer(WebsocketConsumer):
         selected_dice = decode_selected_dice_indexes(payload)
 
         try:
-            state.dice_handler.re_roll_dice(selected_dice)
+            state.dice_handler.re_roll_dice([0,1,2])
         except ValueError:
-            # TODO handle the no re-rolls message gracefully
+            self.send_server_response_to_client(username, room, "{} out of rolls.".format(username))
             pass
 
         # serialize then store modified GameState object
         game.board = pickle.dumps(state)
         game.save()
 
-        print(state.dice_handler.dice_values)
-
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
         self.send_rolls_to_client(username, room, rolled_dice_ui_message)
+
+        print(rolled_dice_ui_message)
 
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
@@ -177,7 +180,7 @@ class GameConsumer(WebsocketConsumer):
         next_player: Player = state.get_next_player_turn()
         print(next_player.username)
 
-        state.dice_handler.roll_initial(6, 2)
+        state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL,DEFAULT_RE_ROLL_COUNT)
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
@@ -213,29 +216,13 @@ class GameConsumer(WebsocketConsumer):
 
         self.send_server_response_to_client(username, room, mud_gamelog_input)
 
-    def roll_dice_handler(self, data):
-        username = data['user']
-        room = data['room']
-        number_of_dice = data['payload']
-
-        print("roll_dice_handler")
-
-        # roll dice
-        # send back to client...
-
-        # roll dice, send back to client formatted:
-        #   [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
-
-        # TEMPORARY..
-        rolled_dice = [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
-
-        self.send_rolls_to_client(username, room, rolled_dice)
-        pass
+    # def roll_dice_handler(self, data):
+    #     pass
 
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
         'selected_dice_request': selected_dice_handler,
-        'roll_dice_request': roll_dice_handler,
+        # 'roll_dice_request': roll_dice_handler,
         'end_turn_request': end_turn_handler
     }
