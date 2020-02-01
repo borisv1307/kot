@@ -1,8 +1,5 @@
-from datetime import datetime
-
 from django.db import models
 from django.utils import timezone
-
 
 
 # Create your models here.
@@ -19,14 +16,6 @@ class User(models.Model):
 
     def __str__(self):
         return self.username
-
-    def read(self):
-        self.last_read_date = datetime.datetime.now()
-        self.save()
-
-    def unread_messages(self):
-        return Message.objects.filter(created_at__gt=self.last_read_date) \
-            .count()
 
 
 class Dice(models.Model):
@@ -79,33 +68,20 @@ class Game(models.Model):
 
 class Play(models.Model):
     MONSTER_POSITION = (
-        ('T', 'In-Tokyo'),
-        ('O', 'Outside-Tokyo'),
+        ('1', 'In-Tokyo'),
+        ('0', 'Outside-Tokyo'),
     )
     # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # should cascade be applied below.
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    # game = models.ForeignKey(Game, on_delete=models.CASCADE)
     # should cascade be applied below.
-    dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
+    # dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
     # should cascade be applied below.
-    card_purchased = models.CharField(max_length=30)
-    card_used = models.CharField(max_length=30)
+    # cards = models.CharField(max_length=30)
+    cards = models.CharField(max_length=30)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
-
-
-class Message(models.Model):
-    MSG_TYPES = (
-        ('error', '1'),
-        ('command', '1'),
-        ('game', '1'),
-    )
-    # should cascade be applied below.
-    message_type = models.CharField(max_length=1, choices=MSG_TYPES)
-    message_string = models.CharField(max_length=30)
-    date_created = models.DateTimeField()
-
