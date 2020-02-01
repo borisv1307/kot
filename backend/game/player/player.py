@@ -23,9 +23,6 @@ class Player:
     def set_username(self, username):
         self.username = username
 
-    def set_password(self, password):
-        self.password = password
-
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
 
