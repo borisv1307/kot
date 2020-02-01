@@ -12,6 +12,7 @@ def player():
     player = Player()
     return player
 
+
 def test_set_monster_name(player):
     player.set_monster_name('Godzilla')
     assert player.monster_name == 'Godzilla'
@@ -25,6 +26,7 @@ def test_set_username(player):
 def test_set_password(player):
     player.set_password('12345678')
     assert player.password == '12345678'
+
 
 def test_player_default_health(player):
     assert player.maximum_health == constants.DEFAULT_HEALTH
