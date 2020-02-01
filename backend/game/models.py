@@ -7,7 +7,6 @@ class User(models.Model):
     monster_name = models.CharField(max_length=30)
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
     date_created = models.DateTimeField(default=timezone.now, blank=True)
 
     online = models.BooleanField(null=False, blank=False, default=False)
@@ -73,12 +72,6 @@ class Play(models.Model):
     )
     # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # should cascade be applied below.
-    # game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    # should cascade be applied below.
-    # dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
-    # should cascade be applied below.
-    # cards = models.CharField(max_length=30)
     cards = models.CharField(max_length=30)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
