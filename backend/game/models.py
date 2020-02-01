@@ -68,18 +68,18 @@ class Game(models.Model):
 
 class Play(models.Model):
     MONSTER_POSITION = (
-        ('T', 'In-Tokyo'),
-        ('O', 'Outside-Tokyo'),
+        ('1', 'In-Tokyo'),
+        ('0', 'Outside-Tokyo'),
     )
     # should cascade be applied below.
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # should cascade be applied below.
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    # game = models.ForeignKey(Game, on_delete=models.CASCADE)
     # should cascade be applied below.
-    dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
+    # dice = models.ForeignKey(Dice, on_delete=models.CASCADE)
     # should cascade be applied below.
-    card_purchased = models.CharField(max_length=30)
-    card_used = models.CharField(max_length=30)
+    # cards = models.CharField(max_length=30)
+    cards = models.CharField(max_length=30)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION)
     victory_points = models.IntegerField()
     energy_cube = models.IntegerField()
