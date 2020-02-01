@@ -112,8 +112,46 @@ def test_player_can_not_have_less_than_zero_victory_points(player):
     assert player.victory_points == 0
 
 
+def test_player_health_cannot_exceed_decreased_max_health(player):
+    player.update_max_health_by(-1)
+    assert player.current_health == player.maximum_health
+
+
+def test_player_health_less_than_increased_max_health(player):
+    player.update_max_health_by(1)
+    assert player.current_health < player.maximum_health
+
+
 def test_player_has_instance_of_card_sees_basic_card(player):
     player.add_card(Energize())
     # check player has Energize but not FireBlast to prove method isn't matching to Card or DiscardCard
-    assert player.has_instance_of_card(Energize()) and not player.has_instance_of_card(FireBlast())
+    assert player.has_instance_of_card(
+        Energize()) and not player.has_instance_of_card(FireBlast())
 
+
+def test_discard_all_cards_removes_all_cards(player):
+    player.add_card(Energize())
+    player.add_card(FireBlast())
+    player.discard_all_cards()
+    assert not player.has_instance_of_card(
+        Energize()) and not player.has_instance_of_card(FireBlast())
+
+
+def test_lose_all_stars_zeros_out_stars(player):
+    player.add_card(Energize())
+    player.add_card(FireBlast())
+    player.discard_all_cards()
+    assert not player.has_instance_of_card(
+        Energize()) and not player.has_instance_of_card(FireBlast())
+
+
+def test_remove_card(player):
+    player.add_card(Energize())
+    player.remove_card(Energize())
+    assert not player.has_instance_of_card(Energize())
+
+
+def lose_all_stars(self):
+    player.update_victory_points_by(10)
+    player.lose_all_stars()
+    assert player.victory_points == constants.DEATH_HIT_POINT
