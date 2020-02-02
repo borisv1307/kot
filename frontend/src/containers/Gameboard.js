@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import "./Gameboard.css";
 
-import GameConsole from "../components/GameConsole/GameConsole";
-import DiceRoller from "./../components/Dice/DiceRoller";
-import PlayerValues from "./../components/PlayerValues/PlayerValues";
+import GameConsole from '../components/GameConsole/GameConsole'
+import DiceRoller from './../components/Dice/DiceRoller'
+import PlayerValues from './../components/PlayerValues/PlayerValues';
 import CardStore from "../components/Cards/CardStore";
 
-import GameInstance from "./../services/gameService";
+
+import GameInstance from './../services/gameService'
+
 
 export default class GameboardLayout extends Component {
   constructor(props) {

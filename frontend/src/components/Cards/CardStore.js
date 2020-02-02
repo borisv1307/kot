@@ -119,9 +119,7 @@ class CardStore extends React.Component {
           </div>
         </div>
       </container>
-      
     );
   }
 }
-
 export default CardStore;

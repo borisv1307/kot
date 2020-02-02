@@ -26,3 +26,8 @@ def yield_tokyo(yielding_player, attacking_player):
     yielding_player.leave_tokyo()
     attacking_player.move_to_tokyo()
     attacking_player.update_victory_points_by(1)
+
+
+def move_players_out_of_tokyo(other_players):
+    for other_player in other_players:
+        other_player.leave_tokyo()
