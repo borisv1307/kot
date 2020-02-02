@@ -1,3 +1,6 @@
+from game.dice.dice import DieValue
+
+
 def decode_selected_dice_indexes(payload):
     """
     Front end sends the list of selected dice as a list of pairs, the value and a boolean flag for selected.
@@ -24,6 +27,7 @@ def dice_values_message_create(values):
 
 
 def translate_enum_to_frontend_val(enum_val):
-    enum_values = ['ONE', 'TWO', 'THREE', 'ATTACK', 'HEAL', 'ENERGY']
+    enum_values = [DieValue.ONE.name, DieValue.TWO.name, DieValue.THREE.name, DieValue.ATTACK.name, DieValue.HEAL.name,
+                   DieValue.ENERGY.name]
     frontend_values = ['1', '2', '3', 'a', 'h', 'e']
     return frontend_values[enum_values.index(enum_val)]
