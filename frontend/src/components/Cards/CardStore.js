@@ -77,14 +77,13 @@ class CardStore extends React.Component {
   async requestCard() {
     try {
 
-      const res = await fetch(Constants.REST_ENDPOINT_CARD);
-      const json_data = await res.json();
+      // const json_data = await res.json();
 
       var result = [];
 
-      result.push([json_data].card1);
-      result.push([json_data].card2);
-      result.push([json_data].card3);
+      // result.push([json_data].card_market);
+      // result.push([json_data].card2);
+      // result.push([json_data].card3);
       //To populate result array with server response
 
       return result;

@@ -66,3 +66,11 @@
 #     connected, subprotocol = await communicator.connect()
 #     assert connected
 #     assert subprotocol == "subprotocol2"
+
+# This test is temporary to prove the GameConsumer has access to the card store
+    def test_get_store_cards():
+        game = GameConsumer(WebsocketConsumer("test"))
+        three_cards = game.get_the_three_store_cards()
+        print(
+            "\n\tCARD 1:{}\n\tCARD 2:{}\n\tCARD 3:{}".format(three_cards[0].name, three_cards[1].name, three_cards[2].name))
+        assert len(three_cards) == 3
