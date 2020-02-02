@@ -1,4 +1,11 @@
 def decode_selected_dice_indexes(payload):
+    """
+    Front end sends the list of selected dice as a list of pairs, the value and a boolean flag for selected.
+    For example:
+    [['1','True'] , ['a', 'False'],  ['h','True'] ... ]
+    This function translates this message to just a list of selected dice to re-roll like the MT expects in the
+    DiceHandler. So above becomes [0, 2 ... ]
+    """
     i = 0
     indexes = []
     for index in payload:
