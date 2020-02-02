@@ -19,6 +19,11 @@ def decode_selected_dice_indexes(payload):
 
 
 def dice_values_message_create(values):
+    """
+    Translates the results of a re-roll to front-end's format. The message is returned in the same format as above,
+    i.e:  [['1','True'] , ['a', 'False'],  ['h','True'] ... ]
+    All dice are deselected at this time, which is why the message appends the die value and then "False"
+    """
     msg = []
     for val in values:
         translated_val = translate_enum_to_frontend_val(val.name)
