@@ -1,16 +1,16 @@
-from django.conf import settings
+import json
+
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-import json
-import django
-import os
 
+import game.values.constants as constants
+from game.cards.card import Card
+from game.engine.board import BoardGame
 from game.models import User
-from backend.game.engine.board import BoardGame
+from game.player.player import Player
 
 
 class GameConsumer(WebsocketConsumer):
-    master_game_controller = BoardGame()
 
     def connect(self):
         self.room_name = 'room'
@@ -117,11 +117,11 @@ class GameConsumer(WebsocketConsumer):
     def get_the_three_store_cards_handler(self, data):
         username = data['user']
         room = data['room']
-        card_market = self.master_game_controller.deck_handler.store
+        card_market = test_temp_cards_to_json()  # TODO eventually replace with the real card market from the game
         # card_market is now a list of three random cards, modify as needed
-        
+
         self.send_server_response_to_client(username, room, card_market)
-    
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
@@ -129,3 +129,21 @@ class GameConsumer(WebsocketConsumer):
         'send_cards_request': get_the_three_store_cards_handler
 
     }
+
+
+def test_get_phony_card_market():
+    game = BoardGame()
+    game.add_player(Player())
+    game.add_player(Player())
+
+    game.start_game()
+    assert len(game.deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
+    return game.deck_handler.store
+
+
+def test_temp_cards_to_json(cards=test_get_phony_card_market()):
+    message = []
+    card: Card
+    for card in cards:
+        message.append([card.name, card.cost, card.effect, card.footnote])
+    return message
