@@ -5,6 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "node",
+      "name": "vscode-jest-tests",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/frontend/node_modules/.bin/react-scripts",
+      "args": ["test", "--env=jsdom", "--runInBand"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true
+    },
+    {
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome localhost",
@@ -61,6 +73,7 @@
       "args": ["runserver", "--noreload", "--nothreading"],
       "django": true
     },
+
     {
       "name": "Python: Flask",
       "type": "python",
@@ -71,6 +84,16 @@
       },
       "args": ["run", "--no-debugger", "--no-reload"],
       "jinja": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest Tests",
+      "program": "${workspaceRoot}\\frontend\\node_modules\\jest\\bin\\jest.js",
+      "args": ["-i"],
+      "internalConsoleOptions": "openOnSessionStart",
+      "outFiles": ["${workspaceRoot}/dist/**/*"]
+      // "envFile": "${workspaceRoot}/.env"
     }
   ]
 }

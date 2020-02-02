@@ -25,6 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "coverage": "npm test -- --coverage",
+    "ucoverage": "react-scripts test --env=jsdom --watchAll=false --coverage",
     "flow": "flow",
     "jest-snap-update": "jest --updateSnapshot"
   },

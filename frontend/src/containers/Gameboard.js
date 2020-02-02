@@ -48,6 +48,9 @@ export default class GameboardLayout extends Component {
               </div>
               <div className="col-sm">
                 <GameConsole
+                  sendMessage={payload => {
+                    GameInstance.sendMessage(payload);
+                  }}
                   currentUser={this.state.username}
                   currentRoom={this.state.gameRoom}
                 />

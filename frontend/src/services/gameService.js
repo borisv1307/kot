@@ -83,7 +83,9 @@ class GameService {
 
   sendMessage(data) {
     try {
-      this.socketRef.send(JSON.stringify({ ...data }));
+      const msg = JSON.stringify({ ...data });
+      this.socketRef.send(msg);
+      return msg;
     } catch (err) {
       console.log(err.message);
     }

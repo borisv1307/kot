@@ -116,9 +116,13 @@ class DiceRoller extends React.Component {
   determineSelectedDice() {
     let selected = this.state.rolledDice;
 
-    if (this.selectedDice) {
-      this.selectedDice.forEach(index => {
-        selected[index] = true;
+    if (this.state.selectedDice) {
+      selected.forEach(index => {
+        index[1] = false;
+      });
+
+      this.state.selectedDice.forEach(index => {
+        selected[index - 1][1] = true;
       });
     }
 

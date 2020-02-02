@@ -13,7 +13,7 @@ class GameConsole extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       log: [], // this holds the name of each list
-      cmd: ""
+      cmd: props.cmd
     };
 
     this.waitForSocketConnection(() => {
@@ -92,24 +92,14 @@ class GameConsole extends React.Component {
   SubmitGameCommand(e) {
     if (this.state.cmd === undefined || this.state.cmd === "") return;
 
-    const command = this.createGameLogCommand(
-      this.state.username,
-      this.state.gameRoom,
-      this.state.cmd
-    );
-
-    GameInstance.sendMessage(command);
-  }
-
-  createGameLogCommand(user, room, cmd) {
-    return {
+    const command = {
       command: "gamelog_send_request",
-      user: user,
-      room: room,
-
-      // payload format: [['text entered by user']
-      payload: cmd
+      user: this.state.username,
+      room: this.state.gameRoom,
+      payload: this.state.cmd
     };
+
+    this.props.sendMessage(command);
   }
 
   handleChange(e) {
@@ -133,12 +123,20 @@ class GameConsole extends React.Component {
           onChange={this.handleChange}
         >
           <textarea
+            name="text_entry"
+            id="text_entry"
+            type="text"
             value={this.state.value}
             onChange={this.handleChange}
           ></textarea>
         </form>
-        <button className="btn btn-secondary" onClick={this.SubmitGameCommand}>
-          Submit Command
+        <button
+          name="send_button"
+          id="send_button"
+          className="btn btn-secondary"
+          onClick={this.SubmitGameCommand}
+        >
+          Send
         </button>
       </div>
     );
