@@ -1,3 +1,4 @@
+import random
 from typing import List
 
 from game.cards.card import Card
@@ -6,13 +7,20 @@ from game.values.locations import Locations
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, username=None):
+        if username is None:
+            self.username = "guest_{}".format(random.randint(1000, 9999))
+        else:
+            self.username = username
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
         self.cards: List[Card] = []
+
+    def __eq__(self, other):
+        return isinstance(other, Player) and self.username == other.username
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
