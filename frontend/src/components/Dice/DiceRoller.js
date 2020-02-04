@@ -22,7 +22,6 @@ class DiceRoller extends React.Component {
 
     this.AttemptReroll = this.AttemptReroll.bind(this);
     this.EndTurn = this.EndTurn.bind(this);
-    this.AttemptReroll_via_REST = this.AttemptReroll_via_REST.bind(this);
     GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
     GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
   }
@@ -112,20 +111,6 @@ class DiceRoller extends React.Component {
     });
   }
 
-  async AttemptReroll_via_REST(/*e*/) {
-    try {
-      let rerollThisMany = this.CalculateRerollCount();
-
-      let result = await this.RequestDiceRoll(rerollThisMany);
-
-      if (result) {
-        this.setState({ rolledDice: result });
-      }
-    } catch (exception) {
-      console.log(exception);
-    }
-  }
-
   determineSelectedDice() {
     let selected = this.state.rolledDice;
 
@@ -176,31 +161,6 @@ class DiceRoller extends React.Component {
     }
 
     return 0;
-  }
-
-  async RequestDiceRoll(rerollThisMany) {
-    try {
-      // TO DO: Provide rerollThisMany to server request
-
-      const res = await fetch(Constants.REST_ENDPOINT_DICE);
-      const json_data = await res.json();
-
-      var result = [];
-
-      result.push([json_data.dice1, json_data.dice1_selected]);
-      result.push([json_data.dice2, json_data.dice2_selected]);
-      result.push([json_data.dice3, json_data.dice3_selected]);
-      result.push([json_data.dice4, json_data.dice4_selected]);
-      result.push([json_data.dice5, json_data.dice5_selected]);
-      result.push([json_data.dice6, json_data.dice6_selected]);
-
-      this.setState({ allowReroll: json_data.allowReroll });
-      // this.state.allowReroll = json_data.allowReroll;
-
-      return result;
-    } catch (err) {
-      console.log(err);
-    }
   }
 
   render() {
