@@ -36,7 +36,7 @@ class DiceRoller extends React.Component {
   };
 
   diceRollerHandler(message) {
-    const room = message.room;
+//    const room = message.room;
     const username_whos_turn_it_is = message.user;
     const content = message.content;
 
@@ -89,7 +89,7 @@ class DiceRoller extends React.Component {
 
   async AttemptReroll(/*e*/) {
     try {
-      if (false == this.determineSelectedDice()) {
+      if (false === this.determineSelectedDice()) {
         const messageObject = {
           user: this.state.username,
           room: this.state.gameRoom,

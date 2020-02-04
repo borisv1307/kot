@@ -217,7 +217,7 @@ class GameConsumer(WebsocketConsumer):
         else:
             self.send_begin_turn_response_to_client(username, room, "None")
 
-        self.send_rolls_to_client(next_player, room, rolled_dice_ui_message)
+        self.send_rolls_to_client(next_player.username, room, rolled_dice_ui_message)
 
     def gamelog_send_handler(self, data):
         username = data['user']
