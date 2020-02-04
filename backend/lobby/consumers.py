@@ -4,6 +4,7 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
+from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
@@ -194,6 +195,17 @@ class GameConsumer(WebsocketConsumer):
         game = GameState.objects.get(room_name=room)
 
         state: BoardGame = pickle.loads(game.board)
+
+        # TODO move to somewhere else
+        dice_resolution(state.dice_handler.dice_values, state.players.current_player,
+                        state.players.get_all_alive_players_minus_current_player())
+        self.send_server_response_to_client(username, room, "{} now has {} energy".format(username,
+                                                                                          state.players.current_player.energy))
+
+        cur_player = state.players.current_player
+        print("Current player now has {} energy, {} health, and {} victory points".format(cur_player.energy,
+                                                                                          cur_player.current_health,
+                                                                                          cur_player.victory_points))
 
         next_player: Player = state.get_next_player_turn()
         print(next_player.username)
