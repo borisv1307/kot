@@ -38,6 +38,7 @@ def test_buy_single_card(deck_handler, rich_player):
     assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
     assert len(deck_handler.draw_pile) == NUMBER_OF_CARDS_IN_GAME - constants.CARD_STORE_SIZE_LIMITER - 1
     assert not deck_handler.draw_pile.__contains__(bought_card)
+    assert rich_player.has_instance_of_card(bought_card)
 
 
 def test_discard_card(deck_handler, rich_player):
