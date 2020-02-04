@@ -117,7 +117,7 @@ class GameConsumer(WebsocketConsumer):
         if len(state.players.players) == temp_max_players:
             state.start_game()
             self.send_server_response_to_client(username, room, "Game started..")
-            state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL,DEFAULT_RE_ROLL_COUNT)
+            state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
             self.send_begin_turn_response_to_client(username, room, username)
             print("Game started..")
         else:
@@ -131,6 +131,19 @@ class GameConsumer(WebsocketConsumer):
 
         # success = 'Chatting in with success with username: ' + username
         # self.send_server_response_to_client(username, room, success)
+
+    def return_dice_state_handler(self, data):
+        username = data['user']
+        room = data['room']
+
+        game = GameState.objects.get(room_name=room)
+        # deserialize then store GameState object
+        state: BoardGame = pickle.loads(game.board)
+
+        values = state.dice_handler.dice_values
+        rolled_dice_ui_message = dice_values_message_create(values)
+
+        self.send_server_response_to_client(username, room, rolled_dice_ui_message)
 
     def selected_dice_handler(self, data):
         username = data['user']
@@ -150,11 +163,12 @@ class GameConsumer(WebsocketConsumer):
 
         selected_dice = decode_selected_dice_indexes(payload)
 
+        print("the selected dice are: " + str(selected_dice))
+
         try:
-            state.dice_handler.re_roll_dice([0,1,2])
+            state.dice_handler.re_roll_dice([])
         except ValueError:
             self.send_server_response_to_client(username, room, "{} out of rolls.".format(username))
-            pass
 
         # serialize then store modified GameState object
         game.board = pickle.dumps(state)
@@ -181,7 +195,7 @@ class GameConsumer(WebsocketConsumer):
         next_player: Player = state.get_next_player_turn()
         print(next_player.username)
 
-        state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL,DEFAULT_RE_ROLL_COUNT)
+        state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
