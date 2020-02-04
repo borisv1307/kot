@@ -1,7 +1,8 @@
 import pytest
-from game.dice_handler import DiceHandler
-import game.dice.dice as dice
 from mock import Mock
+
+import game.dice.dice as dice
+from game.dice.dice_handler import DiceHandler
 
 MOCK_SIX_DIE_VALUES_A = [dice.DieValue.ONE, dice.DieValue.TWO, dice.DieValue.THREE,
                          dice.DieValue.ATTACK, dice.DieValue.ENERGY, dice.DieValue.HEAL]
@@ -36,7 +37,7 @@ def test_re_roll_one_die(dice_handler):
 
 def test_re_roll_all_dice(dice_handler):
     dice_handler.re_roll_dice([0, 1, 2, 3, 4, 5])
-    for i in range(0, len(dice_handler.dice_values)-1):
+    for i in range(0, len(dice_handler.dice_values) - 1):
         assert dice_handler.dice_values[i] == MOCK_DIE_ROLL_RESULT
 
 
@@ -50,7 +51,7 @@ def test_re_roll_out_of_bounds_does_nothing(dice_handler):
 def test_re_roll_costs_re_roll_count(dice_handler):
     starting_re_roll_count = dice_handler.re_rolls_left
     dice_handler.re_roll_dice(2)
-    assert dice_handler.re_rolls_left == starting_re_roll_count -1
+    assert dice_handler.re_rolls_left == starting_re_roll_count - 1
 
 
 def test_re_roll_fail_does_not_cost_re_roll_count(dice_handler):

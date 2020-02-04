@@ -1,3 +1,5 @@
+import pickle
+
 from game.engine.board import BoardGame
 from game.player.player import Player
 from game.values.constants import VICTORY_POINTS_TO_WIN
@@ -63,3 +65,70 @@ def test_get_next_player_turn_consistent_order():
         assert player1 is game.get_next_player_turn()
         assert player2 is game.get_next_player_turn()
         assert player3 is game.get_next_player_turn()
+
+
+def test_board_pickling():
+    game = BoardGame()
+    game.add_player(Player("Awesome_player_1"))
+    game.add_player(Player("Please don't pickle me"))
+    game.start_game()
+    player_whos_turn_it_is = game.players.get_current_player()
+    assert game.is_game_active()
+
+    serial_game = pickle.dumps(game)
+    de_pickled_game: BoardGame = pickle.loads(serial_game)
+    players = de_pickled_game.players
+    assert player_whos_turn_it_is == de_pickled_game.players.get_current_player()
+
+    assert de_pickled_game.is_game_active()
+    assert len(players.players) == 2
+
+
+def test_full_turns():
+    # Scratch pad to step through turn actions for testing
+    player1 = Player("I AM NUMBER UNO!")
+    player2 = Player("PLAYEER ONE SUX")
+    game = BoardGame()
+    game.add_player(player1)
+    game.add_player(player2)
+    game.start_game()
+
+    print("\n\nDEBUG OUTPUT:\n")
+    print("CURRENT PLAYER:" + game.players.get_current_player().username)
+
+    dice_count_for_test = 6
+    reroll_count_for_test = 2
+    dice_to_reroll_in_test = [0, 1, 2]
+
+    game.dice_handler.roll_initial(dice_count_for_test, reroll_count_for_test)
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+
+    print(game.dice_handler.dice_values)
+    try:
+        game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+    except ValueError:
+        print("attempted too many re-rolls, refusing to re-roll")
+    returned_Player = game.get_next_player_turn()
+
+    print("CURRENT PLAYER = " + returned_Player.username)
+
+    game.dice_handler.roll_initial(dice_count_for_test, reroll_count_for_test)
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+
+    print(game.dice_handler.dice_values)
+    try:
+        game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+    except ValueError:
+        print("attempted too many re-rolls, refusing to re-roll")
+    returned_player = game.get_next_player_turn()
+    print("CURRENT PLAYER = " + returned_player.username)
