@@ -27,21 +27,18 @@ exports[`Verify DiceBoard layout template Verify parameter provided dice are ren
   </ForwardRef>
   <ForwardRef
     key="3"
-    selected="t"
     value={4}
   >
     a
   </ForwardRef>
   <ForwardRef
     key="4"
-    selected="e"
     value={5}
   >
     h
   </ForwardRef>
   <ForwardRef
     key="5"
-    selected="n"
     value={6}
   >
     e

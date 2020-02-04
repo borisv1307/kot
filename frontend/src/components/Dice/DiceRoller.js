@@ -90,13 +90,26 @@ class DiceRoller extends React.Component {
   async AttemptReroll(/*e*/) {
     try {
       if (false == this.determineSelectedDice()) {
-        // Initally, there are no roll to select.
-        // So hit the REST endpoint to get a random roll.
-        await this.AttemptReroll_via_REST();
+        const messageObject = {
+          user: this.state.username,
+          room: this.state.gameRoom,
+          data: ""
+        };
+
+        this.sendDiceStateRequest(messageObject);
       }
     } catch (exception) {
       console.log(exception);
     }
+  }
+
+  sendDiceStateRequest(envelope) {
+    GameInstance.sendMessage({
+      command: "return_dice_state_request",
+      user: envelope.user,
+      room: envelope.room,
+      payload: ""
+    });
   }
 
   async AttemptReroll_via_REST(/*e*/) {

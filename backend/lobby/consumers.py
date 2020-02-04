@@ -143,7 +143,10 @@ class GameConsumer(WebsocketConsumer):
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
 
-        self.send_server_response_to_client(username, room, rolled_dice_ui_message)
+        print("return_dice_state_handler")
+        print(rolled_dice_ui_message)
+
+        self.send_rolls_to_client(username, room, rolled_dice_ui_message)
 
     def selected_dice_handler(self, data):
         username = data['user']
@@ -166,7 +169,7 @@ class GameConsumer(WebsocketConsumer):
         print("the selected dice are: " + str(selected_dice))
 
         try:
-            state.dice_handler.re_roll_dice([])
+            state.dice_handler.re_roll_dice(selected_dice)
         except ValueError:
             self.send_server_response_to_client(username, room, "{} out of rolls.".format(username))
 
@@ -239,5 +242,6 @@ class GameConsumer(WebsocketConsumer):
         'gamelog_send_request': gamelog_send_handler,
         'selected_dice_request': selected_dice_handler,
         # 'roll_dice_request': roll_dice_handler,
+        'return_dice_state_request': return_dice_state_handler,
         'end_turn_request': end_turn_handler
     }
