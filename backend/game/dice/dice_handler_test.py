@@ -1,8 +1,12 @@
+import json
+import re
+
 import pytest
 from mock import Mock
 
 import game.dice.dice as dice
 from game.dice.dice_handler import DiceHandler
+from lobby.kot_object_serializer import KOTObjectSerializer
 
 MOCK_SIX_DIE_VALUES_A = [dice.DieValue.ONE, dice.DieValue.TWO, dice.DieValue.THREE,
                          dice.DieValue.ATTACK, dice.DieValue.ENERGY, dice.DieValue.HEAL]
@@ -99,3 +103,13 @@ def test_roll_bonus_die(dice_handler):
     dice.roll = Mock(return_value=MOCK_DIE_ROLL_RESULT_B)
     dice_handler.re_roll_dice([last_die_index])
     assert dice_handler.dice_values[last_die_index] == MOCK_DIE_ROLL_RESULT_B
+
+
+def test_serialize_dice_handler():
+    dh = DiceHandler()
+    dh.roll_initial(6, 3)
+    print("\n\n")
+    print("re rolls left = {}".format(dh.re_rolls_left))
+    encoded_dh = json.dumps(dh.serialize_kot_obj(), cls=KOTObjectSerializer)
+    print("the json data is:\n{}".format(encoded_dh))
+    assert re.match(".*dice_handler.*dice_values.*(die_val.*){6}re_rolls_left.*", encoded_dh, )

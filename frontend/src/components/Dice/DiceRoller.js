@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 import "./DiceRoller.css";
 import Button from "react-bootstrap/Button";
 
-import * as Constants from '../../constants'
+import * as Constants from "../../constants";
 
-import DiceBoard from './DiceBoard'
+import DiceBoard from "./DiceBoard";
 
-import GameInstance from '../../services/gameService'
+import GameInstance from "../../services/gameService";
 
 class DiceRoller extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -22,36 +21,108 @@ class DiceRoller extends React.Component {
     };
 
     this.AttemptReroll = this.AttemptReroll.bind(this);
+    this.EndTurn = this.EndTurn.bind(this);
+    GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
+    GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
   }
 
   componentDidMount() {
     // ... do something with fetchedData e.g. set the data
   }
 
-  selectedDiceCallback = (selectedDice) => {
+  selectedDiceCallback = selectedDice => {
     this.setState({ selectedDice: selectedDice });
-    // console.log('selected :', selectedDice);
-    // console.log('total :', this.state.rolledDice.length);
+  };
+
+  diceRollerHandler(message) {
+//    const room = message.room;
+    const username_whos_turn_it_is = message.user;
+    const content = message.content;
+
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    this.setState({ allowReroll: its_my_turn });
+
+    if (!its_my_turn) {
+      // clear dice display
+      this.setState({ rolledDice: [] });
+    } else {
+      if (content === undefined || content === "") return;
+      this.setState({ rolledDice: content });
+    }
+  }
+
+  beginTurnHandler(message) {
+    // const room = message.room;
+    // const user = message.user;
+    const username_whos_turn_it_is = message.content;
+
+    if (
+      username_whos_turn_it_is === undefined ||
+      username_whos_turn_it_is === ""
+    )
+      return;
+
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    this.setState({ allowReroll: its_my_turn });
+
+    if (!its_my_turn) {
+      // clear dice display
+      this.setState({ rolledDice: [] });
+    }
+  }
+
+  EndTurn(/*e*/) {
+    try {
+      GameInstance.sendMessage({
+        command: "end_turn_request",
+        user: this.state.username,
+        room: this.state.gameRoom,
+        payload: this.state.username
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
   }
 
   async AttemptReroll(/*e*/) {
     try {
-      this.determineSelectedDice();
+      if (false === this.determineSelectedDice()) {
+        const messageObject = {
+          user: this.state.username,
+          room: this.state.gameRoom,
+          data: ""
+        };
 
-      let rerollThisMany = this.CalculateRerollCount();
-
-      let result = await this.RequestDiceRoll(rerollThisMany);
-
-      if (result) {
-        this.setState({ rolledDice: result });
+        this.sendDiceStateRequest(messageObject);
       }
     } catch (exception) {
       console.log(exception);
     }
   }
 
+  sendDiceStateRequest(envelope) {
+    GameInstance.sendMessage({
+      command: "return_dice_state_request",
+      user: envelope.user,
+      room: envelope.room,
+      payload: ""
+    });
+  }
+
   determineSelectedDice() {
     let selected = this.state.rolledDice;
+
+    if (this.state.selectedDice) {
+      selected.forEach(index => {
+        index[1] = false;
+      });
+
+      this.state.selectedDice.forEach(index => {
+        selected[index - 1][1] = true;
+      });
+    }
 
     if (selected && selected.length > 0) {
       const messageObject = {
@@ -64,7 +135,9 @@ class DiceRoller extends React.Component {
       this.setState({
         message: ""
       });
+      return true;
     }
+    return false;
   }
 
   // sends dice back to server formatted as an array of 2d arrays.
@@ -90,31 +163,6 @@ class DiceRoller extends React.Component {
     return 0;
   }
 
-  async RequestDiceRoll(rerollThisMany) {
-    try {
-
-      // TO DO: Provide rerollThisMany to server request
-
-      const res = await fetch(Constants.REST_ENDPOINT_DICE);
-      const json_data = await res.json();
-
-      var result = [];
-
-      result.push([json_data.dice1, json_data.dice1_selected]);
-      result.push([json_data.dice2, json_data.dice2_selected]);
-      result.push([json_data.dice3, json_data.dice3_selected]);
-      result.push([json_data.dice4, json_data.dice4_selected]);
-      result.push([json_data.dice5, json_data.dice5_selected]);
-      result.push([json_data.dice6, json_data.dice6_selected]);
-
-      this.state.allowReroll = json_data.allowReroll;
-
-      return result;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   render() {
     return (
       <div className="DiceRoller">
@@ -131,6 +179,14 @@ class DiceRoller extends React.Component {
           onClick={this.AttemptReroll}
         >
           Roll
+        </Button>
+
+        <Button
+          className="btn btn-secondary"
+          disabled={!this.state.allowReroll}
+          onClick={this.EndTurn}
+        >
+          End Turn
         </Button>
       </div>
     );
