@@ -18,15 +18,5 @@ exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`
   >
     Roll
   </Button>
-  <Button
-    active={false}
-    className="btn btn-secondary"
-    disabled={false}
-    onClick={[Function]}
-    type="button"
-    variant="primary"
-  >
-    End Turn
-  </Button>
 </div>
 `;

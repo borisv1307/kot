@@ -1,30 +1,8 @@
 import config from "./config";
 
-// we'll omit error handling and complex stuff for simplicity
-const EventEmitter = {
-  events: {}, // dictionary with our events
-  on(event, listener) {
-    // add event listeners
-    if (!this.events[event]) {
-      this.events[event] = { listeners: [] };
-    }
-    this.events[event].listeners.push(listener);
-  },
-  off(event) {
-    // remove listeners
-    delete this.events[event];
-  },
-  emit(name, ...payload) {
-    // trigger events
-    for (const listener of this.events[name].listeners) {
-      listener.apply(this, payload);
-    }
-  }
-};
-
 class GameService {
   static instance = null;
-  //callbacks = {};
+  callbacks = {};
 
   static getInstance() {
     if (!GameService.instance) {
@@ -36,6 +14,7 @@ class GameService {
   constructor() {
     this.socketRef = null;
   }
+
 
   connect(roomName) {
     const path = config.GAME_SOCKET_API_PATH + roomName + "/";
@@ -65,20 +44,17 @@ class GameService {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
     const action = parsedData.action;
+    if (Object.keys(this.callbacks).length === 0) {
+      return;
+    }
 
-    EventEmitter.emit(command, action);
+    if (command === "server_response") {
+      this.callbacks[command](action);
+    }
   }
 
-  addCallback(serverResponseCallback) {
-    EventEmitter.on("server_response", serverResponseCallback);
-  }
-
-  addDiceCallback(diceRollCallback) {
-    EventEmitter.on("dice_rolls_response", diceRollCallback);
-  }
-
-  addBeginTurnCallback(beginTurnCallback) {
-    EventEmitter.on("begin_turn_response", beginTurnCallback);
+  addCallbacks(serverResponseCallback) {
+    this.callbacks["server_response"] = serverResponseCallback;
   }
 
   sendMessage(data) {

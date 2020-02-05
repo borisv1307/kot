@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify CardStore layout template Verify parameter provided cards are rendered correctly 1`] = `
+<container
+  className="card"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-sm"
+    >
+      <div
+        className="card"
+        type="checkbox"
+      >
+        <Card
+          body={false}
+        >
+          <CardBody
+            key="0"
+          >
+            <CardTitle>
+              Card: 
+              Armor Plating
+            </CardTitle>
+            <CardSubtitle
+              className="mb-2 text-muted"
+            >
+              Cost: 
+              4
+            </CardSubtitle>
+            <CardText>
+              Type: 
+              Keep
+            </CardText>
+            <CardText>
+              Effect: 
+              Ignore damage of 1
+            </CardText>
+            <CardText>
+               
+            </CardText>
+          </CardBody>
+        </Card>
+        <Card
+          body={false}
+        >
+          <CardBody
+            key="1"
+          >
+            <CardTitle>
+              Card: 
+              Commuter Train
+            </CardTitle>
+            <CardSubtitle
+              className="mb-2 text-muted"
+            >
+              Cost: 
+              4
+            </CardSubtitle>
+            <CardText>
+              Type: 
+              Discard
+            </CardText>
+            <CardText>
+              Effect: 
+              Gain 2 victory points
+            </CardText>
+            <CardText>
+               
+            </CardText>
+          </CardBody>
+        </Card>
+        <Card
+          body={false}
+        >
+          <CardBody
+            key="2"
+          >
+            <CardTitle>
+              Card: 
+              Giant Brain
+            </CardTitle>
+            <CardSubtitle
+              className="mb-2 text-muted"
+            >
+              Cost: 
+              5
+            </CardSubtitle>
+            <CardText>
+              Type: 
+              Keep
+            </CardText>
+            <CardText>
+              Effect: 
+              You have one extra reroll each turn
+            </CardText>
+            <CardText>
+               
+            </CardText>
+          </CardBody>
+        </Card>
+      </div>
+      <Button
+        active={false}
+        className="btn btn-secondary"
+        disabled={false}
+        type="button"
+        variant="primary"
+      >
+        Card Store
+      </Button>
+         
+      <Button
+        active={false}
+        className="btn btn-secondary"
+        disabled={false}
+        type="button"
+        variant="primary"
+      >
+        Shuffle Cards
+      </Button>
+    </div>
+  </div>
+</container>
+`;
