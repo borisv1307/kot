@@ -145,4 +145,4 @@ def test_remove_card(player):
 def test_lose_all_stars(player):
     player.update_victory_points_by(10)
     player.lose_all_stars()
-    assert player.victory_points == constants.DEATH_HIT_POINT
+    assert player.victory_points == 0

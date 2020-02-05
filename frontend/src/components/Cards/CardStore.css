@@ -1,5 +1,6 @@
-#card {
+.card {
     justify-content: center;
     display: flex;
     flex-direction: row;
+    border-width: thin
 }

@@ -22,8 +22,7 @@ class GameConsole extends React.Component {
         this.state.gameRoom
       );
       GameInstance.sendMessage(initCmd);
-      GameInstance.addCallback(this.serverResponseHandler.bind(this));
-      GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
+      GameInstance.addCallbacks(this.serverResponseHandler.bind(this));
     });
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,26 +35,6 @@ class GameConsole extends React.Component {
       user: user,
       room: room
     };
-  }
-
-  beginTurnHandler(message) {
-    // const room = message.room;
-    // const user = message.user;
-    const username_whos_turn_it_is = message.content;
-
-    if (
-      username_whos_turn_it_is === undefined ||
-      username_whos_turn_it_is === ""
-    )
-      return;
-
-    let its_my_turn = username_whos_turn_it_is === this.state.username;
-
-    let log_message = its_my_turn
-      ? "your turn " + this.state.username
-      : username_whos_turn_it_is + " turn...";
-
-    this.setState({ log: [...this.state.log, log_message] });
   }
 
   serverResponseHandler(messages) {
