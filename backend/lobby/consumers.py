@@ -197,7 +197,7 @@ class GameConsumer(WebsocketConsumer):
         state: BoardGame = pickle.loads(game.board)
 
         # TODO move to somewhere else
-        dice_resolution(state.dice_handler.dice_values, state.players.current_player,
+        dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
                         state.players.get_all_alive_players_minus_current_player())
         self.send_server_response_to_client(username, room, "{} now has {} energy".format(username,
                                                                                           state.players.current_player.energy))
