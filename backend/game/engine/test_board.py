@@ -85,7 +85,6 @@ def test_board_pickling():
 
 
 def test_full_turns():
-    # Scratch pad to step through turn actions for testing
     player1 = Player("I AM NUMBER UNO!")
     player2 = Player("PLAYEER ONE SUX")
     game = BoardGame()
@@ -93,42 +92,54 @@ def test_full_turns():
     game.add_player(player2)
     game.start_game()
 
+    for _ in range(10):
+        print("CURRENT PLAYER:" + game.get_next_player_turn().username)
+
+    game.dice_handler.roll_initial(6, 2)
+
+    num_players = len(game.players.get_alive_players())
+
     print("\n\nDEBUG OUTPUT:\n")
     print("CURRENT PLAYER:" + game.players.get_current_player().username)
 
-    dice_count_for_test = 6
-    reroll_count_for_test = 2
-    dice_to_reroll_in_test = [0, 1, 2]
-
-    game.dice_handler.roll_initial(dice_count_for_test, reroll_count_for_test)
+    print(game.dice_handler.dice_values)
+    game.dice_handler.re_roll_dice([1, 2, 3])
 
     print(game.dice_handler.dice_values)
-    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
-
-    print(game.dice_handler.dice_values)
-    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+    game.dice_handler.re_roll_dice([1, 2, 3])
 
     print(game.dice_handler.dice_values)
     try:
-        game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+        game.dice_handler.re_roll_dice([1, 2, 3])
     except ValueError:
-        print("attempted too many re-rolls, refusing to re-roll")
+        print("failed too many rerolls")
     returned_Player = game.get_next_player_turn()
 
     print("CURRENT PLAYER = " + returned_Player.username)
 
-    game.dice_handler.roll_initial(dice_count_for_test, reroll_count_for_test)
+    game.dice_handler.roll_initial(6, 2)
 
     print(game.dice_handler.dice_values)
-    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+    game.dice_handler.re_roll_dice([1, 2, 3])
 
     print(game.dice_handler.dice_values)
-    game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+    game.dice_handler.re_roll_dice([1, 2, 3])
 
     print(game.dice_handler.dice_values)
     try:
-        game.dice_handler.re_roll_dice(dice_to_reroll_in_test)
+        game.dice_handler.re_roll_dice([1, 2, 3])
     except ValueError:
-        print("attempted too many re-rolls, refusing to re-roll")
-    returned_player = game.get_next_player_turn()
-    print("CURRENT PLAYER = " + returned_player.username)
+        print("failed too many rerolls")
+    returned_Player = game.get_next_player_turn()
+    print("CURRENT PLAYER = " + returned_Player.username)
+
+
+def test_decode_selected_dice_indexes():
+    payload = [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
+    i = 0
+    indexes = []
+    for item in payload:
+        if item[1] == True:
+            indexes.append(i)
+        i += 1
+    assert indexes == [0, 2, 4]
