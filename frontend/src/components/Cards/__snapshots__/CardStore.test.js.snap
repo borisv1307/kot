@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify CardStore layout template Verify parameter provided cards are rendered correctly 1`] = `
+<container
+  className="card"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-sm"
+    >
+      <div
+        className="card"
+        type="checkbox"
+      />
+      <Button
+        active={false}
+        className="btn btn-secondary"
+        disabled={false}
+        type="button"
+        variant="primary"
+      >
+        Card Store
+      </Button>
+         
+      <Button
+        active={false}
+        className="btn btn-secondary"
+        disabled={false}
+        type="button"
+        variant="primary"
+      >
+        Shuffle Cards
+      </Button>
+    </div>
+  </div>
+</container>
+`;
