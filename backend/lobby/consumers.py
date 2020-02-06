@@ -119,7 +119,7 @@ class GameConsumer(WebsocketConsumer):
             state.start_game()
             self.send_server_response_to_client(username, room, "Game started..")
             state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
-            self.send_begin_turn_response_to_client(username, room, username)
+            self.send_begin_turn_response_to_client(username, room, state.players.get_current_player().username)
             print("Game started..")
         else:
             msg = "Joined, waiting on additional players"
