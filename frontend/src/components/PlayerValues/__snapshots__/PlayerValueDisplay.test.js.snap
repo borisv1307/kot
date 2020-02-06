@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify PlayerValueDisplay layout template Verify parameter provided PlayeValues are rendered correctly 1`] = `
+<container
+  className="card"
+>
+  <PlayerValues
+    energy={2}
+    health={0}
+    key="0"
+    player_name="howdy"
+    victory_points={1}
+  />
+  <PlayerValues
+    energy={4}
+    health={5}
+    key="1"
+    player_name="ya"
+    victory_points={5}
+  />
+  <PlayerValues
+    energy={6}
+    health={10}
+    key="2"
+    player_name="all"
+    victory_points={10}
+  />
+</container>
+`;
