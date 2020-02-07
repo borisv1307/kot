@@ -9,6 +9,7 @@ from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
 from game.player.player import Player
+from game.player.player_status_resolver import player_status_summary_to_JSON, generate_player_status_summary
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
 
 
@@ -61,6 +62,10 @@ class GameConsumer(WebsocketConsumer):
             }
         }
         return content
+
+    def send_player_status_to_client(self, username, room, payload):
+        content = self.create_send_response_to_client('player_status_update_response', username, room, payload);
+        self.send_group_message(content)
 
     def send_begin_turn_response_to_client(self, username, room, payload):
         content = self.create_send_response_to_client('begin_turn_response', username, room, payload);
@@ -125,7 +130,10 @@ class GameConsumer(WebsocketConsumer):
             msg = "Joined, waiting on additional players"
             self.send_server_response_to_client(username, room, username + msg)
             print(msg)
-        # hack to start game after 2 players join
+
+        player_summaries = player_status_summary_to_JSON(state.players)
+        #player_summaries: [] = generate_player_status_summary(state.players)
+        self.send_player_status_to_client(username, room, player_summaries)
 
         game.board = pickle.dumps(state)
         game.save()
@@ -206,6 +214,10 @@ class GameConsumer(WebsocketConsumer):
         print("Current player now has {} energy, {} health, and {} victory points".format(cur_player.energy,
                                                                                           cur_player.current_health,
                                                                                           cur_player.victory_points))
+
+        # player_summaries: [] = generate_player_status_summary(state.players)
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_player_status_to_client(cur_player.username, room, player_summaries)
 
         next_player: Player = state.get_next_player_turn()
         print(next_player.username)
