@@ -1,5 +1,4 @@
 import itertools
-import json
 
 from game.player.player import Player
 

@@ -17,6 +17,7 @@ exports[`Verify player value template Player values should be rendered correctly
           className="badge badge-light"
         />
         <img
+          alt=""
           src="Star.png"
         />
       </p>
@@ -26,6 +27,7 @@ exports[`Verify player value template Player values should be rendered correctly
           className="badge badge-light"
         />
         <img
+          alt=""
           src="Heart.gif"
         />
       </p>
@@ -35,6 +37,7 @@ exports[`Verify player value template Player values should be rendered correctly
           className="badge badge-light"
         />
         <img
+          alt=""
           src="Energy.png"
         />
       </p>

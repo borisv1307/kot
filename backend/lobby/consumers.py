@@ -9,7 +9,7 @@ from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
 from game.player.player import Player
-from game.player.player_status_resolver import player_status_summary_to_JSON, generate_player_status_summary
+from game.player.player_status_resolver import player_status_summary_to_JSON
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
 
 
@@ -132,14 +132,10 @@ class GameConsumer(WebsocketConsumer):
             print(msg)
 
         player_summaries = player_status_summary_to_JSON(state.players)
-        #player_summaries: [] = generate_player_status_summary(state.players)
         self.send_player_status_to_client(username, room, player_summaries)
 
         game.board = pickle.dumps(state)
         game.save()
-
-        # success = 'Chatting in with success with username: ' + username
-        # self.send_server_response_to_client(username, room, success)
 
     def return_dice_state_handler(self, data):
         username = data['user']
@@ -215,7 +211,6 @@ class GameConsumer(WebsocketConsumer):
                                                                                           cur_player.current_health,
                                                                                           cur_player.victory_points))
 
-        # player_summaries: [] = generate_player_status_summary(state.players)
         player_summaries = player_status_summary_to_JSON(state.players)
         self.send_player_status_to_client(cur_player.username, room, player_summaries)
 

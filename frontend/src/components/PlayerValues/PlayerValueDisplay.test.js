@@ -6,21 +6,21 @@ import PlayerValueDisplay from "./PlayerValueDisplay";
 describe("Verify PlayerValueDisplay layout template", () => {
   const test_player_details = [
     {
-      player_name: "howdy",
+      username: "howdy",
       victory_points: 1,
       health: 0,
       energy: 2,
       position: "Out"
     },
     {
-      player_name: "ya",
+      username: "ya",
       victory_points: 5,
       health: 5,
       energy: 4,
       position: "In"
     },
     {
-      player_name: "all",
+      username: "all",
       victory_points: 10,
       health: 10,
       energy: 6,
@@ -81,7 +81,7 @@ describe("Verify PlayerValueDisplay layout template", () => {
     const expected_backend_callback_message = {
       user: test_username,
       room: test_roomname,
-      content: test_player_details
+      content: JSON.stringify(test_player_details)
     };
 
     wrapper.instance().playerUpdateHandler(expected_backend_callback_message);
