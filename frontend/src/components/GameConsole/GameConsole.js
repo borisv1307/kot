@@ -22,7 +22,7 @@ class GameConsole extends React.Component {
         this.state.gameRoom
       );
       GameInstance.sendMessage(initCmd);
-      GameInstance.addCallback(this.serverResponseHandler.bind(this));
+      GameInstance.addServerResponseCallback(this.serverResponseHandler.bind(this));
       GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
     });
 

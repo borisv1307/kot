@@ -69,7 +69,11 @@ class GameService {
     EventEmitter.emit(command, action);
   }
 
-  addCallback(serverResponseCallback) {
+  addCallback(callback_lookup_key, serverResponseCallback) {
+    EventEmitter.on(callback_lookup_key, serverResponseCallback);
+  }
+
+  addServerResponseCallback(serverResponseCallback) {
     EventEmitter.on("server_response", serverResponseCallback);
   }
 
