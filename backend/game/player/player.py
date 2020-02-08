@@ -69,3 +69,14 @@ class Player:
 
     def discard_all_cards(self):
         self.cards.clear()
+
+    def generate_player_status_as_dictionary(self):
+        location_string = "Out" if self.location == Locations.OUTSIDE else "In"
+        return {
+            "username": self.username,
+            "current_health": self.current_health,
+            "location": location_string,
+            "is_alive": self.is_alive,
+            "victory_points": self.victory_points,
+            "energy": self.energy
+        }

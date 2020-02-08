@@ -1,11 +1,7 @@
 import React from "react";
 import "./DiceRoller.css";
 import Button from "react-bootstrap/Button";
-
-import * as Constants from "../../constants";
-
 import DiceBoard from "./DiceBoard";
-
 import GameInstance from "../../services/gameService";
 
 class DiceRoller extends React.Component {
@@ -35,7 +31,7 @@ class DiceRoller extends React.Component {
   };
 
   diceRollerHandler(message) {
-//    const room = message.room;
+    //    const room = message.room;
     const username_whos_turn_it_is = message.user;
     const content = message.content;
 

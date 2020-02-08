@@ -92,6 +92,20 @@ class CardStore extends React.Component {
     };
   }
 
+
+
+  // playerUpdateHandler(message) {
+  //   const content = message.content;
+
+  //   if (content === undefined || content === "") return;
+
+  //   let player_status = [];
+  //   try {
+  //     player_status = JSON.parse(content);
+  //   } catch (e) {}
+  //   this.setState({ data: player_status });
+  // }
+
   render() {
     return (
       <container className="card">
