@@ -26,7 +26,11 @@ class PlayerValueDisplay extends React.Component {
 
     if (content === undefined || content === "") return;
 
-    this.setState({ data: message.content });
+    let player_status = [];
+    try {
+      player_status = JSON.parse(content);
+    } catch (e) {}
+    this.setState({ data: player_status });
   }
 
   render() {
@@ -36,11 +40,11 @@ class PlayerValueDisplay extends React.Component {
           {this.state.data.map((entry, index) => (
             <PlayerValues
               key={index}
-              player_name={entry.player_name}
+              username={entry.username}
               victory_points={entry.victory_points} // 0 to 10
-              health={entry.health} // 0 to 10
+              current_health={entry.current_health} // 0 to 10
               energy={entry.energy} // 0 or more
-              in_or_out_position={entry.in_or_out_position} // 'In' or 'Out'
+              location={entry.location} // 'In' or 'Out'
             />
           ))}
         </container>

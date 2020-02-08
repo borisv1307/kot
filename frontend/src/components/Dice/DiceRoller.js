@@ -1,11 +1,7 @@
 import React from "react";
 import "./DiceRoller.css";
 import Button from "react-bootstrap/Button";
-
-import * as Constants from "../../constants";
-
 import DiceBoard from "./DiceBoard";
-
 import GameInstance from "../../services/gameService";
 
 class DiceRoller extends React.Component {

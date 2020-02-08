@@ -146,3 +146,14 @@ def test_lose_all_stars(player):
     player.update_victory_points_by(10)
     player.lose_all_stars()
     assert player.victory_points == constants.DEATH_HIT_POINT
+
+
+def test_generate_player_status_summary(player):
+    summary: {} = player.generate_player_status_as_dictionary()
+    assert summary["username"] is not ""
+    assert summary["current_health"] == constants.DEFAULT_HEALTH
+    assert summary["location"] is "Out"
+    assert summary["is_alive"]
+    assert summary["victory_points"] == constants.DEATH_HIT_POINT
+    assert summary["energy"] == constants.DEFAULT_ENERGY_CUBE
+    print(summary)
