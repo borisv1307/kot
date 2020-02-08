@@ -106,3 +106,4 @@ def test_if_not_last_player_alive():
     player_queue.add_player_to_game(player1)
     player_queue.add_player_to_game(player2)
     assert player_queue.is_last_player_alive(player2) is False
+
