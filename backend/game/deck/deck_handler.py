@@ -44,8 +44,8 @@ class DeckHandler:
     def json_store(self):
         json_data = []
         for card in self.store:
-            json_data.append(card.to_json())
-        json.dumps(json_data)
+            json_data.append(card.to_dict())
+        return json.dumps(json_data)
 
     def get_top_draw_pile_card(self):
         # if draw pile is empty, shuffle the discard pile to become draw pile

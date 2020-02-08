@@ -2,11 +2,10 @@ from typing import List
 
 import pytest
 
+import game.cards.master_card_list as master_card_list
 import game.values.constants as constants
 from game.cards.card import Card
 from game.deck.deck_handler import DeckHandler
-
-import game.cards.master_card_list as master_card_list
 from game.player.player import Player
 
 NUMBER_OF_CARDS_IN_GAME = len(master_card_list.get_all_cards())
@@ -127,13 +126,14 @@ def test_run_out_of_cards(deck_handler, rich_player):
         assert deck_handler.buy_card_from_store(0, rich_player)
     assert str(exception.value) == constants.OUT_OF_CARDS_MSG
 
+
 def test_do_not_sell_card_to_player_with_no_energy(deck_handler):
     poor_player = Player()
     poor_player.energy = 0
     with pytest.raises(Exception) as raised_exception:
         deck_handler.buy_card_from_store(1, poor_player)
     assert constants.INSUFFICIENT_FUNDS_MSG in str(raised_exception.value)
-    
+
 
 def test_sweep_store_not_allowed_with_insufficient_energy(deck_handler):
     test_player = Player()
@@ -171,4 +171,3 @@ def test_sweep_store_costs_energy(deck_handler):
 def test_store_refills_after_sweep(deck_handler):
     test_sweep_store_costs_energy(deck_handler)
     assert len(deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
-
