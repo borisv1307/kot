@@ -1,55 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Verify gameboard layout template Gameboard should render correctly 1`] = `
-<div>
+<div
+  className="board_container"
+>
   <br />
   <h4>
     Room_1234
   </h4>
   <div>
-    <div
-      className="col"
-    >
+    <div>
       <CardStore />
     </div>
   </div>
   <div
     className="container"
   >
-    <div
-      className="row"
-    >
+    <div>
       <div
-        className="col-sm"
+        className="row"
       >
-        <PlayerValueDisplay
-          currentRoom="Room_1234"
-          currentUser="Guest_1234"
-        />
+        <div
+          className="col-sm"
+        >
+          <DiceRoller
+            currentRoom="Room_1234"
+            currentUser="Guest_1234"
+          />
+        </div>
+        <div
+          className="col-sm board_middle_column"
+        >
+          <GameConsole
+            currentRoom="Room_1234"
+            currentUser="Guest_1234"
+            sendMessage={[Function]}
+          />
+        </div>
+        <div
+          className="col-sm"
+        >
+          <p>
+            Chatroom Placeholder
+          </p>
+        </div>
       </div>
       <div
-        className="col-sm"
+        className="row"
       >
-        <DiceRoller
-          currentRoom="Room_1234"
-          currentUser="Guest_1234"
-        />
-      </div>
-      <div
-        className="col-sm"
-      >
-        <GameConsole
-          currentRoom="Room_1234"
-          currentUser="Guest_1234"
-          sendMessage={[Function]}
-        />
-      </div>
-      <div
-        className="col-sm"
-      >
-        <p>
-          Chatroom Placeholder
-        </p>
+        <div
+          className="col-sm"
+        >
+          <PlayerValueDisplay
+            currentRoom="Room_1234"
+            currentUser="Guest_1234"
+          />
+        </div>
       </div>
     </div>
   </div>

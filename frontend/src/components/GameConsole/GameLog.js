@@ -22,10 +22,13 @@ class GameLog extends React.Component {
 
   scrollToBottom() {
     const chat = this.messagesEnd;
-    const scrollHeight = chat.scrollHeight;
-    const height = chat.clientHeight;
-    const maxScrollTop = scrollHeight - height;
-    chat.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+
+    if (chat) {
+      const scrollHeight = chat.scrollHeight;
+      const height = chat.clientHeight;
+      const maxScrollTop = scrollHeight - height;
+      chat.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+    }
   }
 
   renderMessages(messages) {
