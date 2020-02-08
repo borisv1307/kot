@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import * as Constants from '../../constants'
 import GameInstance from "../../services/gameService";
 
+import MT_RESPONSE_CARD_STORE_RESPONSE from "../../services/config";
+
 class CardStore extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -19,8 +21,26 @@ class CardStore extends React.Component {
       selectedCard: []
     };
 
-    this.selectCard = this.selectCard.bind(this);
+
+    GameInstance.addCallback(
+      MT_RESPONSE_CARD_STORE_RESPONSE,
+      this.cardUpdateHandler.bind(this)
+    );
   }
+
+  // I think this gets that JSON data all the way to here in card_content
+  cardUpdateHandler(message) {
+    const content = message.content;
+
+    if (content === undefined || content === "") return;
+
+    let card_content = [];
+    try {
+      card_content = JSON.parse(content);
+    } catch (e) { }
+    // this.setState({ data: card_content });
+  }
+
 
   componentDidMount() {
     // ... do something with fetchedData e.g. set the data

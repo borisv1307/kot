@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 import game.values.constants as constants
@@ -39,6 +40,12 @@ class DeckHandler:
     @property
     def discard_pile(self):
         return self.__discard_pile
+
+    def json_store(self):
+        json_data = []
+        for card in self.store:
+            json_data.append(card.to_json())
+        json.dumps(json_data)
 
     def get_top_draw_pile_card(self):
         # if draw pile is empty, shuffle the discard pile to become draw pile

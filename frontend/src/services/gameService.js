@@ -73,6 +73,10 @@ class GameService {
     EventEmitter.on("player_status_update_response", playerValueCallback);
   }
 
+  addCardCallBack(cardStoreCallback) {
+    EventEmitter.on("card_store_response", cardStoreCallback)
+  }
+
   addServerResponseCallback(serverResponseCallback) {
     EventEmitter.on("server_response", serverResponseCallback);
   }
@@ -102,7 +106,7 @@ class GameService {
   waitForSocketConnection(callback) {
     const socket = this.socketRef;
     const recursion = this.waitForSocketConnection;
-    setTimeout(function() {
+    setTimeout(function () {
       if (socket.readyState === 1) {
         console.log("Connection is made");
         if (callback != null) {

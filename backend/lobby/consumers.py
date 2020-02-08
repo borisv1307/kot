@@ -4,13 +4,11 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from game.cards.card import Card
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
 from game.player.player import Player
-from game.values import constants
 from game.player.player_status_resolver import player_status_summary_to_JSON
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
 
@@ -66,19 +64,23 @@ class GameConsumer(WebsocketConsumer):
         return content
 
     def send_player_status_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('player_status_update_response', username, room, payload);
+        content = self.create_send_response_to_client('player_status_update_response', username, room, payload)
         self.send_group_message(content)
 
     def send_begin_turn_response_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('begin_turn_response', username, room, payload);
+        content = self.create_send_response_to_client('begin_turn_response', username, room, payload)
         self.send_group_message(content)
 
     def send_server_response_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('server_response', username, room, payload);
+        content = self.create_send_response_to_client('server_response', username, room, payload)
         self.send_group_message(content)
 
     def send_rolls_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('dice_rolls_response', username, room, payload);
+        content = self.create_send_response_to_client('dice_rolls_response', username, room, payload)
+        self.send_group_message(content)
+
+    def send_cards_to_client(self, username, room, payload):
+        content = self.create_send_response_to_client('card_store_response', username, room, payload)
         self.send_group_message(content)
 
     def get_or_create_user(self, username, room):
@@ -126,6 +128,7 @@ class GameConsumer(WebsocketConsumer):
             state.start_game()
             self.send_server_response_to_client(username, room, "Game started..")
             state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
+            self.send_cards_to_client(username, room, state.deck_handler.json_store())
             self.send_begin_turn_response_to_client(username, room, state.players.get_current_player().username)
             print("Game started..")
         else:
@@ -267,20 +270,20 @@ class GameConsumer(WebsocketConsumer):
         'end_turn_request': end_turn_handler
     }
 
-
-def test_get_phony_card_market():
-    game = BoardGame()
-    game.add_player(Player())
-    game.add_player(Player())
-
-    game.start_game()
-    assert len(game.deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
-    return game.deck_handler.store
-
-
-def test_temp_cards_to_json(cards=test_get_phony_card_market()):
-    message = []
-    card: Card
-    for card in cards:
-        message.append([card.name, card.cost, card.effect, card.footnote])
-    return message
+# These should go away
+# def test_get_phony_card_market():
+#     game = BoardGame()
+#     game.add_player(Player())
+#     game.add_player(Player())
+#
+#     game.start_game()
+#     assert len(game.deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
+#     return game.deck_handler.store
+#
+#
+# def test_temp_cards_to_json(cards=test_get_phony_card_market()):
+#     message = []
+#     card: Card
+#     for card in cards:
+#         message.append([card.name, card.cost, card.effect, card.footnote])
+#     return message
