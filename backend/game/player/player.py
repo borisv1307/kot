@@ -4,6 +4,7 @@ from typing import List
 from game.cards.card import Card
 from game.values import constants
 from game.values.locations import Locations
+from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
 
 
 class Player:
@@ -29,6 +30,8 @@ class Player:
         self.location = Locations.OUTSIDE
 
     def update_health_by(self, change_integer):
+        if self.has_instance_of_card(WereOnlyMakingItStronger()) and change_integer <= -2:
+            WereOnlyMakingItStronger.special_effect(self, self, None)
         self.current_health += change_integer
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health
