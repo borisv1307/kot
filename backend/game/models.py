@@ -1,3 +1,4 @@
+import base64
 from django.db import models
 from django.utils import timezone
 
@@ -171,3 +172,4 @@ class Play(models.Model):
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
+
