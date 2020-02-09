@@ -2,9 +2,9 @@ import pytest
 
 from game.cards.discard_cards.energy_manipulation_cards.energize import Energize
 from game.cards.discard_cards.health_manipulation_cards.fire_blast import FireBlast
+from game.player.player import Player
 from game.values import constants
 from game.values.locations import Locations
-from game.player.player import Player
 
 
 @pytest.fixture(autouse=True)
@@ -15,6 +15,12 @@ def player():
 
 def test_player_default_health(player):
     assert player.maximum_health == constants.DEFAULT_HEALTH
+
+
+def test_player_username():
+    sweet_username = "Sam the man, destroyer of worlds"
+    player = Player(sweet_username)
+    assert player.username == sweet_username
 
 
 def test_player_default_location(player):
@@ -136,7 +142,18 @@ def test_remove_card(player):
     assert not player.has_instance_of_card(Energize())
 
 
-def lose_all_stars(self):
+def test_lose_all_stars(player):
     player.update_victory_points_by(10)
     player.lose_all_stars()
     assert player.victory_points == constants.DEATH_HIT_POINT
+
+
+def test_generate_player_status_summary(player):
+    summary: {} = player.generate_player_status_as_dictionary()
+    assert summary["username"] is not ""
+    assert summary["current_health"] == constants.DEFAULT_HEALTH
+    assert summary["location"] is "Out"
+    assert summary["is_alive"]
+    assert summary["victory_points"] == constants.DEATH_HIT_POINT
+    assert summary["energy"] == constants.DEFAULT_ENERGY_CUBE
+    print(summary)

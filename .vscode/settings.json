@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "${workspaceFolder}/backend/env/Scripts/python.exe",
+    "python.pythonPath": "C:\\Users\\kaubin\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
     "python.linting.pycodestyleEnabled": false,
@@ -26,8 +26,9 @@
         "--ignore=E501",
         "--ignore=E303"
     ],
-    "python.linting.enabled": false,
+    "python.linting.enabled": true,
     "[python]": {
         "editor.formatOnSave": true
-    }
+    },
+    "eslint.enable": false
 }

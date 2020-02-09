@@ -4,6 +4,8 @@ import os
 CARDS_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
 # ints
+DEFAULT_DICE_TO_ROLL = 6
+DEFAULT_RE_ROLL_COUNT = 2
 DEFAULT_HEALTH = 10
 DEATH_HIT_POINT = 0
 DEFAULT_ENERGY_CUBE = 0

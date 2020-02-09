@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import "./Gameboard.css";
 
+import GameConsole from "../components/GameConsole/GameConsole";
+import DiceRoller from "./../components/Dice/DiceRoller";
+import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
+import CardStore from "./../components/Cards/CardStore";
 
-import GameConsole from '../components/GameConsole/GameConsole'
-import DiceRoller from './../components/Dice/DiceRoller'
-import PlayerValues from './../components/PlayerValues/PlayerValues';
-import CardStore from "../components/Cards/CardStore";
-
-
-import GameInstance from './../services/gameService'
-
+import GameInstance from "./../services/gameService";
 
 export default class GameboardLayout extends Component {
   constructor(props) {
@@ -36,13 +33,19 @@ export default class GameboardLayout extends Component {
       <div>
         <br />
         <h4>{this.state.gameRoom}</h4>
+        <div>
+          <div className="col">
+            <CardStore />
+          </div>
+        </div>
         <div className="container">
           {this.state.loggedIn ? (
             <div className="row">
               <div className="col-sm">
-                <PlayerValues player_name={this.state.username} />
-                <br />
-                <PlayerValues player_name="B" />
+                <PlayerValuesDisplay
+                  currentUser={this.state.username}
+                  currentRoom={this.state.gameRoom}
+                />
               </div>
               <div className="col-sm">
                 <DiceRoller
@@ -52,6 +55,9 @@ export default class GameboardLayout extends Component {
               </div>
               <div className="col-sm">
                 <GameConsole
+                  sendMessage={payload => {
+                    GameInstance.sendMessage(payload);
+                  }}
                   currentUser={this.state.username}
                   currentRoom={this.state.gameRoom}
                 />

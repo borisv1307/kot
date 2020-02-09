@@ -13,16 +13,19 @@ exports[`Verify GameConsole layout template GameConsole should render correctly 
     onSubmit={[Function]}
   >
     <textarea
+      id="text_entry"
+      name="text_entry"
       onChange={[Function]}
-    >
-      Type Command [enter]
-    </textarea>
+      type="text"
+    />
   </form>
   <button
     className="btn btn-secondary"
+    id="send_button"
+    name="send_button"
     onClick={[Function]}
   >
-    Submit Command
+    Send
   </button>
 </div>
 `;
