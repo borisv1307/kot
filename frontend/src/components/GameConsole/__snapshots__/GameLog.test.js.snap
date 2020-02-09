@@ -1,51 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Verify GameLog layout template Verify parameter provided logs are rendered correctly 1`] = `
-<div>
-  <li
-    key="-- Sammy turn –"
+<div
+  className=""
+>
+  <div
+    className=""
   >
-    -- Sammy turn –
-  </li>
-  <li
-    key="Rolled: E E H 1 2 3"
-  >
-    Rolled: E E H 1 2 3
-  </li>
-  <li
-    key="Decision: keep E E"
-  >
-    Decision: keep E E
-  </li>
-  <li
-    key="Rolled: E P 1 2 2"
-  >
-    Rolled: E P 1 2 2
-  </li>
-  <li
-    key="Decision: keep E"
-  >
-    Decision: keep E
-  </li>
-  <li
-    key="Rolled: 2 2 2 (TRIPPLE! +2 VP)"
-  >
-    Rolled: 2 2 2 (TRIPPLE! +2 VP)
-  </li>
-  <li
-    key=":: Gain: E E E +2 VP ::"
-  >
-    :: Gain: E E E +2 VP ::
-  </li>
-  <li
-    key="Buy: Psychic Probe"
-  >
-    Buy: Psychic Probe
-  </li>
-  <li
-    key="End Turn"
-  >
-    End Turn
-  </li>
+    <ul />
+  </div>
 </div>
 `;

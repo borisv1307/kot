@@ -12,7 +12,7 @@ class DiceHandler:
 
     def re_roll_dice(self, indexes_of_dice_to_re_roll):
         if self.re_rolls_left <= 0:
-            raise Exception("No re-rolls left")
+            raise ValueError("No re-rolls left")
 
         if isinstance(indexes_of_dice_to_re_roll, int):
             indexes_of_dice_to_re_roll = [indexes_of_dice_to_re_roll]
@@ -32,6 +32,12 @@ class DiceHandler:
         self.re_rolls_left -= 1
         self.dice_values = temp_values
 
+        return self.dice_values
+
     def add_bonus_die(self, count_to_add=1):
         for _ in range(count_to_add):
             self.dice_values.append(dice.roll())
+
+    def serialize_kot_obj(self):
+        return dict(
+            dice_handler=dict(dice_values=self.dice_values, re_rolls_left=self.re_rolls_left))
