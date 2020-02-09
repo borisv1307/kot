@@ -37,7 +37,9 @@ export default class GameboardLayout extends Component {
         <h4>{this.state.gameRoom}</h4>
         <div>
           <div className="col">
-            <CardStore />
+            <CardStore
+              currentUser={this.state.username}
+              currentRoom={this.state.gameRoom} />
           </div>
         </div>
         <div className="container">
