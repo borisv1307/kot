@@ -1,9 +1,9 @@
 {
-    "python.pythonPath": "C:\\Users\\kaubin\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
+    "python.pythonPath": "${workspaceFolder}/backend/env/Scripts/python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
     "python.linting.pycodestyleEnabled": false,
-    "python.linting.pylintPath": "${workspaceFolder}/env/Scripts/pylint.exe",
+    "python.linting.pylintPath": "${workspaceFolder}/backend/env/Scripts/pylint.exe",
     "python.linting.pylintArgs": [
         "--load-plugins",
         "pylint_django"
