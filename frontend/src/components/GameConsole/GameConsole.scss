@@ -1,0 +1,135 @@
+.game_console {}
+
+.submit_game_command {
+  color: black;
+}
+
+$blue: #0084ff;
+$white: #fff;
+$grey: #eee;
+
+.chat {
+  // margin: auto;
+
+  .container {
+    // padding: 0 30px;
+    // height: 80%;
+    // width: 40%;
+    height: 50vh;
+
+    &.message-form {
+      // height: 10%;
+      margin-top: 1px;
+      margin-bottom: 3px;
+    }
+  }
+
+  h1,
+  h3 {
+    margin-top: 0;
+    color: $blue;
+  }
+
+  input {
+    color: #7e99a0;
+    font-size: 1em;
+    font-weight: 300;
+    // line-height: 19px;
+    padding: 5px;
+    margin-right: 5px;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 75%;
+    float: left;
+  }
+
+  button {
+    background-color: $blue;
+    border-color: $blue;
+    border-style: solid;
+    color: white;
+    font-size: 1em;
+    // padding: 5px;
+    width: 20%;
+    // float: left;
+  }
+
+  ul {
+    list-style: none;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    height: 90%;
+    width: 100%;
+  }
+
+  ul li {
+    clear: both;
+    display: block;
+    margin-bottom: 5px;
+    // max-width: 80%;
+    white-space: normal;
+    float: left;
+    width: 100%;
+    height: auto;
+    word-wrap: break-word;
+
+    p {
+      border-radius: 100px / 30px;
+      padding: 5px 20px;
+      margin: 0;
+    }
+
+    .author {
+      color: grey;
+      display: inline-block;
+      text-align: center;
+      padding: 5px;
+      margin: 0 2%;
+      font-weight: 300;
+      font-size: 12px;
+    }
+  }
+
+  .him {
+    float: left;
+    text-align: left;
+
+    p {
+      background: $white;
+    }
+  }
+
+  .me {
+    float: right;
+    text-align: right;
+
+    .author {
+      display: none;
+    }
+
+    p {
+      background: $blue;
+      color: $white;
+    }
+  }
+
+  .him+.me {
+    p {
+      border-bottom-right-radius: 1px;
+    }
+  }
+
+  .me+.me {
+    p {
+      border-top-right-radius: 1px;
+      border-bottom-right-radius: 1px;
+    }
+  }
+
+  .me:last-of-type {
+    p {
+      border-bottom-right-radius: 10px;
+    }
+  }
+}

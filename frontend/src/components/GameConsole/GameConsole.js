@@ -1,5 +1,5 @@
 import React from "react";
-import "./GameConsole.css";
+import "./GameConsole.scss";
 
 import GameLog from "./GameLog";
 
@@ -13,7 +13,8 @@ class GameConsole extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       log: [], // this holds the name of each list
-      cmd: props.cmd
+      cmd: props.cmd,
+      hideMudUi: true
     };
 
     this.waitForSocketConnection(() => {
@@ -22,7 +23,9 @@ class GameConsole extends React.Component {
         this.state.gameRoom
       );
       GameInstance.sendMessage(initCmd);
-      GameInstance.addServerResponseCallback(this.serverResponseHandler.bind(this));
+      GameInstance.addServerResponseCallback(
+        this.serverResponseHandler.bind(this)
+      );
       GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
     });
 
@@ -109,37 +112,49 @@ class GameConsole extends React.Component {
   }
 
   render() {
-    return (
-      <div className="game_console">
+    if (this.state.hideMudUi) {
+      return (
         <GameLog
           data={this.state.log}
           currentUser={this.state.username}
           currentRoom={this.state.gameRoom}
         />
+      );
+    } else {
+      return (
+        <div className="chat">
+          <div className="container message-form">
+            <form
+              className="submit_game_command"
+              onSubmit={this.SubmitGameCommand}
+              onChange={this.handleChange}
+            >
+              <input
+                name="text_entry"
+                id="text_entry"
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+            </form>
+            <button
+              name="send_button"
+              id="send_button"
+              className="btn btn-secondary"
+              onClick={this.SubmitGameCommand}
+            >
+              Send
+            </button>
 
-        <form
-          className="submit_game_command"
-          onSubmit={this.SubmitGameCommand}
-          onChange={this.handleChange}
-        >
-          <textarea
-            name="text_entry"
-            id="text_entry"
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-          ></textarea>
-        </form>
-        <button
-          name="send_button"
-          id="send_button"
-          className="btn btn-secondary"
-          onClick={this.SubmitGameCommand}
-        >
-          Send
-        </button>
-      </div>
-    );
+            <GameLog
+              data={this.state.log}
+              currentUser={this.state.username}
+              currentRoom={this.state.gameRoom}
+            />
+          </div>
+        </div>
+      );
+    }
   }
 }
 
