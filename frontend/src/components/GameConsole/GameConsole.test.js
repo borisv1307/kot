@@ -19,11 +19,18 @@ describe("<GameConsole />", () => {
     currentUser: expected_user,
     currentRoom: expected_room,
     cmd: expected_cmd,
-    sendMessage: jest.fn()
+    sendMessage: jest.fn(),
+    hideMudUi: false
   };
 
   it("Submit works", () => {
     const component = shallow(<GameConsole {...testValues} />);
+
+    component.setState({
+      log: [],
+      hideMudUi: false
+    });
+
     const button = component.find("#send_button");
     expect(button.length).toBe(1);
     button.simulate("click");

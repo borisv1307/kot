@@ -85,6 +85,10 @@ class GameService {
     EventEmitter.on("begin_turn_response", beginTurnCallback);
   }
 
+  addCardCallback(cardStoreCallback) {
+    EventEmitter.on("card_store_response", cardStoreCallback);
+  }
+
   sendMessage(data) {
     try {
       const msg = JSON.stringify({ ...data });
