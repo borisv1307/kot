@@ -4,13 +4,14 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from game.cards.card import Card
+from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
+from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
+from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
 from game.player.player import Player
-from game.values import constants
 from game.player.player_status_resolver import player_status_summary_to_JSON
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
 
@@ -122,6 +123,9 @@ class GameConsumer(WebsocketConsumer):
             state = pickle.loads(game.board)
 
         player: Player = Player(username)
+
+        # TODO, stop giving free cards
+        player.add_card(EnergyHoarder(), SolarPowered(), EvenBigger())
         state.add_player(player)
 
         # hack to start game after 2 players join
