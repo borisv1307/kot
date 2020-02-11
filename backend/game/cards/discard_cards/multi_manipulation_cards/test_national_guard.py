@@ -17,4 +17,4 @@ def test_national_guard_costs_3_energy():
 
 
 def test_type_is_discard():
-    assert NationalGuard().type == "Discard"
+    assert NationalGuard().card_type == "Discard"

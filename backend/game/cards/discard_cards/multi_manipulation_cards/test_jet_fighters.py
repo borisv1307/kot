@@ -17,4 +17,4 @@ def test_jet_fighters_costs_5_energy():
 
 
 def test_type_is_discard():
-    assert JetFighters().type == "Discard"
+    assert JetFighters().card_type == "Discard"

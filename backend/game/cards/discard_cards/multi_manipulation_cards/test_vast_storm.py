@@ -17,4 +17,4 @@ def test_vast_storm_costs_6_energy():
 
 
 def test_type_is_discard():
-    assert VastStorm().type == "Discard"
+    assert VastStorm().card_type == "Discard"
