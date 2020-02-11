@@ -2,12 +2,8 @@
 
 exports[`Verify GameLog layout template Verify parameter provided logs are rendered correctly 1`] = `
 <div
-  className=""
+  className="container"
 >
-  <div
-    className=""
-  >
-    <ul />
-  </div>
+  <ul />
 </div>
 `;

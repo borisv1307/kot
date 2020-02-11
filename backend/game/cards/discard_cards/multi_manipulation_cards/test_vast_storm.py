@@ -14,3 +14,7 @@ def test_vast_storm_subtracts_1_health(player):
 
 def test_vast_storm_costs_6_energy():
     assert VastStorm().cost == 6
+
+
+def test_type_is_discard():
+    assert VastStorm().type == "Discard"

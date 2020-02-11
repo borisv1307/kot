@@ -5,6 +5,7 @@ from game.cards.card import Card
 from game.values import constants
 from game.values.locations import Locations
 from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
+from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 
 
 class Player:
@@ -51,6 +52,8 @@ class Player:
             self.victory_points = 0
 
     def update_energy_by(self, change_integer):
+        if self.has_instance_of_card(FriendOfChildren()):
+            change_integer = FriendOfChildren.add_extra_energy(change_integer)
         self.energy += change_integer
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE

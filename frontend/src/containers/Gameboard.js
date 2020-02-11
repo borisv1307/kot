@@ -30,40 +30,44 @@ export default class GameboardLayout extends Component {
 
   render() {
     return (
-      <div>
+      <div className="board_container">
         <br />
         <h4>{this.state.gameRoom}</h4>
         <div>
-          <div className="col">
+          <div>
             <CardStore />
           </div>
         </div>
         <div className="container">
           {this.state.loggedIn ? (
-            <div className="row">
-              <div className="col-sm">
-                <PlayerValuesDisplay
-                  currentUser={this.state.username}
-                  currentRoom={this.state.gameRoom}
-                />
+            <div>
+              <div className="row">
+                <div className="col-sm">
+                  <DiceRoller
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                  />
+                </div>
+                <div className="col-sm board_middle_column">
+                  <GameConsole
+                    sendMessage={payload => {
+                      GameInstance.sendMessage(payload);
+                    }}
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                  />
+                </div>
+                <div className="col-sm">
+                  <p>Chatroom Placeholder</p>
+                </div>
               </div>
-              <div className="col-sm">
-                <DiceRoller
-                  currentUser={this.state.username}
-                  currentRoom={this.state.gameRoom}
-                />
-              </div>
-              <div className="col-sm">
-                <GameConsole
-                  sendMessage={payload => {
-                    GameInstance.sendMessage(payload);
-                  }}
-                  currentUser={this.state.username}
-                  currentRoom={this.state.gameRoom}
-                />
-              </div>
-              <div className="col-sm">
-                <p>Chatroom Placeholder</p>
+              <div className="row">
+                <div className="col-sm">
+                  <PlayerValuesDisplay
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                  />
+                </div>
               </div>
             </div>
           ) : (

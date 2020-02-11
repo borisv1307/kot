@@ -14,3 +14,7 @@ def test_jet_fighters_subtracts_4_health(player):
 
 def test_jet_fighters_costs_5_energy():
     assert JetFighters().cost == 5
+
+
+def test_type_is_discard():
+    assert JetFighters().type == "Discard"
