@@ -4,13 +4,11 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from game.cards.card import Card
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.models import User, GameState
 from game.player.player import Player
-from game.values import constants
 from game.player.player_status_resolver import player_status_summary_to_JSON
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
 
@@ -266,11 +264,11 @@ class GameConsumer(WebsocketConsumer):
     def card_store_request_handler(self, data):
         username = data['user']
         room = data['room']
-        # game = GameState.objects.get(room_name=room)
-        # state: BoardGame = pickle.loads(game.board)
+        game = GameState.objects.get(room_name=room)
+        state: BoardGame = pickle.loads(game.board)
         selected_cards_ui_message = state.deck_handler.json_store()
 
-        self.send_rolls_to_client(username, room, selected_cards_ui_message)
+        self.send_cards_to_client(username, room, selected_cards_ui_message)
 
     commands = {
         'init_user_request': init_chat_handler,
