@@ -10,6 +10,9 @@ class DieValue(Enum):
     HEAL = 5
     ENERGY = 6
 
+    def serialize_kot_obj(self):
+        return dict(die_val=self.name)
+
 
 def roll() -> str:
     return random.choice(list(DieValue))

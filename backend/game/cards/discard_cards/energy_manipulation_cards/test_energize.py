@@ -9,3 +9,7 @@ def test_energize_adds_9_energy_cubes(player):
 
 def test_energize_costs_8_energy():
     assert Energize().cost == 8
+
+
+def test_type_is_discard():
+    assert Energize().type == "Discard"

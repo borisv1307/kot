@@ -1,15 +1,20 @@
+import random
 from typing import List
 
 from game.cards.card import Card
 from game.values import constants
 from game.values.locations import Locations
+from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
+from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, username=None):
+        if username is None:
+            self.username = "guest_{}".format(random.randint(1000, 9999))
+        else:
+            self.username = username
         self.monster_name = None
-        self.username = None
-        self.password = None
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
@@ -23,6 +28,9 @@ class Player:
     def set_username(self, username):
         self.username = username
 
+    def __eq__(self, other):
+        return isinstance(other, Player) and self.username == other.username
+
     def move_to_tokyo(self):
         self.location = Locations.TOKYO
 
@@ -30,6 +38,8 @@ class Player:
         self.location = Locations.OUTSIDE
 
     def update_health_by(self, change_integer):
+        if self.has_instance_of_card(WereOnlyMakingItStronger()) and change_integer <= -2:
+            WereOnlyMakingItStronger.special_effect(self, self, None)
         self.current_health += change_integer
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health
@@ -49,6 +59,8 @@ class Player:
             self.victory_points = 0
 
     def update_energy_by(self, change_integer):
+        if self.has_instance_of_card(FriendOfChildren()):
+            change_integer = FriendOfChildren.add_extra_energy(change_integer)
         self.energy += change_integer
         if self.energy < constants.DEFAULT_ENERGY_CUBE:
             self.energy = constants.DEFAULT_ENERGY_CUBE
@@ -70,3 +82,14 @@ class Player:
 
     def discard_all_cards(self):
         self.cards.clear()
+
+    def generate_player_status_as_dictionary(self):
+        location_string = "Out" if self.location == Locations.OUTSIDE else "In"
+        return {
+            "username": self.username,
+            "current_health": self.current_health,
+            "location": location_string,
+            "is_alive": self.is_alive,
+            "victory_points": self.victory_points,
+            "energy": self.energy
+        }

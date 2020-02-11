@@ -15,3 +15,7 @@ def test_gas_refinery_subtracts_3_health_from_other_players(player, five_players
     GasRefinery().immediate_effect(player, five_players)
     assert all(other_players.current_health ==
                7 for other_players in five_players)
+
+
+def test_type_is_discard():
+    assert GasRefinery().type == "Discard"

@@ -10,3 +10,7 @@ def test_heal_adds_2_health(player):
 
 def test_heal_costs_3_energy():
     assert Heal().cost == 3
+
+
+def test_type_is_discard():
+    assert Heal().type == "Discard"

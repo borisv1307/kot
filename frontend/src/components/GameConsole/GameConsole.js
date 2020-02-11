@@ -1,5 +1,5 @@
 import React from "react";
-import "./GameConsole.css";
+import "./GameConsole.scss";
 
 import GameLog from "./GameLog";
 
@@ -13,7 +13,8 @@ class GameConsole extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       log: [], // this holds the name of each list
-      cmd: ""
+      cmd: props.cmd,
+      hideMudUi: true
     };
 
     this.waitForSocketConnection(() => {
@@ -22,7 +23,10 @@ class GameConsole extends React.Component {
         this.state.gameRoom
       );
       GameInstance.sendMessage(initCmd);
-      GameInstance.addCallbacks(this.serverResponseHandler.bind(this));
+      GameInstance.addServerResponseCallback(
+        this.serverResponseHandler.bind(this)
+      );
+      GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
     });
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,6 +39,26 @@ class GameConsole extends React.Component {
       user: user,
       room: room
     };
+  }
+
+  beginTurnHandler(message) {
+    // const room = message.room;
+    // const user = message.user;
+    const username_whos_turn_it_is = message.content;
+
+    if (
+      username_whos_turn_it_is === undefined ||
+      username_whos_turn_it_is === ""
+    )
+      return;
+
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    let log_message = its_my_turn
+      ? "your turn " + this.state.username
+      : username_whos_turn_it_is + " turn...";
+
+    this.setState({ log: [...this.state.log, log_message] });
   }
 
   serverResponseHandler(messages) {
@@ -71,24 +95,14 @@ class GameConsole extends React.Component {
   SubmitGameCommand(e) {
     if (this.state.cmd === undefined || this.state.cmd === "") return;
 
-    const command = this.createGameLogCommand(
-      this.state.username,
-      this.state.gameRoom,
-      this.state.cmd
-    );
-
-    GameInstance.sendMessage(command);
-  }
-
-  createGameLogCommand(user, room, cmd) {
-    return {
+    const command = {
       command: "gamelog_send_request",
-      user: user,
-      room: room,
-
-      // payload format: [['text entered by user']
-      payload: cmd
+      user: this.state.username,
+      room: this.state.gameRoom,
+      payload: this.state.cmd
     };
+
+    this.props.sendMessage(command);
   }
 
   handleChange(e) {
@@ -98,29 +112,49 @@ class GameConsole extends React.Component {
   }
 
   render() {
-    return (
-      <div className="game_console">
+    if (this.state.hideMudUi) {
+      return (
         <GameLog
           data={this.state.log}
           currentUser={this.state.username}
           currentRoom={this.state.gameRoom}
         />
+      );
+    } else {
+      return (
+        <div className="chat">
+          <div className="container message-form">
+            <form
+              className="submit_game_command"
+              onSubmit={this.SubmitGameCommand}
+              onChange={this.handleChange}
+            >
+              <input
+                name="text_entry"
+                id="text_entry"
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+            </form>
+            <button
+              name="send_button"
+              id="send_button"
+              className="btn btn-secondary"
+              onClick={this.SubmitGameCommand}
+            >
+              Send
+            </button>
 
-        <form
-          className="submit_game_command"
-          onSubmit={this.SubmitGameCommand}
-          onChange={this.handleChange}
-        >
-          <textarea
-            value={this.state.value}
-            onChange={this.handleChange}
-          ></textarea>
-        </form>
-        <button className="btn btn-secondary" onClick={this.SubmitGameCommand}>
-          Submit Command
-        </button>
-      </div>
-    );
+            <GameLog
+              data={this.state.log}
+              currentUser={this.state.username}
+              currentRoom={this.state.gameRoom}
+            />
+          </div>
+        </div>
+      );
+    }
   }
 }
 

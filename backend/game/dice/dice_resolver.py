@@ -41,7 +41,7 @@ def resolve_attack_dice(dice_counter, attacking_player, other_players):
     attackable_players = get_attackable_players(
         attacking_player, other_players)
     attack_players(attacking_player, attackable_players, attack)
-    if attack > 1:
+    if attack > 0:
         move_to_tokyo_if_empty(attacking_player, other_players)
 
 

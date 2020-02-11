@@ -1,14 +1,15 @@
 {
+
     "python.pythonPath": "${workspaceFolder}/backend/env/Scripts/python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
     "python.linting.pycodestyleEnabled": false,
-    "python.linting.pylintPath": "${workspaceFolder}/env/Scripts/pylint.exe",
+    "python.linting.pylintPath": "${workspaceFolder}/backend/env/Scripts/pylint.exe",
     "python.linting.pylintArgs": [
         "--load-plugins",
         "pylint_django"
     ],
-    "python.linting.pylintEnabled": true,
+    "python.linting.pylintEnabled": false,
     "python.testing.pytestArgs": [
         "backend"
     ],
@@ -26,8 +27,10 @@
         "--ignore=E501",
         "--ignore=E303"
     ],
-    "python.linting.enabled": false,
+    "python.linting.enabled": true,
     "[python]": {
         "editor.formatOnSave": true
-    }
+    },
+    "eslint.enable": false,
+    "python.linting.banditEnabled": true
 }

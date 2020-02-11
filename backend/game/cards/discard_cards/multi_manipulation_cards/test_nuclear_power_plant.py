@@ -15,3 +15,7 @@ def test_nuclear_power_adds_3_health(player):
 
 def test_nuclear_power_costs_6_energy():
     assert NuclearPowerPlant().cost == 6
+
+
+def test_type_is_discard():
+    assert NuclearPowerPlant().type == "Discard"

@@ -1,5 +1,5 @@
 import React from "react";
-import "./GameLog.scss";
+import "./GameConsole";
 
 class GameLog extends React.Component {
   constructor(props) {
@@ -13,19 +13,22 @@ class GameLog extends React.Component {
   }
 
   componentDidMount() {
-    //this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   componentDidUpdate() {
-    //this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   scrollToBottom() {
     const chat = this.messagesEnd;
-    const scrollHeight = chat.scrollHeight;
-    const height = chat.clientHeight;
-    const maxScrollTop = scrollHeight - height;
-    chat.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+
+    if (chat) {
+      const scrollHeight = chat.scrollHeight;
+      const height = chat.clientHeight;
+      const maxScrollTop = scrollHeight - height;
+      chat.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+    }
   }
 
   renderMessages(messages) {
@@ -42,21 +45,14 @@ class GameLog extends React.Component {
   render() {
     const game_messages = this.props.data;
     return (
-      <div className="">
-        <div className="">
-          {/* {
-                    this.state.log.map(entry =>
-                        <li key={entry}>{entry}</li>
-                    )
-                } */}
-          <ul
-            ref={el => {
-              this.messagesEnd = el;
-            }}
-          >
-            {game_messages && this.renderMessages(game_messages)}
-          </ul>
-        </div>
+      <div className="container">
+        <ul
+          ref={el => {
+            this.messagesEnd = el;
+          }}
+        >
+          {game_messages && this.renderMessages(game_messages)}
+        </ul>
       </div>
     );
   }
