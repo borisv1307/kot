@@ -281,21 +281,3 @@ class GameConsumer(WebsocketConsumer):
         'end_turn_request': end_turn_handler,
         'card_store_request': card_store_request_handler
     }
-
-
-def test_get_phony_card_market():
-    game = BoardGame()
-    game.add_player(Player())
-    game.add_player(Player())
-
-    game.start_game()
-    assert len(game.deck_handler.store) == constants.CARD_STORE_SIZE_LIMITER
-    return game.deck_handler.store
-
-
-def test_temp_cards_to_json(cards=test_get_phony_card_market()):
-    message = []
-    card: Card
-    for card in cards:
-        message.append([card.name, card.cost, card.effect, card.footnote])
-    return message
