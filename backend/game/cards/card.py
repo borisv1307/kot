@@ -1,13 +1,14 @@
 import json
 from abc import ABC
 
-from game.values.constants import CARD_NAME_KEY, CARD_COST_KEY, CARD_EFFECT_KEY, CARD_FOOTNOTE_KEY
+from game.values.constants import CARD_NAME_KEY, CARD_COST_KEY, CARD_TYPE_KEY, CARD_FOOTNOTE_KEY, CARD_EFFECT_KEY
 
 
 class Card(ABC):
     def __init__(self, name, cost, effect, footnote=None):
         self.name = name
         self.cost = cost
+        self.card_type = None
         self.effect = effect
         self.footnote = footnote
 
@@ -19,6 +20,7 @@ class Card(ABC):
         return {
             CARD_NAME_KEY: self.name,
             CARD_COST_KEY: self.cost,
+            CARD_TYPE_KEY: self.card_type,
             CARD_EFFECT_KEY: self.effect,
             CARD_FOOTNOTE_KEY: self.footnote
         }
