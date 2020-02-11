@@ -125,7 +125,9 @@ class GameConsumer(WebsocketConsumer):
         player: Player = Player(username)
 
         # TODO, stop giving free cards
-        player.add_card(EnergyHoarder(), SolarPowered(), EvenBigger())
+        player.add_card(EnergyHoarder())
+        player.add_card(SolarPowered())
+        player.add_card(EvenBigger())
         state.add_player(player)
 
         # hack to start game after 2 players join
