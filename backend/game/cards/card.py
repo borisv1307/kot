@@ -1,4 +1,7 @@
+import json
 from abc import ABC
+
+from game.values.constants import CARD_NAME_KEY, CARD_COST_KEY, CARD_TYPE_KEY, CARD_FOOTNOTE_KEY, CARD_EFFECT_KEY
 
 
 class Card(ABC):
@@ -11,3 +14,15 @@ class Card(ABC):
     # Card is a user defined object. Provided comparison context other than object reference.
     def __eq__(self, other):
         return self is other or self.name == other.name
+
+    def to_dict(self):
+        return {
+            CARD_NAME_KEY: self.name,
+            CARD_COST_KEY: self.cost,
+            CARD_TYPE_KEY: self.card_type,
+            CARD_EFFECT_KEY: self.effect,
+            CARD_FOOTNOTE_KEY: self.footnote
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict())

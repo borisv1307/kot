@@ -18,3 +18,10 @@ VICTORY_POINTS_TO_WIN = 20
 OUT_OF_CARDS_MSG = "No more cards available to shuffle"
 INSUFFICIENT_FUNDS_MSG = "Insufficient energy to purchase card"
 INSUFFICIENT_FUNDS_TO_SWEEP_MSG = "Insufficient energy to sweep the card store"
+
+# keys
+CARD_NAME_KEY = "name"
+CARD_COST_KEY = "cost"
+CARD_TYPE_KEY = "type"
+CARD_EFFECT_KEY = "effect"
+CARD_FOOTNOTE_KEY = "footnote"
