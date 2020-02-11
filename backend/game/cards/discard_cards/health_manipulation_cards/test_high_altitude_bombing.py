@@ -14,3 +14,7 @@ def test_high_altitude_bombing_subtracts_3_health_other_players(player, five_pla
 
 def test_high_altitude_bombing_costs_4_energy():
     assert HighAltitudeBombing().cost == 4
+
+
+def test_type_is_discard():
+    assert HighAltitudeBombing().type == "Discard"
