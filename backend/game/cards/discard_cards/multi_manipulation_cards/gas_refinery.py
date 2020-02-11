@@ -1,10 +1,9 @@
 from game.cards.discard_card import DiscardCard
-from game.cards.card import Card
 
 
 class GasRefinery(DiscardCard):
     def __init__(self):
-        Card.__init__(self, "Gas Refinery", 6,
+        super().__init__("Gas Refinery", 6,
                          "+ 2[Star] and other monsters lose 3[health]", "")
 
     def immediate_effect(self, player_that_bought_the_card, other_players):

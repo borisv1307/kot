@@ -2,7 +2,10 @@ import React from 'react';
 import Card from "react-bootstrap/Card";
 import './CardStore.css'
 import Button from 'react-bootstrap/Button';
+
 import GameInstance from "../../services/gameService";
+import MT_RESPONSE_CARD_STORE_RESPONSE from "../../services/config";
+
 
 class CardStore extends React.Component {
   constructor(props, context) {
@@ -15,29 +18,16 @@ class CardStore extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       value: [],
-      selectedCard: []
+      selectedCard: [],
+      data: props.data
     };
+
+    this.cardStoreRequest = this.cardStoreRequest.bind(this);
+    GameInstance.addCardCallback(this.cardUpdateHandler.bind(this));
   }
 
   componentDidMount() {
     // ... do something with fetchedData e.g. set the data
-  }
-
-  sendSelectedCard() {
-
-    let selected = this.state.selectedCard;
-
-    if (selected && selected.length > 0) {
-      const messageObject = {
-        from: this.props.currentUser,
-        data: selected
-      };
-
-      GameInstance.sendSelectedCard(messageObject);
-      this.setState({
-        message: ''
-      })
-    }
   }
 
   handleChange(e) {
@@ -49,34 +39,71 @@ class CardStore extends React.Component {
     this.setState({ value: [] });
   }
 
+  async cardStoreRequest(/*e*/) {
+    try {
+        const messageObject = {
+          user: this.state.username,
+          room: this.state.gameRoom,
+          data: ""
+        };
+        this.sendCardStoreRequest(messageObject);
+    } catch (exception) {
+      console.log(exception);
+    }
+  }
+
+  sendCardStoreRequest(envelope) {
+    GameInstance.sendMessage({
+      command: "card_store_request",
+      user: envelope.user,
+      room: envelope.room,
+      payload: ""
+    });
+  }
+
+  cardUpdateHandler(message) {
+    const content = message.content;
+
+    if (content === undefined || content === "") return;
+
+    let card_content = [];
+    try {
+      card_content = JSON.parse(content);
+    } catch (e) {}
+    this.setState({ selectedCard: card_content });
+  }
 
   render() {
-    return (
-      <container className="card">
-        <div className="row">
-          <div className="col-sm">
-            <div className="card" type="checkbox">
-              {
-                this.state.selectedCard.map((entry, index) => (
-                  <Card key={index}>
-                    <Card.Body>
-                      <Card.Title>Card: {entry.name}</Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">Cost: {entry.cost}</Card.Subtitle>
-                      <Card.Text>Type: {entry.type}</Card.Text>
-                      <Card.Text>Effect: {entry.effect}</Card.Text>
-                      <Card.Text>{entry.footnote}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                ))
-              }
+    if (this.state.selectedCard) {
+      return (
+        <container className="card">
+          <div className="row">
+            <div className="col-sm">
+              <div className="card" type="checkbox">
+                {
+                  this.state.selectedCard.map((entry, index) => (
+                    <Card key={index}>
+                      <Card.Body>
+                        <Card.Title>Card: {entry.name}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">Cost: {entry.cost}</Card.Subtitle>
+                        <Card.Text>Type: {entry.type}</Card.Text>
+                        <Card.Text>Effect: {entry.effect}</Card.Text>
+                        <Card.Text>{entry.footnote}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  ))
+                }
+              </div>
+              <Button onClick={this.cardStoreRequest} className="btn btn-secondary">Card Store</Button>
+              &nbsp;&nbsp;&nbsp;
+                    <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
             </div>
-            <Button onClick={this.selectCard} className="btn btn-secondary">Card Store{this.state.cardStore}</Button>
-            &nbsp;&nbsp;&nbsp;
-                  <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
           </div>
-        </div>
-      </container>
-    );
+        </container>
+      );
+    } else {
+      return <div>Waiting on Players</div>
+    }
   }
 }
 export default CardStore;

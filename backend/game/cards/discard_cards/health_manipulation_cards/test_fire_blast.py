@@ -10,3 +10,7 @@ def test_fire_blast_subtracts_2_health(player, five_players):
 
 def test_fire_blast_costs_3_energy():
     assert FireBlast().cost == 3
+
+
+def test_type_is_discard():
+    assert FireBlast().type == "Discard"
