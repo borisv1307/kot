@@ -14,3 +14,7 @@ def test_national_guard_subtracts_2_health(player):
 
 def test_national_guard_costs_3_energy():
     assert NationalGuard().cost == 3
+
+
+def test_type_is_discard():
+    assert NationalGuard().type == "Discard"
