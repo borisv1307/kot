@@ -12,6 +12,7 @@ from game.values.status import Status
 class BoardGame:
 
     def __init__(self):
+        self.deck_handler = DeckHandler()
         self.players = GamePlayers()
         self.status = Status.SETUP
         self.winner = None

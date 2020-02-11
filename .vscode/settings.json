@@ -1,4 +1,5 @@
 {
+
     "python.pythonPath": "${workspaceFolder}/backend/env/Scripts/python.exe",
     "team.showWelcomeMessage": false,
     "editor.formatOnSave": true,
@@ -8,7 +9,7 @@
         "--load-plugins",
         "pylint_django"
     ],
-    "python.linting.pylintEnabled": true,
+    "python.linting.pylintEnabled": false,
     "python.testing.pytestArgs": [
         "backend"
     ],
@@ -30,5 +31,6 @@
     "[python]": {
         "editor.formatOnSave": true
     },
-    "eslint.enable": false
+    "eslint.enable": false,
+    "python.linting.banditEnabled": true
 }
