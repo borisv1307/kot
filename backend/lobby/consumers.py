@@ -64,19 +64,23 @@ class GameConsumer(WebsocketConsumer):
         return content
 
     def send_player_status_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('player_status_update_response', username, room, payload);
+        content = self.create_send_response_to_client('player_status_update_response', username, room, payload)
         self.send_group_message(content)
 
     def send_begin_turn_response_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('begin_turn_response', username, room, payload);
+        content = self.create_send_response_to_client('begin_turn_response', username, room, payload)
         self.send_group_message(content)
 
     def send_server_response_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('server_response', username, room, payload);
+        content = self.create_send_response_to_client('server_response', username, room, payload)
         self.send_group_message(content)
 
     def send_rolls_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('dice_rolls_response', username, room, payload);
+        content = self.create_send_response_to_client('dice_rolls_response', username, room, payload)
+        self.send_group_message(content)
+
+    def send_cards_to_client(self, username, room, payload):
+        content = self.create_send_response_to_client('card_store_response', username, room, payload)
         self.send_group_message(content)
 
     def get_or_create_user(self, username, room):
@@ -124,6 +128,7 @@ class GameConsumer(WebsocketConsumer):
             state.start_game()
             self.send_server_response_to_client(username, room, "Game started..")
             state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
+            self.send_cards_to_client(username, room, state.deck_handler.json_store())
             self.send_begin_turn_response_to_client(username, room, state.players.get_current_player().username)
             print("Game started..")
         else:
@@ -253,8 +258,17 @@ class GameConsumer(WebsocketConsumer):
 
         self.send_server_response_to_client(username, room, mud_gamelog_input)
 
-    # def roll_dice_handler(self, data):
-    #     pass
+    def roll_dice_handler(self, data):
+        pass
+
+    def card_store_request_handler(self, data):
+        username = data['user']
+        room = data['room']
+        game = GameState.objects.get(room_name=room)
+        state: BoardGame = pickle.loads(game.board)
+        selected_cards_ui_message = state.deck_handler.json_store()
+
+        self.send_cards_to_client(username, room, selected_cards_ui_message)
 
     commands = {
         'init_user_request': init_chat_handler,
@@ -262,5 +276,6 @@ class GameConsumer(WebsocketConsumer):
         'selected_dice_request': selected_dice_handler,
         # 'roll_dice_request': roll_dice_handler,
         'return_dice_state_request': return_dice_state_handler,
-        'end_turn_request': end_turn_handler
+        'end_turn_request': end_turn_handler,
+        'card_store_request': card_store_request_handler
     }

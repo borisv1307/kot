@@ -14,3 +14,7 @@ def test_tanks_subtracts_3_health(player):
 
 def test_tanks_costs_4_energy():
     assert Tanks().cost == 4
+
+
+def test_type_is_discard():
+    assert Tanks().type == "Discard"

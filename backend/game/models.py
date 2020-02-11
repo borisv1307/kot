@@ -1,4 +1,3 @@
-import base64
 from django.db import models
 from django.utils import timezone
 
@@ -21,7 +20,7 @@ class Game(models.Model):
 
 
 class User(models.Model):
-    game_id = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
     monster_name = models.CharField(max_length=30)
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
@@ -48,7 +47,7 @@ class Dice(models.Model):
         ('1', 'SELECT'),
         ('0', 'DISCARD'),
     )
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     roll_number = models.IntegerField()
     dice1 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice1_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
@@ -156,7 +155,7 @@ class Play(models.Model):
         ('74', 'Thunder Stomp'),
         ('75', 'Unstable DNA'),
     )
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     card1_swept = models.CharField(max_length=2, choices=CARD)
     card1_swept_type = models.CharField(max_length=1, choices=CARD_TYPE)
     card2_swept = models.CharField(max_length=2, choices=CARD)
@@ -172,4 +171,3 @@ class Play(models.Model):
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
-
