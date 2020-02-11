@@ -1,7 +1,9 @@
 import json
 from abc import ABC
 
+
 from game.values.constants import CARD_NAME_KEY, CARD_COST_KEY, CARD_TYPE_KEY, CARD_FOOTNOTE_KEY, CARD_EFFECT_KEY
+
 
 
 class Card(ABC):

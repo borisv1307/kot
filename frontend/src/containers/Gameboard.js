@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import "./Gameboard.css";
 
-import GameConsole from "../components/GameConsole/GameConsole";
+
+import GameConsole from "../components/GameConsole/GameConsole"
 import DiceRoller from "./../components/Dice/DiceRoller";
+import PlayerValues from "./../components/PlayerValues/PlayerValues";
+import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
-import CardStore from "./../components/Cards/CardStore";
 
 import GameInstance from "./../services/gameService";
 
@@ -34,8 +36,11 @@ export default class GameboardLayout extends Component {
         <br />
         <h4>{this.state.gameRoom}</h4>
         <div>
-          <div>
-            <CardStore />
+          <div className="col">
+            <CardStore
+              currentUser={this.state.username}
+              currentRoom={this.state.gameRoom} />
+
           </div>
         </div>
         <div className="container">
