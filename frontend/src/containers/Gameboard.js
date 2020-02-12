@@ -61,7 +61,11 @@ export default class GameboardLayout extends Component {
                   />
                 </div>
                 <div className="col-sm">
-                  <p>Chatroom Placeholder</p>
+                  <PlayerValuesDisplay
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                    displayOnlySelf={true}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -69,6 +73,7 @@ export default class GameboardLayout extends Component {
                   <PlayerValuesDisplay
                     currentUser={this.state.username}
                     currentRoom={this.state.gameRoom}
+                    displayOnlySelf={false}
                   />
                 </div>
               </div>

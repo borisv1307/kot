@@ -21,7 +21,7 @@ class PlayerHandDisplay extends React.Component {
   }
 
   render() {
-    if (this.state.data) {
+    if (this.state.data && this.state.data.length > 0) {
       return (
         <div>
           <img className="img-hand" alt="" src={Hand}></img>
@@ -39,7 +39,12 @@ class PlayerHandDisplay extends React.Component {
         </div>
       );
     } else {
-      return <div></div>;
+      return (
+        <div>
+          <img className="img-hand" alt="" src={Hand}></img>
+          No Cards...
+        </div>
+      );
     }
   }
 }

@@ -7,12 +7,18 @@ import PlayerHandDisplay from "./PlayerHandDisplay";
 
 class PlayerValues extends React.Component {
   render() {
+    let you_or_them = "them";
+    if (this.props.thisIsYou) {
+      you_or_them = "you";
+    }
+
     return (
       <div>
         <div class="container">
           <div class="row">
             <div class="col-sm player-border">
-              <h2>Player {this.props.username}</h2>
+              <h2>{this.props.username}</h2>
+              <p>{you_or_them}</p>
               <div className="player-values">
                 <p>
                   Victory Points:

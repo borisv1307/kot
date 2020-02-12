@@ -12,7 +12,8 @@ class PlayerValueDisplay extends React.Component {
     this.state = {
       username: props.currentUser,
       gameRoom: props.currentRoom,
-      data: props.data
+      data: props.data,
+      justShowSelf: props.displayOnlySelf
     };
 
     GameInstance.addCallback(
@@ -35,24 +36,40 @@ class PlayerValueDisplay extends React.Component {
 
   render() {
     if (this.state.data) {
-      return (
-        <container className="player_details">
-          {this.state.data.map((entry, index) => (
-            <PlayerValues
-              key={index}
-              username={entry.username}
-              victory_points={entry.victory_points} // 0 to 10
-              current_health={entry.current_health} // 0 to 10
-              energy={entry.energy} // 0 or more
-              location={entry.location} // 'In' or 'Out'
-              cards={entry.cards}
-            />
-          ))}
-        </container>
-      );
-    } else {
-      return <div>Waiting on Players</div>;
+      let you = this.state.username;
+      let justSelf = this.state.justShowSelf;
+      let items = [];
+      this.state.data.forEach(element => {
+        if (justSelf && element.username === you) {
+          items.push(element);
+        } else if (!justSelf && element.username !== you) {
+          items.push(element);
+        }
+      });
+
+      if (items && items.length) {
+        let tisYou = this.state.username;
+
+        return (
+          <container className="player_details">
+            {items.map((entry, index) => (
+              <PlayerValues
+                key={index}
+                username={entry.username}
+                thisIsYou={entry.username === tisYou}
+                victory_points={entry.victory_points} // 0 to 10
+                current_health={entry.current_health} // 0 to 10
+                energy={entry.energy} // 0 or more
+                location={entry.location} // 'In' or 'Out'
+                cards={entry.cards}
+              />
+            ))}
+          </container>
+        );
+      }
     }
+
+    return <div>Waiting on Players</div>;
   }
 }
 export default PlayerValueDisplay;
