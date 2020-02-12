@@ -36,7 +36,7 @@ class PlayerValueDisplay extends React.Component {
   render() {
     if (this.state.data) {
       return (
-        <container className="card">
+        <container className="player_details">
           {this.state.data.map((entry, index) => (
             <PlayerValues
               key={index}
@@ -45,6 +45,7 @@ class PlayerValueDisplay extends React.Component {
               current_health={entry.current_health} // 0 to 10
               energy={entry.energy} // 0 or more
               location={entry.location} // 'In' or 'Out'
+              cards={entry.cards}
             />
           ))}
         </container>

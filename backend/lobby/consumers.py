@@ -142,7 +142,7 @@ class GameConsumer(WebsocketConsumer):
         else:
             msg = "Joined, waiting on additional players"
             self.send_server_response_to_client(username, room, username + msg)
-            print(msg)
+            print(username + msg)
 
         player_summaries = player_status_summary_to_JSON(state.players)
         self.send_player_status_to_client(username, room, player_summaries)

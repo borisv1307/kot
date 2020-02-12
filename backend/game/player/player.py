@@ -2,6 +2,7 @@ import random
 from typing import List
 
 from game.cards.card import Card
+from game.player.player_status_resolver import json_players_hand
 from game.values import constants
 from game.values.locations import Locations
 from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
@@ -84,5 +85,6 @@ class Player:
             "location": location_string,
             "is_alive": self.is_alive,
             "victory_points": self.victory_points,
-            "energy": self.energy
+            "energy": self.energy,
+            "cards": json_players_hand(self.cards)
         }
