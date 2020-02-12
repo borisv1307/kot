@@ -14,12 +14,19 @@ class Player:
             self.username = "guest_{}".format(random.randint(1000, 9999))
         else:
             self.username = username
+        self.monster_name = None
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
         self.cards: List[Card] = []
+
+    def set_monster_name(self, monster_name):
+        self.monster_name = monster_name
+
+    def set_username(self, username):
+        self.username = username
 
     def __eq__(self, other):
         return isinstance(other, Player) and self.username == other.username
