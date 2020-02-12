@@ -167,3 +167,4 @@ def test_generate_player_status_summary(player):
     assert summary["victory_points"] == constants.DEATH_HIT_POINT
     assert summary["energy"] == constants.DEFAULT_ENERGY_CUBE
     print(summary)
+

@@ -14,7 +14,7 @@ class Player:
             self.username = "guest_{}".format(random.randint(1000, 9999))
         else:
             self.username = username
-        self.monster_name = None
+        self.monster_name = None    
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
