@@ -171,3 +171,4 @@ class Play(models.Model):
     energy_cube = models.IntegerField()
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
+
