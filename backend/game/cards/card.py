@@ -5,11 +5,12 @@ from game.values.constants import CARD_NAME_KEY, CARD_COST_KEY, CARD_EFFECT_KEY,
 
 
 class Card(ABC):
-    def __init__(self, name, cost, effect, footnote=None):
+    def __init__(self, name, cost, effect, card_type, footnote=None):
         self.name = name
         self.cost = cost
         self.effect = effect
         self.footnote = footnote
+        self.type = card_type
 
     # Card is a user defined object. Provided comparison context other than object reference.
     def __eq__(self, other):
