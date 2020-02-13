@@ -272,11 +272,11 @@ class GameConsumer(WebsocketConsumer):
     def card_store_request_handler(self, data):
         username = data['user']
         room = data['room']
-        # game = GameState.objects.get(room_name=room)
-        # state: BoardGame = pickle.loads(game.board)
+        game = GameState.objects.get(room_name=room)
+        state: BoardGame = pickle.loads(game.board)
         selected_cards_ui_message = state.deck_handler.json_store()
 
-        self.send_rolls_to_client(username, room, selected_cards_ui_message)
+        self.send_cards_to_client(username, room, selected_cards_ui_message)
 
     commands = {
         'init_user_request': init_chat_handler,
