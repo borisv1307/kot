@@ -4,9 +4,9 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
-from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
-from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
+# from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
+# from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
+# from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
