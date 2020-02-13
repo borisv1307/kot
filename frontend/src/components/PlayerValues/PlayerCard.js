@@ -11,8 +11,6 @@ class PlayerCard extends React.Component {
       t_footnote = this.props.footnote;
     }
 
-    // let t_info = this.props.effect + " Footnote: " + t_footnote;
-
     return (
       <div>
         <div className="card-border">

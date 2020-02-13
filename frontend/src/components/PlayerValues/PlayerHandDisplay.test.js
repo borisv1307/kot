@@ -6,27 +6,26 @@ import PlayerHandDisplay from "./PlayerHandDisplay";
 describe("Verify PlayerHandDisplay layout template", () => {
   const test_player_details = [
     {
-      username: "howdy",
-      victory_points: 1,
-      health: 0,
-      energy: 2,
-      position: "Out"
+      name: "howdy",
+      cost: 1,
+      effect: 0,
+      footnote: 2
     },
     {
-      username: "ya",
+      name: "ya",
       victory_points: 5,
       health: 5,
-      energy: 4,
-      position: "In"
+      footnote: 4
     },
     {
-      username: "all",
-      victory_points: 10,
+      name: "all",
+      cost: 10,
       health: 10,
-      energy: 6,
-      position: "Out"
+      footnote: 6
     }
   ];
+
+  const json_test_player_details = JSON.stringify(test_player_details);
 
   const test_username = "test_user";
   const test_roomname = "test_room";
@@ -42,7 +41,7 @@ describe("Verify PlayerHandDisplay layout template", () => {
       <PlayerHandDisplay
         currentUser={test_username}
         currentRoom={test_roomname}
-        data={test_player_details}
+        data={json_test_player_details}
       />
     );
     expect(component).toMatchSnapshot();
@@ -53,7 +52,7 @@ describe("Verify PlayerHandDisplay layout template", () => {
       <PlayerHandDisplay
         currentUser={test_username}
         currentRoom={test_roomname}
-        data={test_player_details}
+        data={json_test_player_details}
       />
     );
     expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
@@ -64,7 +63,7 @@ describe("Verify PlayerHandDisplay layout template", () => {
       <PlayerHandDisplay
         currentUser={test_username}
         currentRoom={test_roomname}
-        data={[]}
+        data={JSON.stringify([])}
       />
     );
 
@@ -77,15 +76,5 @@ describe("Verify PlayerHandDisplay layout template", () => {
     expect(wrapper.state()).toEqual({
       ...expected_state_values_with_no_player_details
     });
-
-    const expected_backend_callback_message = {
-      user: test_username,
-      room: test_roomname,
-      content: JSON.stringify(test_player_details)
-    };
-
-    wrapper.instance().playerUpdateHandler(expected_backend_callback_message);
-
-    expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
   });
 });

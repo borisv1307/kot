@@ -10,7 +10,9 @@ class PlayerHandDisplay extends React.Component {
     let cards = {};
 
     if (this.props.data) {
-      cards = JSON.parse(this.props.data);
+      try {
+        cards = JSON.parse(this.props.data);
+      } catch (e) {}
     }
 
     this.state = {
