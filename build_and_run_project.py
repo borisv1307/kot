@@ -1,5 +1,6 @@
 """
 King of Tokyo game script
+
 This file performs all of the necessary commands in order to build
 the project and run the Django server so that the game can be
 played locally.
