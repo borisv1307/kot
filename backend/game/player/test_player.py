@@ -13,6 +13,16 @@ def player():
     return player
 
 
+def test_set_monster_name(player):
+    player.set_monster_name('Godzilla')
+    assert player.monster_name == 'Godzilla'
+
+
+def test_set_username(player):
+    player.set_username('Tester')
+    assert player.username == 'Tester'
+
+
 def test_player_default_health(player):
     assert player.maximum_health == constants.DEFAULT_HEALTH
 
@@ -157,3 +167,4 @@ def test_generate_player_status_summary(player):
     assert summary["victory_points"] == constants.DEATH_HIT_POINT
     assert summary["energy"] == constants.DEFAULT_ENERGY_CUBE
     print(summary)
+
