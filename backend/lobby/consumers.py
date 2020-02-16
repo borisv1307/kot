@@ -216,10 +216,12 @@ class GameConsumer(WebsocketConsumer):
         self.send_to_client(SERVER_RESPONSE, username, room, mud_gamelog_input)
 
     def card_store_request_handler(self, data):
+
         username, room, game, state = reconstruct_game(data)
         selected_cards_ui_message = state.deck_handler.json_store()
 
         self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
+
 
     commands = {
         'init_user_request': init_chat_handler,

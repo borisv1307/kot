@@ -11,7 +11,7 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - py.test  --cov-report term --cov=.
+  - py.test backend --ignore backend/game/db --ignore backend/game/irepository --cov-report term --cov=.
   - coverage xml
 services:
   - sqlite
