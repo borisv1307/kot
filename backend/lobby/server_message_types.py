@@ -1,0 +1,5 @@
+PLAYER_STATUS_UPDATE_RESPONSE = 'player_status_update_response'
+BEGIN_TURN_RESPONSE = 'begin_turn_response'
+SERVER_RESPONSE = 'server_response'
+DICE_ROLLS_RESPONSE = 'dice_rolls_response'
+CARD_STORE_RESPONSE = 'card_store_response'

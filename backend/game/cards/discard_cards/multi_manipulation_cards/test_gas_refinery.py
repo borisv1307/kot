@@ -18,4 +18,4 @@ def test_gas_refinery_subtracts_3_health_from_other_players(player, five_players
 
 
 def test_type_is_discard():
-    assert GasRefinery().type == "Discard"
+    assert GasRefinery().card_type == "Discard"

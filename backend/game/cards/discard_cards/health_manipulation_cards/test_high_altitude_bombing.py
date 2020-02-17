@@ -17,4 +17,4 @@ def test_high_altitude_bombing_costs_4_energy():
 
 
 def test_type_is_discard():
-    assert HighAltitudeBombing().type == "Discard"
+    assert HighAltitudeBombing().card_type == "Discard"
