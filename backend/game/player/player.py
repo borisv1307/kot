@@ -2,11 +2,11 @@ import random
 from typing import List
 
 from game.cards.card import Card
+from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
+from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
 from game.player.player_status_resolver import json_players_hand
 from game.values import constants
 from game.values.locations import Locations
-from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
-from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 
 
 class Player:
@@ -15,13 +15,14 @@ class Player:
             self.username = "guest_{}".format(random.randint(1000, 9999))
         else:
             self.username = username
-        self.monster_name = None    
+        self.monster_name = None
         self.maximum_health = self.current_health = constants.DEFAULT_HEALTH
         self.location = Locations.OUTSIDE
         self.is_alive = True
         self.victory_points = constants.DEATH_HIT_POINT
         self.energy = constants.DEFAULT_ENERGY_CUBE
         self.cards: List[Card] = []
+        self.allowed_to_yield = False
 
     def set_monster_name(self, monster_name):
         self.monster_name = monster_name
@@ -31,6 +32,9 @@ class Player:
 
     def __eq__(self, other):
         return isinstance(other, Player) and self.username == other.username
+
+    def is_in_tokyo(self):
+        return self.location == Locations.TOKYO
 
     def move_to_tokyo(self):
         self.location = Locations.TOKYO

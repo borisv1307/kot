@@ -217,11 +217,28 @@ class GameConsumer(WebsocketConsumer):
 
     def yield_tokyo_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
-        print("{} wants to yield tokyo".format(username))
+        player = state.players.get_player_by_username_from_alive(username)
+        if player.allowed_to_yield:
+            state.yield_tokyo_to_current_player(player)
+            self.send_to_client(SERVER_RESPONSE, username, room,
+                                "{} yields Tokyo to {}!".format(username, state.players.current_player.username))
+            for m_player in state.players.get_alive_players():
+                if m_player.allowed_to_yield:
+                    print("{} started allowed".format(m_player.username))
+            state.players.reset_allowed_to_yield()
+            for m_player in state.players.get_alive_players():
+                if m_player.allowed_to_yield:
+                    print("{} ended allowed".format(m_player.username))
+
+            player_summaries = player_status_summary_to_JSON(state.players)
+            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+        else:
+            print("{} can't yield tokyo!".format(username))
+        save_game(game, state)
 
     def resolve_dice_handler(self, data):
         username, room, game, state = reconstruct_game(data)
-        
+
         dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
                         state.players.get_all_alive_players_minus_current_player())
 
