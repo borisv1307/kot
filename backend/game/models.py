@@ -172,3 +172,7 @@ class Play(models.Model):
     life_points = models.IntegerField()
     date_created = models.DateTimeField()
 
+
+class GameState(models.Model):
+    room_name = models.CharField(max_length=30)
+    board = models.BinaryField()
