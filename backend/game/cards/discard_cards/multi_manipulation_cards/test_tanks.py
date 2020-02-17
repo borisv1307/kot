@@ -17,4 +17,4 @@ def test_tanks_costs_4_energy():
 
 
 def test_type_is_discard():
-    assert Tanks().type == "Discard"
+    assert Tanks().card_type == "Discard"

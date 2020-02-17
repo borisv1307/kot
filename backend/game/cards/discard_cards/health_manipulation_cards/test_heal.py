@@ -13,4 +13,4 @@ def test_heal_costs_3_energy():
 
 
 def test_type_is_discard():
-    assert Heal().type == "Discard"
+    assert Heal().card_type == "Discard"

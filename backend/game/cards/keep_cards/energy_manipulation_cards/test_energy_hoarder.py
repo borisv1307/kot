@@ -15,3 +15,7 @@ def test_energy_hoarder_gain_2_star(player):
     player.add_card(EnergyHoarder())
     EnergyHoarder().special_effect(player, None)
     assert player.victory_points == 2
+
+
+def test_energy_hoarder_type_is_keep():
+    assert EnergyHoarder().card_type == "Keep"

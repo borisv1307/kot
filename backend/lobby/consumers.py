@@ -4,9 +4,9 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-# from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
-# from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
-# from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
+from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
+from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
+from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
@@ -14,6 +14,35 @@ from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
+from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
+    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE
+
+
+def reconstruct_game(data):
+    username = data['user']
+    room = data['room']
+
+    game = GameState.objects.get(room_name=room)
+    # deserialize then store GameState object
+    state: BoardGame = pickle.loads(game.board)
+    return username, room, game, state
+
+
+def save_game(game, state):
+    game.board = pickle.dumps(state)
+    game.save()
+
+
+def create_send_response_to_client(command, username, room, payload):
+    content = {
+        'command': command,
+        'action': {
+            'user': username,
+            'room': room,
+            'content': payload
+        }
+    }
+    return content
 
 
 class GameConsumer(WebsocketConsumer):
@@ -55,35 +84,8 @@ class GameConsumer(WebsocketConsumer):
         # Send message to WebSocket
         self.send(text_data=json.dumps(message))
 
-    def create_send_response_to_client(self, command, username, room, payload):
-        content = {
-            'command': command,
-            'action': {
-                'user': username,
-                'room': room,
-                'content': payload
-            }
-        }
-        return content
-
-    def send_player_status_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('player_status_update_response', username, room, payload)
-        self.send_group_message(content)
-
-    def send_begin_turn_response_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('begin_turn_response', username, room, payload)
-        self.send_group_message(content)
-
-    def send_server_response_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('server_response', username, room, payload)
-        self.send_group_message(content)
-
-    def send_rolls_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('dice_rolls_response', username, room, payload)
-        self.send_group_message(content)
-
-    def send_cards_to_client(self, username, room, payload):
-        content = self.create_send_response_to_client('card_store_response', username, room, payload)
+    def send_to_client(self, message_type, username, room, payload):
+        content = create_send_response_to_client(message_type, username, room, payload)
         self.send_group_message(content)
 
     def get_or_create_user(self, username, room):
@@ -91,10 +93,10 @@ class GameConsumer(WebsocketConsumer):
 
         if not user:
             error = 'Unable to get or create User with username: ' + username
-            self.send_server_response_to_client(username, room, error)
+            self.send_to_client(SERVER_RESPONSE, username, room, error)
 
         success = 'Chatting in with success with username: ' + username
-        self.send_server_response_to_client(username, room, success)
+        self.send_to_client(SERVER_RESPONSE, username, room, success)
         return user
 
     def get_or_create_game(self, username, room):
@@ -102,19 +104,25 @@ class GameConsumer(WebsocketConsumer):
 
         if not game:
             error = 'Unable to get or create Game with room: ' + room
-            self.send_server_response_to_client(username, room, error)
+            self.send_to_client(SERVER_RESPONSE, username, room, error)
 
         success = 'Chatting in with success within room: ' + room
-        self.send_server_response_to_client(username, room, success)
+        self.send_to_client(SERVER_RESPONSE, username, room, success)
         return game
+
+    def start_web_game(self, room, state, username):
+        state.start_game()
+        self.send_to_client(SERVER_RESPONSE, username, room, "Game started..")
+        state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
+        self.send_to_client(CARD_STORE_RESPONSE, username, room, state.deck_handler.json_store())
+        self.send_to_client(BEGIN_TURN_RESPONSE, username, room, state.players.get_current_player().username)
+        print("Game started..")
 
     def init_chat_handler(self, data):
         username = data['user']
         room = data['room']
-        # self.get_or_create_user(username, room)
-        self.get_or_create_game(username, room)
 
-        print("init_chat_handler")
+        self.get_or_create_game(username, room)
 
         game = GameState.objects.get(room_name=room)
         if not game.board:
@@ -123,101 +131,63 @@ class GameConsumer(WebsocketConsumer):
             state = pickle.loads(game.board)
 
         player: Player = Player(username)
+        if player not in state.players.players:
+            # free cards to demonstrate inventory
 
-        # TODO, stop giving free cards
-        # player.add_card(EnergyHoarder())
-        # player.add_card(SolarPowered())
-        # player.add_card(EvenBigger())
-        state.add_player(player)
+            player.add_card(EnergyHoarder())
+            player.add_card(SolarPowered())
+            player.add_card(EvenBigger())
+            state.add_player(player)
 
         # hack to start game after 2 players join
         temp_max_players = 2
         if len(state.players.players) == temp_max_players:
-            state.start_game()
-            self.send_server_response_to_client(username, room, "Game started..")
-            state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
-            self.send_cards_to_client(username, room, state.deck_handler.json_store())
-            self.send_begin_turn_response_to_client(username, room, state.players.get_current_player().username)
-            print("Game started..")
+            self.start_web_game(room, state, username)
         else:
             msg = "Joined, waiting on additional players"
-            self.send_server_response_to_client(username, room, username + msg)
-            print(username + msg)
+            self.send_to_client(SERVER_RESPONSE, username, room, username + msg)
 
         player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_player_status_to_client(username, room, player_summaries)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
 
-        game.board = pickle.dumps(state)
-        game.save()
+        save_game(game, state)
 
     def return_dice_state_handler(self, data):
-        username = data['user']
-        room = data['room']
-
-        game = GameState.objects.get(room_name=room)
-        # deserialize then store GameState object
-        state: BoardGame = pickle.loads(game.board)
+        username, room, game, state = reconstruct_game(data)
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
 
-        print("return_dice_state_handler")
-        print(rolled_dice_ui_message)
-
-        self.send_rolls_to_client(username, room, rolled_dice_ui_message)
+        self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
 
     def selected_dice_handler(self, data):
-        username = data['user']
-        room = data['room']
+        username, room, game, state = reconstruct_game(data)
 
-        # [['e', True], ['1', False], ['h', True], ['2', False], ['3', True], ['e', False]]
         payload = data['payload']
 
-        print("incoming")
-        print(payload)
-
-        print("selected_dice_handler")
-
-        game = GameState.objects.get(room_name=room)
-        # deserialize then store GameState object
-        state: BoardGame = pickle.loads(game.board)
-
         selected_dice = decode_selected_dice_indexes(payload)
-
-        print("the selected dice are: " + str(selected_dice))
 
         try:
             state.dice_handler.re_roll_dice(selected_dice)
         except ValueError:
-            self.send_server_response_to_client(username, room, "{} out of rolls.".format(username))
+            self.send_to_client(SERVER_RESPONSE, username, room, "{} out of rolls.".format(username))
 
         # serialize then store modified GameState object
-        game.board = pickle.dumps(state)
-        game.save()
+        save_game(game, state)
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
-        self.send_rolls_to_client(username, room, rolled_dice_ui_message)
-
-        print(rolled_dice_ui_message)
+        self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
 
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
-
-        username = data['user']
-        room = data['room']
-
-        print("end_turn_handler")
-
-        game = GameState.objects.get(room_name=room)
-
-        state: BoardGame = pickle.loads(game.board)
+        username, room, game, state = reconstruct_game(data)
 
         # TODO move to somewhere else
         dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
                         state.players.get_all_alive_players_minus_current_player())
-        self.send_server_response_to_client(username, room, "{} now has {} energy".format(username,
-                                                                                          state.players.current_player.energy))
+        self.send_to_client(SERVER_RESPONSE, username, room, "{} now has {} energy".format(username,
+                                                                                           state.players.current_player.energy))
 
         cur_player = state.players.current_player
         print("Current player now has {} energy, {} health, and {} victory points".format(cur_player.energy,
@@ -225,58 +195,37 @@ class GameConsumer(WebsocketConsumer):
                                                                                           cur_player.victory_points))
 
         player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_player_status_to_client(cur_player.username, room, player_summaries)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
 
         next_player: Player = state.get_next_player_turn()
-        print(next_player.username)
 
         state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
 
-        game.board = pickle.dumps(state)
-        game.save()
-
-        # for p in state.players.players:
-        #     print(p.username)
-
-        # print("next player: " + next_player.username)
-        # print(state.players.current_player.username)
+        save_game(game, state)
 
         if next_player is not None:
-            self.send_begin_turn_response_to_client(username, room, next_player.username)
+            self.send_to_client(BEGIN_TURN_RESPONSE, username, room, next_player.username)
         else:
-            self.send_begin_turn_response_to_client(username, room, "None")
+            self.send_to_client(BEGIN_TURN_RESPONSE, username, room, "None")
 
-        self.send_rolls_to_client(next_player.username, room, rolled_dice_ui_message)
+        self.send_to_client(DICE_ROLLS_RESPONSE, next_player.username, room, rolled_dice_ui_message)
 
     def gamelog_send_handler(self, data):
-        username = data['user']
-        room = data['room']
+        username, room, game, state = reconstruct_game(data)
 
-        # [['text entered by user']
         mud_gamelog_input = data['payload']
 
-        print("gamelog_send_handler")
-
-        # TO DO:
-        # parse mud_gamelog_input
-        # apply input effects to game state
-
-        self.send_server_response_to_client(username, room, mud_gamelog_input)
-
-    def roll_dice_handler(self, data):
-        pass
+        self.send_to_client(SERVER_RESPONSE, username, room, mud_gamelog_input)
 
     def card_store_request_handler(self, data):
-        username = data['user']
-        room = data['room']
-        game = GameState.objects.get(room_name=room)
-        state: BoardGame = pickle.loads(game.board)
+
+        username, room, game, state = reconstruct_game(data)
         selected_cards_ui_message = state.deck_handler.json_store()
 
-        self.send_cards_to_client(username, room, selected_cards_ui_message)
+        self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
 
     commands = {
         'init_user_request': init_chat_handler,

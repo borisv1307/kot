@@ -12,4 +12,4 @@ def test_energize_costs_8_energy():
 
 
 def test_type_is_discard():
-    assert Energize().type == "Discard"
+    assert Energize().card_type == "Discard"

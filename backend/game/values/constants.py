@@ -22,6 +22,7 @@ INSUFFICIENT_FUNDS_TO_SWEEP_MSG = "Insufficient energy to sweep the card store"
 # keys
 CARD_NAME_KEY = "name"
 CARD_COST_KEY = "cost"
+CARD_TYPE_KEY = "type"
 CARD_EFFECT_KEY = "effect"
 CARD_FOOTNOTE_KEY = "footnote"
 CARD_TYPE_KEY = "type"

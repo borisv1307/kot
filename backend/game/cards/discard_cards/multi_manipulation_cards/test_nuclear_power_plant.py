@@ -18,4 +18,4 @@ def test_nuclear_power_costs_6_energy():
 
 
 def test_type_is_discard():
-    assert NuclearPowerPlant().type == "Discard"
+    assert NuclearPowerPlant().card_type == "Discard"
