@@ -182,18 +182,6 @@ class GameConsumer(WebsocketConsumer):
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
         username, room, game, state = reconstruct_game(data)
-
-        # TODO move to somewhere else
-        dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
-                        state.players.get_all_alive_players_minus_current_player())
-        self.send_to_client(SERVER_RESPONSE, username, room, "{} now has {} energy".format(username,
-                                                                                           state.players.current_player.energy))
-
-        cur_player = state.players.current_player
-        print("Current player now has {} energy, {} health, and {} victory points".format(cur_player.energy,
-                                                                                          cur_player.current_health,
-                                                                                          cur_player.victory_points))
-
         player_summaries = player_status_summary_to_JSON(state.players)
         self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
 
@@ -227,12 +215,29 @@ class GameConsumer(WebsocketConsumer):
 
         self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
 
+    def yield_tokyo_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        print("{} wants to yield tokyo".format(username))
+
+    def resolve_dice_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        
+        dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
+                        state.players.get_all_alive_players_minus_current_player())
+
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+
+        save_game(game, state)
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
         'selected_dice_request': selected_dice_handler,
         # 'roll_dice_request': roll_dice_handler,
         'return_dice_state_request': return_dice_state_handler,
+        'resolve_dice_request': resolve_dice_handler,
         'end_turn_request': end_turn_handler,
-        'card_store_request': card_store_request_handler
+        'card_store_request': card_store_request_handler,
+        'yield_tokyo_request': yield_tokyo_request_handler
     }
