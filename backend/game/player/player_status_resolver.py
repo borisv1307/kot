@@ -1,4 +1,7 @@
 import json
+from typing import List
+
+from game.cards.card import Card
 
 
 def generate_player_status_summary(player_queue):
@@ -16,3 +19,10 @@ def generate_player_status_summary(player_queue):
 def player_status_summary_to_JSON(player_queue):
     summary: [] = generate_player_status_summary(player_queue)
     return json.dumps(summary)
+
+
+def json_players_hand(cards: List[Card] = []):
+    json_data = []
+    for card in cards:
+        json_data.append(card.to_dict())
+    return json.dumps(json_data)

@@ -102,7 +102,7 @@ class CardStore extends React.Component {
         </container>
       );
     } else {
-      return <div>Waiting on Players</div>
+      return <div></div>
     }
   }
 }

@@ -4,6 +4,9 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
+from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
+from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
+from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
@@ -43,9 +46,6 @@ def create_send_response_to_client(command, username, room, payload):
 
 
 class GameConsumer(WebsocketConsumer):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'kot_%s' % self.room_name
@@ -132,6 +132,11 @@ class GameConsumer(WebsocketConsumer):
 
         player: Player = Player(username)
         if player not in state.players.players:
+            # free cards to demonstrate inventory
+
+            player.add_card(EnergyHoarder())
+            player.add_card(SolarPowered())
+            player.add_card(EvenBigger())
             state.add_player(player)
 
         # hack to start game after 2 players join
@@ -221,7 +226,6 @@ class GameConsumer(WebsocketConsumer):
         selected_cards_ui_message = state.deck_handler.json_store()
 
         self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
-
 
     commands = {
         'init_user_request': init_chat_handler,

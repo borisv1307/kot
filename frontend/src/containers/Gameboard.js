@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import "./Gameboard.css";
 
-
-import GameConsole from "../components/GameConsole/GameConsole"
+import GameConsole from "../components/GameConsole/GameConsole";
 import DiceRoller from "./../components/Dice/DiceRoller";
-import PlayerValues from "./../components/PlayerValues/PlayerValues";
 import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
 
@@ -39,8 +37,8 @@ export default class GameboardLayout extends Component {
           <div className="col">
             <CardStore
               currentUser={this.state.username}
-              currentRoom={this.state.gameRoom} />
-
+              currentRoom={this.state.gameRoom}
+            />
           </div>
         </div>
         <div className="container">
@@ -63,7 +61,11 @@ export default class GameboardLayout extends Component {
                   />
                 </div>
                 <div className="col-sm">
-                  <p>Chatroom Placeholder</p>
+                  <PlayerValuesDisplay
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                    displayOnlySelf={true}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -71,6 +73,7 @@ export default class GameboardLayout extends Component {
                   <PlayerValuesDisplay
                     currentUser={this.state.username}
                     currentRoom={this.state.gameRoom}
+                    displayOnlySelf={false}
                   />
                 </div>
               </div>
@@ -78,6 +81,9 @@ export default class GameboardLayout extends Component {
           ) : (
             <p>Please login</p>
           )}
+        </div>
+        <div className="col">
+          <a href="https://icons8.com/">Images Provided by icons8.com</a>
         </div>
       </div>
     );

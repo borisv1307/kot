@@ -9,8 +9,13 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
     Room_1234
   </h4>
   <div>
-    <div>
-      <CardStore />
+    <div
+      className="col"
+    >
+      <CardStore
+        currentRoom="Room_1234"
+        currentUser="Guest_1234"
+      />
     </div>
   </div>
   <div
@@ -40,9 +45,11 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
         <div
           className="col-sm"
         >
-          <p>
-            Chatroom Placeholder
-          </p>
+          <PlayerValueDisplay
+            currentRoom="Room_1234"
+            currentUser="Guest_1234"
+            displayOnlySelf={true}
+          />
         </div>
       </div>
       <div
@@ -54,10 +61,20 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
           <PlayerValueDisplay
             currentRoom="Room_1234"
             currentUser="Guest_1234"
+            displayOnlySelf={false}
           />
         </div>
       </div>
     </div>
+  </div>
+  <div
+    className="col"
+  >
+    <a
+      href="https://icons8.com/"
+    >
+      Images Provided by icons8.com
+    </a>
   </div>
 </div>
 `;
