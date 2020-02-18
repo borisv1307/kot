@@ -131,7 +131,7 @@ class GameConsumer(WebsocketConsumer):
             state = pickle.loads(game.board)
 
         player: Player = Player(username)
-        if player not in state.players.players:
+        if player not in state.players.players and not state.is_game_active():
             # free cards to demonstrate inventory
 
             player.add_card(EnergyHoarder())
@@ -222,13 +222,8 @@ class GameConsumer(WebsocketConsumer):
             state.yield_tokyo_to_current_player(player)
             self.send_to_client(SERVER_RESPONSE, username, room,
                                 "{} yields Tokyo to {}!".format(username, state.players.current_player.username))
-            for m_player in state.players.get_alive_players():
-                if m_player.allowed_to_yield:
-                    print("{} started allowed".format(m_player.username))
+
             state.players.reset_allowed_to_yield()
-            for m_player in state.players.get_alive_players():
-                if m_player.allowed_to_yield:
-                    print("{} ended allowed".format(m_player.username))
 
             player_summaries = player_status_summary_to_JSON(state.players)
             self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)

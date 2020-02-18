@@ -29,5 +29,5 @@ def attack_players(attacking_player, attackable_players, attack_value=1):
         attacked_player.update_health_by(attack_value * -1)
         if not attacked_player.is_alive:
             take_tokyo_on_kill(attacking_player, attacked_player)
-        elif attacked_player.is_in_tokyo:
+        elif attacked_player.is_in_tokyo():
             attacked_player.allowed_to_yield = True

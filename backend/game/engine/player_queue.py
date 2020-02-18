@@ -32,7 +32,6 @@ class GamePlayers:
 
     def reset_allowed_to_yield(self):
         for player in self.players:
-            print("setting {} allowed to yield to false".format(player.username))
             player.allowed_to_yield = False
 
     def get_next_player(self):
