@@ -89,13 +89,14 @@ class CardStore extends React.Component {
                         <Card.Text>Type: {entry.type}</Card.Text>
                         <Card.Text>Effect: {entry.effect}</Card.Text>
                         <Card.Text>{entry.footnote}</Card.Text>
+                        <Button className="btn btn-secondary">Buy Card</Button>
                       </Card.Body>
                     </Card>
                   ))
                 }
               </div>
-              <Button onClick={this.cardStoreRequest} className="btn btn-secondary">Card Store</Button>
-              &nbsp;&nbsp;&nbsp;
+              {/* <Button onClick={this.cardStoreRequest} className="btn btn-secondary">Card Store</Button>
+              &nbsp;&nbsp;&nbsp; */}
                     <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
             </div>
           </div>
