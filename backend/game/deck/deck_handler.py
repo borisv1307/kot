@@ -85,9 +85,11 @@ class DeckHandler:
 
     def sweep_store(self, player_invoking_sweep: Player):
         if player_invoking_sweep.energy < constants.SWEEP_CARD_STORE_COST:
-            raise Exception(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
+            print(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
+            return False
         else:
             player_invoking_sweep.update_energy_by(-constants.SWEEP_CARD_STORE_COST)
             for _ in range(3):
                 self.discard(self.store.pop())
             self.__fill_card_store()
+            return True

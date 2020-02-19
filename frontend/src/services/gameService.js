@@ -106,7 +106,7 @@ class GameService {
   waitForSocketConnection(callback) {
     const socket = this.socketRef;
     const recursion = this.waitForSocketConnection;
-    setTimeout(function() {
+    setTimeout(function () {
       if (socket.readyState === 1) {
         console.log("Connection is made");
         if (callback != null) {

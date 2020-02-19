@@ -42,12 +42,12 @@ class CardStore extends React.Component {
 
   async cardStoreRequest(/*e*/) {
     try {
-        const messageObject = {
-          user: this.state.username,
-          room: this.state.gameRoom,
-          data: ""
-        };
-        this.sendCardStoreRequest(messageObject);
+      const messageObject = {
+        user: this.state.username,
+        room: this.state.gameRoom,
+        data: ""
+      };
+      this.sendCardStoreRequest(messageObject);
     } catch (exception) {
       console.log(exception);
     }
@@ -70,7 +70,7 @@ class CardStore extends React.Component {
     let card_content = [];
     try {
       card_content = JSON.parse(content);
-    } catch (e) {}
+    } catch (e) { }
     this.setState({ selectedCard: card_content });
   }
 
