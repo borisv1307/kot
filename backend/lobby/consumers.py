@@ -227,6 +227,10 @@ class GameConsumer(WebsocketConsumer):
 
         self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
 
+    def buy_card_t=request_handler(self, data) {
+        #To add backend handling
+    }
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
@@ -234,5 +238,6 @@ class GameConsumer(WebsocketConsumer):
         # 'roll_dice_request': roll_dice_handler,
         'return_dice_state_request': return_dice_state_handler,
         'end_turn_request': end_turn_handler,
-        'card_store_request': card_store_request_handler
+        'card_store_request': card_store_request_handler,
+        'buy_card_request': buy_card_t=request_handler
     }
