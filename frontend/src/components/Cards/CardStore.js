@@ -23,6 +23,7 @@ class CardStore extends React.Component {
     };
 
     this.cardStoreRequest = this.cardStoreRequest.bind(this);
+    this.sweepStore = this.sweepStore.bind(this);
     GameInstance.addCardCallback(this.cardUpdateHandler.bind(this));
   }
 
@@ -73,6 +74,15 @@ class CardStore extends React.Component {
     this.setState({ selectedCard: card_content });
   }
 
+  sweepStore() {
+    GameInstance.sendMessage({
+      command: "sweep_card_store_request",
+      user: this.state.username,
+      room: this.state.gameRoom,
+      payload: ""
+    });
+  }
+
   render() {
     if (this.state.selectedCard) {
       return (
@@ -96,7 +106,7 @@ class CardStore extends React.Component {
               </div>
               <Button onClick={this.cardStoreRequest} className="btn btn-secondary">Card Store</Button>
               &nbsp;&nbsp;&nbsp;
-                    <Button onClick={this.shuffleCards} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button>
+                    <Button onClick={this.sweepStore} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button>
             </div>
           </div>
         </container>
