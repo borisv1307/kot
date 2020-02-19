@@ -13,13 +13,16 @@ from game.cards.discard_cards.multi_manipulation_cards.nuclear_power_plant impor
 from game.cards.discard_cards.multi_manipulation_cards.tanks import Tanks
 from game.cards.discard_cards.multi_manipulation_cards.vast_storm import VastStorm
 
-
 # Victory Point Manipulation Cards
 from game.cards.discard_cards.victory_point_manipulation_cards.apartment_building import ApartmentBuilding
 from game.cards.discard_cards.victory_point_manipulation_cards.commuter_train import CommuterTrain
 from game.cards.discard_cards.victory_point_manipulation_cards.corner_store import CornerStore
 from game.cards.discard_cards.victory_point_manipulation_cards.evacuation_orders import EvacuationOrders
 from game.cards.discard_cards.victory_point_manipulation_cards.skyscraper import Skyscraper
+from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
+from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
+from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
+from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
 
 
 def get_all_cards():
@@ -45,7 +48,14 @@ def get_all_cards():
     discard_cards.extend(multi_manipulation_cards)
     discard_cards.extend(victory_point_manipulation_cards)
 
+    keep_cards = []
+
+    keep_energy_manipulation_cards = [EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
+
+    keep_cards.extend(keep_energy_manipulation_cards)
+
     full_list_of_cards = []
     full_list_of_cards.extend(discard_cards)
+    full_list_of_cards.extend(keep_cards)
 
     return full_list_of_cards
