@@ -3,10 +3,10 @@ import pickle
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
+from game.irepository.irepository_game import IRepositoryGame
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
@@ -96,6 +96,12 @@ class GameConsumer(WebsocketConsumer):
 
     def get_or_create_game(self, username, room):
         game, created = GameState.objects.get_or_create(room_name=room)
+
+        if not IRepositoryGame.get_game_by_room(room):
+            game_store = IRepositoryGame.save_game(room)
+            print("Room created with id" + game_store)
+        else:
+            error = 'Room already exist, Unable to create Game with room: ' + room
 
         if not game:
             error = 'Unable to get or create Game with room: ' + room

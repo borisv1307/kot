@@ -224,6 +224,7 @@ dist/
 *.egg-info
 issue/
 env/
+venv/
 .env/
 3rdparty/
 .tox

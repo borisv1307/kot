@@ -1,4 +1,5 @@
 import datetime
+
 from game.models import Game
 
 
@@ -21,6 +22,14 @@ class IRepositoryGame:
 
     def get_game_by_id(self, game_id):
         self.game = Game.objects.get(id=game_id)
+        return self.game
+
+    def get_game_by_status(self, status_type):
+        self.game = Game.objects.filter(game_status=status_type)
+        return self.game
+
+    def get_game_by_room(self, room):
+        self.game = Game.objects.filter(room_name=room)
         return self.game
 
     def get_all_games(self):
