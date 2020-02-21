@@ -4,6 +4,9 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
+from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
+from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
+from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
@@ -237,6 +240,24 @@ class GameConsumer(WebsocketConsumer):
 
         save_game(game, state)
 
+    def card_store_sweep_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        if state.players.current_player.username == username:
+            successfully_swept_cardstore = state.deck_handler.sweep_store(state.players.current_player)
+            if not successfully_swept_cardstore:
+                message = "{} does not have enough funds to sweep the card store!".format(username)
+                self.send_to_client(SERVER_RESPONSE, username, room, message)
+        else:
+            print("{} tried to sweep out of turn!".format(username))
+
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+
+        selected_cards_ui_message = state.deck_handler.json_store()
+        self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
+
+        save_game(game, state)
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
@@ -245,5 +266,6 @@ class GameConsumer(WebsocketConsumer):
         'return_dice_state_request': return_dice_state_handler,
         'end_turn_request': end_turn_handler,
         'card_store_request': card_store_request_handler,
+        'sweep_card_store_request': card_store_sweep_request_handler,
         'buy_card_request': buy_card_request_handler
     }
