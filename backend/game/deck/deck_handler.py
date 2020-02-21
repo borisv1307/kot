@@ -3,6 +3,8 @@ from typing import List
 
 import game.values.constants as constants
 from game.cards.card import Card
+from game.cards.discard_card import DiscardCard
+from game.cards.keep_card import KeepCard
 from game.deck.deck import Deck
 from game.player.player import Player
 
@@ -72,7 +74,14 @@ class DeckHandler:
             raise Exception(constants.INSUFFICIENT_FUNDS_MSG)
         else:
             purchasing_player.update_energy_by(-card_to_buy.cost)
-            purchasing_player.add_card(card_to_buy)
+            if isinstance(card_to_buy, DiscardCard):
+                print("{} is a discard card".format(card_to_buy.name))
+                self.discard(card_to_buy)
+            elif isinstance(card_to_buy, KeepCard):
+                purchasing_player.add_card(card_to_buy)
+            else:
+                print("UNEXPECTED CARD TYPE!!!")
+                raise Exception
             self.__card_store.remove(card_to_buy)
             self.__fill_card_store()
         return card_to_buy
@@ -85,11 +94,9 @@ class DeckHandler:
 
     def sweep_store(self, player_invoking_sweep: Player):
         if player_invoking_sweep.energy < constants.SWEEP_CARD_STORE_COST:
-            print(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
-            return False
+            raise Exception(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
         else:
             player_invoking_sweep.update_energy_by(-constants.SWEEP_CARD_STORE_COST)
             for _ in range(3):
                 self.discard(self.store.pop())
             self.__fill_card_store()
-            return True
