@@ -4,7 +4,6 @@ import './CardStore.css'
 import Button from 'react-bootstrap/Button';
 
 import GameInstance from "../../services/gameService";
-import MT_RESPONSE_CARD_STORE_RESPONSE from "../../services/config";
 
 
 class CardStore extends React.Component {
@@ -132,8 +131,6 @@ class CardStore extends React.Component {
                   ))
                 }
               </div>
-              <Button onClick={this.cardStoreRequest} className="btn btn-secondary">Card Store</Button>
-              &nbsp;&nbsp;&nbsp;
                     <Button onClick={this.sweepStore} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button>
             </div>
           </div>
