@@ -13,4 +13,4 @@ def test_fire_blast_costs_3_energy():
 
 
 def test_type_is_discard():
-    assert FireBlast().type == "Discard"
+    assert FireBlast().card_type == "Discard"

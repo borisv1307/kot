@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify PlayerHandDisplay layout template Verify parameter provided PlayeValues are rendered correctly 1`] = `
+<div>
+  <img
+    alt=""
+    className="img-hand"
+    src="icons8-red-card-80.png"
+  />
+  <container
+    className="player_hand_details"
+  >
+    <PlayerCard
+      cost={1}
+      effect={0}
+      footnote={2}
+      key="0"
+      name="howdy"
+    />
+    <PlayerCard
+      footnote={4}
+      key="1"
+      name="ya"
+    />
+    <PlayerCard
+      cost={10}
+      footnote={6}
+      key="2"
+      name="all"
+    />
+  </container>
+</div>
+`;

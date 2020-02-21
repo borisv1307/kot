@@ -3,50 +3,64 @@
 exports[`Verify player value template Player values should be rendered correctly 1`] = `
 <div>
   <div
-    className="player-border"
+    class="container"
   >
-    <h2>
-      Player 
-    </h2>
     <div
-      className="player-values"
+      class="row"
     >
-      <p>
-        Victory Points:
-        <span
-          className="badge badge-light"
-        />
-        <img
-          alt=""
-          src="Star.png"
-        />
-      </p>
-      <p>
-        Health:
-        <span
-          className="badge badge-light"
-        />
-        <img
-          alt=""
-          src="Heart.gif"
-        />
-      </p>
-      <p>
-        Energy:
-        <span
-          className="badge badge-light"
-        />
-        <img
-          alt=""
-          src="Energy.png"
-        />
-      </p>
-      <p>
-        In/Out of Tokyo:
-        <span
-          className="badge badge-warning"
-        />
-      </p>
+      <div
+        class="col-sm player-border"
+      >
+        <h2 />
+        <p>
+          them
+        </p>
+        <div
+          className="player-values"
+        >
+          <p>
+            Victory Points:
+            <span
+              className="badge badge-light"
+            />
+            <img
+              alt=""
+              src="Star.png"
+            />
+          </p>
+          <p>
+            Health:
+            <span
+              className="badge badge-light"
+            />
+            <img
+              alt=""
+              src="Heart.gif"
+            />
+          </p>
+          <p>
+            Energy:
+            <span
+              className="badge badge-light"
+            />
+            <img
+              alt=""
+              src="Energy.png"
+            />
+          </p>
+          <p>
+            In/Out of Tokyo:
+            <span
+              className="badge badge-warning"
+            />
+          </p>
+        </div>
+      </div>
+      <div
+        class="col-sm"
+      >
+        <PlayerHandDisplay />
+      </div>
     </div>
   </div>
 </div>

@@ -96,13 +96,13 @@ class CardStore extends React.Component {
               </div>
               <Button onClick={this.cardStoreRequest} className="btn btn-secondary">Card Store</Button>
               &nbsp;&nbsp;&nbsp;
-                    <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
+                    <Button onClick={this.shuffleCards} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button>
             </div>
           </div>
         </container>
       );
     } else {
-      return <div>Waiting on Players</div>
+      return <div></div>
     }
   }
 }

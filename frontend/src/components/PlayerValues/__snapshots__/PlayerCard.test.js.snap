@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify card detail template Card details should be rendered correctly 1`] = `
+<div>
+  <div
+    className="card-border"
+  >
+    <p
+      className="card-instances"
+    >
+      <br />
+      <span>
+        <img
+          alt=""
+          className="img-energy"
+          src="Energy.png"
+        />
+      </span>
+      <span>
+        <img
+          alt=""
+          className="img-info"
+          src="icons8-info-128.png"
+        />
+      </span>
+      <span
+        data-tooltip="None"
+      >
+        <img
+          alt=""
+          className="img-info"
+          src="icons8-footsteps-50.png"
+        />
+      </span>
+    </p>
+  </div>
+</div>
+`;
