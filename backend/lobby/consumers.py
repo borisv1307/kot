@@ -4,9 +4,6 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
-from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
-from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
@@ -134,9 +131,10 @@ class GameConsumer(WebsocketConsumer):
         if player not in state.players.players:
             # free cards to demonstrate inventory
 
-            player.add_card(EnergyHoarder())
-            player.add_card(SolarPowered())
-            player.add_card(EvenBigger())
+            # player.add_card(EnergyHoarder())
+            # player.add_card(SolarPowered())
+            # player.add_card(EvenBigger())
+            player.update_energy_by(1000)
             state.add_player(player)
 
         # hack to start game after 2 players join
@@ -227,6 +225,18 @@ class GameConsumer(WebsocketConsumer):
 
         self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
 
+    def buy_card_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        index_to_buy = data['payload']
+        state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player)
+        current_card_store = state.deck_handler.json_store()
+        self.send_to_client(CARD_STORE_RESPONSE, username, room, current_card_store)
+
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+
+        save_game(game, state)
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
@@ -234,5 +244,6 @@ class GameConsumer(WebsocketConsumer):
         # 'roll_dice_request': roll_dice_handler,
         'return_dice_state_request': return_dice_state_handler,
         'end_turn_request': end_turn_handler,
-        'card_store_request': card_store_request_handler
+        'card_store_request': card_store_request_handler,
+        'buy_card_request': buy_card_request_handler
     }
