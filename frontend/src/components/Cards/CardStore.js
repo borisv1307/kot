@@ -19,7 +19,8 @@ class CardStore extends React.Component {
       gameRoom: props.currentRoom,
       value: [],
       selectedCard: [],
-      data: props.data
+      data: props.data,
+      allowEndTurn: true
     };
 
     this.cardStoreRequest = this.cardStoreRequest.bind(this);
@@ -38,6 +39,23 @@ class CardStore extends React.Component {
 
   clearSelected(e) {
     this.setState({ value: [] });
+  }
+
+  beginTurnHandler(message) {
+    // const room = message.room;
+    // const user = message.user;
+    const username_whos_turn_it_is = message.content;
+
+    if (
+      username_whos_turn_it_is === undefined ||
+      username_whos_turn_it_is === ""
+    )
+      return;
+
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    this.setState({ allowEndTurn: its_my_turn });
+
   }
 
   async cardStoreRequest(/*e*/) {
@@ -74,6 +92,15 @@ class CardStore extends React.Component {
     this.setState({ selectedCard: card_content });
   }
 
+  buyCard(index) {
+    GameInstance.sendMessage({
+      command: "buy_card_request",
+      user: this.state.username,
+      room: this.state.gameRoom,
+      payload: index
+    });
+  }
+
   sweepStore() {
     GameInstance.sendMessage({
       command: "sweep_card_store_request",
@@ -99,6 +126,7 @@ class CardStore extends React.Component {
                         <Card.Text>Type: {entry.type}</Card.Text>
                         <Card.Text>Effect: {entry.effect}</Card.Text>
                         <Card.Text>{entry.footnote}</Card.Text>
+                        <Button onClick={this.buyCard.bind(this, index)} className="btn btn-secondary">Buy Card</Button>
                       </Card.Body>
                     </Card>
                   ))
