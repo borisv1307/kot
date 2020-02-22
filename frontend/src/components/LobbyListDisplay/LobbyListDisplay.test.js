@@ -6,16 +6,16 @@ import LobbyListDisplay from "./LobbyListDisplay";
 describe("Verify LobbyListDisplay layout template", () => {
   const test_player_details = [
     {
-      users: ["edward", "marv", "bill", "gus"],
-      room_name: "room 1"
+      room_name: "room 1",
+      users: ["edward", "marv", "bill", "gus"]
     },
     {
-      users: ["edward", "marv", "bill", "gus"],
-      room_name: "room 2"
+      room_name: "room 2",
+      users: ["edward", "marv", "bill", "gus"]
     },
     {
-      users: ["edward", "marv", "bill", "gus"],
-      room_name: "room 3"
+      room_name: "room 3",
+      users: ["edward", "marv", "bill", "gus"]
     }
   ];
 
@@ -23,6 +23,7 @@ describe("Verify LobbyListDisplay layout template", () => {
   const test_roomname = "test_room";
 
   const expected_state_values = {
+    redirect: false,
     username: test_username,
     gameRoom: test_roomname,
     data: test_player_details
@@ -50,7 +51,32 @@ describe("Verify LobbyListDisplay layout template", () => {
     expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
   });
 
-  it("playerUpdateHandler mehthod updates state as expected", () => {
+  it("gameListResponseHandler method updates state as expected", () => {
+    const test_player_callback_details = {
+      Room_8684: [
+        {
+          username: "Guest_1234",
+          current_health: 10,
+          location: "Out",
+          is_alive: true,
+          victory_points: 0,
+          energy: 0,
+          cards: []
+        }
+      ],
+      Room_1234: [
+        {
+          username: "Guest_1234",
+          current_health: 10,
+          location: "Out",
+          is_alive: true,
+          victory_points: 0,
+          energy: 0,
+          cards: []
+        }
+      ]
+    };
+
     const wrapper = shallow(
       <LobbyListDisplay
         currentUser={test_username}
@@ -60,23 +86,24 @@ describe("Verify LobbyListDisplay layout template", () => {
     );
 
     const expected_state_values_with_no_player_details = {
+      redirect: false,
       username: test_username,
       gameRoom: test_roomname,
       data: []
     };
 
-    expect(wrapper.state()).toEqual({
-      ...expected_state_values_with_no_player_details
-    });
-
     const expected_backend_callback_message = {
       user: test_username,
       room: test_roomname,
-      content: JSON.stringify(test_player_details)
+      content: JSON.stringify(test_player_callback_details)
     };
 
-    wrapper.instance().playerUpdateHandler(expected_backend_callback_message);
+    wrapper
+      .instance()
+      .gameListResponseHandler(expected_backend_callback_message);
 
-    expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
+    expect(wrapper.state()).toEqual({
+      ...expected_state_values_with_no_player_details
+    });
   });
 });

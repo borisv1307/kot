@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import "./Lobby.css";
 import config from "../services/config";
 import GameInstance from "./../services/gameService";
-import LobbyListDisplay from "../components/LobbyList/LobbyListDisplay";
+import LobbyListDisplay from "../components/LobbyListDisplay/LobbyListDisplay";
 
 export default class LobbyLayout extends Component {
   constructor(props) {
@@ -88,7 +88,7 @@ export default class LobbyLayout extends Component {
               {this.renderRedirect()}
               <button
                 id={this.state.gameRoom}
-                onClick={this.setRedirect} // (this.state.gameRoom)
+                onClick={this.setRedirect}
                 className="btn btn-secondary"
                 type="button"
               >
@@ -103,11 +103,6 @@ export default class LobbyLayout extends Component {
               currentUser={this.state.username}
               currentRoom={this.state.gameRoom}
               data={[]}
-              //   setRedirect={dest_room => {
-              //     //if (dest_room) {
-              //     this.setRedirect(dest_room);
-              //     //}
-              //   }}
             />
           </div>
         </div>

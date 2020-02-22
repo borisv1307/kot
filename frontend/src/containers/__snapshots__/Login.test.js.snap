@@ -32,7 +32,7 @@ exports[`Verify lobby template Lobby should render correctly 1`] = `
           required={true}
           size="40"
           type="text"
-          value="Room_1234"
+          value=""
         />
       </label>
       <a
@@ -41,59 +41,25 @@ exports[`Verify lobby template Lobby should render correctly 1`] = `
       >
         <button
           className="btn btn-secondary"
+          id=""
           onClick={[Function]}
           type="button"
         >
           Hi 
           Guest_1234
-          , please click to enter room 
-          Room_1234
+          , please click to enter room
+           
         </button>
       </a>
     </div>
     <div
       className="col-sm p-4"
     >
-      <Bootstrap(Table)
-        bordered={true}
-        hover={true}
-        striped={true}
-      >
-        <thead>
-          <tr>
-            <th>
-              User Name
-            </th>
-            <th>
-              Room ID
-            </th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              Guest_1234
-            </td>
-            <td>
-              Room_1234
-            </td>
-            <td>
-              <Button
-                active={false}
-                className="btn btn-secondary"
-                disabled={false}
-                onClick={[Function]}
-                type="button"
-                variant="primary"
-              >
-                Join Room 
-                Room_1234
-              </Button>
-            </td>
-          </tr>
-        </tbody>
-      </Bootstrap(Table)>
+      <LobbyListDisplay
+        currentRoom=""
+        currentUser="Guest_1234"
+        data={Array []}
+      />
     </div>
   </div>
 </div>

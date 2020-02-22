@@ -12,12 +12,12 @@ class LobbyListDisplay extends React.Component {
       redirect: false,
       username: props.currentUser,
       gameRoom: props.currentRoom,
-      data: []
+      data: props.data
     };
 
-    if (props.data) {
-      this.setState({ data: props.data });
-    }
+    // if (props.data) {
+    //   this.setState({ data: props.data });
+    // }
 
     GameInstance.addGameListResponseCallback(
       this.gameListResponseHandler.bind(this)
@@ -126,7 +126,7 @@ class LobbyListDisplay extends React.Component {
               </thead>
               <tbody>
                 {this.state.data.map((entry, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td>{entry.users}</td>
                     <td>{entry.room_name}</td>
                     <td>

@@ -14,7 +14,7 @@ class GameConsole extends React.Component {
       gameRoom: props.currentRoom,
       log: [], // this holds the name of each list
       cmd: props.cmd,
-      hideMudUi: true
+      hideMudUi: false
     };
 
     this.waitForSocketConnection(() => {

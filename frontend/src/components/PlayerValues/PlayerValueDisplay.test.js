@@ -59,7 +59,7 @@ describe("Verify PlayerValueDisplay layout template", () => {
     expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
   });
 
-  it("playerUpdateHandler mehthod updates state as expected", () => {
+  it("playerUpdateHandler method updates state as expected", () => {
     const wrapper = shallow(
       <PlayerValueDisplay
         currentUser={test_username}
