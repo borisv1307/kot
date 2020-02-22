@@ -6,6 +6,7 @@ from game.cards.keep_cards.victory_point_manipulation_cards.urbavore import Urba
 from game.deck.deck_handler import DeckHandler
 from game.dice.dice_handler import DiceHandler
 from game.engine.player_queue import GamePlayers
+from game.turn_actions.player_movement import yield_tokyo
 from game.values.status import Status
 
 
@@ -72,3 +73,6 @@ class BoardGame:
         if self.is_game_active():
             self.players.get_next_player()
             return self.players.current_player
+
+    def yield_tokyo_to_current_player(self, yielding_player):
+        yield_tokyo(yielding_player, self.players.current_player)

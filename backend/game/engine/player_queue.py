@@ -25,7 +25,17 @@ class GamePlayers:
             self.get_next_player()
         return self.current_player
 
+    def get_player_by_username_from_alive(self, username):
+        for player in self.get_alive_players():
+            if player.username == username:
+                return player
+
+    def reset_allowed_to_yield(self):
+        for player in self.players:
+            player.allowed_to_yield = False
+
     def get_next_player(self):
+        self.reset_allowed_to_yield()
         self.current_player = self._cycle_next_alive_player()
 
     def get_alive_players(self):

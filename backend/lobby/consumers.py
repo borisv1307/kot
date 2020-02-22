@@ -105,13 +105,13 @@ class GameConsumer(WebsocketConsumer):
             state = pickle.loads(game.board)
 
         player: Player = Player(username)
-        if player not in state.players.players:
+        if player not in state.players.players and not state.is_game_active():
             # free cards to demonstrate inventory
 
             # player.add_card(EnergyHoarder())
             # player.add_card(SolarPowered())
             # player.add_card(EvenBigger())
-            player.update_energy_by(1000)
+            # player.update_energy_by(1000)
             state.add_player(player)
 
         # hack to start game after 2 players join
@@ -157,18 +157,6 @@ class GameConsumer(WebsocketConsumer):
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
         username, room, game, state = reconstruct_game(data)
-
-        # TODO move to somewhere else
-        dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
-                        state.players.get_all_alive_players_minus_current_player())
-        self.send_to_client(SERVER_RESPONSE, username, room, "{} now has {} energy".format(username,
-                                                                                           state.players.current_player.energy))
-
-        cur_player = state.players.current_player
-        print("Current player now has {} energy, {} health, and {} victory points".format(cur_player.energy,
-                                                                                          cur_player.current_health,
-                                                                                          cur_player.victory_points))
-
         player_summaries = player_status_summary_to_JSON(state.players)
         self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
 
@@ -201,6 +189,33 @@ class GameConsumer(WebsocketConsumer):
         selected_cards_ui_message = state.deck_handler.json_store()
 
         self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
+
+    def yield_tokyo_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        player = state.players.get_player_by_username_from_alive(username)
+        if player.allowed_to_yield:
+            state.yield_tokyo_to_current_player(player)
+            self.send_to_client(SERVER_RESPONSE, username, room,
+                                "{} yields Tokyo to {}!".format(username, state.players.current_player.username))
+
+            state.players.reset_allowed_to_yield()
+
+            player_summaries = player_status_summary_to_JSON(state.players)
+            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+        else:
+            print("{} can't yield tokyo!".format(username))
+        save_game(game, state)
+
+    def resolve_dice_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+
+        dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
+                        state.players.get_all_alive_players_minus_current_player())
+
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+
+        save_game(game, state)
 
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -238,8 +253,10 @@ class GameConsumer(WebsocketConsumer):
         'selected_dice_request': selected_dice_handler,
         # 'roll_dice_request': roll_dice_handler,
         'return_dice_state_request': return_dice_state_handler,
+        'resolve_dice_request': resolve_dice_handler,
         'end_turn_request': end_turn_handler,
         'card_store_request': card_store_request_handler,
+        'yield_tokyo_request': yield_tokyo_request_handler,
         'sweep_card_store_request': card_store_sweep_request_handler,
         'buy_card_request': buy_card_request_handler
     }
