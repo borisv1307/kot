@@ -4,7 +4,6 @@ import './CardStore.css'
 import Button from 'react-bootstrap/Button';
 
 import GameInstance from "../../services/gameService";
-import MT_RESPONSE_CARD_STORE_RESPONSE from "../../services/config";
 
 
 class CardStore extends React.Component {

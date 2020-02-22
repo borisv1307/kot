@@ -1,5 +1,3 @@
-import config from "./config";
-
 // we'll omit error handling and complex stuff for simplicity
 const EventEmitter = {
   events: {}, // dictionary with our events
@@ -37,8 +35,8 @@ class GameService {
     this.socketRef = null;
   }
 
-  connect(roomName) {
-    const path = config.GAME_SOCKET_API_PATH + roomName + "/";
+  connect(roomName, base_path) {
+    const path = base_path + roomName + "/";
     this.socketRef = new WebSocket(path);
 
     this.socketRef.onopen = () => {
@@ -57,7 +55,7 @@ class GameService {
 
     this.socketRef.onclose = e => {
       console.log("Socket OnClosed, Reopening...");
-      this.connect(roomName);
+      this.connect(roomName, base_path);
     };
   }
 
@@ -71,6 +69,10 @@ class GameService {
 
   addCallback(callback_lookup_key, playerValueCallback) {
     EventEmitter.on("player_status_update_response", playerValueCallback);
+  }
+
+  addGameListResponseCallback(gameListResponseCallback) {
+    EventEmitter.on("game_list_response", gameListResponseCallback);
   }
 
   addServerResponseCallback(serverResponseCallback) {
@@ -108,13 +110,13 @@ class GameService {
     const recursion = this.waitForSocketConnection;
     setTimeout(function() {
       if (socket.readyState === 1) {
-        console.log("Connection is made");
+        console.log("Gameroom connection is made");
         if (callback != null) {
           callback();
         }
         return;
       } else {
-        console.log("wait for connection...");
+        console.log("wait for gameroom connection...");
         recursion(callback);
       }
     }, 1); // wait 5 milisecond for the connection...
