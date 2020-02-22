@@ -4,7 +4,6 @@ import './CardStore.css'
 import Button from 'react-bootstrap/Button';
 
 import GameInstance from "../../services/gameService";
-import MT_RESPONSE_CARD_STORE_RESPONSE from "../../services/config";
 
 
 class CardStore extends React.Component {
@@ -19,10 +18,12 @@ class CardStore extends React.Component {
       gameRoom: props.currentRoom,
       value: [],
       selectedCard: [],
-      data: props.data
+      data: props.data,
+      allowEndTurn: true
     };
 
     this.cardStoreRequest = this.cardStoreRequest.bind(this);
+    this.sweepStore = this.sweepStore.bind(this);
     GameInstance.addCardCallback(this.cardUpdateHandler.bind(this));
   }
 
@@ -39,14 +40,31 @@ class CardStore extends React.Component {
     this.setState({ value: [] });
   }
 
+  beginTurnHandler(message) {
+    // const room = message.room;
+    // const user = message.user;
+    const username_whos_turn_it_is = message.content;
+
+    if (
+      username_whos_turn_it_is === undefined ||
+      username_whos_turn_it_is === ""
+    )
+      return;
+
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    this.setState({ allowEndTurn: its_my_turn });
+
+  }
+
   async cardStoreRequest(/*e*/) {
     try {
-        const messageObject = {
-          user: this.state.username,
-          room: this.state.gameRoom,
-          data: ""
-        };
-        this.sendCardStoreRequest(messageObject);
+      const messageObject = {
+        user: this.state.username,
+        room: this.state.gameRoom,
+        data: ""
+      };
+      this.sendCardStoreRequest(messageObject);
     } catch (exception) {
       console.log(exception);
     }
@@ -69,8 +87,26 @@ class CardStore extends React.Component {
     let card_content = [];
     try {
       card_content = JSON.parse(content);
-    } catch (e) {}
+    } catch (e) { }
     this.setState({ selectedCard: card_content });
+  }
+
+  buyCard(index) {
+    GameInstance.sendMessage({
+      command: "buy_card_request",
+      user: this.state.username,
+      room: this.state.gameRoom,
+      payload: index
+    });
+  }
+
+  sweepStore() {
+    GameInstance.sendMessage({
+      command: "sweep_card_store_request",
+      user: this.state.username,
+      room: this.state.gameRoom,
+      payload: ""
+    });
   }
 
   render() {
@@ -89,14 +125,13 @@ class CardStore extends React.Component {
                         <Card.Text>Type: {entry.type}</Card.Text>
                         <Card.Text>Effect: {entry.effect}</Card.Text>
                         <Card.Text>{entry.footnote}</Card.Text>
+                        <Button onClick={this.buyCard.bind(this, index)} className="btn btn-secondary">Buy Card</Button>
                       </Card.Body>
                     </Card>
                   ))
                 }
               </div>
-              <Button onClick={this.cardStoreRequest} className="btn btn-secondary">Card Store</Button>
-              &nbsp;&nbsp;&nbsp;
-                    <Button onClick={this.shuffleCards} className="btn btn-secondary">Shuffle Cards{this.state.allowShuffleCards}</Button>
+                    <Button onClick={this.sweepStore} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button>
             </div>
           </div>
         </container>
