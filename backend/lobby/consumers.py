@@ -108,9 +108,10 @@ class GameConsumer(WebsocketConsumer):
         if player not in state.players.players:
             # free cards to demonstrate inventory
 
-            player.add_card(EnergyHoarder())
-            player.add_card(SolarPowered())
-            player.add_card(EvenBigger())
+            # player.add_card(EnergyHoarder())
+            # player.add_card(SolarPowered())
+            # player.add_card(EvenBigger())
+            player.update_energy_by(1000)
             state.add_player(player)
 
         # hack to start game after 2 players join
@@ -201,6 +202,36 @@ class GameConsumer(WebsocketConsumer):
 
         self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
 
+    def buy_card_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        index_to_buy = data['payload']
+        state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player)
+        current_card_store = state.deck_handler.json_store()
+        self.send_to_client(CARD_STORE_RESPONSE, username, room, current_card_store)
+
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+
+        save_game(game, state)
+
+    def card_store_sweep_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        if state.players.current_player.username == username:
+            successfully_swept_cardstore = state.deck_handler.sweep_store(state.players.current_player)
+            if not successfully_swept_cardstore:
+                message = "{} does not have enough funds to sweep the card store!".format(username)
+                self.send_to_client(SERVER_RESPONSE, username, room, message)
+        else:
+            print("{} tried to sweep out of turn!".format(username))
+
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+
+        selected_cards_ui_message = state.deck_handler.json_store()
+        self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
+
+        save_game(game, state)
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
@@ -208,5 +239,7 @@ class GameConsumer(WebsocketConsumer):
         # 'roll_dice_request': roll_dice_handler,
         'return_dice_state_request': return_dice_state_handler,
         'end_turn_request': end_turn_handler,
-        'card_store_request': card_store_request_handler
+        'card_store_request': card_store_request_handler,
+        'sweep_card_store_request': card_store_sweep_request_handler,
+        'buy_card_request': buy_card_request_handler
     }
