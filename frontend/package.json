@@ -3,14 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000",
-  "jest": {
-    "verbose": true,
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/vendor/**"
-    ]
-  },
   "dependencies": {
     "bootstrap": "^4.3.1",
     "enzyme": "^3.10.0",

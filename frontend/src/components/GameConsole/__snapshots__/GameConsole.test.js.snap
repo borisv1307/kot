@@ -1,35 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Verify GameConsole layout template GameConsole should render correctly 1`] = `
-<div
-  className="chat"
->
-  <div
-    className="container message-form"
-  >
-    <form
-      className="submit_game_command"
-      onChange={[Function]}
-      onSubmit={[Function]}
-    >
-      <input
-        id="text_entry"
-        name="text_entry"
-        onChange={[Function]}
-        type="text"
-      />
-    </form>
-    <button
-      className="btn btn-secondary"
-      id="send_button"
-      name="send_button"
-      onClick={[Function]}
-    >
-      Send
-    </button>
-    <GameLog
-      data={Array []}
-    />
-  </div>
-</div>
+<GameLog
+  data={Array []}
+/>
 `;
