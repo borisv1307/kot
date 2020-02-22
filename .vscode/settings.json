@@ -30,5 +30,9 @@
     "[python]": {
         "editor.formatOnSave": true
     },
-    "eslint.enable": false
+    "eslint.enable": false,
+    "jestrunner.jestPath": "${workspaceFolder}/frontend/node_modules/jest/bin/jest.js",
+    "jest.enableInlineErrorMessages": true,
+    "jest.rootPath": "${workspaceFolder}/frontend",
+    "jest.showCoverageOnLoad": true
 }

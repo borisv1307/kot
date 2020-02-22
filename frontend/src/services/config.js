@@ -1,17 +1,17 @@
-const GAME_SOCKET_API_PATH = "ws://localhost:8000/ws/lobby/";
+const GAME_SOCKET_API_PATH = "ws://localhost:8000/ws/game/";
+const LOBBY_SOCKET_API_PATH = "ws://localhost:8000/ws/lobby/";
 
 const MT_RESPONSE_COMMAND_SERVER_RESPONSE = "server_response";
 const MT_RESPONSE_DICE_ROLLS_RESPONSE = "dice_rolls_response";
 const MT_RESPONSE_BEGIN_TURN_RESPONSE = "begin_turn_response";
 const MT_RESPONSE_PLAYERS_STATUS_UPDATE = "player_status_update_response";
-const MT_RESPONSE_CARD_STORE_RESPONSE = "card_store_response";
 
 export default {
   MT_RESPONSE_COMMAND_SERVER_RESPONSE,
   MT_RESPONSE_DICE_ROLLS_RESPONSE,
   MT_RESPONSE_BEGIN_TURN_RESPONSE,
   MT_RESPONSE_PLAYERS_STATUS_UPDATE,
-  MT_RESPONSE_CARD_STORE_RESPONSE,
 
-  GAME_SOCKET_API_PATH
+  GAME_SOCKET_API_PATH,
+  LOBBY_SOCKET_API_PATH
 };

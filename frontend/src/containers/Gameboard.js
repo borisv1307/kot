@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Gameboard.css";
+import config from "../services/config";
 
 import GameConsole from "../components/GameConsole/GameConsole";
 import DiceRoller from "./../components/Dice/DiceRoller";
@@ -25,7 +26,7 @@ export default class GameboardLayout extends Component {
       loggedIn: true
     };
 
-    GameInstance.connect(this.state.gameRoom);
+    GameInstance.connect(this.state.gameRoom, config.GAME_SOCKET_API_PATH);
   }
 
   render() {

@@ -14,35 +14,9 @@ from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
+from lobby.consumers_common import save_game, reconstruct_game, create_send_response_to_client
 from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
     DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE
-
-
-def reconstruct_game(data):
-    username = data['user']
-    room = data['room']
-
-    game = GameState.objects.get(room_name=room)
-    # deserialize then store GameState object
-    state: BoardGame = pickle.loads(game.board)
-    return username, room, game, state
-
-
-def save_game(game, state):
-    game.board = pickle.dumps(state)
-    game.save()
-
-
-def create_send_response_to_client(command, username, room, payload):
-    content = {
-        'command': command,
-        'action': {
-            'user': username,
-            'room': room,
-            'content': payload
-        }
-    }
-    return content
 
 
 class GameConsumer(WebsocketConsumer):

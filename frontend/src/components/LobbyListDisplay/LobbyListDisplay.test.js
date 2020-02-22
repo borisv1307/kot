@@ -1,30 +1,21 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import PlayerValueDisplay from "./PlayerValueDisplay";
+import LobbyListDisplay from "./LobbyListDisplay";
 
-describe("Verify PlayerValueDisplay layout template", () => {
+describe("Verify LobbyListDisplay layout template", () => {
   const test_player_details = [
     {
-      username: "howdy",
-      victory_points: 1,
-      health: 0,
-      energy: 2,
-      position: "Out"
+      room_name: "room 1",
+      users: ["edward", "marv", "bill", "gus"]
     },
     {
-      username: "ya",
-      victory_points: 5,
-      health: 5,
-      energy: 4,
-      position: "In"
+      room_name: "room 2",
+      users: ["edward", "marv", "bill", "gus"]
     },
     {
-      username: "all",
-      victory_points: 10,
-      health: 10,
-      energy: 6,
-      position: "Out"
+      room_name: "room 3",
+      users: ["edward", "marv", "bill", "gus"]
     }
   ];
 
@@ -32,6 +23,7 @@ describe("Verify PlayerValueDisplay layout template", () => {
   const test_roomname = "test_room";
 
   const expected_state_values = {
+    redirect: false,
     username: test_username,
     gameRoom: test_roomname,
     data: test_player_details
@@ -39,7 +31,7 @@ describe("Verify PlayerValueDisplay layout template", () => {
 
   it("Verify parameter provided PlayeValues are rendered correctly", () => {
     const component = shallow(
-      <PlayerValueDisplay
+      <LobbyListDisplay
         currentUser={test_username}
         currentRoom={test_roomname}
         data={test_player_details}
@@ -50,7 +42,7 @@ describe("Verify PlayerValueDisplay layout template", () => {
 
   it("Verify state transfers via props as expected", () => {
     const wrapper = shallow(
-      <PlayerValueDisplay
+      <LobbyListDisplay
         currentUser={test_username}
         currentRoom={test_roomname}
         data={test_player_details}
@@ -59,9 +51,34 @@ describe("Verify PlayerValueDisplay layout template", () => {
     expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
   });
 
-  it("playerUpdateHandler method updates state as expected", () => {
+  it("gameListResponseHandler method updates state as expected", () => {
+    const test_player_callback_details = {
+      Room_8684: [
+        {
+          username: "Guest_1234",
+          current_health: 10,
+          location: "Out",
+          is_alive: true,
+          victory_points: 0,
+          energy: 0,
+          cards: []
+        }
+      ],
+      Room_1234: [
+        {
+          username: "Guest_1234",
+          current_health: 10,
+          location: "Out",
+          is_alive: true,
+          victory_points: 0,
+          energy: 0,
+          cards: []
+        }
+      ]
+    };
+
     const wrapper = shallow(
-      <PlayerValueDisplay
+      <LobbyListDisplay
         currentUser={test_username}
         currentRoom={test_roomname}
         data={[]}
@@ -69,23 +86,24 @@ describe("Verify PlayerValueDisplay layout template", () => {
     );
 
     const expected_state_values_with_no_player_details = {
+      redirect: false,
       username: test_username,
       gameRoom: test_roomname,
       data: []
     };
 
-    expect(wrapper.state()).toEqual({
-      ...expected_state_values_with_no_player_details
-    });
-
     const expected_backend_callback_message = {
       user: test_username,
       room: test_roomname,
-      content: JSON.stringify(test_player_details)
+      content: JSON.stringify(test_player_callback_details)
     };
 
-    wrapper.instance().playerUpdateHandler(expected_backend_callback_message);
+    wrapper
+      .instance()
+      .gameListResponseHandler(expected_backend_callback_message);
 
-    expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
+    expect(wrapper.state()).toEqual({
+      ...expected_state_values_with_no_player_details
+    });
   });
 });
