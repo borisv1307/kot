@@ -68,7 +68,7 @@ class DeckHandler:
             self.__draw_pile.append(self.discard_pile.draw_from())
         self.__discard_pile.clear()
 
-    def buy_card_from_store(self, index, purchasing_player: Player):
+    def buy_card_from_store(self, index, purchasing_player: Player, other_players):
         card_to_buy: Card = self.__card_store[index]
         if purchasing_player.energy < card_to_buy.cost:
             raise Exception(constants.INSUFFICIENT_FUNDS_MSG)
@@ -76,6 +76,7 @@ class DeckHandler:
             purchasing_player.update_energy_by(-card_to_buy.cost)
             if isinstance(card_to_buy, DiscardCard):
                 print("{} is a discard card".format(card_to_buy.name))
+                card_to_buy.immediate_effect(purchasing_player, other_players)
                 self.discard(card_to_buy)
             elif isinstance(card_to_buy, KeepCard):
                 purchasing_player.add_card(card_to_buy)
