@@ -1,5 +1,9 @@
 # Energy Manipulation Cards
 from game.cards.discard_cards.energy_manipulation_cards.energize import Energize
+from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
+from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
+from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
+from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
 
 # Health Manipulation cards
 from game.cards.discard_cards.health_manipulation_cards.fire_blast import FireBlast
@@ -19,10 +23,7 @@ from game.cards.discard_cards.victory_point_manipulation_cards.commuter_train im
 from game.cards.discard_cards.victory_point_manipulation_cards.corner_store import CornerStore
 from game.cards.discard_cards.victory_point_manipulation_cards.evacuation_orders import EvacuationOrders
 from game.cards.discard_cards.victory_point_manipulation_cards.skyscraper import Skyscraper
-from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
-from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
-from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
-from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
+from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
 
 
 def get_all_cards():
@@ -50,9 +51,13 @@ def get_all_cards():
 
     keep_cards = []
 
-    keep_energy_manipulation_cards = [EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
+    keep_energy_manipulation_cards = [
+        EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
+
+    keep_victory_point_manipulation_cards = [DedicatedNewsTeam()]
 
     keep_cards.extend(keep_energy_manipulation_cards)
+    keep_cards.extend(keep_victory_point_manipulation_cards)
 
     full_list_of_cards = []
     full_list_of_cards.extend(discard_cards)
