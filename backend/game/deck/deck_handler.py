@@ -8,6 +8,8 @@ from game.cards.keep_card import KeepCard
 from game.deck.deck import Deck
 from game.player.player import Player
 
+from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
+
 
 class DeckHandler:
     """
@@ -78,6 +80,8 @@ class DeckHandler:
                 print("{} is a discard card".format(card_to_buy.name))
                 self.discard(card_to_buy)
             elif isinstance(card_to_buy, KeepCard):
+                if purchasing_player.has_instance_of_card(DedicatedNewsTeam()):
+                    DedicatedNewsTeam.special_effect(purchasing_player, [])
                 purchasing_player.add_card(card_to_buy)
             else:
                 print("UNEXPECTED CARD TYPE!!!")
@@ -96,7 +100,8 @@ class DeckHandler:
         if player_invoking_sweep.energy < constants.SWEEP_CARD_STORE_COST:
             raise Exception(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
         else:
-            player_invoking_sweep.update_energy_by(-constants.SWEEP_CARD_STORE_COST)
+            player_invoking_sweep.update_energy_by(
+                -constants.SWEEP_CARD_STORE_COST)
             for _ in range(3):
                 self.discard(self.store.pop())
             self.__fill_card_store()
