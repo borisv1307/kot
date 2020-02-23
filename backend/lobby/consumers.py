@@ -4,9 +4,6 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
-from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
-from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
@@ -220,7 +217,8 @@ class GameConsumer(WebsocketConsumer):
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
         index_to_buy = data['payload']
-        state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player)
+        state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
+                                               state.players.get_all_alive_players_minus_current_player())
         current_card_store = state.deck_handler.json_store()
         self.send_to_client(CARD_STORE_RESPONSE, username, room, current_card_store)
 
