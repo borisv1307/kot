@@ -76,12 +76,12 @@ class DeckHandler:
             raise Exception(constants.INSUFFICIENT_FUNDS_MSG)
         else:
             purchasing_player.update_energy_by(-card_to_buy.cost)
+            if purchasing_player.has_instance_of_card(DedicatedNewsTeam()):
+                DedicatedNewsTeam.special_effect(self, purchasing_player, [])
             if isinstance(card_to_buy, DiscardCard):
                 print("{} is a discard card".format(card_to_buy.name))
                 self.discard(card_to_buy)
             elif isinstance(card_to_buy, KeepCard):
-                if purchasing_player.has_instance_of_card(DedicatedNewsTeam()):
-                    DedicatedNewsTeam.special_effect(purchasing_player, [])
                 purchasing_player.add_card(card_to_buy)
             else:
                 print("UNEXPECTED CARD TYPE!!!")

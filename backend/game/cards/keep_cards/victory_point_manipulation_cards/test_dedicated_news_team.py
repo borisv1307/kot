@@ -13,10 +13,10 @@ def test_eater_of_the_dead_costs_3_energy():
     assert DedicatedNewsTeam().cost == 3
 
 
-def test_dedicated_news_team_player_buys_card(deck_handler, player):
+def test_dedicated_news_team_player_buys_card(player):
     player.energy = 100
     deck_handler = DeckHandler()
     original_victory_points = player.victory_points
     DedicatedNewsTeam().immediate_effect(player, None)
-    bought_card = deck_handler.buy_card_from_store(1, player)
+    deck_handler.buy_card_from_store(1, player)
     assert player.victory_points == original_victory_points + 1
