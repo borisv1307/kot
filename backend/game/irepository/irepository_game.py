@@ -18,7 +18,7 @@ class IRepositoryGame:
                          sixth_winner=0,
                          date_created=datetime.datetime.now())
         self.game.save()
-        return self.game.id
+        return self.game
 
     def get_game_by_id(self, game_id):
         self.game = Game.objects.get(id=game_id)

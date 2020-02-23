@@ -1,11 +1,12 @@
 import pytest
+
 from game.irepository.irepository_game import IRepositoryGame
 
 
 @pytest.mark.django_db(transaction=True)
 def test_save_game():
     repository_game = IRepositoryGame()
-    assert repository_game.save_game('Room1') == 1
+    assert repository_game.save_game('Room1').id == 1
 
 
 @pytest.mark.django_db(transaction=True)

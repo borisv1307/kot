@@ -13,7 +13,7 @@ def test_save_player_db():
     player = Player()
     player.set_monster_name('The King')
     player.set_username('The King')
-    assert repository_player.save_player(player, 'Room1') == 1
+    assert repository_player.save_player(player, 'Room1').id == 1
 
 
 @pytest.mark.django_db(transaction=True)

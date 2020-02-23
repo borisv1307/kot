@@ -19,7 +19,7 @@ def test_save_dice():
     player.set_username('Test_Get')
     repository_player.save_player(player, 'Room1')
     assert repository_dice.save_dice(player, 'Room1', DieValue.ONE, DieValue.TWO, DieValue.THREE, DieValue.ONE,
-                                     DieValue.TWO, DieValue.THREE, 0, 0, 1) == 1
+                                     DieValue.TWO, DieValue.THREE, 0, 0, 1).id == 1
 
 
 @pytest.mark.django_db(transaction=True)
