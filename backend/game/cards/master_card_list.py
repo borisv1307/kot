@@ -24,6 +24,7 @@ from game.cards.discard_cards.victory_point_manipulation_cards.corner_store impo
 from game.cards.discard_cards.victory_point_manipulation_cards.evacuation_orders import EvacuationOrders
 from game.cards.discard_cards.victory_point_manipulation_cards.skyscraper import Skyscraper
 from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
+from game.cards.keep_cards.victory_point_manipulation_cards.gourmet import Gourmet
 
 
 def get_all_cards():
@@ -54,7 +55,7 @@ def get_all_cards():
     keep_energy_manipulation_cards = [
         EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
 
-    keep_victory_point_manipulation_cards = [DedicatedNewsTeam()]
+    keep_victory_point_manipulation_cards = [DedicatedNewsTeam(), Gourmet()]
 
     keep_cards.extend(keep_energy_manipulation_cards)
     keep_cards.extend(keep_victory_point_manipulation_cards)
