@@ -22,17 +22,6 @@ exports[`Verify CardStore layout template Verify parameter provided cards are re
         type="button"
         variant="primary"
       >
-        Card Store
-      </Button>
-         
-      <Button
-        active={false}
-        className="btn btn-secondary"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
-        variant="primary"
-      >
         Sweep Store
       </Button>
     </div>

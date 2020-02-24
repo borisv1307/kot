@@ -8,25 +8,30 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
   <h4>
     Room_1234
   </h4>
-  <div>
-    <div
-      className="col"
-    >
-      <CardStore
-        currentRoom="Room_1234"
-        currentUser="Guest_1234"
-      />
-    </div>
-  </div>
   <div
-    className="container"
+    className="col"
   >
+    <CardStore
+      currentRoom="Room_1234"
+      currentUser="Guest_1234"
+    />
+  </div>
+  <div>
     <div>
       <div
         className="row"
       >
         <div
-          className="col-sm"
+          className="col-sm-2"
+        >
+          <PlayerValueDisplay
+            currentRoom="Room_1234"
+            currentUser="Guest_1234"
+            displayOnlySelf={true}
+          />
+        </div>
+        <div
+          className="col-sm-4"
         >
           <DiceRoller
             currentRoom="Room_1234"
@@ -34,7 +39,7 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
           />
         </div>
         <div
-          className="col-sm board_middle_column"
+          className="col-sm-4 board_middle_column"
         >
           <GameConsole
             currentRoom="Room_1234"
@@ -43,12 +48,11 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
           />
         </div>
         <div
-          className="col-sm"
+          className="col-sm-2"
         >
-          <PlayerValueDisplay
+          <PlayerTable
             currentRoom="Room_1234"
             currentUser="Guest_1234"
-            displayOnlySelf={true}
           />
         </div>
       </div>

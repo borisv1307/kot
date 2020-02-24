@@ -6,7 +6,7 @@ import GameConsole from "../components/GameConsole/GameConsole";
 import DiceRoller from "./../components/Dice/DiceRoller";
 import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
-
+import PlayerTable from "../components/PlayerTable/PlayerTable";
 import GameInstance from "./../services/gameService";
 
 export default class GameboardLayout extends Component {
@@ -34,25 +34,32 @@ export default class GameboardLayout extends Component {
       <div className="board_container">
         <br />
         <h4>{this.state.gameRoom}</h4>
-        <div>
-          <div className="col">
-            <CardStore
-              currentUser={this.state.username}
-              currentRoom={this.state.gameRoom}
-            />
-          </div>
+
+        <div className="col">
+          <CardStore
+            currentUser={this.state.username}
+            currentRoom={this.state.gameRoom}
+          />
         </div>
-        <div className="container">
+
+        <div>
           {this.state.loggedIn ? (
             <div>
               <div className="row">
-                <div className="col-sm">
+                <div className="col-sm-2">
+                  <PlayerValuesDisplay
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                    displayOnlySelf={true}
+                  />
+                </div>
+                <div className="col-sm-4">
                   <DiceRoller
                     currentUser={this.state.username}
                     currentRoom={this.state.gameRoom}
                   />
                 </div>
-                <div className="col-sm board_middle_column">
+                <div className="col-sm-4 board_middle_column">
                   <GameConsole
                     sendMessage={payload => {
                       GameInstance.sendMessage(payload);
@@ -61,11 +68,11 @@ export default class GameboardLayout extends Component {
                     currentRoom={this.state.gameRoom}
                   />
                 </div>
-                <div className="col-sm">
-                  <PlayerValuesDisplay
+
+                <div className="col-sm-2">
+                  <PlayerTable
                     currentUser={this.state.username}
                     currentRoom={this.state.gameRoom}
-                    displayOnlySelf={true}
                   />
                 </div>
               </div>

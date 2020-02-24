@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify PlayerTable layout template Verify parameter provided PlayeValues are rendered correctly 1`] = `
+<div>
+  <p>
+    Waiting, Please wait.
+  </p>
+  <container
+    className="player_seats"
+  >
+    <span>
+      <span
+        className="seat_layout"
+        style={
+          Object {
+            "fill": "lime",
+            "left": 200,
+            "position": "absolute",
+            "stroke": "purple",
+            "top": 275,
+          }
+        }
+      >
+        <p
+          style={
+            Object {
+              "color": "black",
+            }
+          }
+        >
+          howdy
+        </p>
+      </span>
+    </span>
+    <span>
+      <span
+        className="seat_layout"
+        style={
+          Object {
+            "fill": "lime",
+            "left": 264.9519052838329,
+            "position": "absolute",
+            "stroke": "purple",
+            "top": 162.5,
+          }
+        }
+      >
+        <p
+          style={
+            Object {
+              "color": "black",
+            }
+          }
+        >
+          ya
+        </p>
+      </span>
+    </span>
+    <span>
+      <span
+        className="seat_layout"
+        style={
+          Object {
+            "fill": "lime",
+            "left": 135.0480947161671,
+            "position": "absolute",
+            "stroke": "purple",
+            "top": 162.49999999999997,
+          }
+        }
+      >
+        <p
+          style={
+            Object {
+              "color": "black",
+            }
+          }
+        >
+          all
+        </p>
+      </span>
+    </span>
+  </container>
+</div>
+`;
