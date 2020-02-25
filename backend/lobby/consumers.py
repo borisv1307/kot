@@ -115,7 +115,7 @@ class GameConsumer(WebsocketConsumer):
             state.add_player(player)
 
         # hack to start game after 2 players join
-        temp_max_players = 2
+        temp_max_players = 4
         if len(state.players.players) == temp_max_players:
             self.start_web_game(room, state, username)
         else:

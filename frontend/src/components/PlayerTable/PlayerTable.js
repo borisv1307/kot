@@ -2,15 +2,12 @@ import React from "react";
 import "./PlayerTable.css";
 import Go from "./../Images/icons8-go-48.png";
 import Turn from "./../Images/icons8-turn-30.png";
-import Waiting from "./../Images/icons8-wait-30.png";
 
 import GameInstance from "../../services/gameService";
 
 import MT_RESPONSE_PLAYERS_STATUS_UPDATE from "../../services/config";
 
 class PlayerTable extends React.Component {
-  _canvas = null;
-
   constructor(props, context) {
     super(props, context);
 
@@ -18,7 +15,11 @@ class PlayerTable extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       data: props.data,
-      currentTurnUser: ""
+      currentTurnUser: "",
+      tableAreaWidth: 0,
+      tableAreaHeight: 0,
+      centerX: 0,
+      centerY: 0
     };
 
     GameInstance.addCallback(
@@ -40,65 +41,106 @@ class PlayerTable extends React.Component {
     this.setState({ data: player_status });
   }
 
-  // componentDidUpdate() {
-  //   this.tempDoCanvasStuff();
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.data !== prevState.data) {
+      this.doCanvasStuff();
+    }
+  }
 
-  // tempDoCanvasStuff() {
-  //   if (this.state.data instanceof Array) {
-  //     if (this.state.data && this.state.data.length > 0) {
-  //       this._canvas = this.refs.canvas;
-  //       // Make it visually fill the positioned parent
-  //       this._canvas.style.width = "100%";
-  //       this._canvas.style.height = "100%";
-  //       // ...then set the internal size to match
-  //       this._canvas.width = this._canvas.offsetWidth;
-  //       this._canvas.height = this._canvas.offsetHeight;
-  //       // const context = canvas.getContext("2d");
-  //       // var dotsPerCircle = this.state.data.length;
-  //       // var interval = (Math.PI * 2) / dotsPerCircle;
-  //       // var centerX = 150;
-  //       // var centerY = 150;
-  //       // var radius = 75;
-  //       // for (var i = 0; i < dotsPerCircle; i++) {
-  //       //   let desiredRadianAngleOnCircle = interval * i;
-  //       //   var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
-  //       //   var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
-  //       //   context.beginPath();
-  //       //   context.arc(x, y, 3, 0, Math.PI * 2);
-  //       //   context.closePath();
-  //       //   context.fill();
-  //       // }
-  //     }
-  //   }
-  // }
+  doCanvasStuff() {
+    if (this.state.data instanceof Array) {
+      if (this.state.data && this.state.data.length > 0) {
+        let canvas = this.refs.canvas;
+        // Make it visually fill the positioned parent
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
 
-  // componentDidMount() {
-  //   this.tempDoCanvasStuff();
-  // }
+        // ...then set the internal size to match
+        canvas.width = this.state.tableAreaWidth;
+        canvas.height = this.state.tableAreaHeight;
+        const context = canvas.getContext("2d");
+        context.fillStyle = "tan";
+        var dotsPerCircle = this.state.data.length;
+        // if (dotsPerCircle < 1) {
+        //   dotsPerCircle = 1;
+        // }
+        // context.fillStyle = "blue";
+        // context.fillRect(0, 0, canvas.width, canvas.height);
+        var interval = (Math.PI * 2) / dotsPerCircle;
+        let centerX = this.state.centerX > 0 ? this.state.centerX : 100;
+        let centerY = this.state.centerY > 0 ? this.state.centerY : 100;
+        let radius =
+          (this.state.tableAreaWidth < this.state.tableAreaHeight
+            ? this.state.tableAreaWidth
+            : this.state.tableAreaHeight) * 0.4;
+        context.beginPath();
+        for (var i = 0; i < dotsPerCircle; i++) {
+          let desiredRadianAngleOnCircle = interval * i;
+          var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
+          var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
+          if (i == 0) context.moveTo(x, y);
+          // context.beginPath();
+          // context.arc(x, y, 3, 0, Math.PI * 2);
+          // context.seg
+          // context.closePath();
+          // context.fill();
+
+          context.lineTo(x, y);
+        }
+        context.closePath();
+        context.fill();
+      }
+    }
+  }
+
+  componentDidMount() {
+    const height = this.divElement.clientHeight;
+    const width = this.divElement.clientWidth;
+    let centerX = width / 2;
+    let centerY = height / 2;
+
+    this.setState({
+      tableAreaHeight: height,
+      tableAreaWidth: width,
+      centerX: centerX,
+      centerY: centerY
+    });
+  }
 
   genPos(dotsPerCircle) {
-    if (dotsPerCircle < 1) {
-      dotsPerCircle = 1;
+    let centerX = this.state.centerX > 0 ? this.state.centerX : 100;
+    let centerY = this.state.centerY > 0 ? this.state.centerY : 100;
+    if (dotsPerCircle <= 1) {
+      return [
+        {
+          position: "absolute",
+          top: centerY,
+          left: centerX
+        }
+      ];
     }
 
-    var interval = (Math.PI * 2) / dotsPerCircle;
-    var centerX = 200;
-    var centerY = 200;
-    var radius = 75;
+    let interval = (Math.PI * 2) / dotsPerCircle;
+
+    let width = this.state.tableAreaWidth > 0 ? this.state.tableAreaWidth : 200;
+    let height =
+      this.state.tableAreaHeight > 0 ? this.state.tableAreaHeight : 200;
+
+    let radius =
+      (this.state.tableAreaWidth < this.state.tableAreaHeight
+        ? this.state.tableAreaWidth
+        : this.state.tableAreaHeight) * 0.35;
     let positions = [];
 
-    for (var i = 0; i < dotsPerCircle; i++) {
-      let desiredRadianAngleOnCircle = interval * i;
-      var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
-      var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
+    for (let i = 0; i < dotsPerCircle; i++) {
+      let angleRad = interval * i;
+      let x = centerX + radius * Math.cos(angleRad);
+      let y = centerY + radius * Math.sin(angleRad);
 
       positions.push({
         position: "absolute",
-        top: x,
-        left: y,
-        fill: "lime",
-        stroke: "purple"
+        top: y,
+        left: x
       });
     }
     return positions;
@@ -126,11 +168,11 @@ class PlayerTable extends React.Component {
   }
 
   isItsYourTurn() {
-    return this.state.username == this.state.currentTurnUser;
+    return this.state.username === this.state.currentTurnUser;
   }
 
   isItThisGuyTurn(theGuy) {
-    return theGuy == this.state.currentTurnUser;
+    return theGuy === this.state.currentTurnUser;
   }
 
   gameStarted() {
@@ -138,17 +180,40 @@ class PlayerTable extends React.Component {
   }
 
   formatName(name) {
-    let format = "";
-    if (this.areYouMe(name)) format = "(YOU) ";
-    return format + name;
+    let format = name;
+
+    if (this.areYouMe(name)) format = format + "(YOU) ";
+
+    if (this.isItsYourTurn() && this.areYouMe(name)) {
+      return (
+        <div className="txt_bounds">
+          <p className="txt_format">{name}</p>
+          <p className="txt_format">Your Turn!</p>
+        </div>
+      );
+    } else if (this.isItThisGuyTurn(name)) {
+      return (
+        <div className="txt_bounds">
+          <p className="txt_format">{name}</p>
+          <p className="txt_format">Turn!</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="txt_bounds">
+        <p className="txt_format">{name}</p>
+      </div>
+    );
   }
 
   provideShape(name) {
     if (this.isItsYourTurn() && this.areYouMe(name)) {
       return <img alt="Your Turn!" src={Go}></img>;
-    } else if (this.isItThisGuyTurn(name)) {
-      return <img alt="This persons turn." src={Turn}></img>;
     }
+    // else if (this.isItThisGuyTurn(name)) {
+    //   return <img alt="This persons turn." src={Turn}></img>;
+    // }
     return; // <img alt="Waiting for game to start..." src={Waiting}></img>;
   }
 
@@ -183,20 +248,39 @@ class PlayerTable extends React.Component {
         }
 
         return (
-          <div>
+          <div
+            id="table_area"
+            ref={divElement => {
+              this.divElement = divElement;
+            }}
+          >
             {msg}
+            {/* Size: width<b>{this.state.tableAreaWidth}px</b> height
+            <b>{this.state.tableAreaHeight}px</b> */}
             <container className="player_seats">
               {this.state.data.map((entry, index) => (
-                <span>{this.getSeat(items[index], entry.username)}</span>
+                <span key={index}>
+                  {this.getSeat(items[index], entry.username)}
+                </span>
               ))}
-              {/* <canvas ref="canvas" width={640} height={425} /> */}
             </container>
+            <canvas ref="canvas" />
           </div>
         );
       }
     }
 
-    return <div></div>;
+    return (
+      <div
+        className="test"
+        ref={divElement => {
+          this.divElement = divElement;
+        }}
+      >
+        <container className="player_seats"></container>
+        <canvas ref="canvas" width={640} height={425} />
+      </div>
+    );
   }
 }
 export default PlayerTable;

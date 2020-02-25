@@ -5,15 +5,10 @@
   border-width: thin;
 
   margin: 7px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 22px;
-  text-align: left;
+  text-align: center;
   color: black;
-}
-
-#canvas {
-  width: 200px;
-  height: 200px;
 }
 
 img {
@@ -21,8 +16,23 @@ img {
   height: 35px;
 }
 
+.txt_format {
+  margin: 0px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2rem;
+  opacity: 1;
+}
+
+.txt_bounds {
+  background: white;
+  background: #e8e8e8;
+  padding: 4px 5px;
+  border-radius: 30px;
+  vertical-align: middle;
+}
+
 .seat_layout {
-    /* justify-content: center;
+  /* justify-content: center;
     display: flex;
     flex-direction: column;
     border-width: thin; */
