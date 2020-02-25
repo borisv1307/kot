@@ -100,9 +100,11 @@ class GameConsumer(WebsocketConsumer):
     def get_or_create_game(self, username, room):
         game, created = GameState.objects.get_or_create(room_name=room)
 
-        if not IRepositoryGame.get_game_by_room(room):
-            game_store = IRepositoryGame.save_game(room)
-            print("Room created with id" + game_store)
+        i_repository_game = IRepositoryGame()
+
+        if not i_repository_game.get_game_by_room(room):
+            game_store = i_repository_game.save_game(room)
+            print("Room created with id {}".format(game_store))
         else:
             error = 'Room already exist, Unable to create Game with room: ' + room
 
