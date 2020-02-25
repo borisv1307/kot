@@ -1,11 +1,12 @@
 import pytest
+
+from game.irepository.irepository_game import IRepositoryGame
 from game.irepository.irepository_play import IRepositoryPlay
 from game.irepository.irepository_player import IRepositoryPlayer
-from game.irepository.irepository_game import IRepositoryGame
 from game.player.player import Player
+from game.values import constants
 # from game.cards.card import Card
 from game.values import locations
-from game.values import constants
 
 
 @pytest.mark.django_db(transaction=True)
@@ -22,7 +23,7 @@ def test_save_play_card_swept_db():
     player.update_victory_points_by(2)
     player.update_energy_by(2)
     player.update_health_by(-1)
-    assert repository_play.save_play_card_swept(player, 'Room1', '01', '1', '02', '1', '03', '1') == 1
+    assert repository_play.save_play_card_swept(player, 'Room1', '01', '1', '02', '1', '03', '1').id == 1
 
 
 @pytest.mark.django_db(transaction=True)
@@ -39,7 +40,7 @@ def test_save_play_card_purchased_db():
     player.update_victory_points_by(2)
     player.update_energy_by(2)
     player.update_health_by(-1)
-    assert repository_play.save_play_card_purchased(player, 'Room2', '01', '1') == 2
+    assert repository_play.save_play_card_purchased(player, 'Room2', '01', '1').id == 2
 
 
 @pytest.mark.django_db(transaction=True)
@@ -56,7 +57,7 @@ def test_save_play_card_used():
     player.update_victory_points_by(2)
     player.update_energy_by(2)
     player.update_health_by(-1)
-    assert repository_play.save_play_card_used(player, 'Room3', '02', '1') == 3
+    assert repository_play.save_play_card_used(player, 'Room3', '02', '1').id == 3
 
 
 @pytest.mark.django_db(transaction=True)
