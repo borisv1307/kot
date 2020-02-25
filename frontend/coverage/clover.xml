@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1581559499545" clover="3.2.0">
-  <project timestamp="1581559499545" name="All files">
-    <metrics statements="10" coveredstatements="10" conditionals="6" coveredconditionals="5" methods="3" coveredmethods="3" elements="19" coveredelements="18" complexity="0" loc="10" ncloc="10" packages="1" files="1" classes="1"/>
-    <file name="PlayerHandDisplay.js" path="C:\Users\kaubin\Documents\Drexel\SE691 Software Studio\dev\display_player_cards\frontend\src\components\PlayerValues\PlayerHandDisplay.js">
-      <metrics statements="10" coveredstatements="10" conditionals="6" coveredconditionals="5" methods="3" coveredmethods="3"/>
-      <line num="8" count="3" type="stmt"/>
-      <line num="10" count="3" type="stmt"/>
-      <line num="12" count="3" type="cond" truecount="1" falsecount="1"/>
-      <line num="13" count="3" type="stmt"/>
-      <line num="14" count="3" type="stmt"/>
-      <line num="18" count="3" type="stmt"/>
-      <line num="26" count="3" type="cond" truecount="4" falsecount="0"/>
-      <line num="27" count="2" type="stmt"/>
-      <line num="32" count="6" type="stmt"/>
-      <line num="44" count="1" type="stmt"/>
-    </file>
+<coverage generated="1582344595986" clover="3.2.0">
+  <project timestamp="1582344595987" name="All files">
+    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
   </project>
 </coverage>

@@ -9,12 +9,14 @@
         "pylint_django"
     ],
     "python.linting.pylintEnabled": true,
+    "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
-        "backend"
+        "backend",
+        "--ignore=backend/game/db",
+        "--ignore=backend/game/irepository",
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
-    "python.testing.pytestEnabled": true,
     "python.venvPath": "${workspaceFolder}/env",
     "files.exclude": {
         "**/*.pyc": {
@@ -30,5 +32,9 @@
     "[python]": {
         "editor.formatOnSave": true
     },
-    "eslint.enable": false
+    "eslint.enable": false,
+    "jestrunner.jestPath": "${workspaceFolder}/frontend/node_modules/jest/bin/jest.js",
+    "jest.enableInlineErrorMessages": true,
+    "jest.rootPath": "${workspaceFolder}/frontend",
+    "jest.showCoverageOnLoad": true
 }

@@ -1,0 +1,6 @@
+.game_room_details {
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    border-width: thin
+}

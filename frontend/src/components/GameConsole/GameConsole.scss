@@ -1,4 +1,5 @@
-.game_console {}
+.game_console {
+}
 
 .submit_game_command {
   color: black;
@@ -10,8 +11,7 @@ $grey: #eee;
 
 .chat {
   .container {
-    height: 80%;
-    height: 50vh;
+    // height: 60vh;
 
     &.message-form {
       margin-top: 1px;
@@ -105,13 +105,13 @@ $grey: #eee;
     }
   }
 
-  .him+.me {
+  .him + .me {
     p {
       border-bottom-right-radius: 1px;
     }
   }
 
-  .me+.me {
+  .me + .me {
     p {
       border-top-right-radius: 1px;
       border-bottom-right-radius: 1px;

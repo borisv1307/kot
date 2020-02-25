@@ -58,7 +58,7 @@ describe("Verify PlayerHandDisplay layout template", () => {
     expect(wrapper.state()).toEqual({ ...expected_state_values }); // passed
   });
 
-  it("playerUpdateHandler mehthod updates state as expected", () => {
+  it("verify default states are as expected", () => {
     const wrapper = shallow(
       <PlayerHandDisplay
         currentUser={test_username}

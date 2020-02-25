@@ -13,11 +13,14 @@ class DiceRoller extends React.Component {
       gameRoom: props.currentRoom,
       rolledDice: [],
       selectedDice: [],
-      allowReroll: true
+      allowReroll: true,
+      allowEndTurn: true
     };
 
     this.AttemptReroll = this.AttemptReroll.bind(this);
     this.EndTurn = this.EndTurn.bind(this);
+    this.YieldTokyo = this.YieldTokyo.bind(this);
+    this.ResolveDice = this.ResolveDice.bind(this);
     GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
     GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
   }
@@ -62,10 +65,38 @@ class DiceRoller extends React.Component {
     let its_my_turn = username_whos_turn_it_is === this.state.username;
 
     this.setState({ allowReroll: its_my_turn });
+    this.setState({ allowEndTurn: its_my_turn });
 
     if (!its_my_turn) {
       // clear dice display
       this.setState({ rolledDice: [] });
+    }
+  }
+
+  YieldTokyo(/*e*/) {
+    try {
+      GameInstance.sendMessage({
+        command: "yield_tokyo_request",
+        user: this.state.username,
+        room: this.state.gameRoom,
+        payload: this.state.username
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
+  }
+
+  ResolveDice(/*e*/) {
+    try {
+      GameInstance.sendMessage({
+        command: "resolve_dice_request",
+        user: this.state.username,
+        room: this.state.gameRoom,
+        payload: this.state.username
+      });
+      this.setState({ allowReroll: false })
+    } catch (exception) {
+      console.log(exception);
     }
   }
 
@@ -180,10 +211,26 @@ class DiceRoller extends React.Component {
         <Button
           className="btn btn-secondary"
           disabled={!this.state.allowReroll}
+          onClick={this.ResolveDice}
+        >
+          Accept Dice
+        </Button>
+
+        <Button
+          className="btn btn-secondary"
+          disabled={!this.state.allowEndTurn}
           onClick={this.EndTurn}
         >
           End Turn
         </Button>
+
+        <Button
+          className="btn btn-secondary"
+          onClick={this.YieldTokyo}
+        >
+          Yield Tokyo
+        </Button>
+
       </div>
     );
   }

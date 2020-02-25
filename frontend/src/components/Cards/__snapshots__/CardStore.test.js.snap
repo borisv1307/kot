@@ -29,10 +29,11 @@ exports[`Verify CardStore layout template Verify parameter provided cards are re
         active={false}
         className="btn btn-secondary"
         disabled={false}
+        onClick={[Function]}
         type="button"
         variant="primary"
       >
-        Shuffle Cards
+        Sweep Store
       </Button>
     </div>
   </div>

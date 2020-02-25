@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify LobbyListDisplay layout template Verify parameter provided PlayeValues are rendered correctly 1`] = `
+<div>
+  <Bootstrap(Table)
+    bordered={true}
+    hover={true}
+    striped={true}
+  >
+    <thead>
+      <tr>
+        <th>
+          Players
+        </th>
+        <th>
+          Room Name
+        </th>
+        <th />
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        key="0"
+      >
+        <td>
+          edward
+          marv
+          bill
+          gus
+        </td>
+        <td>
+          room 1
+        </td>
+        <td>
+          <a
+            className="b"
+            href="/game"
+          >
+            <button
+              className="btn btn-secondary"
+              id="room 1"
+              onClick={[Function]}
+              type="button"
+            >
+              Join Room 
+              room 1
+            </button>
+          </a>
+        </td>
+      </tr>
+      <tr
+        key="1"
+      >
+        <td>
+          edward
+          marv
+          bill
+          gus
+        </td>
+        <td>
+          room 2
+        </td>
+        <td>
+          <a
+            className="b"
+            href="/game"
+          >
+            <button
+              className="btn btn-secondary"
+              id="room 2"
+              onClick={[Function]}
+              type="button"
+            >
+              Join Room 
+              room 2
+            </button>
+          </a>
+        </td>
+      </tr>
+      <tr
+        key="2"
+      >
+        <td>
+          edward
+          marv
+          bill
+          gus
+        </td>
+        <td>
+          room 3
+        </td>
+        <td>
+          <a
+            className="b"
+            href="/game"
+          >
+            <button
+              className="btn btn-secondary"
+              id="room 3"
+              onClick={[Function]}
+              type="button"
+            >
+              Join Room 
+              room 3
+            </button>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </Bootstrap(Table)>
+</div>
+`;
