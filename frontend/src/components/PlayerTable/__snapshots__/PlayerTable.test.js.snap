@@ -1,23 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Verify PlayerTable layout template Verify parameter provided PlayeValues are rendered correctly 1`] = `
-<div>
+<div
+  id="table_area"
+>
   <p>
     Waiting, Please wait.
   </p>
   <container
     className="player_seats"
   >
-    <span>
+    <span
+      key="0"
+    >
       <span
         className="seat_layout"
         style={
           Object {
-            "fill": "lime",
-            "left": 200,
+            "left": 100,
             "position": "absolute",
-            "stroke": "purple",
-            "top": 275,
+            "top": 100,
           }
         }
       >
@@ -28,20 +30,28 @@ exports[`Verify PlayerTable layout template Verify parameter provided PlayeValue
             }
           }
         >
-          howdy
+          <div
+            className="txt_bounds"
+          >
+            <p
+              className="txt_format"
+            >
+              howdy
+            </p>
+          </div>
         </p>
       </span>
     </span>
-    <span>
+    <span
+      key="1"
+    >
       <span
         className="seat_layout"
         style={
           Object {
-            "fill": "lime",
-            "left": 264.9519052838329,
+            "left": 100,
             "position": "absolute",
-            "stroke": "purple",
-            "top": 162.5,
+            "top": 100,
           }
         }
       >
@@ -52,20 +62,28 @@ exports[`Verify PlayerTable layout template Verify parameter provided PlayeValue
             }
           }
         >
-          ya
+          <div
+            className="txt_bounds"
+          >
+            <p
+              className="txt_format"
+            >
+              ya
+            </p>
+          </div>
         </p>
       </span>
     </span>
-    <span>
+    <span
+      key="2"
+    >
       <span
         className="seat_layout"
         style={
           Object {
-            "fill": "lime",
-            "left": 135.0480947161671,
+            "left": 100,
             "position": "absolute",
-            "stroke": "purple",
-            "top": 162.49999999999997,
+            "top": 100,
           }
         }
       >
@@ -76,10 +94,19 @@ exports[`Verify PlayerTable layout template Verify parameter provided PlayeValue
             }
           }
         >
-          all
+          <div
+            className="txt_bounds"
+          >
+            <p
+              className="txt_format"
+            >
+              all
+            </p>
+          </div>
         </p>
       </span>
     </span>
   </container>
+  <canvas />
 </div>
 `;

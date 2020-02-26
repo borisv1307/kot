@@ -35,7 +35,11 @@ describe("Verify PlayerTable layout template", () => {
     username: test_username,
     gameRoom: test_roomname,
     data: test_player_details,
-    currentTurnUser: ""
+    currentTurnUser: "",
+    tableAreaWidth: 0,
+    tableAreaHeight: 0,
+    centerX: 0,
+    centerY: 0
   };
 
   it("Verify parameter provided PlayeValues are rendered correctly", () => {
@@ -72,7 +76,13 @@ describe("Verify PlayerTable layout template", () => {
     const expected_state_values_with_no_player_details = {
       username: test_username,
       gameRoom: test_roomname,
-      data: []
+      data: [],
+      currentTurnUser: "",
+      tableAreaWidth: 0,
+      tableAreaHeight: 0,
+      centerX: 0,
+      centerY: 0
+
     };
 
     expect(wrapper.state()).toEqual({

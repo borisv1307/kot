@@ -22,7 +22,7 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
         className="row"
       >
         <div
-          className="col-sm-2"
+          className="col-sm-4"
         >
           <PlayerValueDisplay
             currentRoom="Room_1234"
@@ -31,7 +31,7 @@ exports[`Verify gameboard layout template Gameboard should render correctly 1`] 
           />
         </div>
         <div
-          className="col-sm-4"
+          className="col-sm-2"
         >
           <DiceRoller
             currentRoom="Room_1234"

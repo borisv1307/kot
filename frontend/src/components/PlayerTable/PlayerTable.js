@@ -1,10 +1,7 @@
 import React from "react";
 import "./PlayerTable.css";
 import Go from "./../Images/icons8-go-48.png";
-import Turn from "./../Images/icons8-turn-30.png";
-
 import GameInstance from "../../services/gameService";
-
 import MT_RESPONSE_PLAYERS_STATUS_UPDATE from "../../services/config";
 
 class PlayerTable extends React.Component {
@@ -51,60 +48,56 @@ class PlayerTable extends React.Component {
     if (this.state.data instanceof Array) {
       if (this.state.data && this.state.data.length > 0) {
         let canvas = this.refs.canvas;
-        // Make it visually fill the positioned parent
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        if (canvas) {
+          // Make it visually fill the positioned parent
+          canvas.style.width = "100%";
+          canvas.style.height = "100%";
 
-        // ...then set the internal size to match
-        canvas.width = this.state.tableAreaWidth;
-        canvas.height = this.state.tableAreaHeight;
-        const context = canvas.getContext("2d");
-        context.fillStyle = "tan";
-        var dotsPerCircle = this.state.data.length;
-        // if (dotsPerCircle < 1) {
-        //   dotsPerCircle = 1;
-        // }
-        // context.fillStyle = "blue";
-        // context.fillRect(0, 0, canvas.width, canvas.height);
-        var interval = (Math.PI * 2) / dotsPerCircle;
-        let centerX = this.state.centerX > 0 ? this.state.centerX : 100;
-        let centerY = this.state.centerY > 0 ? this.state.centerY : 100;
-        let radius =
-          (this.state.tableAreaWidth < this.state.tableAreaHeight
-            ? this.state.tableAreaWidth
-            : this.state.tableAreaHeight) * 0.4;
-        context.beginPath();
-        for (var i = 0; i < dotsPerCircle; i++) {
-          let desiredRadianAngleOnCircle = interval * i;
-          var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
-          var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
-          if (i == 0) context.moveTo(x, y);
-          // context.beginPath();
-          // context.arc(x, y, 3, 0, Math.PI * 2);
-          // context.seg
-          // context.closePath();
-          // context.fill();
+          // ...then set the internal size to match
+          canvas.width = this.state.tableAreaWidth;
+          canvas.height = this.state.tableAreaHeight;
 
-          context.lineTo(x, y);
+          const context = canvas.getContext("2d");
+          context.fillStyle = "tan";
+          var dotsPerCircle = this.state.data.length;
+          // context.fillStyle = "blue";
+          // context.fillRect(0, 0, canvas.width, canvas.height);
+          var interval = (Math.PI * 2) / dotsPerCircle;
+          let centerX = this.state.centerX > 0 ? this.state.centerX : 100;
+          let centerY = this.state.centerY > 0 ? this.state.centerY : 100;
+          let radius =
+            (this.state.tableAreaWidth < this.state.tableAreaHeight
+              ? this.state.tableAreaWidth
+              : this.state.tableAreaHeight) * 0.4;
+          context.beginPath();
+          for (var i = 0; i < dotsPerCircle; i++) {
+            let desiredRadianAngleOnCircle = interval * i;
+            var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
+            var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
+            if (i === 0) context.moveTo(x, y);
+            context.lineTo(x, y);
+          }
+          context.closePath();
+          context.fill();
         }
-        context.closePath();
-        context.fill();
       }
     }
   }
 
   componentDidMount() {
-    const height = this.divElement.clientHeight;
-    const width = this.divElement.clientWidth;
-    let centerX = width / 2;
-    let centerY = height / 2;
+    if (this.divElement) {
+      const height = this.divElement.clientHeight;
+      const width = this.divElement.clientWidth;
+      let centerX = width / 2;
+      let centerY = height / 2;
 
-    this.setState({
-      tableAreaHeight: height,
-      tableAreaWidth: width,
-      centerX: centerX,
-      centerY: centerY
-    });
+      this.setState({
+        tableAreaHeight: height,
+        tableAreaWidth: width,
+        centerX: centerX,
+        centerY: centerY
+      });
+    }
   }
 
   genPos(dotsPerCircle) {
@@ -121,11 +114,6 @@ class PlayerTable extends React.Component {
     }
 
     let interval = (Math.PI * 2) / dotsPerCircle;
-
-    let width = this.state.tableAreaWidth > 0 ? this.state.tableAreaWidth : 200;
-    let height =
-      this.state.tableAreaHeight > 0 ? this.state.tableAreaHeight : 200;
-
     let radius =
       (this.state.tableAreaWidth < this.state.tableAreaHeight
         ? this.state.tableAreaWidth
@@ -180,10 +168,6 @@ class PlayerTable extends React.Component {
   }
 
   formatName(name) {
-    let format = name;
-
-    if (this.areYouMe(name)) format = format + "(YOU) ";
-
     if (this.isItsYourTurn() && this.areYouMe(name)) {
       return (
         <div className="txt_bounds">
