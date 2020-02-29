@@ -14,6 +14,7 @@ from game.cards.discard_cards.multi_manipulation_cards.tanks import Tanks
 from game.cards.discard_cards.multi_manipulation_cards.vast_storm import VastStorm
 
 # Victory Point Manipulation Cards
+from game.cards.discard_cards.turn_manipulation_cards.frenzy import Frenzy
 from game.cards.discard_cards.victory_point_manipulation_cards.apartment_building import ApartmentBuilding
 from game.cards.discard_cards.victory_point_manipulation_cards.commuter_train import CommuterTrain
 from game.cards.discard_cards.victory_point_manipulation_cards.corner_store import CornerStore
@@ -42,11 +43,14 @@ def get_all_cards():
     victory_point_manipulation_cards = [ApartmentBuilding(), CommuterTrain(), CornerStore(),
                                         EvacuationOrders(), Skyscraper()]
 
+    turn_manipulation_cards = [Frenzy()]
+
     discard_cards = []
     discard_cards.extend(health_manipulation_cards)
     discard_cards.extend(energy_manipulation_cards)
     discard_cards.extend(multi_manipulation_cards)
     discard_cards.extend(victory_point_manipulation_cards)
+    discard_cards.extend(turn_manipulation_cards)
 
     keep_cards = []
 
