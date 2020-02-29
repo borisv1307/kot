@@ -216,11 +216,11 @@ class GameConsumer(WebsocketConsumer):
 
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
-        index_to_buy = data['payload']
 
         if username != state.players.current_player.username:
             return
 
+        index_to_buy = data['payload']
         state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
                                                state.players.get_all_alive_players_minus_current_player())
         current_card_store = state.deck_handler.json_store()
