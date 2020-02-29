@@ -15,10 +15,6 @@ class LobbyListDisplay extends React.Component {
       data: props.data
     };
 
-    // if (props.data) {
-    //   this.setState({ data: props.data });
-    // }
-
     GameInstance.addGameListResponseCallback(
       this.gameListResponseHandler.bind(this)
     );
