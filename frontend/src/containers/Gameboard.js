@@ -37,7 +37,8 @@ export default class GameboardLayout extends Component {
         let username_whos_turn_it_is = message.user;
         let yieldAlert = new YieldAlert(this.props, this.state.username, this.state.gameRoom)
         if (this.state.username === username_whos_turn_it_is) {
-            yieldAlert.showCustom()
+            // yieldAlert.showCustom()
+            yieldAlert.show()
         }
 
     }
