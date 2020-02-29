@@ -4,6 +4,7 @@ from typing import List
 from game.cards.card import Card
 from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
+from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
 from game.player.player_status_resolver import json_players_hand
 from game.values import constants
 from game.values.locations import Locations
@@ -23,6 +24,13 @@ class Player:
         self.energy = constants.DEFAULT_ENERGY_CUBE
         self.cards: List[Card] = []
         self.allowed_to_yield = False
+
+    @property
+    def dice_allowed(self):
+        allowed_dice = constants.DEFAULT_DICE_TO_ROLL
+        if self.has_instance_of_card(GiantBrain()):
+            allowed_dice += 1
+        return allowed_dice
 
     def set_monster_name(self, monster_name):
         self.monster_name = monster_name
