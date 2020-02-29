@@ -18,6 +18,14 @@ from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN
     DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE
 
 
+def dice_vals_log_message(player_name, values):
+    msg = "{} rolled: ".format(player_name)
+    for val in values[:-1]:
+        msg += val.name + ", "
+    msg += values[-1].name
+    return msg
+
+
 class GameConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
@@ -139,7 +147,7 @@ class GameConsumer(WebsocketConsumer):
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
-
+        self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(username, values))
         self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
 
     def selected_dice_handler(self, data):
@@ -151,15 +159,13 @@ class GameConsumer(WebsocketConsumer):
 
         try:
             state.dice_handler.re_roll_dice(selected_dice)
+            values = state.dice_handler.dice_values
+            self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(username, values))
+            rolled_dice_ui_message = dice_values_message_create(values)
+            self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
+            save_game(game, state)
         except ValueError:
             self.send_to_client(SERVER_RESPONSE, username, room, "{} out of rolls.".format(username))
-
-        # serialize then store modified GameState object
-        save_game(game, state)
-
-        values = state.dice_handler.dice_values
-        rolled_dice_ui_message = dice_values_message_create(values)
-        self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
 
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
@@ -172,6 +178,7 @@ class GameConsumer(WebsocketConsumer):
         state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
 
         values = state.dice_handler.dice_values
+
         rolled_dice_ui_message = dice_values_message_create(values)
 
         save_game(game, state)
@@ -182,6 +189,7 @@ class GameConsumer(WebsocketConsumer):
             self.send_to_client(BEGIN_TURN_RESPONSE, username, room, "None")
 
         self.send_to_client(DICE_ROLLS_RESPONSE, next_player.username, room, rolled_dice_ui_message)
+        self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(next_player.username, values))
 
     def gamelog_send_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -215,6 +223,8 @@ class GameConsumer(WebsocketConsumer):
 
     def resolve_dice_handler(self, data):
         username, room, game, state = reconstruct_game(data)
+        self.send_to_client(SERVER_RESPONSE, username, room,
+                            "{} locked in dice".format(state.players.current_player.username))
 
         dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
                         state.players.get_all_alive_players_minus_current_player())
@@ -243,9 +253,6 @@ class GameConsumer(WebsocketConsumer):
                                 "{} tried to buy {} but has insufficient energy!".format(
                                     username, state.deck_handler.store[index_to_buy].name)
                                 )
-
-        except:
-            print("wrong exception")
 
         save_game(game, state)
 
