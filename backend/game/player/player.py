@@ -4,6 +4,7 @@ from typing import List
 from game.cards.card import Card
 from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
+from game.cards.keep_cards.health_manipulation_cards.it_has_a_child import ItHasAChild
 from game.player.player_status_resolver import json_players_hand
 from game.values import constants
 from game.values.locations import Locations
@@ -50,7 +51,10 @@ class Player:
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health
         if self.current_health <= 0:
-            self.is_alive = False
+            if self.has_instance_of_card(ItHasAChild()):
+                ItHasAChild.special_effect(self, self, None)
+            else:
+                self.is_alive = False
 
     def update_max_health_by(self, change_integer):
         self.maximum_health += change_integer
