@@ -14,16 +14,17 @@ class DiceRoller extends React.Component {
             rolledDice: [],
             selectedDice: [],
             allowReroll: true,
-            allowEndTurn: true,
-            diceAccepted: false
+            allowEndTurn: false,
+            diceAccepted: false,
+            its_my_turn: false
         };
 
         this.AttemptReroll = this.AttemptReroll.bind(this);
         this.EndTurn = this.EndTurn.bind(this);
-        this.YieldTokyo = this.YieldTokyo.bind(this);
         this.ResolveDice = this.ResolveDice.bind(this);
         GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
         GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
+        GameInstance.addAllowEndTurnCallback(this.allowEndTurnHandler.bind(this));
     }
 
     componentDidMount() {
@@ -40,6 +41,7 @@ class DiceRoller extends React.Component {
         const content = message.content;
 
         let its_my_turn = username_whos_turn_it_is === this.state.username;
+        this.setState({its_my_turn: its_my_turn})
 
         this.setState({allowReroll: its_my_turn});
 
@@ -51,6 +53,7 @@ class DiceRoller extends React.Component {
             this.setState({rolledDice: content});
         }
     }
+
 
     beginTurnHandler(message) {
         // const room = message.room;
@@ -66,7 +69,7 @@ class DiceRoller extends React.Component {
         let its_my_turn = username_whos_turn_it_is === this.state.username;
 
         this.setState({allowReroll: its_my_turn});
-        this.setState({allowEndTurn: its_my_turn});
+        this.setState({allowEndTurn: false});
         this.setState({diceAccepted: false})
 
         if (!its_my_turn) {
@@ -75,17 +78,11 @@ class DiceRoller extends React.Component {
         }
     }
 
-    YieldTokyo(/*e*/) {
-        try {
-            GameInstance.sendMessage({
-                command: "yield_tokyo_request",
-                user: this.state.username,
-                room: this.state.gameRoom,
-                payload: this.state.username
-            });
-        } catch (exception) {
-            console.log(exception);
+    allowEndTurnHandler(message) {
+        if (this.state.its_my_turn) {
+            this.setState({allowEndTurn: true})
         }
+
     }
 
     ResolveDice(/*e*/) {
@@ -229,13 +226,6 @@ class DiceRoller extends React.Component {
                     onClick={this.EndTurn}
                 >
                     End Turn
-                </Button>
-
-                <Button
-                    className="btn btn-secondary"
-                    onClick={this.YieldTokyo}
-                >
-                    Yield Tokyo
                 </Button>
 
             </div>

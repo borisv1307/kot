@@ -24,6 +24,7 @@ class Player:
         self.energy = constants.DEFAULT_ENERGY_CUBE
         self.cards: List[Card] = []
         self.allowed_to_yield = False
+        self.gets_bonus_turn = False
 
     @property
     def dice_allowed(self):

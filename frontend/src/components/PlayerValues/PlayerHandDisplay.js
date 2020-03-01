@@ -7,8 +7,11 @@ class PlayerHandDisplay extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    let cards = {};
+    this.updateCards();
+  }
 
+  updateCards() {
+    let cards = {};
     if (this.props.data) {
       try {
         cards = JSON.parse(this.props.data);
@@ -16,13 +19,15 @@ class PlayerHandDisplay extends React.Component {
     }
 
     this.state = {
-      username: props.currentUser,
-      gameRoom: props.currentRoom,
+      username: this.props.currentUser,
+      gameRoom: this.props.currentRoom,
       data: cards
     };
   }
 
   render() {
+    this.updateCards();
+
     if (this.state.data && this.state.data.length > 0) {
       return (
         <div>
