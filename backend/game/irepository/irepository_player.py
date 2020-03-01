@@ -1,6 +1,7 @@
 import datetime
-from game.models import User
+
 from game.models import Game
+from game.models import User
 from game.player.player import Player
 
 
@@ -14,7 +15,7 @@ class IRepositoryPlayer:
                          username=player.username,
                          date_created=datetime.datetime.now())
         self.user.save()
-        return self.user.id
+        return self.user
 
     def get_player_by_id(self, user_id):
         self.user = User.objects.get(id=user_id)
