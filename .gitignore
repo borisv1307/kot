@@ -224,6 +224,7 @@ dist/
 *.egg-info
 issue/
 env/
+venv/
 .env/
 3rdparty/
 .tox
@@ -340,3 +341,4 @@ public
 # TernJS port file
 .tern-port
 .vscode/settings.json
+/backend/game/migrations/0001_initial.py

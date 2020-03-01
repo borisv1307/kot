@@ -1,7 +1,8 @@
 import datetime
-from game.models import User
+
 from game.models import Dice
 from game.models import Game
+from game.models import User
 from game.player.player import Player
 
 
@@ -32,7 +33,7 @@ class IRepositoryDice:
             dice8_selected='N',
             date_created=datetime.datetime.now())
         self.dice.save()
-        return self.dice.id
+        return self.dice
 
     def get_dice_by_id(self, dice_id):
         self.dice = Dice.objects.get(id=dice_id)
@@ -40,7 +41,7 @@ class IRepositoryDice:
 
     def get_all_dice_by_player_and_room(self, player: Player, room):
         self.dice = Dice.objects.get(user=User.objects.get(monster_name=player.monster_name,
-                                                              game=Game.objects.get(room_name=room)).id)
+                                                           game=Game.objects.get(room_name=room)).id)
         return self.dice
 
     def update_dice_by_id(self, dice_id, dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8, roll):

@@ -1,7 +1,8 @@
 import datetime
-from game.models import User
-from game.models import Play
+
 from game.models import Game
+from game.models import Play
+from game.models import User
 from game.player.player import Player
 
 
@@ -29,7 +30,7 @@ class IRepositoryPlay:
                          life_points=player.current_health,
                          date_created=datetime.datetime.now())
         self.play.save()
-        return self.play.id
+        return self.play
 
     def save_play_card_purchased(self, player: Player, room, card, card_type):
         self.play = Play(user=User.objects.get(monster_name=player.monster_name, game=Game.objects.get(room_name=room)),
@@ -49,7 +50,7 @@ class IRepositoryPlay:
                          life_points=player.current_health,
                          date_created=datetime.datetime.now())
         self.play.save()
-        return self.play.id
+        return self.play
 
     def save_play_card_used(self, player: Player, room, card, card_type):
         self.play = Play(user=User.objects.get(monster_name=player.monster_name, game=Game.objects.get(room_name=room)),
@@ -69,7 +70,7 @@ class IRepositoryPlay:
                          life_points=player.current_health,
                          date_created=datetime.datetime.now())
         self.play.save()
-        return self.play.id
+        return self.play
 
     def get_play_by_id(self, play_id):
         self.play = Play.objects.get(id=play_id)

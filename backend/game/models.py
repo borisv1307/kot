@@ -8,15 +8,15 @@ class Game(models.Model):
         ('0', 'Game-Cancelled'),
         ('2', 'In-Progress'),
     )
-    room_name = models.CharField(max_length=30)
+    room_name = models.CharField(max_length=30, unique=True)
     game_status = models.CharField(max_length=1, choices=GAME_STATUS)
-    first_winner = models.IntegerField()
-    second_winner = models.IntegerField()
-    third_winner = models.IntegerField()
-    fourth_winner = models.IntegerField()
-    fifth_winner = models.IntegerField()
-    sixth_winner = models.IntegerField()
-    date_created = models.DateTimeField()
+    first_winner = models.IntegerField(null=True)
+    second_winner = models.IntegerField(null=True)
+    third_winner = models.IntegerField(null=True)
+    fourth_winner = models.IntegerField(null=True)
+    fifth_winner = models.IntegerField(null=True)
+    sixth_winner = models.IntegerField(null=True)
+    date_created = models.DateTimeField(null=True)
 
 
 class User(models.Model):
@@ -24,10 +24,8 @@ class User(models.Model):
     monster_name = models.CharField(max_length=30)
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
-    date_created = models.DateTimeField(default=timezone.now, blank=True)
-
     online = models.BooleanField(null=False, blank=False, default=False)
-
+    date_created = models.DateTimeField(default=timezone.now, blank=True)
     REQUIRED_FIELDS = []
 
     def __str__(self):

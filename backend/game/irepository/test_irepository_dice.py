@@ -1,11 +1,11 @@
 import pytest
 
-from game.irepository.irepository_dice import IRepositoryDice
-from game.irepository.irepository_player import IRepositoryPlayer
-from game.irepository.irepository_game import IRepositoryGame
-from game.dice_handler import DiceHandler
-from game.player.player import Player
 from game.dice.dice import DieValue
+from game.dice.dice_handler import DiceHandler
+from game.irepository.irepository_dice import IRepositoryDice
+from game.irepository.irepository_game import IRepositoryGame
+from game.irepository.irepository_player import IRepositoryPlayer
+from game.player.player import Player
 
 
 @pytest.mark.django_db(transaction=True)
@@ -19,7 +19,7 @@ def test_save_dice():
     player.set_username('Test_Get')
     repository_player.save_player(player, 'Room1')
     assert repository_dice.save_dice(player, 'Room1', DieValue.ONE, DieValue.TWO, DieValue.THREE, DieValue.ONE,
-                                     DieValue.TWO, DieValue.THREE, 0, 0, 1) == 1
+                                     DieValue.TWO, DieValue.THREE, 0, 0, 1).id == 1
 
 
 @pytest.mark.django_db(transaction=True)
