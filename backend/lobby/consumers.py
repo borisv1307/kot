@@ -14,7 +14,7 @@ from game.player.player_status_resolver import player_status_summary_to_JSON
 from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
 from lobby.consumers_common import save_game, reconstruct_game, create_send_response_to_client
 from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
-    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE
+    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, END_TURN
 
 
 class GameConsumer(WebsocketConsumer):
@@ -199,6 +199,7 @@ class GameConsumer(WebsocketConsumer):
     def yield_tokyo_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
         player = state.players.get_player_by_username_from_alive(username)
+
         if player.allowed_to_yield:
             state.yield_tokyo_to_current_player(player)
             self.send_to_client(SERVER_RESPONSE, username, room,
@@ -208,9 +209,29 @@ class GameConsumer(WebsocketConsumer):
 
             player_summaries = player_status_summary_to_JSON(state.players)
             self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+            self.send_to_client(END_TURN, state.players.current_player.username, room, "allow end turn")
         else:
             print("{} can't yield tokyo!".format(username))
         save_game(game, state)
+
+    def keep_tokyo_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        player = state.players.get_player_by_username_from_alive(username)
+        player.allowed_to_yield = False
+        save_game(game, state)
+
+        self.send_to_client(SERVER_RESPONSE, username, room,
+                            "{} refuses to yield Tokyo!".format(username))
+        awaiting_yield_response = False
+
+        for p in state.players.players:
+            if p.allowed_to_yield:
+                awaiting_yield_response = True
+                self.send_to_client(SERVER_RESPONSE, username, room,
+                                    "Waiting for {} to decide whether to yield Tokyo!".format(p.username))
+
+        if not awaiting_yield_response:
+            self.send_to_client(END_TURN, state.players.current_player.username, room, "allow end turn")
 
     def resolve_dice_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -222,6 +243,21 @@ class GameConsumer(WebsocketConsumer):
         self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
 
         save_game(game, state)
+
+        self.trigger_yield_popup_if_necessary(state, room)
+
+    def trigger_yield_popup_if_necessary(self, state, room):
+        awaiting_yield_response = False
+
+        for p in state.players.players:
+            if p.allowed_to_yield:
+                awaiting_yield_response = True
+                self.send_to_client(SERVER_RESPONSE, state.players.current_player.username, room,
+                                    "Waiting for {} to decide whether to yield Tokyo!".format(p.username))
+                self.send_to_client(YIELD_ALERT, p.username, room, "yield")
+
+        if not awaiting_yield_response:
+            self.send_to_client(END_TURN, state.players.current_player.username, room, "allow end turn")
 
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -268,6 +304,7 @@ class GameConsumer(WebsocketConsumer):
         'end_turn_request': end_turn_handler,
         'card_store_request': card_store_request_handler,
         'yield_tokyo_request': yield_tokyo_request_handler,
+        'keep_tokyo_request': keep_tokyo_request_handler,
         'sweep_card_store_request': card_store_sweep_request_handler,
         'buy_card_request': buy_card_request_handler
     }
