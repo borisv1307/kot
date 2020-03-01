@@ -117,7 +117,7 @@ class GameConsumer(WebsocketConsumer):
             # player.add_card(EnergyHoarder())
             # player.add_card(SolarPowered())
             # player.add_card(EvenBigger())
-            # player.update_energy_by(1000)
+            player.update_energy_by(1000)
             state.add_player(player)
 
         # hack to start game after 2 players join
@@ -225,6 +225,10 @@ class GameConsumer(WebsocketConsumer):
 
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
+
+        if username != state.players.current_player.username:
+            return
+
         index_to_buy = data['payload']
         state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
                                                state.players.get_all_alive_players_minus_current_player())
