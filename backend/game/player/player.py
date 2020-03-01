@@ -23,6 +23,7 @@ class Player:
         self.energy = constants.DEFAULT_ENERGY_CUBE
         self.cards: List[Card] = []
         self.allowed_to_yield = False
+        self.gets_bonus_turn = False
 
     def set_monster_name(self, monster_name):
         self.monster_name = monster_name
