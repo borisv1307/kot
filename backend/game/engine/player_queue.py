@@ -36,7 +36,7 @@ class GamePlayers:
 
     def get_next_player(self):
         self.reset_allowed_to_yield()
-        if self.current_player is not None and self.current_player.gets_bonus_turn:
+        if self.current_player and self.current_player.gets_bonus_turn:
             self.current_player.gets_bonus_turn = False
         else:
             self.current_player = self._cycle_next_alive_player()
