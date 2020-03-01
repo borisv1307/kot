@@ -83,7 +83,7 @@ class DeckHandler:
                 card_to_buy.immediate_effect(purchasing_player, other_players)
                 self.discard(card_to_buy)
             elif isinstance(card_to_buy, KeepCard):
-                purchasing_player.add_card(card_to_buy)
+                card_to_buy.immediate_effect(purchasing_player, other_players)
             else:
                 print("UNEXPECTED CARD TYPE!!!")
                 raise UnexpectedCardTypeException
