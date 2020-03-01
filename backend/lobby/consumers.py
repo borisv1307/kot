@@ -19,10 +19,7 @@ from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN
 
 
 def dice_vals_log_message(player_name, values):
-    msg = "{} rolled: ".format(player_name)
-    for val in values[:-1]:
-        msg += val.name + ", "
-    msg += values[-1].name
+    msg = "{} rolled: {}".format(player_name, ", ".join([val.name for val in values]))
     return msg
 
 
