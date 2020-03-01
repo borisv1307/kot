@@ -1,9 +1,13 @@
+# Attack Manipulation Cards
+from game.cards.keep_cards.attack_manipulation_cards.nova_breath import NovaBreath
+
 # Energy Manipulation Cards
 from game.cards.discard_cards.energy_manipulation_cards.energize import Energize
 # Health Manipulation cards
 from game.cards.discard_cards.health_manipulation_cards.fire_blast import FireBlast
 from game.cards.discard_cards.health_manipulation_cards.high_altitude_bombing import HighAltitudeBombing
 from game.cards.keep_cards.health_manipulation_cards.it_has_a_child import ItHasAChild
+from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 
 # Multi-Manipulation Cards
 from game.cards.discard_cards.multi_manipulation_cards.gas_refinery import GasRefinery
@@ -12,21 +16,27 @@ from game.cards.discard_cards.multi_manipulation_cards.national_guard import Nat
 from game.cards.discard_cards.multi_manipulation_cards.nuclear_power_plant import NuclearPowerPlant
 from game.cards.discard_cards.multi_manipulation_cards.tanks import Tanks
 from game.cards.discard_cards.multi_manipulation_cards.vast_storm import VastStorm
+
 # Turn manipulations cards
 from game.cards.discard_cards.turn_manipulation_cards.frenzy import Frenzy
+
 # Discard Victory Point Manipulation Cards
 from game.cards.discard_cards.victory_point_manipulation_cards.apartment_building import ApartmentBuilding
 from game.cards.discard_cards.victory_point_manipulation_cards.commuter_train import CommuterTrain
 from game.cards.discard_cards.victory_point_manipulation_cards.corner_store import CornerStore
+from game.cards.discard_cards.victory_point_manipulation_cards.drop_from_high_altitude import DropFromHighAltitude
 from game.cards.discard_cards.victory_point_manipulation_cards.evacuation_orders import EvacuationOrders
 from game.cards.discard_cards.victory_point_manipulation_cards.skyscraper import Skyscraper
+
 # Keep Energy Point Manipulation Cards
 from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import EnergyHoarder
 from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
 from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
+
 # Keep Turn Manipulation Cards
 from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
+
 # Keep Victory Point Manipulation Cards
 from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
 from game.cards.keep_cards.victory_point_manipulation_cards.gourmet import Gourmet
@@ -47,7 +57,7 @@ def get_all_cards():
     multi_manipulation_cards = [GasRefinery(), JetFighters(), NationalGuard(), NuclearPowerPlant(), Tanks(),
                                 VastStorm()]
 
-    victory_point_manipulation_cards = [ApartmentBuilding(), CommuterTrain(), CornerStore(),
+    victory_point_manipulation_cards = [ApartmentBuilding(), CommuterTrain(), CornerStore(), DropFromHighAltitude(),
                                         EvacuationOrders(), Skyscraper()]
 
     turn_manipulation_cards = [Frenzy()]
@@ -59,9 +69,14 @@ def get_all_cards():
     discard_cards.extend(victory_point_manipulation_cards)
     discard_cards.extend(turn_manipulation_cards)
 
+
+    keep_cards = []
+
+    keep_attack_manipulation_cards = [NovaBreath()]
+
     keep_energy_manipulation_cards = [EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
 
-    keep_health_manipulation_cards = [ItHasAChild()]
+    keep_health_manipulation_cards = [ItHasAChild(), EvenBigger()]
 
     keep_victory_point_manipulation_cards = [
         DedicatedNewsTeam(), Gourmet(), Omnivore()]
@@ -69,6 +84,7 @@ def get_all_cards():
     keep_turn_manipulation_cards = [GiantBrain()]
 
     keep_cards = []
+    keep_cards.extend(keep_attack_manipulation_cards)
     keep_cards.extend(keep_energy_manipulation_cards)
     keep_cards.extend(keep_health_manipulation_cards)
     keep_cards.extend(keep_victory_point_manipulation_cards)
