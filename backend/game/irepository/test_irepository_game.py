@@ -27,32 +27,64 @@ def test_get_game_by_status():
 
 
 @pytest.mark.django_db(transaction=True)
-def test_get_all_games():
+def test_get_game_by_room():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room5')
     repository_game.save_game('Room6')
-    assert repository_game.get_game_by_id(5).room_name == 'Room5'
-    assert repository_game.get_game_by_id(6).room_name == 'Room6'
+    result = repository_game.get_game_by_room('Room6')
+    assert result.room_name == 'Room6'
+
+
+@pytest.mark.django_db(transaction=True)
+def test_get_all_games():
+    repository_game = IRepositoryGame()
+    repository_game.save_game('Room7')
+    repository_game.save_game('Room8')
+    assert repository_game.get_game_by_id(7).room_name == 'Room7'
+    assert repository_game.get_game_by_id(8).room_name == 'Room8'
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_game_status_by_id():
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room7')
-    repository_game.update_game_status_by_id(7, '1')
-    assert repository_game.get_game_by_id(7).game_status == '1'
+    repository_game.save_game('Room9')
+    repository_game.update_game_status_by_id(9, '1')
+    assert repository_game.get_game_by_id(9).game_status == '1'
+
+
+@pytest.mark.django_db(transaction=True)
+def test_update_game_status_by_room():
+    repository_game = IRepositoryGame()
+    repository_game.save_game('Room10')
+    repository_game.update_game_status_by_room('Room10', '1')
+    assert repository_game.get_game_by_room('Room10').game_status == '1'
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_game_winners_by_id():
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room8')
-    repository_game.update_game_winners_by_id(8, 1, 2, 3, 4, 5, 6)
-    assert repository_game.get_game_by_id(8).second_winner == 2
+    repository_game.save_game('Room11')
+    repository_game.update_game_winners_by_id(11, 1, 2, 3, 4, 5, 6)
+    assert repository_game.get_game_by_id(11).second_winner == 2
+
+
+@pytest.mark.django_db(transaction=True)
+def test_update_game_winners_by_room():
+    repository_game = IRepositoryGame()
+    repository_game.save_game('Room12')
+    repository_game.update_game_winners_by_room('Room12', 6, 5, 4, 3, 2, 1)
+    assert repository_game.get_game_by_room('Room12').second_winner == 5
 
 
 @pytest.mark.django_db(transaction=True)
 def test_delete_game_by_id():
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room9')
-    assert repository_game.delete_game_by_id(9) is None
+    repository_game.save_game('Room13')
+    assert repository_game.delete_game_by_id(13) is None
+
+
+@pytest.mark.django_db(transaction=True)
+def test_delete_game_by_room():
+    repository_game = IRepositoryGame()
+    repository_game.save_game('Room14')
+    assert repository_game.delete_game_by_room('Room14') is None

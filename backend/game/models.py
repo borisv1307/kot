@@ -21,7 +21,7 @@ class Game(models.Model):
 
 class User(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    monster_name = models.CharField(max_length=30)
+    monster_name = models.CharField(max_length=30, null=True)
     # the user can be an email or guest thus username, guest must be unique
     username = models.CharField(max_length=30)
     online = models.BooleanField(null=False, blank=False, default=False)
@@ -59,10 +59,10 @@ class Dice(models.Model):
     dice5_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
     dice6 = models.CharField(max_length=1, choices=DICE_VALUE)
     dice6_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    dice7 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice7_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
-    dice8 = models.CharField(max_length=1, choices=DICE_VALUE)
-    dice8_selected = models.CharField(max_length=1, choices=DICE_SELECTED)
+    dice7 = models.CharField(max_length=1, choices=DICE_VALUE, null=True)
+    dice7_selected = models.CharField(max_length=1, choices=DICE_SELECTED, null=True)
+    dice8 = models.CharField(max_length=1, choices=DICE_VALUE, null=True)
+    dice8_selected = models.CharField(max_length=1, choices=DICE_SELECTED, null=True)
     date_created = models.DateTimeField()
 
 
@@ -154,21 +154,21 @@ class Play(models.Model):
         ('75', 'Unstable DNA'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    card1_swept = models.CharField(max_length=2, choices=CARD)
-    card1_swept_type = models.CharField(max_length=1, choices=CARD_TYPE)
-    card2_swept = models.CharField(max_length=2, choices=CARD)
-    card2_swept_type = models.CharField(max_length=1, choices=CARD_TYPE)
-    card3_swept = models.CharField(max_length=2, choices=CARD)
-    card3_swept_type = models.CharField(max_length=1, choices=CARD_TYPE)
-    card_purchased = models.CharField(max_length=2, choices=CARD)
-    card_purchased_type = models.CharField(max_length=1, choices=CARD_TYPE)
-    card_used = models.CharField(max_length=2, choices=CARD)
-    card_used_type = models.CharField(max_length=1, choices=CARD_TYPE)
-    location = models.CharField(max_length=1, choices=MONSTER_POSITION)
-    victory_points = models.IntegerField()
-    energy_cube = models.IntegerField()
-    life_points = models.IntegerField()
-    date_created = models.DateTimeField()
+    card1_swept = models.CharField(max_length=2, choices=CARD, null=True)
+    card1_swept_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True)
+    card2_swept = models.CharField(max_length=2, choices=CARD, null=True)
+    card2_swept_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True)
+    card3_swept = models.CharField(max_length=2, choices=CARD, null=True)
+    card3_swept_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True)
+    card_purchased = models.CharField(max_length=2, choices=CARD, null=True)
+    card_purchased_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True)
+    card_used = models.CharField(max_length=2, choices=CARD, null=True)
+    card_used_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True)
+    location = models.CharField(max_length=1, choices=MONSTER_POSITION, null=True)
+    victory_points = models.IntegerField(null=True)
+    energy_cube = models.IntegerField(null=True)
+    life_points = models.IntegerField(null=True)
+    date_created = models.DateTimeField(null=True)
 
 
 class GameState(models.Model):
