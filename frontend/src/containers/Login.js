@@ -64,7 +64,7 @@ export default class LoginLayout extends Component {
         <div className="row">
           <div className="col-sm p-4">
             <div className="login">
-              <Form class="login">
+              <Form className="login">
                 <h2>Login to Join a Game</h2>
                 <Form.Group
                   href="/lobby"

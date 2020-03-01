@@ -58,19 +58,20 @@ class PlayerTable extends React.Component {
           canvas.height = this.state.tableAreaHeight;
 
           const context = canvas.getContext("2d");
-          context.fillStyle = "tan";
           var dotsPerCircle = this.state.data.length;
+
+          if (dotsPerCircle <= 2) dotsPerCircle = 3;
+
           // context.fillStyle = "blue";
           // context.fillRect(0, 0, canvas.width, canvas.height);
           var interval = (Math.PI * 2) / dotsPerCircle;
           let centerX = this.state.centerX > 0 ? this.state.centerX : 100;
           let centerY = this.state.centerY > 0 ? this.state.centerY : 100;
-          let radius =
-            (this.state.tableAreaWidth < this.state.tableAreaHeight
-              ? this.state.tableAreaWidth
-              : this.state.tableAreaHeight) * 0.4;
+          let radius = this.state.tableAreaWidth * 0.5;
+
           context.beginPath();
           for (var i = 0; i < dotsPerCircle; i++) {
+            context.fillStyle = "tan";
             let desiredRadianAngleOnCircle = interval * i;
             var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
             var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
@@ -79,6 +80,30 @@ class PlayerTable extends React.Component {
           }
           context.closePath();
           context.fill();
+
+          this.state.data.map((entry, index) => {
+            let desiredRadianAngleOnCircle = interval * index;
+            var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
+            var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
+            context.fillStyle = "tan";
+            context.font = "20px Arial";
+            const txt = this.formatName(entry.username);
+            const tInfo = context.measureText(txt);
+            const tWidth = tInfo.width * 0.5;
+
+            let txtX = x - tWidth;
+            if (x + tWidth > this.state.tableAreaWidth) txtX = x - tInfo.width;
+
+            context.fillStyle = "white";
+            /// draw background rect assuming height of font
+            context.fillRect(txtX - 2, y - 20 + 2, tInfo.width + 4, 24);
+
+            context.fillStyle = "black";
+            context.fillText(txt, txtX, y);
+
+            const img = this.provideShape();
+            if (img) context.drawImage(img, x, y);
+          });
         }
       }
     }
@@ -98,40 +123,6 @@ class PlayerTable extends React.Component {
         centerY: centerY
       });
     }
-  }
-
-  genPos(dotsPerCircle) {
-    let centerX = this.state.centerX > 0 ? this.state.centerX : 100;
-    let centerY = this.state.centerY > 0 ? this.state.centerY : 100;
-    if (dotsPerCircle <= 1) {
-      return [
-        {
-          position: "absolute",
-          top: centerY,
-          left: centerX
-        }
-      ];
-    }
-
-    let interval = (Math.PI * 2) / dotsPerCircle;
-    let radius =
-      (this.state.tableAreaWidth < this.state.tableAreaHeight
-        ? this.state.tableAreaWidth
-        : this.state.tableAreaHeight) * 0.35;
-    let positions = [];
-
-    for (let i = 0; i < dotsPerCircle; i++) {
-      let angleRad = interval * i;
-      let x = centerX + radius * Math.cos(angleRad);
-      let y = centerY + radius * Math.sin(angleRad);
-
-      positions.push({
-        position: "absolute",
-        top: y,
-        left: x
-      });
-    }
-    return positions;
   }
 
   beginTurnHandler(message) {
@@ -169,64 +160,26 @@ class PlayerTable extends React.Component {
 
   formatName(name) {
     if (this.isItsYourTurn() && this.areYouMe(name)) {
-      return (
-        <div className="txt_bounds">
-          <p className="txt_format">{name}</p>
-          <p className="txt_format">Your Turn!</p>
-        </div>
-      );
+      return name + "Your Turn!";
     } else if (this.isItThisGuyTurn(name)) {
-      return (
-        <div className="txt_bounds">
-          <p className="txt_format">{name}</p>
-          <p className="txt_format">Turn!</p>
-        </div>
-      );
+      return name + "Turn!";
     }
-
-    return (
-      <div className="txt_bounds">
-        <p className="txt_format">{name}</p>
-      </div>
-    );
+    return name;
   }
 
   provideShape(name) {
     if (this.isItsYourTurn() && this.areYouMe(name)) {
-      return <img alt="Your Turn!" src={Go}></img>;
+      return this.refs.Go_Image;
     }
-    // else if (this.isItThisGuyTurn(name)) {
-    //   return <img alt="This persons turn." src={Turn}></img>;
-    // }
-    return; // <img alt="Waiting for game to start..." src={Waiting}></img>;
-  }
-
-  provideColor(name) {
-    if (this.isItsYourTurn() && this.areYouMe(name)) {
-      return "green";
-    } else if (this.isItThisGuyTurn(name)) {
-      return "orange";
-    }
-    return "black";
-  }
-
-  getSeat(style_in, player) {
-    return (
-      <span className="seat_layout" style={{ ...style_in }}>
-        <p style={{ color: this.provideColor(player) }}>
-          {this.provideShape(player)}
-          {this.formatName(player)}
-        </p>
-      </span>
-    );
+    return null;
   }
 
   render() {
     if (this.state.data instanceof Array) {
       if (this.state.data && this.state.data.length > 0) {
-        let items = this.genPos(this.state.data.length);
+        // let items = this.genPos(this.state.data.length);
 
-        let msg = <p>Game Started! {items.length} Playing...</p>;
+        let msg = <p>Game Started! {this.state.data.length} Playing...</p>;
         if (!this.gameStarted()) {
           msg = <p>Waiting, Please wait.</p>;
         }
@@ -238,16 +191,8 @@ class PlayerTable extends React.Component {
               this.divElement = divElement;
             }}
           >
+            <img hidden ref="Go_Image" src={Go}></img>
             {msg}
-            {/* Size: width<b>{this.state.tableAreaWidth}px</b> height
-            <b>{this.state.tableAreaHeight}px</b> */}
-            <container className="player_seats">
-              {this.state.data.map((entry, index) => (
-                <span key={index}>
-                  {this.getSeat(items[index], entry.username)}
-                </span>
-              ))}
-            </container>
             <canvas ref="canvas" />
           </div>
         );

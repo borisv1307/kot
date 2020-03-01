@@ -4,109 +4,13 @@ exports[`Verify PlayerTable layout template Verify parameter provided PlayeValue
 <div
   id="table_area"
 >
+  <img
+    hidden={true}
+    src="icons8-go-48.png"
+  />
   <p>
     Waiting, Please wait.
   </p>
-  <container
-    className="player_seats"
-  >
-    <span
-      key="0"
-    >
-      <span
-        className="seat_layout"
-        style={
-          Object {
-            "left": 100,
-            "position": "absolute",
-            "top": 100,
-          }
-        }
-      >
-        <p
-          style={
-            Object {
-              "color": "black",
-            }
-          }
-        >
-          <div
-            className="txt_bounds"
-          >
-            <p
-              className="txt_format"
-            >
-              howdy
-            </p>
-          </div>
-        </p>
-      </span>
-    </span>
-    <span
-      key="1"
-    >
-      <span
-        className="seat_layout"
-        style={
-          Object {
-            "left": 100,
-            "position": "absolute",
-            "top": 100,
-          }
-        }
-      >
-        <p
-          style={
-            Object {
-              "color": "black",
-            }
-          }
-        >
-          <div
-            className="txt_bounds"
-          >
-            <p
-              className="txt_format"
-            >
-              ya
-            </p>
-          </div>
-        </p>
-      </span>
-    </span>
-    <span
-      key="2"
-    >
-      <span
-        className="seat_layout"
-        style={
-          Object {
-            "left": 100,
-            "position": "absolute",
-            "top": 100,
-          }
-        }
-      >
-        <p
-          style={
-            Object {
-              "color": "black",
-            }
-          }
-        >
-          <div
-            className="txt_bounds"
-          >
-            <p
-              className="txt_format"
-            >
-              all
-            </p>
-          </div>
-        </p>
-      </span>
-    </span>
-  </container>
   <canvas />
 </div>
 `;

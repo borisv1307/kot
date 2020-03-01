@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Verify CardStore layout template Verify parameter provided cards are rendered correctly 1`] = `
-<container
+<div
   className="card"
 >
   <div
@@ -26,5 +26,5 @@ exports[`Verify CardStore layout template Verify parameter provided cards are re
       </Button>
     </div>
   </div>
-</container>
+</div>
 `;

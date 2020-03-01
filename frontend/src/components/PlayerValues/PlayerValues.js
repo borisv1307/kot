@@ -14,9 +14,9 @@ class PlayerValues extends React.Component {
 
     return (
       <div>
-        <div class="container">
-          <div class="row">
-            <div class="col-sm player-border">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm player-border">
               <h2>{this.props.username}</h2>
               <p>{you_or_them}</p>
               <div className="player-values">
@@ -47,7 +47,7 @@ class PlayerValues extends React.Component {
                 </p>
               </div>
             </div>
-            <div class="col-sm">
+            <div className="col-sm">
               <PlayerHandDisplay data={this.props.cards} />
             </div>
           </div>
