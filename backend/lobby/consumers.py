@@ -11,10 +11,16 @@ from game.irepository.irepository_game import IRepositoryGame
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
-from game.values.constants import DEFAULT_RE_ROLL_COUNT
+from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
+from game.values.exceptions import InsufficientFundsException
 from lobby.consumers_common import save_game, reconstruct_game, create_send_response_to_client
 from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
     DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, END_TURN
+
+
+def dice_vals_log_message(player_name, values):
+    msg = "{} rolled: {}".format(player_name, ", ".join([val.name for val in values]))
+    return msg
 
 
 class GameConsumer(WebsocketConsumer):
@@ -138,7 +144,7 @@ class GameConsumer(WebsocketConsumer):
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
-
+        self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(username, values))
         self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
 
     def selected_dice_handler(self, data):
@@ -150,15 +156,13 @@ class GameConsumer(WebsocketConsumer):
 
         try:
             state.dice_handler.re_roll_dice(selected_dice)
+            values = state.dice_handler.dice_values
+            self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(username, values))
+            rolled_dice_ui_message = dice_values_message_create(values)
+            self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
+            save_game(game, state)
         except ValueError:
             self.send_to_client(SERVER_RESPONSE, username, room, "{} out of rolls.".format(username))
-
-        # serialize then store modified GameState object
-        save_game(game, state)
-
-        values = state.dice_handler.dice_values
-        rolled_dice_ui_message = dice_values_message_create(values)
-        self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
 
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
@@ -171,6 +175,7 @@ class GameConsumer(WebsocketConsumer):
         state.dice_handler.roll_initial(state.players.current_player.dice_allowed, DEFAULT_RE_ROLL_COUNT)
 
         values = state.dice_handler.dice_values
+
         rolled_dice_ui_message = dice_values_message_create(values)
 
         save_game(game, state)
@@ -181,6 +186,7 @@ class GameConsumer(WebsocketConsumer):
             self.send_to_client(BEGIN_TURN_RESPONSE, username, room, "None")
 
         self.send_to_client(DICE_ROLLS_RESPONSE, next_player.username, room, rolled_dice_ui_message)
+        self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(next_player.username, values))
 
     def gamelog_send_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -235,6 +241,8 @@ class GameConsumer(WebsocketConsumer):
 
     def resolve_dice_handler(self, data):
         username, room, game, state = reconstruct_game(data)
+        self.send_to_client(SERVER_RESPONSE, username, room,
+                            "{} locked in dice".format(state.players.current_player.username))
 
         dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
                         state.players.get_all_alive_players_minus_current_player())
@@ -266,13 +274,22 @@ class GameConsumer(WebsocketConsumer):
             return
 
         index_to_buy = data['payload']
-        state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
-                                               state.players.get_all_alive_players_minus_current_player())
-        current_card_store = state.deck_handler.json_store()
-        self.send_to_client(CARD_STORE_RESPONSE, username, room, current_card_store)
+        try:
+            bought = state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
+                                                            state.players.get_all_alive_players_minus_current_player())
+            current_card_store = state.deck_handler.json_store()
+            self.send_to_client(CARD_STORE_RESPONSE, username, room, current_card_store)
 
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+            player_summaries = player_status_summary_to_JSON(state.players)
+            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+            self.send_to_client(SERVER_RESPONSE, username, room,
+                                "{} bought {}!".format(
+                                    state.players.current_player.username, bought.name))
+        except InsufficientFundsException:
+            self.send_to_client(SERVER_RESPONSE, username, room,
+                                "{} tried to buy {} but has insufficient energy!".format(
+                                    username, state.deck_handler.store[index_to_buy].name)
+                                )
 
         save_game(game, state)
 
