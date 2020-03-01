@@ -1,4 +1,4 @@
-from game.cards.keep_cards.nova_breath import NovaBreath
+from game.cards.keep_cards.attack_manipulation_cards.nova_breath import NovaBreath
 from game.player.player import Player
 from game.turn_actions.player_movement import take_tokyo_on_kill
 from game.values.locations import Locations

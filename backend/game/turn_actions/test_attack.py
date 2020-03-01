@@ -1,5 +1,5 @@
 import game.turn_actions.attack as attack_actions
-from game.cards.keep_cards.nova_breath import NovaBreath
+from game.cards.keep_cards.attack_manipulation_cards.nova_breath import NovaBreath
 from game.player.player import Player
 
 

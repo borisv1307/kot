@@ -7,7 +7,8 @@ from game.dice.dice_resolver import dice_resolution
 from game.dice.dice import DieValue
 from game.values.constants import DEFAULT_HEALTH
 
-MOCK_DICE_VALUES = [DieValue.ATTACK, DieValue.ATTACK, DieValue.HEAL, DieValue.HEAL, DieValue.HEAL, DieValue.HEAL]
+MOCK_DICE_VALUES = [DieValue.ATTACK, DieValue.ATTACK,
+                    DieValue.HEAL, DieValue.HEAL, DieValue.HEAL, DieValue.HEAL]
 
 
 @pytest.fixture(autouse=True)
@@ -74,7 +75,8 @@ def test_first_attack_roll_forces_move_to_tokyo(main_player, other_players):
 
 def test_first_attack_roll_does_not_hurt_anyone(main_player, other_players):
     dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
-    assert all(others.current_health == DEFAULT_HEALTH for others in other_players)
+    assert all(others.current_health ==
+               DEFAULT_HEALTH for others in other_players)
 
 
 def test_yield_on_death_causes_death(main_player, other_players):
@@ -100,3 +102,15 @@ def test_yield_on_death_leaves_attacker_in_tokyo(main_player, other_players):
     main_player.location = Locations.TOKYO
     dice_resolution(MOCK_DICE_VALUES, main_player, other_players)
     assert main_player.location == Locations.TOKYO
+
+
+def test_move_players_out_of_tokyo(other_players):
+    player_a = other_players[0]
+    player_b = other_players[1]
+    player_c = other_players[2]
+    player_a.location = Locations.TOKYO
+    player_b.location = Locations.OUTSIDE
+    player_c.location = Locations.TOKYO
+    player_movement.move_players_out_of_tokyo(other_players)
+    assert all(player.location == Locations.OUTSIDE
+               for player in other_players)
