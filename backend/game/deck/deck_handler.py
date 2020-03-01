@@ -5,8 +5,10 @@ import game.values.constants as constants
 from game.cards.card import Card
 from game.cards.discard_card import DiscardCard
 from game.cards.keep_card import KeepCard
+from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
 from game.deck.deck import Deck
 from game.player.player import Player
+from game.values.exceptions import InsufficientFundsException, UnexpectedCardTypeException
 
 
 class DeckHandler:
@@ -68,20 +70,23 @@ class DeckHandler:
             self.__draw_pile.append(self.discard_pile.draw_from())
         self.__discard_pile.clear()
 
-    def buy_card_from_store(self, index, purchasing_player: Player):
+    def buy_card_from_store(self, index, purchasing_player: Player, other_players):
         card_to_buy: Card = self.__card_store[index]
         if purchasing_player.energy < card_to_buy.cost:
-            raise Exception(constants.INSUFFICIENT_FUNDS_MSG)
+            raise InsufficientFundsException(constants.INSUFFICIENT_FUNDS_MSG)
         else:
             purchasing_player.update_energy_by(-card_to_buy.cost)
+            if purchasing_player.has_instance_of_card(DedicatedNewsTeam()):
+                DedicatedNewsTeam.special_effect(self, purchasing_player, [])
             if isinstance(card_to_buy, DiscardCard):
                 print("{} is a discard card".format(card_to_buy.name))
+                card_to_buy.immediate_effect(purchasing_player, other_players)
                 self.discard(card_to_buy)
             elif isinstance(card_to_buy, KeepCard):
                 purchasing_player.add_card(card_to_buy)
             else:
                 print("UNEXPECTED CARD TYPE!!!")
-                raise Exception
+                raise UnexpectedCardTypeException
             self.__card_store.remove(card_to_buy)
             self.__fill_card_store()
         return card_to_buy
@@ -96,7 +101,8 @@ class DeckHandler:
         if player_invoking_sweep.energy < constants.SWEEP_CARD_STORE_COST:
             raise Exception(constants.INSUFFICIENT_FUNDS_TO_SWEEP_MSG)
         else:
-            player_invoking_sweep.update_energy_by(-constants.SWEEP_CARD_STORE_COST)
+            player_invoking_sweep.update_energy_by(
+                -constants.SWEEP_CARD_STORE_COST)
             for _ in range(3):
                 self.discard(self.store.pop())
             self.__fill_card_store()

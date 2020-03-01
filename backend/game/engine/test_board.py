@@ -13,12 +13,14 @@ def test_before_game_starts():
 
 def test_after_game_starts():
     game = BoardGame()
+    game.add_player(Player())
     game.start_game()
     assert game.status == Status.ACTIVE
 
 
 def test_game_stops():
     game = BoardGame()
+    game.add_player(Player())
     game.start_game()
     assert game.status != Status.COMPLETED
     game.end_game()

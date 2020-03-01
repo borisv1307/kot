@@ -25,6 +25,7 @@ class BoardGame:
 
     def start_game(self):
         self.players.set_player_order()
+        self.players.get_current_player()
         self.status = Status.ACTIVE
 
     def check_if_winner(self, potential_winner):
