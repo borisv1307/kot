@@ -11,7 +11,7 @@ from game.irepository.irepository_game import IRepositoryGame
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
-from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
+from game.values.constants import DEFAULT_RE_ROLL_COUNT
 from lobby.consumers_common import save_game, reconstruct_game, create_send_response_to_client
 from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
     DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, END_TURN
@@ -93,7 +93,7 @@ class GameConsumer(WebsocketConsumer):
     def start_web_game(self, room, state, username):
         state.start_game()
         self.send_to_client(SERVER_RESPONSE, username, room, "Game started..")
-        state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
+        state.dice_handler.roll_initial(state.players.current_player.dice_allowed, DEFAULT_RE_ROLL_COUNT)
         self.send_to_client(CARD_STORE_RESPONSE, username, room, state.deck_handler.json_store())
         self.send_to_client(BEGIN_TURN_RESPONSE, username, room, state.players.get_current_player().username)
         print("Game started..")
@@ -168,7 +168,7 @@ class GameConsumer(WebsocketConsumer):
 
         next_player: Player = state.get_next_player_turn()
 
-        state.dice_handler.roll_initial(DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT)
+        state.dice_handler.roll_initial(state.players.current_player.dice_allowed, DEFAULT_RE_ROLL_COUNT)
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
