@@ -53,13 +53,7 @@ class BoardGame:
     def re_roll(self, indexes_to_re_roll):
         self.dice_handler.re_roll_dice(indexes_to_re_roll)
 
-    def resolve_dice(self, dice, turn_player):
-        others = self.players.get_all_alive_players_minus_current_player()
-        dice_resolver.dice_resolution(dice, turn_player, others)
-
     def post_roll_actions(self, active_player):
-        self.resolve_dice(active_player)
-
         # TODO, refactor to other method
         if active_player.has_instance_of_card(EnergyHoarder()):
             EnergyHoarder.special_effect(
