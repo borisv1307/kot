@@ -1,4 +1,4 @@
-from game.cards.keep_cards.nova_breath import NovaBreath
+from game.cards.keep_cards.attack_manipulation_cards.nova_breath import NovaBreath
 from game.player.player import Player
 from game.turn_actions.player_movement import take_tokyo_on_kill
 from game.values.locations import Locations
@@ -29,5 +29,5 @@ def attack_players(attacking_player, attackable_players, attack_value=1):
         attacked_player.update_health_by(attack_value * -1)
         if not attacked_player.is_alive:
             take_tokyo_on_kill(attacking_player, attacked_player)
-        elif attacked_player.is_in_tokyo():
+        elif attacked_player.is_in_tokyo() and attack_value > 0:
             attacked_player.allowed_to_yield = True

@@ -18,7 +18,6 @@ MOCK_DIE_ROLL_RESULT = dice.DieValue.ATTACK
 MOCK_DIE_ROLL_RESULT_B = dice.DieValue.ENERGY
 
 dice.roll = Mock(return_value=MOCK_DIE_ROLL_RESULT)
-dice.roll_many = Mock(return_value=MOCK_SIX_DIE_VALUES_A)
 
 
 @pytest.fixture(autouse=True)
@@ -35,8 +34,10 @@ def test_start_turn(dice_handler):
 
 
 def test_re_roll_one_die(dice_handler):
+    dice_handler.dice_values = MOCK_SIX_DIE_VALUES_A
     dice_handler.re_roll_dice(0)
-    assert dice_handler.dice_values == MOCK_SIX_VALUES_AFTER_RE_ROLL_DIE_ONE
+    assert dice_handler.dice_values[1:] == MOCK_SIX_DIE_VALUES_A[1:]
+    assert dice_handler.dice_values[0] == MOCK_DIE_ROLL_RESULT
 
 
 def test_re_roll_all_dice(dice_handler):

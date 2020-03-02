@@ -3,11 +3,6 @@ from game.player.player import Player
 from game.values.locations import Locations
 
 
-def test_it_has_a_child_player_add_card(player):
-    ItHasAChild().immediate_effect(player, None)
-    assert player.has_instance_of_card(ItHasAChild())
-
-
 def test_it_has_a_child_costs_7_energy():
     assert ItHasAChild().cost == 7
 
