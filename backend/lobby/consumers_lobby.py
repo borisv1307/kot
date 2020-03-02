@@ -16,8 +16,6 @@ class LobbyConsumer(WebsocketConsumer):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'kot_lobby_%s' % self.room_name
 
-        print(self.room_group_name)
-
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
@@ -67,8 +65,6 @@ class LobbyConsumer(WebsocketConsumer):
                 state: BoardGame = pickle.loads(state_from_db.board)
                 players_as_json = player_status_summary_to_JSON(state.players)
                 rooms[state_from_db.room_name] = players_as_json
-                print(state_from_db.room_name)
-                print(players_as_json)
 
         self.send_to_client(GAME_LIST_RESPONSE, username, room, rooms)
 

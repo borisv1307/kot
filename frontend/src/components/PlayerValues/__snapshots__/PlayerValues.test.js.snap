@@ -3,13 +3,13 @@
 exports[`Verify player value template Player values should be rendered correctly 1`] = `
 <div>
   <div
-    class="container"
+    className="container"
   >
     <div
-      class="row"
+      className="row"
     >
       <div
-        class="col-sm player-border"
+        className="col-sm player-border"
       >
         <h2 />
         <p>
@@ -57,7 +57,7 @@ exports[`Verify player value template Player values should be rendered correctly
         </div>
       </div>
       <div
-        class="col-sm"
+        className="col-sm"
       >
         <PlayerHandDisplay />
       </div>

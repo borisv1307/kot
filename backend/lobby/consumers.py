@@ -19,7 +19,8 @@ from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN
 
 
 def dice_vals_log_message(player_name, values):
-    msg = "{} rolled: {}".format(player_name, ", ".join([val.name for val in values]))
+    msg = "{} rolled: {}".format(
+        player_name, ", ".join([val.name for val in values]))
     return msg
 
 
@@ -63,7 +64,8 @@ class GameConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(message))
 
     def send_to_client(self, message_type, username, room, payload):
-        content = create_send_response_to_client(message_type, username, room, payload)
+        content = create_send_response_to_client(
+            message_type, username, room, payload)
         self.send_group_message(content)
 
     def get_or_create_user(self, username, room):
@@ -99,9 +101,12 @@ class GameConsumer(WebsocketConsumer):
     def start_web_game(self, room, state, username):
         state.start_game()
         self.send_to_client(SERVER_RESPONSE, username, room, "Game started..")
-        state.dice_handler.roll_initial(state.players.current_player.dice_allowed, DEFAULT_RE_ROLL_COUNT)
-        self.send_to_client(CARD_STORE_RESPONSE, username, room, state.deck_handler.json_store())
-        self.send_to_client(BEGIN_TURN_RESPONSE, username, room, state.players.get_current_player().username)
+        state.dice_handler.roll_initial(
+            state.players.current_player.dice_allowed, DEFAULT_RE_ROLL_COUNT)
+        self.send_to_client(CARD_STORE_RESPONSE, username,
+                            room, state.deck_handler.json_store())
+        self.send_to_client(BEGIN_TURN_RESPONSE, username,
+                            room, state.players.get_current_player().username)
         print("Game started..")
 
     def init_chat_handler(self, data):
@@ -132,10 +137,12 @@ class GameConsumer(WebsocketConsumer):
             self.start_web_game(room, state, username)
         else:
             msg = "Joined, waiting on additional players"
-            self.send_to_client(SERVER_RESPONSE, username, room, username + msg)
+            self.send_to_client(SERVER_RESPONSE, username,
+                                room, username + msg)
 
         player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
+                            username, room, player_summaries)
 
         save_game(game, state)
 
@@ -144,8 +151,10 @@ class GameConsumer(WebsocketConsumer):
 
         values = state.dice_handler.dice_values
         rolled_dice_ui_message = dice_values_message_create(values)
-        self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(username, values))
-        self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
+        self.send_to_client(SERVER_RESPONSE, username, room,
+                            dice_vals_log_message(username, values))
+        self.send_to_client(DICE_ROLLS_RESPONSE, username,
+                            room, rolled_dice_ui_message)
 
     def selected_dice_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -157,22 +166,28 @@ class GameConsumer(WebsocketConsumer):
         try:
             state.dice_handler.re_roll_dice(selected_dice)
             values = state.dice_handler.dice_values
-            self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(username, values))
+            self.send_to_client(SERVER_RESPONSE, username,
+                                room, dice_vals_log_message(username, values))
             rolled_dice_ui_message = dice_values_message_create(values)
-            self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
+            self.send_to_client(DICE_ROLLS_RESPONSE, username,
+                                room, rolled_dice_ui_message)
             save_game(game, state)
         except ValueError:
-            self.send_to_client(SERVER_RESPONSE, username, room, "{} out of rolls.".format(username))
+            self.send_to_client(SERVER_RESPONSE, username,
+                                room, "{} out of rolls.".format(username))
 
     def end_turn_handler(self, data):
         # a method to end a players turn and let the next guy go
         username, room, game, state = reconstruct_game(data)
+        state.post_roll_actions(state.players.current_player)
         player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
+                            username, room, player_summaries)
 
         next_player: Player = state.get_next_player_turn()
 
-        state.dice_handler.roll_initial(state.players.current_player.dice_allowed, DEFAULT_RE_ROLL_COUNT)
+        state.dice_handler.roll_initial(
+            state.players.current_player.dice_allowed, DEFAULT_RE_ROLL_COUNT)
 
         values = state.dice_handler.dice_values
 
@@ -181,12 +196,15 @@ class GameConsumer(WebsocketConsumer):
         save_game(game, state)
 
         if next_player is not None:
-            self.send_to_client(BEGIN_TURN_RESPONSE, username, room, next_player.username)
+            self.send_to_client(BEGIN_TURN_RESPONSE, username,
+                                room, next_player.username)
         else:
             self.send_to_client(BEGIN_TURN_RESPONSE, username, room, "None")
 
-        self.send_to_client(DICE_ROLLS_RESPONSE, next_player.username, room, rolled_dice_ui_message)
-        self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(next_player.username, values))
+        self.send_to_client(DICE_ROLLS_RESPONSE,
+                            next_player.username, room, rolled_dice_ui_message)
+        self.send_to_client(SERVER_RESPONSE, username, room,
+                            dice_vals_log_message(next_player.username, values))
 
         for player in state.players.players:
             if state.check_if_winner(player):
@@ -204,7 +222,8 @@ class GameConsumer(WebsocketConsumer):
         username, room, game, state = reconstruct_game(data)
         selected_cards_ui_message = state.deck_handler.json_store()
 
-        self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
+        self.send_to_client(CARD_STORE_RESPONSE, username,
+                            room, selected_cards_ui_message)
 
     def yield_tokyo_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -218,8 +237,10 @@ class GameConsumer(WebsocketConsumer):
             state.players.reset_allowed_to_yield()
 
             player_summaries = player_status_summary_to_JSON(state.players)
-            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
-            self.send_to_client(END_TURN, state.players.current_player.username, room, "allow end turn")
+            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
+                                username, room, player_summaries)
+            self.send_to_client(
+                END_TURN, state.players.current_player.username, room, "allow end turn")
         else:
             print("{} can't yield tokyo!".format(username))
         save_game(game, state)
@@ -241,7 +262,8 @@ class GameConsumer(WebsocketConsumer):
                                     "Waiting for {} to decide whether to yield Tokyo!".format(p.username))
 
         if not awaiting_yield_response:
-            self.send_to_client(END_TURN, state.players.current_player.username, room, "allow end turn")
+            self.send_to_client(
+                END_TURN, state.players.current_player.username, room, "allow end turn")
 
     def resolve_dice_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -252,7 +274,8 @@ class GameConsumer(WebsocketConsumer):
                         state.players.get_all_alive_players_minus_current_player())
 
         player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
+                            username, room, player_summaries)
 
         save_game(game, state)
 
@@ -269,7 +292,8 @@ class GameConsumer(WebsocketConsumer):
                 self.send_to_client(YIELD_ALERT, p.username, room, "yield")
 
         if not awaiting_yield_response:
-            self.send_to_client(END_TURN, state.players.current_player.username, room, "allow end turn")
+            self.send_to_client(
+                END_TURN, state.players.current_player.username, room, "allow end turn")
 
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -282,10 +306,12 @@ class GameConsumer(WebsocketConsumer):
             bought = state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
                                                             state.players.get_all_alive_players_minus_current_player())
             current_card_store = state.deck_handler.json_store()
-            self.send_to_client(CARD_STORE_RESPONSE, username, room, current_card_store)
+            self.send_to_client(CARD_STORE_RESPONSE,
+                                username, room, current_card_store)
 
             player_summaries = player_status_summary_to_JSON(state.players)
-            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
+                                username, room, player_summaries)
             self.send_to_client(SERVER_RESPONSE, username, room,
                                 "{} bought {}!".format(
                                     state.players.current_player.username, bought.name))
@@ -300,18 +326,22 @@ class GameConsumer(WebsocketConsumer):
     def card_store_sweep_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
         if state.players.current_player.username == username:
-            successfully_swept_cardstore = state.deck_handler.sweep_store(state.players.current_player)
+            successfully_swept_cardstore = state.deck_handler.sweep_store(
+                state.players.current_player)
             if not successfully_swept_cardstore:
-                message = "{} does not have enough funds to sweep the card store!".format(username)
+                message = "{} does not have enough funds to sweep the card store!".format(
+                    username)
                 self.send_to_client(SERVER_RESPONSE, username, room, message)
         else:
             print("{} tried to sweep out of turn!".format(username))
 
         player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE, username, room, player_summaries)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
+                            username, room, player_summaries)
 
         selected_cards_ui_message = state.deck_handler.json_store()
-        self.send_to_client(CARD_STORE_RESPONSE, username, room, selected_cards_ui_message)
+        self.send_to_client(CARD_STORE_RESPONSE, username,
+                            room, selected_cards_ui_message)
 
         save_game(game, state)
 

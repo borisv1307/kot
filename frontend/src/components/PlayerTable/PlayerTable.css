@@ -1,0 +1,39 @@
+.player_seats {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  border-width: thin;
+
+  margin: 7px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 22px;
+  text-align: center;
+  color: black;
+}
+
+img {
+  margin: 3px;
+  height: 35px;
+}
+
+.txt_format {
+  margin: 0px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2rem;
+  opacity: 1;
+}
+
+.txt_bounds {
+  background: white;
+  background: #e8e8e8;
+  padding: 4px 5px;
+  border-radius: 30px;
+  vertical-align: middle;
+}
+
+.seat_layout {
+  /* justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border-width: thin; */
+}

@@ -8,6 +8,7 @@ from game.cards.discard_cards.health_manipulation_cards.fire_blast import FireBl
 from game.cards.discard_cards.health_manipulation_cards.high_altitude_bombing import HighAltitudeBombing
 from game.cards.keep_cards.health_manipulation_cards.it_has_a_child import ItHasAChild
 from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
+from game.cards.keep_cards.health_manipulation_cards.regeneration import Regeneration
 
 # Multi-Manipulation Cards
 from game.cards.discard_cards.multi_manipulation_cards.gas_refinery import GasRefinery
@@ -69,14 +70,15 @@ def get_all_cards():
     discard_cards.extend(victory_point_manipulation_cards)
     discard_cards.extend(turn_manipulation_cards)
 
-
     keep_cards = []
 
     keep_attack_manipulation_cards = [NovaBreath()]
 
-    keep_energy_manipulation_cards = [EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
+    keep_energy_manipulation_cards = [
+        EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
 
-    keep_health_manipulation_cards = [ItHasAChild(), EvenBigger()]
+    keep_health_manipulation_cards = [
+        ItHasAChild(), EvenBigger(), Regeneration()]
 
     keep_victory_point_manipulation_cards = [
         DedicatedNewsTeam(), Gourmet(), Omnivore()]

@@ -14,91 +14,132 @@ describe("Verify DiceRoller layout template", () => {
   });
 });
 
-test("default state expected to be..", done => {
-  const wrapper = shallow(<DiceRoller />);
+describe("Verify DiceRoller", () => {
+  const test_username = "test_user";
+  const test_roomname = "test_room";
 
-  expect(wrapper.state()).toEqual({
-    rolledDice: [],
-    selectedDice: [],
-    allowReroll: true
-  }); // passed
+  it("default state expected to be..", done => {
+    const wrapper = shallow(
+      <DiceRoller currentUser={test_username} currentRoom={test_roomname} />
+    );
 
-  done();
-});
+    expect(wrapper.state()).toEqual({
+      username: test_username,
+      gameRoom: test_roomname,
+      rolledDice: [],
+      selectedDice: [],
+      allowReroll: true,
+      allowEndTurn: true
+    });
 
-test("set state expected to..", done => {
-  const wrapper = shallow(<DiceRoller />);
+    done();
+  });
 
-  expect(wrapper.state()).toEqual({
-    rolledDice: [],
-    selectedDice: [],
-    allowReroll: true
-  }); // passed
+  it("set state expected to..", done => {
+    const wrapper = shallow(
+      <DiceRoller currentUser={test_username} currentRoom={test_roomname} />
+    );
 
-  wrapper.setState(
-    {
-      rolledDice: ["", ""],
-      selectedDice: ["", "", "", ""],
-      allowReroll: false
-    },
-    () => {
-      expect(wrapper.state()).toEqual({
+    expect(wrapper.state()).toEqual({
+      username: test_username,
+      gameRoom: test_roomname,
+      rolledDice: [],
+      selectedDice: [],
+      allowReroll: true,
+      allowEndTurn: true
+    });
+
+    wrapper.setState(
+      {
+        username: test_username,
+        gameRoom: test_roomname,
         rolledDice: ["", ""],
         selectedDice: ["", "", "", ""],
-        allowReroll: false
-      }); // passed
+        allowReroll: false,
+        allowEndTurn: true
+      },
+      () => {
+        expect(wrapper.state()).toEqual({
+          username: test_username,
+          gameRoom: test_roomname,
+          rolledDice: ["", ""],
+          selectedDice: ["", "", "", ""],
+          allowReroll: false,
+          allowEndTurn: true
+        });
 
-      done();
-    }
-  );
-});
-
-it("CalculateRerollCount() expect 2", () => {
-  const wrapper = shallow(<DiceRoller />);
-
-  wrapper.setState({
-    rolledDice: ["", "", "", "", ""],
-    selectedDice: ["", "", ""],
-    allowReroll: false
+        done();
+      }
+    );
   });
 
-  const actual = wrapper.instance().CalculateRerollCount();
+  it("CalculateRerollCount() expect 2", () => {
+    const wrapper = shallow(
+      <DiceRoller currentUser={test_username} currentRoom={test_roomname} />
+    );
 
-  expect(actual).toEqual(2);
-});
+    wrapper.setState({
+      username: test_username,
+      gameRoom: test_roomname,
+      rolledDice: ["", "", "", "", ""],
+      selectedDice: ["", "", ""],
+      allowReroll: false,
+      allowEndTurn: true
+    });
 
-it("selectedDiceCallback(selectedDice) expect state.selectedDice to be set", () => {
-  const wrapper = shallow(<DiceRoller />);
+    const actual = wrapper.instance().CalculateRerollCount();
 
-  wrapper.setState({
-    rolledDice: [],
-    selectedDice: [],
-    allowReroll: true
+    expect(actual).toEqual(2);
   });
 
-  const actual = ["", "", "", ""];
+  it("selectedDiceCallback(selectedDice) expect state.selectedDice to be set", () => {
+    const wrapper = shallow(
+      <DiceRoller currentUser={test_username} currentRoom={test_roomname} />
+    );
 
-  wrapper.instance().selectedDiceCallback(actual);
+    wrapper.setState({
+      username: test_username,
+      gameRoom: test_roomname,
+      rolledDice: [],
+      selectedDice: [],
+      allowReroll: true,
+      allowEndTurn: true
+    });
 
-  expect(wrapper.state()).toEqual({
-    rolledDice: [],
-    selectedDice: actual,
-    allowReroll: true
+    const actual = ["", "", "", ""];
+
+    wrapper.instance().selectedDiceCallback(actual);
+
+    expect(wrapper.state()).toEqual({
+      username: test_username,
+      gameRoom: test_roomname,
+      rolledDice: [],
+      selectedDice: actual,
+      allowReroll: true,
+      allowEndTurn: true
+    });
   });
-});
 
-test("should update a state on a next line", () => {
-  const wrapper = shallow(<DiceRoller />);
+  test("should update a state on a next line", () => {
+    const wrapper = shallow(
+      <DiceRoller currentUser={test_username} currentRoom={test_roomname} />
+    );
+    wrapper.setState({
+      username: test_username,
+      gameRoom: test_roomname,
+      rolledDice: [],
+      selectedDice: [],
+      allowReroll: false,
+      allowEndTurn: true
+    });
 
-  wrapper.setState({
-    rolledDice: [],
-    selectedDice: [],
-    allowReroll: false
+    expect(wrapper.state()).toEqual({
+      username: test_username,
+      gameRoom: test_roomname,
+      rolledDice: [],
+      selectedDice: [],
+      allowReroll: false,
+      allowEndTurn: true
+    });
   });
-
-  expect(wrapper.state()).toEqual({
-    rolledDice: [],
-    selectedDice: [],
-    allowReroll: false
-  }); // passed
 });
