@@ -28,10 +28,12 @@ class BoardGame:
         self.status = Status.ACTIVE
 
     def check_if_winner(self, potential_winner):
-        if (potential_winner.victory_points == constants.VICTORY_POINTS_TO_WIN or
+        if (potential_winner.victory_points >= constants.VICTORY_POINTS_TO_WIN or
                 self.players.is_last_player_alive(potential_winner)):
             self.winner = potential_winner
             self.end_game()
+            return True
+        return False
 
     def is_game_active(self):
         return self.status == Status.ACTIVE

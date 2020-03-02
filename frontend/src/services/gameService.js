@@ -1,4 +1,4 @@
-import YieldAlert from "../components/YieldAlert/YieldAlert"
+import YieldAlert from "../components/Alerts/YieldAlert"
 
 // we'll omit error handling and complex stuff for simplicity
 const EventEmitter = {
@@ -102,6 +102,10 @@ class GameService {
 
     addYieldCallback(yieldCallback) {
         EventEmitter.on("yield_alert", yieldCallback);
+    }
+
+    addWinnerCallback(winnerCallback) {
+        EventEmitter.on("winner_alert", winnerCallback);
     }
 
     sendMessage(data) {
