@@ -11,7 +11,6 @@ class IRepositoryPlayer:
 
     def save_player(self, username, room):
         self.user = User(game=Game.objects.get(room_name=room),
-                         ##monster_name=Null,
                          username=username,
                          date_created=datetime.datetime.now())
         self.user.save()
@@ -22,7 +21,7 @@ class IRepositoryPlayer:
         return self.user
 
     def get_players_by_username_and_room(self, username, room):
-        self.user = User.objects.get(username=username, game=Game.objects.get(room_name=room).id)
+        self.user = User.objects.filter(username=username, game=Game.objects.get(room_name=room).id)
         return self.user
 
     def update_player_username_by_id(self, user_id, name):

@@ -29,7 +29,7 @@ class IRepositoryGame:
         return self.game
 
     def get_game_by_room(self, room):
-        self.game = Game.objects.get(room_name=room)
+        self.game = Game.objects.filter(room_name=room)
         return self.game
 
     def get_all_games(self):
