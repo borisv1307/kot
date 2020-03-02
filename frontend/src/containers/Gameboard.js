@@ -8,7 +8,8 @@ import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
 import PlayerTable from "../components/PlayerTable/PlayerTable";
 import GameInstance from "./../services/gameService";
-import YieldAlert from "../components/YieldAlert/YieldAlert";
+import YieldAlert from "../components/Alerts/YieldAlert";
+import WinnerAlert from "../components/Alerts/WinnerAlert";
 
 export default class GameboardLayout extends Component {
     constructor(props) {
@@ -29,8 +30,7 @@ export default class GameboardLayout extends Component {
 
         GameInstance.connect(this.state.gameRoom, config.GAME_SOCKET_API_PATH);
         GameInstance.addYieldCallback(this.showAlert.bind(this));
-        this.yieldAlert = new YieldAlert(this.state.username)
-
+        GameInstance.addWinnerCallback(this.showWinner.bind(this));
     }
 
     showAlert(message) {
@@ -41,6 +41,13 @@ export default class GameboardLayout extends Component {
             yieldAlert.show()
         }
 
+    }
+  
+    showWinner(message) {
+        let winner = message.user;
+        let winnerAlert = new WinnerAlert(this.props, winner)
+        winnerAlert.show()
+        // yieldAlert.showCustom()
     }
   
   render() {
@@ -55,6 +62,7 @@ export default class GameboardLayout extends Component {
             currentRoom={this.state.gameRoom}
           />
         </div>
+
 
         <div>
           {this.state.loggedIn ? (
@@ -72,6 +80,7 @@ export default class GameboardLayout extends Component {
                     currentUser={this.state.username}
                     currentRoom={this.state.gameRoom}
                   />
+
                 </div>
                 <div className="col-sm-4 board_middle_column">
                   <GameConsole

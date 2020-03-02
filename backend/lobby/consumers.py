@@ -11,11 +11,11 @@ from game.irepository.irepository_game import IRepositoryGame
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
-from game.values.constants import DEFAULT_DICE_TO_ROLL, DEFAULT_RE_ROLL_COUNT
+from game.values.constants import DEFAULT_RE_ROLL_COUNT
 from game.values.exceptions import InsufficientFundsException
 from lobby.consumers_common import save_game, reconstruct_game, create_send_response_to_client
 from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
-    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, END_TURN
+    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, END_TURN, WINNER_ALERT
 
 
 def dice_vals_log_message(player_name, values):
@@ -205,6 +205,10 @@ class GameConsumer(WebsocketConsumer):
                             next_player.username, room, rolled_dice_ui_message)
         self.send_to_client(SERVER_RESPONSE, username, room,
                             dice_vals_log_message(next_player.username, values))
+
+        for player in state.players.players:
+            if state.check_if_winner(player):
+                self.send_to_client(WINNER_ALERT, state.players.current_player.username, room, "Winner")
 
     def gamelog_send_handler(self, data):
         username, room, game, state = reconstruct_game(data)
