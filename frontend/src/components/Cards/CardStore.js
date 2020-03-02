@@ -112,7 +112,7 @@ class CardStore extends React.Component {
   render() {
     if (this.state.selectedCard) {
       return (
-        <container className="card">
+        <div className="card">
           <div className="row">
             <div className="col-sm">
               <div className="card" type="checkbox">
@@ -134,7 +134,7 @@ class CardStore extends React.Component {
                     <Button onClick={this.sweepStore} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button>
             </div>
           </div>
-        </container>
+        </div>
       );
     } else {
       return <div></div>

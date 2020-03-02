@@ -6,7 +6,6 @@
 }
 
 .board_middle_column {
-  max-width: 400px;
   height: 30vh;
   overflow: auto;
 }

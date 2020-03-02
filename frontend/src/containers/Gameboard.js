@@ -6,7 +6,7 @@ import GameConsole from "../components/GameConsole/GameConsole";
 import DiceRoller from "./../components/Dice/DiceRoller";
 import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
-
+import PlayerTable from "../components/PlayerTable/PlayerTable";
 import GameInstance from "./../services/gameService";
 import YieldAlert from "../components/YieldAlert/YieldAlert";
 
@@ -42,60 +42,53 @@ export default class GameboardLayout extends Component {
         }
 
     }
+  
+  render() {
+    return (
+      <div className="board_container">
+        <br />
+        <h4>{this.state.gameRoom}</h4>
 
-    render() {
-        return (
-            <div className="board_container">
-                <br/>
-                <h4>{this.state.gameRoom}</h4>
-                <div>
-                    <div className="col">
-                        <CardStore
-                            currentUser={this.state.username}
-                            currentRoom={this.state.gameRoom}
-                        />
-                    </div>
+        <div className="col">
+          <CardStore
+            currentUser={this.state.username}
+            currentRoom={this.state.gameRoom}
+          />
+        </div>
+
+        <div>
+          {this.state.loggedIn ? (
+            <div>
+              <div className="row">
+                <div className="col-sm-4">
+                  <PlayerValuesDisplay
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                    displayOnlySelf={true}
+                  />
                 </div>
-                <div className="container">
-                    {this.state.loggedIn ? (
-                        <div>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <DiceRoller
-                                        currentUser={this.state.username}
-                                        currentRoom={this.state.gameRoom}
-                                    />
-                                </div>
-                                <div className="col-sm board_middle_column">
-                                    <GameConsole
-                                        sendMessage={payload => {
-                                            GameInstance.sendMessage(payload);
-                                        }}
-                                        currentUser={this.state.username}
-                                        currentRoom={this.state.gameRoom}
-                                    />
-                                </div>
-                                <div className="col-sm">
-                                    <PlayerValuesDisplay
-                                        currentUser={this.state.username}
-                                        currentRoom={this.state.gameRoom}
-                                        displayOnlySelf={true}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <PlayerValuesDisplay
-                                        currentUser={this.state.username}
-                                        currentRoom={this.state.gameRoom}
-                                        displayOnlySelf={false}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <p>Please login</p>
-                    )}
+                <div className="col-sm-2">
+                  <DiceRoller
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                  />
+                </div>
+                <div className="col-sm-4 board_middle_column">
+                  <GameConsole
+                    sendMessage={payload => {
+                      GameInstance.sendMessage(payload);
+                    }}
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                  />
+                </div>
+
+                <div className="col-sm-2">
+                  <PlayerTable
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                  />
+
                 </div>
                 <div className="col">
                     <a href="https://icons8.com/">Images Provided by icons8.com</a>

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Verify PlayerTable layout template Verify parameter provided PlayeValues are rendered correctly 1`] = `
+<div
+  id="table_area"
+>
+  <img
+    hidden={true}
+    src="icons8-go-48.png"
+  />
+  <p>
+    Waiting, Please wait.
+  </p>
+  <canvas />
+</div>
+`;
