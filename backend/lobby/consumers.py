@@ -86,15 +86,15 @@ class GameConsumer(WebsocketConsumer):
 
         if not i_repository_game.get_game_by_room(room):
             game_store = i_repository_game.save_game(room)
-            print("Room created with id {}".format(game_store))
+            print("Room created in analytics database with id {}".format(game_store))
         else:
-            error = 'Room already exist, Unable to create Game with room: ' + room
+            error = 'Room already exist in analytics database, Unable to create Game with room: ' + room
 
         if not i_repository_player.get_players_by_username_and_room(username, room):
             player_store = i_repository_player.save_player(username, room)
-            print("Player created with id {}".format(player_store))
+            print("Player created in analytics database with id {}".format(player_store))
         else:
-            error = 'Player in this room already exist, Unable to create Player in room: ' + room
+            error = 'Player in this room already exist in analytics database, Unable to create Player in room: ' + room
 
         if not game:
             error = 'Unable to get or create Game with room: ' + room
@@ -156,7 +156,7 @@ class GameConsumer(WebsocketConsumer):
             dice_store = i_repository_dice.save_dice(username, room, values[0], values[1], values[2], values[3],
                                                      values[4], values[5], None, None, state.dice_handler.re_rolls_left,
                                                      None)
-            print("Dice created with id {}".format(dice_store))
+            print("Dice created in analytics database with id {}".format(dice_store))
 
         rolled_dice_ui_message = dice_values_message_create(values)
         self.send_to_client(SERVER_RESPONSE, username, room, dice_vals_log_message(username, values))
@@ -188,7 +188,7 @@ class GameConsumer(WebsocketConsumer):
             dice_store = i_repository_dice.save_dice(username, room, values[0], values[1], values[2], values[3],
                                                      values[4], values[5], None, None, state.dice_handler.re_rolls_left,
                                                      selected_dice)
-            print("Dice created with id {}".format(dice_store))
+            print("Dice with selections created in analytics database with id {}".format(dice_store))
 
         rolled_dice_ui_message = dice_values_message_create(values)
         self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
