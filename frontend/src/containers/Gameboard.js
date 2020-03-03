@@ -9,6 +9,7 @@ import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay
 import GameInstance from "./../services/gameService";
 import YieldAlert from "../components/Alerts/YieldAlert";
 import WinnerAlert from "../components/Alerts/WinnerAlert";
+import PlayerTable from "../components/PlayerTable/PlayerTable";
 
 export default class GameboardLayout extends Component {
     constructor(props) {
@@ -67,6 +68,15 @@ export default class GameboardLayout extends Component {
                     {this.state.loggedIn ? (
                         <div>
                             <div className="row">
+
+                                <div className="col-sm">
+                                    <PlayerValuesDisplay
+                                        currentUser={this.state.username}
+                                        currentRoom={this.state.gameRoom}
+                                        displayOnlySelf={true}
+                                    />
+                                </div>
+
                                 <div className="col-sm">
                                     <DiceRoller
                                         currentUser={this.state.username}
@@ -82,11 +92,10 @@ export default class GameboardLayout extends Component {
                                         currentRoom={this.state.gameRoom}
                                     />
                                 </div>
-                                <div className="col-sm">
-                                    <PlayerValuesDisplay
+                                <div className="col-sm-2">
+                                    <PlayerTable
                                         currentUser={this.state.username}
                                         currentRoom={this.state.gameRoom}
-                                        displayOnlySelf={true}
                                     />
                                 </div>
                             </div>
