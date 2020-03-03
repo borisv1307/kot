@@ -11,26 +11,19 @@ class IRepositoryDice:
     def __init__(self):
         self.dice = None
 
-    def save_dice(self, player: Player, room, dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8, roll):
+    def save_dice(self, username, room, dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8, re_rolls_left, re_roll_selected_dice):
         self.dice = Dice(
-            user=User.objects.get(monster_name=player.monster_name, game=Game.objects.get(room_name=room)),
-            roll_number=roll,
+            user=User.objects.get(username=username, game=Game.objects.get(room_name=room)),
+            re_rolls_left=re_rolls_left,
             dice1=dice1,
-            dice1_selected='Y',
             dice2=dice2,
-            dice2_selected='Y',
             dice3=dice3,
-            dice3_selected='Y',
             dice4=dice4,
-            dice4_selected='Y',
             dice5=dice5,
-            dice5_selected='Y',
             dice6=dice6,
-            dice6_selected='Y',
             dice7=dice7,
-            dice7_selected='N',
             dice8=dice8,
-            dice8_selected='N',
+            re_roll_selected_dice=re_roll_selected_dice,
             date_created=datetime.datetime.now())
         self.dice.save()
         return self.dice
@@ -44,9 +37,9 @@ class IRepositoryDice:
                                                            game=Game.objects.get(room_name=room)).id)
         return self.dice
 
-    def update_dice_by_id(self, dice_id, dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8, roll):
+    def update_dice_by_id(self, dice_id, dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8, re_rolls_left, re_roll_selected_dice):
         self.dice = Dice.objects.get(id=dice_id)
-        self.dice.roll_number = roll
+        self.dice.re_rolls_left=re_rolls_left
         self.dice.dice1 = dice1
         self.dice.dice2 = dice2
         self.dice.dice3 = dice3
@@ -55,6 +48,7 @@ class IRepositoryDice:
         self.dice.dice6 = dice6
         self.dice.dice7 = dice7
         self.dice.dice8 = dice8
+        self.dice.re_roll_selected_dice = re_roll_selected_dice
         self.dice.save()
         return self.dice
 

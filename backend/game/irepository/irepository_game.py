@@ -42,6 +42,12 @@ class IRepositoryGame:
         self.game.save()
         return self.game
 
+    def update_game_status_by_room(self, room, status):
+        self.game = Game.objects.get(room_name=room)
+        self.game.game_status = status
+        self.game.save()
+        return self.game
+
     def update_game_winners_by_id(self, game_id, first, second, third, fourth, fifth, sixth):
         self.game = Game.objects.get(id=game_id)
         self.game.first_winner = first
@@ -53,7 +59,23 @@ class IRepositoryGame:
         self.game.save()
         return self.game
 
+    def update_game_winners_by_room(self, room, first, second, third, fourth, fifth, sixth):
+        self.game = Game.objects.get(room_name=room)
+        self.game.first_winner = first
+        self.game.second_winner = second
+        self.game.third_winner = third
+        self.game.fourth_winner = fourth
+        self.game.fifth_winner = fifth
+        self.game.sixth_winner = sixth
+        self.game.save()
+        return self.game
+
     def delete_game_by_id(self, game_id):
         self.game = Game.objects.get(id=game_id)
+        self.game.delete()
+        return None
+
+    def delete_game_by_room(self, room):
+        self.game = Game.objects.get(room_name=room)
         self.game.delete()
         return None
