@@ -224,16 +224,15 @@ class GameConsumer(WebsocketConsumer):
 
         save_game(game, state)
 
-        if next_player is not None:
+        if next_player:
             self.send_to_client(BEGIN_TURN_RESPONSE, username,
                                 room, next_player.username)
+            self.send_to_client(DICE_ROLLS_RESPONSE,
+                                next_player.username, room, rolled_dice_ui_message)
+            self.send_to_client(SERVER_RESPONSE, username, room,
+                                dice_vals_log_message(next_player.username, values))
         else:
             self.send_to_client(BEGIN_TURN_RESPONSE, username, room, "None")
-
-        self.send_to_client(DICE_ROLLS_RESPONSE,
-                            next_player.username, room, rolled_dice_ui_message)
-        self.send_to_client(SERVER_RESPONSE, username, room,
-                            dice_vals_log_message(next_player.username, values))
 
         for player in state.players.players:
             if state.check_if_winner(player):

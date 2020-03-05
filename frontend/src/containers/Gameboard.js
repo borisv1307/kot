@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import "./Gameboard.css";
 import config from "../services/config";
 
@@ -6,10 +6,10 @@ import GameConsole from "../components/GameConsole/GameConsole";
 import DiceRoller from "./../components/Dice/DiceRoller";
 import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
-import PlayerTable from "../components/PlayerTable/PlayerTable";
 import GameInstance from "./../services/gameService";
 import YieldAlert from "../components/Alerts/YieldAlert";
 import WinnerAlert from "../components/Alerts/WinnerAlert";
+import PlayerTable from "../components/PlayerTable/PlayerTable";
 
 export default class GameboardLayout extends Component {
     constructor(props) {
@@ -30,7 +30,7 @@ export default class GameboardLayout extends Component {
 
         GameInstance.connect(this.state.gameRoom, config.GAME_SOCKET_API_PATH);
         GameInstance.addYieldCallback(this.showAlert.bind(this));
-        GameInstance.addWinnerCallback(this.showWinner.bind(this));
+        GameInstance.addWinnerCallback(this.showWinner.bind(this))
     }
 
     showAlert(message) {
@@ -42,14 +42,15 @@ export default class GameboardLayout extends Component {
         }
 
     }
-  
+
     showWinner(message) {
         let winner = message.user;
         let winnerAlert = new WinnerAlert(this.props, winner)
         winnerAlert.show()
         // yieldAlert.showCustom()
     }
-  
+
+
   render() {
     return (
       <div className="board_container">
@@ -62,7 +63,6 @@ export default class GameboardLayout extends Component {
             currentRoom={this.state.gameRoom}
           />
         </div>
-
 
         <div>
           {this.state.loggedIn ? (
@@ -80,7 +80,6 @@ export default class GameboardLayout extends Component {
                     currentUser={this.state.username}
                     currentRoom={this.state.gameRoom}
                   />
-
                 </div>
                 <div className="col-sm-4 board_middle_column">
                   <GameConsole
@@ -97,12 +96,26 @@ export default class GameboardLayout extends Component {
                     currentUser={this.state.username}
                     currentRoom={this.state.gameRoom}
                   />
-
                 </div>
-                <div className="col">
-                    <a href="https://icons8.com/">Images Provided by icons8.com</a>
+              </div>
+              <div className="row">
+                <div className="col-sm">
+                  <PlayerValuesDisplay
+                    currentUser={this.state.username}
+                    currentRoom={this.state.gameRoom}
+                    displayOnlySelf={false}
+                  />
                 </div>
+              </div>
             </div>
-        );
-    }
+          ) : (
+            <p>Please login</p>
+          )}
+        </div>
+        <div className="col">
+          <a href="https://icons8.com/">Images Provided by icons8.com</a>
+        </div>
+      </div>
+    );
+  }
 }
