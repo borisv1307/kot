@@ -136,7 +136,7 @@ class GameConsumer(WebsocketConsumer):
             # player.add_card(EnergyHoarder())
             # player.add_card(SolarPowered())
             # player.add_card(EvenBigger())
-            player.update_energy_by(1000)
+            # player.update_energy_by(1000)
             state.add_player(player)
 
         # hack to start game after 2 players join
