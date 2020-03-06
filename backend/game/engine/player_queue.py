@@ -1,6 +1,7 @@
 import itertools
 
 from game.player.player import Player
+from game.values.locations import Locations
 
 
 class GamePlayers:
@@ -60,3 +61,7 @@ class GamePlayers:
         for player in self.player_cycle:
             if player.is_alive:
                 return player
+
+    def get_count_in_tokyo_ignore_current_player(self):
+        return len([player for player in self.get_all_alive_players_minus_current_player() if
+                    player.location != Locations.OUTSIDE])
