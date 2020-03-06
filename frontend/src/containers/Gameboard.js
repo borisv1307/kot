@@ -8,6 +8,7 @@ import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
 import GameInstance from "./../services/gameService";
 import YieldAlert from "../components/Alerts/YieldAlert";
+import ChooseYielderAlert from "../components/Alerts/ChooseYielderAlert";
 import WinnerAlert from "../components/Alerts/WinnerAlert";
 import PlayerTable from "../components/PlayerTable/PlayerTable";
 
@@ -30,7 +31,8 @@ export default class GameboardLayout extends Component {
 
         GameInstance.connect(this.state.gameRoom, config.GAME_SOCKET_API_PATH);
         GameInstance.addYieldCallback(this.showAlert.bind(this));
-        GameInstance.addWinnerCallback(this.showWinner.bind(this))
+        GameInstance.addWinnerCallback(this.showWinner.bind(this));
+        GameInstance.addYieldForcedCallback(this.showForceYieldChoice.bind(this))
     }
 
     showAlert(message) {
@@ -48,6 +50,15 @@ export default class GameboardLayout extends Component {
         let winnerAlert = new WinnerAlert(this.props, winner)
         winnerAlert.show()
         // yieldAlert.showCustom()
+    }
+
+    showForceYieldChoice(message){
+      let username_whos_turn_it_is = message.user;
+      if (this.state.username === username_whos_turn_it_is) {
+        let users = message.content;
+        let chooseYielder = new ChooseYielderAlert(this.props, this.state.username, this.state.gameRoom, users[0], users[1])
+        chooseYielder.show()
+      }
     }
 
 

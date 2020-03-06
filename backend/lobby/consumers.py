@@ -4,20 +4,23 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
+from game.cards.discard_cards.victory_point_manipulation_cards.drop_from_high_altitude import DropFromHighAltitude
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
+from game.irepository.irepository_dice import IRepositoryDice
 from game.irepository.irepository_game import IRepositoryGame
 from game.irepository.irepository_player import IRepositoryPlayer
-from game.irepository.irepository_dice import IRepositoryDice
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
+from game.turn_actions.player_movement import move_players_out_of_tokyo
 from game.values.constants import DEFAULT_RE_ROLL_COUNT
 from game.values.exceptions import InsufficientFundsException
+from game.values.locations import Locations
 from lobby.consumers_common import save_game, reconstruct_game, create_send_response_to_client
 from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
-    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, END_TURN, WINNER_ALERT
+    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, YIELD_FORCE_ALERT, END_TURN, WINNER_ALERT
 
 
 def dice_vals_log_message(player_name, values):
@@ -323,6 +326,13 @@ class GameConsumer(WebsocketConsumer):
             self.send_to_client(
                 END_TURN, state.players.current_player.username, room, "allow end turn")
 
+    def trigger_force_yield_choice(self, username, state, room):
+        players_in_tokyo = []
+        for player in state.players.get_all_alive_players_minus_current_player():
+            if player.location != Locations.OUTSIDE:
+                players_in_tokyo.append(player.username)
+        self.send_to_client(YIELD_FORCE_ALERT, username, room, players_in_tokyo)
+
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
 
@@ -333,6 +343,12 @@ class GameConsumer(WebsocketConsumer):
         try:
             bought = state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
                                                             state.players.get_all_alive_players_minus_current_player())
+            if isinstance(bought, DropFromHighAltitude):
+                if state.players.get_count_in_tokyo_ignore_current_player() > 1:
+                    self.trigger_force_yield_choice(username, state, room)
+                else:
+                    move_players_out_of_tokyo(state.players.get_all_alive_players_minus_current_player())
+                    state.players.current_player.move_to_tokyo()
             current_card_store = state.deck_handler.json_store()
             self.send_to_client(CARD_STORE_RESPONSE,
                                 username, room, current_card_store)
@@ -373,6 +389,16 @@ class GameConsumer(WebsocketConsumer):
 
         save_game(game, state)
 
+    def force_yield_tokyo_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        yielding_player = data['payload']
+        DropFromHighAltitude().immediate_effect(state.players.get_player_by_username_from_alive(username),
+                                                state.players.get_player_by_username_from_alive(yielding_player))
+        player_summaries = player_status_summary_to_JSON(state.players)
+        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
+                            username, room, player_summaries)
+        save_game(game, state)
+
     commands = {
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
@@ -385,5 +411,6 @@ class GameConsumer(WebsocketConsumer):
         'yield_tokyo_request': yield_tokyo_request_handler,
         'keep_tokyo_request': keep_tokyo_request_handler,
         'sweep_card_store_request': card_store_sweep_request_handler,
-        'buy_card_request': buy_card_request_handler
+        'buy_card_request': buy_card_request_handler,
+        'force_yield_tokyo_request': force_yield_tokyo_request_handler
     }
