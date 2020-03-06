@@ -15,3 +15,10 @@ def test_drop_from_high_altitude_costs_5_energy():
 def test_drop_from_high_altitude_location_tokyo(player):
     DropFromHighAltitude().immediate_effect(player)
     assert player.location == Locations.TOKYO
+
+
+def test_drop_from_high_altitude_force_other_player_out(player):
+    other_player = Player()
+    other_player.move_to_tokyo()
+    DropFromHighAltitude().immediate_effect(player, other_player)
+    assert other_player.location == Locations.OUTSIDE
