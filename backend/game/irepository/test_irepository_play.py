@@ -16,7 +16,7 @@ def test_save_play_card_swept_db():
     repository_game.save_game('Room1')
     repository_player = IRepositoryPlayer()
     repository_player.save_player('Godzilla1', 'Room1')
-    assert repository_play.save_play_card_swept('Godzilla1', 'Room1', '01', '1', '02', '1', '03', '1').id == 1
+    assert repository_play.save_play_card_swept('Godzilla1', 'Room1', '01', '1', '02', '1', '03', '1', '1', 10, 10, 10).id == 1
 
 
 @pytest.mark.django_db(transaction=True)
@@ -25,15 +25,8 @@ def test_save_play_card_purchased_db():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room2')
     repository_player = IRepositoryPlayer()
-    player = Player()
-    player.set_monster_name('Godzilla1')
-    player.set_username('Test_Get')
-    repository_player.save_player(player, 'Room2')
-    player.move_to_tokyo()
-    player.update_victory_points_by(2)
-    player.update_energy_by(2)
-    player.update_health_by(-1)
-    assert repository_play.save_play_card_purchased(player, 'Room2', '01', '1').id == 2
+    repository_player.save_player('Godzilla2', 'Room2')
+    assert repository_play.save_play_card_purchased('Godzilla2', 'Room2', '01', '1', '1', 10, 10, 10).id == 2
 
 
 @pytest.mark.django_db(transaction=True)
@@ -42,15 +35,8 @@ def test_save_play_card_used():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room3')
     repository_player = IRepositoryPlayer()
-    player = Player()
-    player.set_monster_name('Godzilla1')
-    player.set_username('Test_Get')
-    repository_player.save_player(player, 'Room3')
-    player.move_to_tokyo()
-    player.update_victory_points_by(2)
-    player.update_energy_by(2)
-    player.update_health_by(-1)
-    assert repository_play.save_play_card_used(player, 'Room3', '02', '1').id == 3
+    repository_player.save_player('Godzilla3', 'Room3')
+    assert repository_play.save_play_card_used('Godzilla3', 'Room3', '02', '1', '1', 10, 10, 10).id == 3
 
 
 @pytest.mark.django_db(transaction=True)
@@ -59,8 +45,8 @@ def test_get_play_by_id():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room4')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla1', 'Room4')
-    repository_play.save_play_card_swept('Godzilla1', 'Room4', '04', '1', '05', '1', '06', '1')
+    repository_player.save_player('Godzilla4', 'Room4')
+    repository_play.save_play_card_swept('Godzilla4', 'Room4', '04', '1', '05', '1', '06', '1', '1', 10, 10, 10)
     assert repository_play.get_play_by_id(4).card1_swept == '04'
 
 
@@ -70,9 +56,9 @@ def test_get_plays_by_player_and_room():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room5')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla1', 'Room5')
-    repository_play.save_play_card_swept('Godzilla1', 'Room5', '04', '1', '05', '1', '06', '1')
-    assert repository_play.get_plays_by_player_and_room(player, 'Room5').card2_swept == '05'
+    repository_player.save_player('Godzilla5', 'Room5')
+    repository_play.save_play_card_swept('Godzilla5', 'Room5', '04', '1', '05', '1', '06', '1', '1', 10, 10, 10)
+    assert repository_play.get_plays_by_player_and_room('Godzilla5', 'Room5').card2_swept == '05'
 
 
 @pytest.mark.django_db(transaction=True)
@@ -81,8 +67,8 @@ def test_update_play_card_swept():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room6')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla1', 'Room6')
-    repository_play.save_play_card_swept('Godzilla1', 'Room6', '01', '1', '02', '1', '03', '1')
+    repository_player.save_player('Godzilla6', 'Room6')
+    repository_play.save_play_card_swept('Godzilla6', 'Room6', '01', '1', '02', '1', '03', '1', '1', 10, 10, 10)
     repository_play.update_play_card_swept_by_id(6, '10', '1', '12', '1', '13', '1')
     assert repository_play.get_play_by_id(6).card3_swept == '13'
 
@@ -93,8 +79,8 @@ def test_update_play_card_purchased():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room7')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla1', 'Room7')
-    repository_play.save_play_card_purchased('Godzilla1', 'Room7', '01', '1')
+    repository_player.save_player('Godzilla7', 'Room7')
+    repository_play.save_play_card_purchased('Godzilla7', 'Room7', '01', '1', '1', 10, 10, 10)
     repository_play.update_play_card_purchased_by_id(7, '21', '1')
     assert repository_play.get_play_by_id(7).card_purchased == '21'
 
@@ -105,8 +91,8 @@ def test_update_play_card_used():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room8')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla1', 'Room8')
-    repository_play.save_play_card_used('Godzilla1', 'Room8', '01', '1')
+    repository_player.save_player('Godzilla8', 'Room8')
+    repository_play.save_play_card_used('Godzilla8', 'Room8', '01', '1', '1', 10, 10, 10)
     repository_play.update_play_card_used_by_id(8, '31', '1')
     assert repository_play.get_play_by_id(8).card_used == '31'
 
@@ -117,16 +103,8 @@ def test_update_play_card_location_by_id():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room9')
     repository_player = IRepositoryPlayer()
-    player = Player()
-    player.set_monster_name('Godzilla1')
-    player.set_username('Test_Get')
-    repository_player.save_player(player, 'Room9')
-    player.move_to_tokyo()
-    player.update_victory_points_by(2)
-    player.update_energy_by(2)
-    player.update_health_by(-1)
-    player.location = locations.Locations.OUTSIDE
-    repository_play.save_play_card_used(player, 'Room9', '01', '1')
+    repository_player.save_player('Godzilla9', 'Room9')
+    repository_play.save_play_card_used('Godzilla9', 'Room9', '01', '1', '1', 10, 10, 10)
     repository_play.update_play_location_by_id(9, locations.Locations.TOKYO.value)
     assert repository_play.get_play_by_id(9).location == '1'
 
@@ -137,15 +115,8 @@ def test_update_play_card_victory_point_by_id():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room10')
     repository_player = IRepositoryPlayer()
-    player = Player()
-    player.set_monster_name('Godzilla1')
-    player.set_username('Test_Get')
-    repository_player.save_player(player, 'Room10')
-    player.move_to_tokyo()
-    player.update_victory_points_by(2)
-    player.update_energy_by(2)
-    player.update_health_by(-1)
-    repository_play.save_play_card_used(player, 'Room10', '01', '1')
+    repository_player.save_player('Godzilla10', 'Room10')
+    repository_play.save_play_card_used('Godzilla10', 'Room10', '01', '1', '1', 10, 10, 10)
     repository_play.update_play_victory_points_by_id(10, constants.VICTORY_POINTS_TO_WIN)
     assert repository_play.get_play_by_id(10).victory_points == constants.VICTORY_POINTS_TO_WIN
 
@@ -156,15 +127,8 @@ def test_update_play_card_energy_by_id():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room11')
     repository_player = IRepositoryPlayer()
-    player = Player()
-    player.set_monster_name('Godzilla1')
-    player.set_username('Test_Get')
-    repository_player.save_player(player, 'Room11')
-    player.move_to_tokyo()
-    player.update_victory_points_by(2)
-    player.update_energy_by(2)
-    player.update_health_by(-1)
-    repository_play.save_play_card_used(player, 'Room11', '01', '1')
+    repository_player.save_player('Godzilla11', 'Room11')
+    repository_play.save_play_card_used('Godzilla11', 'Room11', '01', '1', '1', 10, 10, 10)
     repository_play.update_play_energy_by_id(11, constants.ENERGY_HOARDER_DIVIDER)
     assert repository_play.get_play_by_id(11).energy_cube == constants.ENERGY_HOARDER_DIVIDER
 
@@ -175,32 +139,18 @@ def test_update_play_card_health_by_id():
     repository_game = IRepositoryGame()
     repository_game.save_game('Room12')
     repository_player = IRepositoryPlayer()
-    player = Player()
-    player.set_monster_name('Godzilla1')
-    player.set_username('Test_Get')
-    repository_player.save_player(player, 'Room12')
-    player.move_to_tokyo()
-    player.update_victory_points_by(2)
-    player.update_energy_by(2)
-    player.update_health_by(-1)
-    repository_play.save_play_card_used(player, 'Room12', '01', '1')
-    repository_play.update_play_life_by_id(12, constants.DEFAULT_HEALTH)
-    assert repository_play.get_play_by_id(12).life_points == constants.DEFAULT_HEALTH
+    repository_player.save_player('Godzilla12', 'Room12')
+    repository_play.save_play_card_used('Godzilla12', 'Room12', '01', '1', '1', 10, 10, 10)
+    repository_play.update_play_health_by_id(12, constants.DEFAULT_HEALTH)
+    assert repository_play.get_play_by_id(12).health_points == constants.DEFAULT_HEALTH
 
 
 @pytest.mark.django_db(transaction=True)
-def test_delete_dice():
+def test_delete_dice_by_id():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
     repository_game.save_game('Room13')
     repository_player = IRepositoryPlayer()
-    player = Player()
-    player.set_monster_name('Godzilla1')
-    player.set_username('Test_Get')
-    repository_player.save_player(player, 'Room13')
-    player.move_to_tokyo()
-    player.update_victory_points_by(2)
-    player.update_energy_by(2)
-    player.update_health_by(-1)
-    repository_play.save_play_card_swept(player, 'Room13', '01', '1', '02', '1', '03', '1')
+    repository_player.save_player('Godzilla13', 'Room13')
+    repository_play.save_play_card_swept('Godzilla13', 'Room13', '01', '1', '02', '1', '03', '1', '1', 10, 10, 10)
     assert repository_play.delete_play_by_id(13) is None

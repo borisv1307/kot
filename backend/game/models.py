@@ -156,7 +156,7 @@ class Play(models.Model):
     location = models.CharField(max_length=1, choices=MONSTER_POSITION, null=True, blank=True)
     victory_points = models.IntegerField(null=True, blank=True)
     energy_cube = models.IntegerField(null=True, blank=True)
-    life_points = models.IntegerField(null=True, blank=True)
+    health_points = models.IntegerField(null=True, blank=True)
     date_created = models.DateTimeField(null=True, blank=True)
 
 
