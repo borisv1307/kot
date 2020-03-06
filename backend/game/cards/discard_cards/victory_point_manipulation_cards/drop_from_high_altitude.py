@@ -18,3 +18,5 @@ class DropFromHighAltitude(DiscardCard):
         if yielding_player:
             if player_that_bought_the_card.location == Locations.OUTSIDE and yielding_player.location != Locations.OUTSIDE:
                 player_movement.yield_tokyo(yielding_player, player_that_bought_the_card)
+        else:
+            player_that_bought_the_card.move_to_tokyo()
