@@ -40,117 +40,127 @@ def test_save_play_card_used():
 
 
 @pytest.mark.django_db(transaction=True)
-def test_get_play_by_id():
+def test_save_move_in_and_out_tokyo():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
     repository_game.save_game('Room4')
     repository_player = IRepositoryPlayer()
     repository_player.save_player('Godzilla4', 'Room4')
-    repository_play.save_play_card_swept('Godzilla4', 'Room4', '04', '1', '05', '1', '06', '1', '1', 10, 10, 10)
-    assert repository_play.get_play_by_id(4).card1_swept == '04'
+    assert repository_play.save_move_in_and_out_tokyo('Godzilla4', 'Room4', '1', 10, 10, 10).id == 4
 
 
 @pytest.mark.django_db(transaction=True)
-def test_get_plays_by_player_and_room():
+def test_get_play_by_id():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
     repository_game.save_game('Room5')
     repository_player = IRepositoryPlayer()
     repository_player.save_player('Godzilla5', 'Room5')
     repository_play.save_play_card_swept('Godzilla5', 'Room5', '04', '1', '05', '1', '06', '1', '1', 10, 10, 10)
-    assert repository_play.get_plays_by_player_and_room('Godzilla5', 'Room5').card2_swept == '05'
+    assert repository_play.get_play_by_id(5).card1_swept == '04'
+
+
+@pytest.mark.django_db(transaction=True)
+def test_get_plays_by_player_and_room():
+    repository_play = IRepositoryPlay()
+    repository_game = IRepositoryGame()
+    repository_game.save_game('Room6')
+    repository_player = IRepositoryPlayer()
+    repository_player.save_player('Godzilla6', 'Room6')
+    repository_play.save_play_card_swept('Godzilla6', 'Room6', '04', '1', '05', '1', '06', '1', '1', 10, 10, 10)
+    assert repository_play.get_plays_by_player_and_room('Godzilla6', 'Room6').card2_swept == '05'
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_play_card_swept():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room6')
+    repository_game.save_game('Room7')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla6', 'Room6')
-    repository_play.save_play_card_swept('Godzilla6', 'Room6', '01', '1', '02', '1', '03', '1', '1', 10, 10, 10)
-    repository_play.update_play_card_swept_by_id(6, '10', '1', '12', '1', '13', '1')
-    assert repository_play.get_play_by_id(6).card3_swept == '13'
+    repository_player.save_player('Godzilla7', 'Room7')
+    repository_play.save_play_card_swept('Godzilla7', 'Room7', '01', '1', '02', '1', '03', '1', '1', 10, 10, 10)
+    repository_play.update_play_card_swept_by_id(7, '10', '1', '12', '1', '13', '1')
+    assert repository_play.get_play_by_id(7).card3_swept == '13'
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_play_card_purchased():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room7')
+    repository_game.save_game('Room8')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla7', 'Room7')
-    repository_play.save_play_card_purchased('Godzilla7', 'Room7', '01', '1', '1', 10, 10, 10)
-    repository_play.update_play_card_purchased_by_id(7, '21', '1')
-    assert repository_play.get_play_by_id(7).card_purchased == '21'
+    repository_player.save_player('Godzilla8', 'Room8')
+    repository_play.save_play_card_purchased('Godzilla8', 'Room8', '01', '1', '1', 10, 10, 10)
+    repository_play.update_play_card_purchased_by_id(8, '21', '1')
+    assert repository_play.get_play_by_id(8).card_purchased == '21'
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_play_card_used():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room8')
+    repository_game.save_game('Room9')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla8', 'Room8')
-    repository_play.save_play_card_used('Godzilla8', 'Room8', '01', '1', '1', 10, 10, 10)
-    repository_play.update_play_card_used_by_id(8, '31', '1')
-    assert repository_play.get_play_by_id(8).card_used == '31'
+    repository_player.save_player('Godzilla9', 'Room9')
+    repository_play.save_play_card_used('Godzilla9', 'Room9', '01', '1', '1', 10, 10, 10)
+    repository_play.update_play_card_used_by_id(9, '31', '1')
+    assert repository_play.get_play_by_id(9).card_used == '31'
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_play_card_location_by_id():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room9')
+    repository_game.save_game('Room10')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla9', 'Room9')
-    repository_play.save_play_card_used('Godzilla9', 'Room9', '01', '1', '1', 10, 10, 10)
-    repository_play.update_play_location_by_id(9, locations.Locations.TOKYO.value)
-    assert repository_play.get_play_by_id(9).location == '1'
+    repository_player.save_player('Godzilla10', 'Room10')
+    repository_play.save_play_card_used('Godzilla10', 'Room10', '01', '1', '1', 10, 10, 10)
+    repository_play.update_play_location_by_id(10, locations.Locations.TOKYO.value)
+    assert repository_play.get_play_by_id(10).location == '1'
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_play_card_victory_point_by_id():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room10')
+    repository_game.save_game('Room11')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla10', 'Room10')
-    repository_play.save_play_card_used('Godzilla10', 'Room10', '01', '1', '1', 10, 10, 10)
-    repository_play.update_play_victory_points_by_id(10, constants.VICTORY_POINTS_TO_WIN)
-    assert repository_play.get_play_by_id(10).victory_points == constants.VICTORY_POINTS_TO_WIN
+    repository_player.save_player('Godzilla11', 'Room11')
+    repository_play.save_play_card_used('Godzilla11', 'Room11', '01', '1', '1', 10, 10, 10)
+    repository_play.update_play_victory_points_by_id(11, constants.VICTORY_POINTS_TO_WIN)
+    assert repository_play.get_play_by_id(11).victory_points == constants.VICTORY_POINTS_TO_WIN
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_play_card_energy_by_id():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room11')
+    repository_game.save_game('Room12')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla11', 'Room11')
-    repository_play.save_play_card_used('Godzilla11', 'Room11', '01', '1', '1', 10, 10, 10)
-    repository_play.update_play_energy_by_id(11, constants.ENERGY_HOARDER_DIVIDER)
-    assert repository_play.get_play_by_id(11).energy_cube == constants.ENERGY_HOARDER_DIVIDER
+    repository_player.save_player('Godzilla12', 'Room12')
+    repository_play.save_play_card_used('Godzilla12', 'Room12', '01', '1', '1', 10, 10, 10)
+    repository_play.update_play_energy_by_id(12, constants.ENERGY_HOARDER_DIVIDER)
+    assert repository_play.get_play_by_id(12).energy_cube == constants.ENERGY_HOARDER_DIVIDER
 
 
 @pytest.mark.django_db(transaction=True)
 def test_update_play_card_health_by_id():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room12')
+    repository_game.save_game('Room13')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla12', 'Room12')
-    repository_play.save_play_card_used('Godzilla12', 'Room12', '01', '1', '1', 10, 10, 10)
-    repository_play.update_play_health_by_id(12, constants.DEFAULT_HEALTH)
-    assert repository_play.get_play_by_id(12).health_points == constants.DEFAULT_HEALTH
+    repository_player.save_player('Godzilla13', 'Room13')
+    repository_play.save_play_card_used('Godzilla13', 'Room13', '01', '1', '1', 10, 10, 10)
+    repository_play.update_play_health_by_id(13, constants.DEFAULT_HEALTH)
+    assert repository_play.get_play_by_id(13).health_points == constants.DEFAULT_HEALTH
 
 
 @pytest.mark.django_db(transaction=True)
 def test_delete_dice_by_id():
     repository_play = IRepositoryPlay()
     repository_game = IRepositoryGame()
-    repository_game.save_game('Room13')
+    repository_game.save_game('Room14')
     repository_player = IRepositoryPlayer()
-    repository_player.save_player('Godzilla13', 'Room13')
-    repository_play.save_play_card_swept('Godzilla13', 'Room13', '01', '1', '02', '1', '03', '1', '1', 10, 10, 10)
-    assert repository_play.delete_play_by_id(13) is None
+    repository_player.save_player('Godzilla14', 'Room14')
+    repository_play.save_play_card_swept('Godzilla14', 'Room14', '01', '1', '02', '1', '03', '1', '1', 10, 10, 10)
+    assert repository_play.delete_play_by_id(14) is None

@@ -53,6 +53,16 @@ class IRepositoryPlay:
         self.play.save()
         return self.play
 
+    def save_move_in_and_out_tokyo(self, username, room, location, victory_points, energy, health):
+        self.play = Play(user=User.objects.get(username=username, game=Game.objects.get(room_name=room)),
+                         location=location,
+                         victory_points=victory_points,
+                         energy_cube=energy,
+                         health_points=health,
+                         date_created=datetime.datetime.now())
+        self.play.save()
+        return self.play
+
     def get_play_by_id(self, play_id):
         self.play = Play.objects.get(id=play_id)
         return self.play
