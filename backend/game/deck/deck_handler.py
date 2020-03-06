@@ -29,6 +29,7 @@ class DeckHandler:
         self.__draw_pile.get_new_deck()
         self.__draw_pile.shuffle()
         self.__fill_card_store()
+        self.cards_swept = []
 
     def __len__(self):
         return len(self.draw_pile) + len(self.store) + len(self.discard_pile)
@@ -94,6 +95,7 @@ class DeckHandler:
     # optional second arg allows discard to handle removing card from origin as well
     def discard(self, card: Card, card_from_location: List[Card] = None):
         self.__discard_pile.append(card)
+        self.cards_swept.append(card)
         if card_from_location is not None:
             card_from_location.remove(card)
 

@@ -10,6 +10,7 @@ from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_v
 from game.irepository.irepository_game import IRepositoryGame
 from game.irepository.irepository_player import IRepositoryPlayer
 from game.irepository.irepository_dice import IRepositoryDice
+from game.irepository.irepository_play import IRepositoryPlay
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
@@ -356,6 +357,17 @@ class GameConsumer(WebsocketConsumer):
         if state.players.current_player.username == username:
             successfully_swept_cardstore = state.deck_handler.sweep_store(
                 state.players.current_player)
+
+            if successfully_swept_cardstore is None:
+                i_repository_play = IRepositoryPlay()
+                i_repository_play.save_play_card_swept(username, room, state.deck_handler.cards_swept[2].name,
+                                                       state.deck_handler.cards_swept[2].card_type,
+                                                       state.deck_handler.cards_swept[1].name,
+                                                       state.deck_handler.cards_swept[1].card_type,
+                                                       state.deck_handler.cards_swept[0].name,
+                                                       state.deck_handler.cards_swept[0].card_type)
+            state.deck_handler.cards_swept.clear()
+
             if not successfully_swept_cardstore:
                 message = "{} does not have enough funds to sweep the card store!".format(
                     username)
