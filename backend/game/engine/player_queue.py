@@ -1,5 +1,6 @@
 import itertools
 
+from game.cards.keep_cards.victory_point_manipulation_cards.eater_of_the_dead import EaterOfTheDead
 from game.player.player import Player
 from game.values.locations import Locations
 
@@ -65,3 +66,16 @@ class GamePlayers:
     def get_count_in_tokyo_ignore_current_player(self):
         return len([player for player in self.get_all_alive_players_minus_current_player() if
                     player.location != Locations.OUTSIDE])
+
+    def check_for_eater_of_dead_holders(self):
+        return [player for player in self.get_alive_players() if player.has_instance_of_card(EaterOfTheDead())]
+
+    def check_for_newly_dead_players(self):
+        return [player for player in self.players if player.is_newly_dead]
+
+    def apply_eater_of_dead_action(self):
+        card_holders = self.check_for_eater_of_dead_holders()
+        newly_dead = self.check_for_newly_dead_players()
+        for _ in newly_dead:
+            for player in card_holders:
+                EaterOfTheDead().special_effect(player)

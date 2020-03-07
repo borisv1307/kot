@@ -142,7 +142,7 @@ class GameConsumer(WebsocketConsumer):
             player.update_energy_by(1000)
             state.add_player(player)
 
-        # hack to start game after 2 players join
+            # hack to start game after 2 players join
         temp_max_players = 2
         if len(state.players.players) == temp_max_players:
             self.start_web_game(room, state, username)
@@ -150,6 +150,11 @@ class GameConsumer(WebsocketConsumer):
             msg = "Joined, waiting on additional players"
             self.send_to_client(SERVER_RESPONSE, username,
                                 room, username + msg)
+
+        self.update_player_status(state, username, room, game)
+
+    def update_player_status(self, state, username, room, game):
+        state.players.apply_eater_of_dead_action()
 
         player_summaries = player_status_summary_to_JSON(state.players)
         self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
@@ -212,9 +217,8 @@ class GameConsumer(WebsocketConsumer):
         # a method to end a players turn and let the next guy go
         username, room, game, state = reconstruct_game(data)
         state.post_roll_actions(state.players.current_player)
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                            username, room, player_summaries)
+
+        self.update_player_status(state, username, room, game)
 
         next_player: Player = state.get_next_player_turn()
 
@@ -267,9 +271,8 @@ class GameConsumer(WebsocketConsumer):
 
             state.players.reset_allowed_to_yield()
 
-            player_summaries = player_status_summary_to_JSON(state.players)
-            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                                username, room, player_summaries)
+            self.update_player_status(state, username, room, game)
+
             self.send_to_client(
                 END_TURN, state.players.current_player.username, room, "allow end turn")
         else:
@@ -304,11 +307,7 @@ class GameConsumer(WebsocketConsumer):
         dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
                         state.players.get_all_alive_players_minus_current_player())
 
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                            username, room, player_summaries)
-
-        save_game(game, state)
+        self.update_player_status(state, username, room, game)
 
         self.trigger_yield_popup_if_necessary(state, room)
 
@@ -353,9 +352,8 @@ class GameConsumer(WebsocketConsumer):
             self.send_to_client(CARD_STORE_RESPONSE,
                                 username, room, current_card_store)
 
-            player_summaries = player_status_summary_to_JSON(state.players)
-            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                                username, room, player_summaries)
+            self.update_player_status(state, username, room, game)
+
             self.send_to_client(SERVER_RESPONSE, username, room,
                                 "{} bought {}!".format(
                                     state.players.current_player.username, bought.name))
@@ -379,9 +377,7 @@ class GameConsumer(WebsocketConsumer):
         else:
             print("{} tried to sweep out of turn!".format(username))
 
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                            username, room, player_summaries)
+        self.update_player_status(state, username, room, game)
 
         selected_cards_ui_message = state.deck_handler.json_store()
         self.send_to_client(CARD_STORE_RESPONSE, username,
@@ -394,10 +390,7 @@ class GameConsumer(WebsocketConsumer):
         yielding_player = data['payload']
         DropFromHighAltitude().immediate_effect(state.players.get_player_by_username_from_alive(username),
                                                 state.players.get_player_by_username_from_alive(yielding_player))
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                            username, room, player_summaries)
-        save_game(game, state)
+        self.update_player_status(state, username, room, game)
 
     commands = {
         'init_user_request': init_chat_handler,

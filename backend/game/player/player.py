@@ -5,8 +5,8 @@ from game.cards.card import Card
 from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
 from game.cards.keep_cards.health_manipulation_cards.it_has_a_child import ItHasAChild
-from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
 from game.cards.keep_cards.health_manipulation_cards.regeneration import Regeneration
+from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
 from game.player.player_status_resolver import json_players_hand
 from game.values import constants
 from game.values.locations import Locations
@@ -27,6 +27,7 @@ class Player:
         self.cards: List[Card] = []
         self.allowed_to_yield = False
         self.gets_bonus_turn = False
+        self.newly_dead = False
 
     @property
     def dice_allowed(self):
@@ -34,6 +35,14 @@ class Player:
         if self.has_instance_of_card(GiantBrain()):
             allowed_dice += 1
         return allowed_dice
+
+    @property
+    def is_newly_dead(self):
+        if self.newly_dead:
+            self.newly_dead = False
+            return True
+        else:
+            return False
 
     def set_monster_name(self, monster_name):
         self.monster_name = monster_name
@@ -55,18 +64,18 @@ class Player:
 
     def update_health_by(self, change_integer):
         if self.has_instance_of_card(WereOnlyMakingItStronger()) and change_integer <= -2:
-            WereOnlyMakingItStronger.special_effect(self, self, None)
+            WereOnlyMakingItStronger().special_effect(self, None)
         if self.has_instance_of_card(Regeneration()):
-            change_integer = Regeneration.special_effect(
-                self, self, change_integer)
+            change_integer = Regeneration().special_effect(self, change_integer)
         self.current_health += change_integer
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health
         if self.current_health <= 0:
             if self.has_instance_of_card(ItHasAChild()):
-                ItHasAChild.special_effect(self, self, None)
+                ItHasAChild().special_effect(self, None)
             else:
                 self.is_alive = False
+                self.newly_dead = True
 
     def update_max_health_by(self, change_integer):
         self.maximum_health += change_integer
