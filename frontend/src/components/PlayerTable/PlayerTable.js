@@ -160,11 +160,20 @@ class PlayerTable extends React.Component {
 
   formatName(name) {
     if (this.isItsYourTurn() && this.areYouMe(name)) {
-      return name + "Your Turn!";
+      return name + " Your Turn!";
     } else if (this.isItThisGuyTurn(name)) {
-      return name + "Turn!";
+      return name + " Turn!";
     }
     return name;
+    // if (!this.gameStarted()) return name;
+
+    // if (this.isItsYourTurn() && this.areYouMe(name)) {
+    //   return name + " Your Turn!";
+    // }
+    // if (this.isItThisGuyTurn(name)) {
+    //   return name + " Turn!";
+    // }
+    // return name;
   }
 
   provideShape(name) {
@@ -181,7 +190,7 @@ class PlayerTable extends React.Component {
 
         let msg = <p>Game Started! {this.state.data.length} Playing...</p>;
         if (!this.gameStarted()) {
-          msg = <p>Waiting, Please wait.</p>;
+          msg = <p>Waiting for more players, Please wait.</p>;
         }
 
         return (
