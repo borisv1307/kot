@@ -358,22 +358,25 @@ class GameConsumer(WebsocketConsumer):
     def card_store_sweep_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
         if state.players.current_player.username == username:
+            cards_swept = state.deck_handler.get_top_three_cards()
+            print("Cards to be swept {}".format(cards_swept))
+
             successfully_swept_cardstore = state.deck_handler.sweep_store(
                 state.players.current_player)
 
             if successfully_swept_cardstore is None:
                 i_repository_play = IRepositoryPlay()
-                i_repository_play.save_play_card_swept(username, room, state.deck_handler.cards_swept[2].name,
-                                                       state.deck_handler.cards_swept[2].card_type,
-                                                       state.deck_handler.cards_swept[1].name,
-                                                       state.deck_handler.cards_swept[1].card_type,
-                                                       state.deck_handler.cards_swept[0].name,
-                                                       state.deck_handler.cards_swept[0].card_type,
+                i_repository_play.save_play_card_swept(username, room, cards_swept[2].name,
+                                                       cards_swept[2].card_type,
+                                                       cards_swept[1].name,
+                                                       cards_swept[1].card_type,
+                                                       cards_swept[0].name,
+                                                       cards_swept[0].card_type,
                                                        state.players.current_player.location,
                                                        state.players.current_player.victory_points,
                                                        state.players.current_player.energy,
                                                        state.players.current_player.current_health)
-            state.deck_handler.cards_swept.clear()
+            cards_swept.clear()
 
             if not successfully_swept_cardstore:
                 message = "{} does not have enough funds to sweep the card store!".format(

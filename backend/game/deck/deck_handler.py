@@ -95,7 +95,6 @@ class DeckHandler:
     # optional second arg allows discard to handle removing card from origin as well
     def discard(self, card: Card, card_from_location: List[Card] = None):
         self.__discard_pile.append(card)
-        self.cards_swept.append(card)
         if card_from_location is not None:
             card_from_location.remove(card)
 
@@ -108,3 +107,9 @@ class DeckHandler:
             for _ in range(3):
                 self.discard(self.store.pop())
             self.__fill_card_store()
+
+    def get_top_three_cards(self):
+        self.cards_swept.clear()
+        for i in range(3):
+            self.cards_swept.append(self.store[i])
+        return self.cards_swept

@@ -41,18 +41,6 @@ class IRepositoryPlay:
         self.play.save()
         return self.play
 
-    def save_play_card_used(self, username, room, card, card_type, location, victory_points, energy, health):
-        self.play = Play(user=User.objects.get(username=username, game=Game.objects.get(room_name=room)),
-                         card_used=card,
-                         card_used_type=card_type,
-                         location=location,
-                         victory_points=victory_points,
-                         energy_cube=energy,
-                         health_points=health,
-                         date_created=datetime.datetime.now())
-        self.play.save()
-        return self.play
-
     def save_move_in_and_out_tokyo(self, username, room, location, victory_points, energy, health):
         self.play = Play(user=User.objects.get(username=username, game=Game.objects.get(room_name=room)),
                          location=location,
@@ -87,13 +75,6 @@ class IRepositoryPlay:
         self.play = Play.objects.get(id=play_id)
         self.play.card_purchased = card
         self.play.card_purchased_type = card_type
-        self.play.save()
-        return self.play
-
-    def update_play_card_used_by_id(self, play_id, card, card_type):
-        self.play = Play.objects.get(id=play_id)
-        self.play.card_used = card
-        self.play.card_used_type = card_type
         self.play.save()
         return self.play
 
