@@ -11,6 +11,9 @@ from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_v
 from game.irepository.irepository_dice import IRepositoryDice
 from game.irepository.irepository_game import IRepositoryGame
 from game.irepository.irepository_player import IRepositoryPlayer
+from game.irepository.irepository_dice import IRepositoryDice
+from game.irepository.irepository_play import IRepositoryPlay
+
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
@@ -91,13 +94,11 @@ class GameConsumer(WebsocketConsumer):
 
         if not i_repository_game.get_game_by_room(room):
             game_store = i_repository_game.save_game(room)
-            print("Room created in analytics database with id {}".format(game_store))
         else:
             error = 'Room already exist in analytics database, Unable to create Game with room: ' + room
 
         if not i_repository_player.get_players_by_username_and_room(username, room):
             player_store = i_repository_player.save_player(username, room)
-            print("Player created in analytics database with id {}".format(player_store))
         else:
             error = 'Player in this room already exist in analytics database, Unable to create Player in room: ' + room
 
@@ -171,7 +172,6 @@ class GameConsumer(WebsocketConsumer):
             dice_store = i_repository_dice.save_dice(username, room, values[0], values[1], values[2], values[3],
                                                      values[4], values[5], None, None, state.dice_handler.re_rolls_left,
                                                      None)
-            print("Dice created in analytics database with id {}".format(dice_store))
 
         rolled_dice_ui_message = dice_values_message_create(values)
         self.send_to_client(SERVER_RESPONSE, username, room,
@@ -186,7 +186,6 @@ class GameConsumer(WebsocketConsumer):
         payload = data['payload']
 
         selected_dice = decode_selected_dice_indexes(payload)
-        print("Dice Selected {}".format(selected_dice))
 
         try:
             state.dice_handler.re_roll_dice(selected_dice)
@@ -208,7 +207,6 @@ class GameConsumer(WebsocketConsumer):
             dice_store = i_repository_dice.save_dice(username, room, values[0], values[1], values[2], values[3],
                                                      values[4], values[5], None, None, state.dice_handler.re_rolls_left,
                                                      selected_dice)
-            print("Dice with selections created in analytics database with id {}".format(dice_store))
 
         rolled_dice_ui_message = dice_values_message_create(values)
         self.send_to_client(DICE_ROLLS_RESPONSE, username, room, rolled_dice_ui_message)
@@ -342,12 +340,21 @@ class GameConsumer(WebsocketConsumer):
         try:
             bought = state.deck_handler.buy_card_from_store(index_to_buy, state.players.current_player,
                                                             state.players.get_all_alive_players_minus_current_player())
+            if bought:
+                i_repository_play = IRepositoryPlay()
+                i_repository_play.save_play_card_purchased(username, room, bought.name, bought.card_type,
+                                                           state.players.current_player.location,
+                                                           state.players.current_player.victory_points,
+                                                           state.players.current_player.energy,
+                                                           state.players.current_player.current_health)
+
             if isinstance(bought, DropFromHighAltitude):
                 if state.players.get_count_in_tokyo_ignore_current_player() > 1:
                     self.trigger_force_yield_choice(username, state, room)
                 else:
                     move_players_out_of_tokyo(state.players.get_all_alive_players_minus_current_player())
                     state.players.current_player.move_to_tokyo()
+
             current_card_store = state.deck_handler.json_store()
             self.send_to_client(CARD_STORE_RESPONSE,
                                 username, room, current_card_store)
@@ -368,8 +375,26 @@ class GameConsumer(WebsocketConsumer):
     def card_store_sweep_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
         if state.players.current_player.username == username:
+            cards_swept = state.deck_handler.store.copy()
+            print("Cards to be swept {}".format(cards_swept))
+
             successfully_swept_cardstore = state.deck_handler.sweep_store(
                 state.players.current_player)
+
+            if successfully_swept_cardstore is None:
+                i_repository_play = IRepositoryPlay()
+                i_repository_play.save_play_card_swept(username, room, cards_swept[2].name,
+                                                       cards_swept[2].card_type,
+                                                       cards_swept[1].name,
+                                                       cards_swept[1].card_type,
+                                                       cards_swept[0].name,
+                                                       cards_swept[0].card_type,
+                                                       state.players.current_player.location,
+                                                       state.players.current_player.victory_points,
+                                                       state.players.current_player.energy,
+                                                       state.players.current_player.current_health)
+            cards_swept.clear()
+
             if not successfully_swept_cardstore:
                 message = "{} does not have enough funds to sweep the card store!".format(
                     username)

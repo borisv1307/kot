@@ -151,12 +151,10 @@ class Play(models.Model):
     card3_swept_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True, blank=True)
     card_purchased = models.CharField(max_length=2, choices=CARD, null=True, blank=True)
     card_purchased_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True, blank=True)
-    card_used = models.CharField(max_length=2, choices=CARD, null=True, blank=True)
-    card_used_type = models.CharField(max_length=1, choices=CARD_TYPE, null=True, blank=True)
     location = models.CharField(max_length=1, choices=MONSTER_POSITION, null=True, blank=True)
     victory_points = models.IntegerField(null=True, blank=True)
     energy_cube = models.IntegerField(null=True, blank=True)
-    life_points = models.IntegerField(null=True, blank=True)
+    health_points = models.IntegerField(null=True, blank=True)
     date_created = models.DateTimeField(null=True, blank=True)
 
 
