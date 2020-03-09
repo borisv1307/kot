@@ -35,7 +35,7 @@ class PlayerTable extends React.Component {
     let player_status = [];
     try {
       player_status = JSON.parse(content);
-    } catch (e) { }
+    } catch (e) {}
     this.setState({ data: player_status });
   }
 
@@ -82,7 +82,7 @@ class PlayerTable extends React.Component {
           context.closePath();
           context.fill();
 
-          this.state.data.map((entry, index) => {
+          this.state.data.forEach((entry, index) => {
             let desiredRadianAngleOnCircle = interval * index;
             var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
             var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
@@ -105,6 +105,32 @@ class PlayerTable extends React.Component {
             const img = this.provideShape();
             if (img) context.drawImage(img, x, y);
           });
+
+          // this.state.data.map((entry, index) => {
+          //   let desiredRadianAngleOnCircle = interval * index;
+          //   var x = centerX + radius * Math.cos(desiredRadianAngleOnCircle);
+          //   var y = centerY + radius * Math.sin(desiredRadianAngleOnCircle);
+          //   context.fillStyle = "tan";
+          //   context.font = "20px Arial";
+          //   const txt = this.formatName(entry.username);
+          //   const tInfo = context.measureText(txt);
+          //   const tWidth = tInfo.width * 0.5;
+
+          //   let txtX = x - tWidth;
+          //   if (x + tWidth > this.state.tableAreaWidth) txtX = x - tInfo.width;
+
+          //   context.fillStyle = "white";
+          //   /// draw background rect assuming height of font
+          //   context.fillRect(txtX - 2, y - 20 + 2, tInfo.width + 4, 24);
+
+          //   context.fillStyle = "black";
+          //   context.fillText(txt, txtX, y);
+
+          //   const img = this.provideShape();
+          //   if (img) context.drawImage(img, x, y);
+
+          //   return;
+          // });
         }
       }
     }
@@ -201,7 +227,7 @@ class PlayerTable extends React.Component {
               this.divElement = divElement;
             }}
           >
-            <img hidden ref="Go_Image" src={Go}></img>
+            <img hidden ref="Go_Image" src={Go} alt="Go, your turn!"></img>
             {msg}
             <canvas ref="canvas" />
           </div>

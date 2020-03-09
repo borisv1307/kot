@@ -5,11 +5,12 @@ exports[`Verify PlayerTable layout template Verify parameter provided PlayeValue
   id="table_area"
 >
   <img
+    alt="Go, your turn!"
     hidden={true}
     src="icons8-go-48.png"
   />
   <p>
-    Waiting, Please wait.
+    Waiting for more players, Please wait.
   </p>
   <canvas />
 </div>

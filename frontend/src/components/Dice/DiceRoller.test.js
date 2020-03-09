@@ -26,10 +26,13 @@ describe("Verify DiceRoller", () => {
     expect(wrapper.state()).toEqual({
       username: test_username,
       gameRoom: test_roomname,
+      currentTurnUser: "",
       rolledDice: [],
       selectedDice: [],
       allowReroll: true,
-      allowEndTurn: true
+      allowEndTurn: false,
+      diceAccepted: false,
+      its_my_turn: false
     });
 
     done();
@@ -43,10 +46,13 @@ describe("Verify DiceRoller", () => {
     expect(wrapper.state()).toEqual({
       username: test_username,
       gameRoom: test_roomname,
+      currentTurnUser: "",
       rolledDice: [],
       selectedDice: [],
       allowReroll: true,
-      allowEndTurn: true
+      allowEndTurn: false,
+      diceAccepted: false,
+      its_my_turn: false
     });
 
     wrapper.setState(
@@ -55,8 +61,11 @@ describe("Verify DiceRoller", () => {
         gameRoom: test_roomname,
         rolledDice: ["", ""],
         selectedDice: ["", "", "", ""],
-        allowReroll: false,
-        allowEndTurn: true
+        allowReroll: true,
+        allowEndTurn: false,
+        diceAccepted: false,
+        its_my_turn: false,
+        currentTurnUser: ""
       },
       () => {
         expect(wrapper.state()).toEqual({
@@ -64,8 +73,11 @@ describe("Verify DiceRoller", () => {
           gameRoom: test_roomname,
           rolledDice: ["", ""],
           selectedDice: ["", "", "", ""],
-          allowReroll: false,
-          allowEndTurn: true
+          allowReroll: true,
+          allowEndTurn: false,
+          diceAccepted: false,
+          its_my_turn: false,
+          currentTurnUser: ""
         });
 
         done();
@@ -83,8 +95,11 @@ describe("Verify DiceRoller", () => {
       gameRoom: test_roomname,
       rolledDice: ["", "", "", "", ""],
       selectedDice: ["", "", ""],
-      allowReroll: false,
-      allowEndTurn: true
+      allowReroll: true,
+      allowEndTurn: false,
+      diceAccepted: false,
+      its_my_turn: false,
+      currentTurnUser: ""
     });
 
     const actual = wrapper.instance().CalculateRerollCount();
@@ -103,7 +118,10 @@ describe("Verify DiceRoller", () => {
       rolledDice: [],
       selectedDice: [],
       allowReroll: true,
-      allowEndTurn: true
+      allowEndTurn: true,
+      diceAccepted: false,
+      its_my_turn: false,
+      currentTurnUser: ""
     });
 
     const actual = ["", "", "", ""];
@@ -116,7 +134,10 @@ describe("Verify DiceRoller", () => {
       rolledDice: [],
       selectedDice: actual,
       allowReroll: true,
-      allowEndTurn: true
+      allowEndTurn: true,
+      diceAccepted: false,
+      its_my_turn: false,
+      currentTurnUser: ""
     });
   });
 
@@ -130,7 +151,10 @@ describe("Verify DiceRoller", () => {
       rolledDice: [],
       selectedDice: [],
       allowReroll: false,
-      allowEndTurn: true
+      allowEndTurn: true,
+      diceAccepted: false,
+      its_my_turn: false,
+      currentTurnUser: ""
     });
 
     expect(wrapper.state()).toEqual({
@@ -139,7 +163,10 @@ describe("Verify DiceRoller", () => {
       rolledDice: [],
       selectedDice: [],
       allowReroll: false,
-      allowEndTurn: true
+      allowEndTurn: true,
+      diceAccepted: false,
+      its_my_turn: false,
+      currentTurnUser: ""
     });
   });
 });

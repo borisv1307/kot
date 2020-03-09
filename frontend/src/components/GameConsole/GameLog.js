@@ -8,15 +8,8 @@ class GameLog extends React.Component {
     this.state = {
       username: props.currentUser,
       gameRoom: props.currentRoom,
-      log: props.data,
-      scrollToBottom: true
+      log: props.data
     };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    const target = event.target;
-    this.setState({ scrollToBottom: target.checked });
   }
 
   componentDidMount() {
@@ -47,7 +40,6 @@ class GameLog extends React.Component {
         </li>
       ));
     }
-    if (this.state.scrollToBottom) this.scrollToBottom();
   }
 
   render() {
@@ -61,13 +53,6 @@ class GameLog extends React.Component {
         >
           {game_messages && this.renderMessages(game_messages)}
         </ul>
-
-        <input
-          name="scroll_to_bottom"
-          type="checkbox"
-          checked={this.state.scrollToBottom}
-          onChange={this.handleChange}
-        />
       </div>
     );
   }

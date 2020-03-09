@@ -11,7 +11,6 @@ import GameInstance from "./../services/gameService";
 import YieldAlert from "../components/Alerts/YieldAlert";
 import ChooseYielderAlert from "../components/Alerts/ChooseYielderAlert";
 import WinnerAlert from "../components/Alerts/WinnerAlert";
-import PlayerTable from "../components/PlayerTable/PlayerTable";
 
 export default class GameboardLayout extends Component {
     constructor(props) {

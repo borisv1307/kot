@@ -39,7 +39,8 @@ describe("Verify PlayerTable layout template", () => {
     tableAreaWidth: 0,
     tableAreaHeight: 0,
     centerX: 0,
-    centerY: 0
+    centerY: 0,
+    itsMyTurn: false
   };
 
   it("Verify parameter provided PlayeValues are rendered correctly", () => {
@@ -81,8 +82,8 @@ describe("Verify PlayerTable layout template", () => {
       tableAreaWidth: 0,
       tableAreaHeight: 0,
       centerX: 0,
-      centerY: 0
-
+      centerY: 0,
+      itsMyTurn: false
     };
 
     expect(wrapper.state()).toEqual({
