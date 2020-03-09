@@ -39,6 +39,7 @@ from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronge
 from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
 
 # Keep Victory Point Manipulation Cards
+from game.cards.keep_cards.victory_point_manipulation_cards.complete_destruction import CompleteDestruction
 from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
 from game.cards.keep_cards.victory_point_manipulation_cards.eater_of_the_dead import EaterOfTheDead
 from game.cards.keep_cards.victory_point_manipulation_cards.gourmet import Gourmet
@@ -82,7 +83,7 @@ def get_all_cards():
         ItHasAChild(), EvenBigger(), Regeneration()]
 
     keep_victory_point_manipulation_cards = [
-        DedicatedNewsTeam(), Gourmet(), Omnivore(), EaterOfTheDead()]
+        CompleteDestruction(), DedicatedNewsTeam(), Gourmet(), Omnivore(), EaterOfTheDead()]
 
     keep_turn_manipulation_cards = [GiantBrain()]
 
