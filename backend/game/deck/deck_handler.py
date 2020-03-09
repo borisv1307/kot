@@ -7,6 +7,7 @@ from game.cards.discard_card import DiscardCard
 from game.cards.discard_cards.victory_point_manipulation_cards.drop_from_high_altitude import DropFromHighAltitude
 from game.cards.keep_card import KeepCard
 from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
+from game.cards.keep_cards.energy_manipulation_cards.alien_metabolism import AlienMetabolism
 from game.deck.deck import Deck
 from game.player.player import Player
 from game.values.exceptions import InsufficientFundsException, UnexpectedCardTypeException
@@ -73,19 +74,23 @@ class DeckHandler:
 
     def buy_card_from_store(self, index, purchasing_player: Player, other_players):
         card_to_buy: Card = self.__card_store[index]
-        if purchasing_player.energy < card_to_buy.cost:
+        card_cost = card_to_buy.cost
+        if purchasing_player.has_instance_of_card(AlienMetabolism()):
+            card_cost = card_to_buy.cost - 1
+        if purchasing_player.energy < card_cost:
             raise InsufficientFundsException(constants.INSUFFICIENT_FUNDS_MSG)
         else:
-            purchasing_player.update_energy_by(-card_to_buy.cost)
+            purchasing_player.update_energy_by(-card_cost)
             if purchasing_player.has_instance_of_card(DedicatedNewsTeam()):
-                DedicatedNewsTeam.special_effect(self, purchasing_player, [])
+                DedicatedNewsTeam().special_effect(purchasing_player, None)
             if isinstance(card_to_buy, DiscardCard):
                 print("{} is a discard card".format(card_to_buy.name))
 
                 # if the card is DropFromHighAltitude, we have to prompt player, and then consumers.py will handle
                 # triggering the immediate_effect
                 if not isinstance(card_to_buy, DropFromHighAltitude):
-                    card_to_buy.immediate_effect(purchasing_player, other_players)
+                    card_to_buy.immediate_effect(
+                        purchasing_player, other_players)
                 self.discard(card_to_buy)
             elif isinstance(card_to_buy, KeepCard):
                 card_to_buy.immediate_effect(purchasing_player, other_players)
