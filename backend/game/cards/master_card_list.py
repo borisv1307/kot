@@ -34,6 +34,7 @@ from game.cards.keep_cards.energy_manipulation_cards.energy_hoarder import Energ
 from game.cards.keep_cards.energy_manipulation_cards.friend_of_children import FriendOfChildren
 from game.cards.keep_cards.energy_manipulation_cards.solar_powered import SolarPowered
 from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronger import WereOnlyMakingItStronger
+from game.cards.keep_cards.energy_manipulation_cards.alien_metabolism import AlienMetabolism
 
 # Keep Turn Manipulation Cards
 from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
@@ -77,7 +78,7 @@ def get_all_cards():
     keep_attack_manipulation_cards = [NovaBreath()]
 
     keep_energy_manipulation_cards = [
-        EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger()]
+        EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger(), AlienMetabolism()]
 
     keep_health_manipulation_cards = [
         ItHasAChild(), EvenBigger(), Regeneration()]
