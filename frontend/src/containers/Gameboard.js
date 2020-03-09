@@ -9,49 +9,62 @@ import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay
 import PlayerTable from "../components/PlayerTable/PlayerTable";
 import GameInstance from "./../services/gameService";
 import YieldAlert from "../components/Alerts/YieldAlert";
+import ChooseYielderAlert from "../components/Alerts/ChooseYielderAlert";
 import WinnerAlert from "../components/Alerts/WinnerAlert";
+import PlayerTable from "../components/PlayerTable/PlayerTable";
 
 export default class GameboardLayout extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    let userName = "Guest_1234";
-    let roomName = "Room_1234";
-    if (props.location && props.location.state) {
-      userName = props.location.state.username;
-      roomName = props.location.state.gameRoom;
+        let userName = "Guest_1234";
+        let roomName = "Room_1234";
+        if (props.location && props.location.state) {
+            userName = props.location.state.username;
+            roomName = props.location.state.gameRoom;
+        }
+
+        this.state = {
+            username: userName,
+            gameRoom: roomName,
+            loggedIn: true
+        };
+
+        GameInstance.connect(this.state.gameRoom, config.GAME_SOCKET_API_PATH);
+        GameInstance.addYieldCallback(this.showAlert.bind(this));
+        GameInstance.addWinnerCallback(this.showWinner.bind(this));
+        GameInstance.addYieldForcedCallback(this.showForceYieldChoice.bind(this))
     }
 
-    this.state = {
-      username: userName,
-      gameRoom: roomName,
-      loggedIn: true
-    };
-
-    GameInstance.connect(this.state.gameRoom, config.GAME_SOCKET_API_PATH);
-    GameInstance.addYieldCallback(this.showAlert.bind(this));
-    GameInstance.addWinnerCallback(this.showWinner.bind(this));
-  }
-
-  showAlert(message) {
-    let username_whos_turn_it_is = message.user;
-    let yieldAlert = new YieldAlert(
-      this.props,
-      this.state.username,
-      this.state.gameRoom
-    );
-    if (this.state.username === username_whos_turn_it_is) {
-      // yieldAlert.showCustom()
-      yieldAlert.show();
+    showAlert(message) {
+        let username_whos_turn_it_is = message.user;
+        let yieldAlert = new YieldAlert(
+            this.props,
+            this.state.username,
+            this.state.gameRoom
+        );
+        if (this.state.username === username_whos_turn_it_is) {
+            // yieldAlert.showCustom()
+            yieldAlert.show()
+        }
     }
-  }
 
-  showWinner(message) {
-    let winner = message.user;
-    let winnerAlert = new WinnerAlert(this.props, winner);
-    winnerAlert.show();
-    // yieldAlert.showCustom()
-  }
+    showWinner(message) {
+        let winner = message.user;
+        let winnerAlert = new WinnerAlert(this.props, winner);
+        winnerAlert.show();
+        // yieldAlert.showCustom()
+    }
+
+    showForceYieldChoice(message){
+      let username_whos_turn_it_is = message.user;
+      if (this.state.username === username_whos_turn_it_is) {
+        let users = message.content;
+        let chooseYielder = new ChooseYielderAlert(this.props, this.state.username, this.state.gameRoom, users[0], users[1])
+        chooseYielder.show()
+      }
+    }
+
 
   render() {
     return (
