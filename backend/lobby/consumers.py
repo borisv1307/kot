@@ -218,8 +218,6 @@ class GameConsumer(WebsocketConsumer):
         username, room, game, state = reconstruct_game(data)
         state.post_roll_actions(state.players.current_player)
 
-        self.update_player_status(state, username, room, game)
-
         next_player: Player = state.get_next_player_turn()
 
         state.dice_handler.roll_initial(
@@ -229,21 +227,22 @@ class GameConsumer(WebsocketConsumer):
 
         rolled_dice_ui_message = dice_values_message_create(values)
 
-        save_game(game, state)
-
         if next_player:
+            self.send_to_client(SERVER_RESPONSE, username, room,
+                                dice_vals_log_message(next_player.username, values))
             self.send_to_client(BEGIN_TURN_RESPONSE, username,
                                 room, next_player.username)
             self.send_to_client(DICE_ROLLS_RESPONSE,
                                 next_player.username, room, rolled_dice_ui_message)
-            self.send_to_client(SERVER_RESPONSE, username, room,
-                                dice_vals_log_message(next_player.username, values))
         else:
             self.send_to_client(BEGIN_TURN_RESPONSE, username, room, "None")
+
+        self.update_player_status(state, username, room, game)
 
         for player in state.players.players:
             if state.check_if_winner(player):
                 self.send_to_client(WINNER_ALERT, state.players.current_player.username, room, "Winner")
+                break
 
     def gamelog_send_handler(self, data):
         username, room, game, state = reconstruct_game(data)

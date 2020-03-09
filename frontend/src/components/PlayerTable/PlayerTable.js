@@ -16,7 +16,8 @@ class PlayerTable extends React.Component {
       tableAreaWidth: 0,
       tableAreaHeight: 0,
       centerX: 0,
-      centerY: 0
+      centerY: 0,
+      itsMyTurn: false
     };
 
     GameInstance.addCallback(
@@ -34,7 +35,7 @@ class PlayerTable extends React.Component {
     let player_status = [];
     try {
       player_status = JSON.parse(content);
-    } catch (e) {}
+    } catch (e) { }
     this.setState({ data: player_status });
   }
 
