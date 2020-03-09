@@ -4,6 +4,7 @@ from game.dice.dice import DieValue
 from game.turn_actions.attack import get_attackable_players, attack_players
 from game.turn_actions.player_movement import move_to_tokyo_if_empty
 from game.turn_actions.heal import heal_self_from_dice
+from game.cards.keep_cards.victory_point_manipulation_cards.complete_destruction import CompleteDestruction
 from game.cards.keep_cards.victory_point_manipulation_cards.urbavore import Urbavore
 from game.cards.keep_cards.victory_point_manipulation_cards.gourmet import Gourmet
 from game.cards.keep_cards.victory_point_manipulation_cards.omnivore import Omnivore
@@ -61,9 +62,13 @@ def resolve_all_other_dice(dice_counter, player):
 
 def card_based_dice_actions(dice_counter, player, other_players):
     if dice_counter[DieValue.ONE] >= 3 and player.has_instance_of_card(Gourmet()):
-        Gourmet.special_effect(player, other_players)
+        Gourmet().special_effect(player, other_players)
     if dice_counter[DieValue.ONE] >= 1 and dice_counter[DieValue.TWO] >= 1 and dice_counter[DieValue.THREE] >= 1 and player.has_instance_of_card(Omnivore()):
-        Omnivore.special_effect(player, other_players)
+        Omnivore().special_effect(player, other_players)
+    if dice_counter[DieValue.ONE] >= 1 and dice_counter[DieValue.TWO] >= 1 and dice_counter[DieValue.THREE] >= 1 and \
+            dice_counter[DieValue.HEAL] >= 1 and dice_counter[DieValue.ATTACK] >= 1 and dice_counter[DieValue.ENERGY] >= 1 and \
+            player.has_instance_of_card(CompleteDestruction()):
+        CompleteDestruction().special_effect(player, other_players)
 
 
 def dice_resolution(dice, player, other_players):

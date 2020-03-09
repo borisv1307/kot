@@ -4,6 +4,7 @@ from typing import List
 import game.values.constants as constants
 from game.cards.card import Card
 from game.cards.discard_card import DiscardCard
+from game.cards.discard_cards.victory_point_manipulation_cards.drop_from_high_altitude import DropFromHighAltitude
 from game.cards.keep_card import KeepCard
 from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
 from game.deck.deck import Deck
@@ -81,7 +82,11 @@ class DeckHandler:
                 DedicatedNewsTeam.special_effect(self, purchasing_player, [])
             if isinstance(card_to_buy, DiscardCard):
                 print("{} is a discard card".format(card_to_buy.name))
-                card_to_buy.immediate_effect(purchasing_player, other_players)
+
+                # if the card is DropFromHighAltitude, we have to prompt player, and then consumers.py will handle
+                # triggering the immediate_effect
+                if not isinstance(card_to_buy, DropFromHighAltitude):
+                    card_to_buy.immediate_effect(purchasing_player, other_players)
                 self.discard(card_to_buy)
             elif isinstance(card_to_buy, KeepCard):
                 card_to_buy.immediate_effect(purchasing_player, other_players)
