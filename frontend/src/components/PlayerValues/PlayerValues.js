@@ -6,10 +6,6 @@ import "./PlayerValues.css";
 import PlayerHandDisplay from "./PlayerHandDisplay";
 
 class PlayerValues extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
   render() {
     let you_or_them = "them";
     if (this.props.thisIsYou) {

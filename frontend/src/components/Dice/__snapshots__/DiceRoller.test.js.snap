@@ -4,6 +4,9 @@ exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`
 <div
   className="DiceRoller"
 >
+  <p>
+    Waiting for more players, Please wait.
+  </p>
   <DiceBoard
     callbackSendDiceSelectionOut={[Function]}
     data={Array []}
@@ -11,7 +14,7 @@ exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`
   <Button
     active={false}
     className="btn btn-secondary"
-    disabled={false}
+    disabled={true}
     onClick={[Function]}
     type="button"
     variant="primary"
@@ -21,7 +24,7 @@ exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`
   <Button
     active={false}
     className="btn btn-secondary"
-    disabled={false}
+    disabled={true}
     onClick={[Function]}
     type="button"
     variant="primary"
@@ -31,22 +34,12 @@ exports[`Verify DiceRoller layout template DiceRoller should render correctly 1`
   <Button
     active={false}
     className="btn btn-secondary"
-    disabled={false}
+    disabled={true}
     onClick={[Function]}
     type="button"
     variant="primary"
   >
     End Turn
-  </Button>
-  <Button
-    active={false}
-    className="btn btn-secondary"
-    disabled={false}
-    onClick={[Function]}
-    type="button"
-    variant="primary"
-  >
-    Yield Tokyo
   </Button>
 </div>
 `;

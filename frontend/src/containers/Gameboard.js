@@ -6,11 +6,11 @@ import GameConsole from "../components/GameConsole/GameConsole";
 import DiceRoller from "./../components/Dice/DiceRoller";
 import CardStore from "../components/Cards/CardStore";
 import PlayerValuesDisplay from "./../components/PlayerValues/PlayerValueDisplay";
+import PlayerTable from "../components/PlayerTable/PlayerTable";
 import GameInstance from "./../services/gameService";
 import YieldAlert from "../components/Alerts/YieldAlert";
 import ChooseYielderAlert from "../components/Alerts/ChooseYielderAlert";
 import WinnerAlert from "../components/Alerts/WinnerAlert";
-import PlayerTable from "../components/PlayerTable/PlayerTable";
 
 export default class GameboardLayout extends Component {
     constructor(props) {
@@ -37,18 +37,21 @@ export default class GameboardLayout extends Component {
 
     showAlert(message) {
         let username_whos_turn_it_is = message.user;
-        let yieldAlert = new YieldAlert(this.props, this.state.username, this.state.gameRoom)
+        let yieldAlert = new YieldAlert(
+            this.props,
+            this.state.username,
+            this.state.gameRoom
+        );
         if (this.state.username === username_whos_turn_it_is) {
             // yieldAlert.showCustom()
             yieldAlert.show()
         }
-
     }
 
     showWinner(message) {
         let winner = message.user;
-        let winnerAlert = new WinnerAlert(this.props, winner)
-        winnerAlert.show()
+        let winnerAlert = new WinnerAlert(this.props, winner);
+        winnerAlert.show();
         // yieldAlert.showCustom()
     }
 
