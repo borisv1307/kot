@@ -358,7 +358,7 @@ class GameConsumer(WebsocketConsumer):
     def card_store_sweep_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
         if state.players.current_player.username == username:
-            cards_swept = state.deck_handler.get_top_three_cards()
+            cards_swept = state.deck_handler.store.copy()
             print("Cards to be swept {}".format(cards_swept))
 
             successfully_swept_cardstore = state.deck_handler.sweep_store(

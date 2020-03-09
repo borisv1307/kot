@@ -29,7 +29,6 @@ class DeckHandler:
         self.__draw_pile.get_new_deck()
         self.__draw_pile.shuffle()
         self.__fill_card_store()
-        self.cards_swept = []
 
     def __len__(self):
         return len(self.draw_pile) + len(self.store) + len(self.discard_pile)
@@ -107,9 +106,3 @@ class DeckHandler:
             for _ in range(3):
                 self.discard(self.store.pop())
             self.__fill_card_store()
-
-    def get_top_three_cards(self):
-        self.cards_swept.clear()
-        for i in range(3):
-            self.cards_swept.append(self.store[i])
-        return self.cards_swept
