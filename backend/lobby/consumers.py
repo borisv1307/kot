@@ -4,21 +4,26 @@ import pickle
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
+from game.cards.discard_cards.victory_point_manipulation_cards.drop_from_high_altitude import DropFromHighAltitude
 from game.dice.dice_resolver import dice_resolution
 from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
+from game.irepository.irepository_dice import IRepositoryDice
 from game.irepository.irepository_game import IRepositoryGame
 from game.irepository.irepository_player import IRepositoryPlayer
 from game.irepository.irepository_dice import IRepositoryDice
 from game.irepository.irepository_play import IRepositoryPlay
+
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
+from game.turn_actions.player_movement import move_players_out_of_tokyo
 from game.values.constants import DEFAULT_RE_ROLL_COUNT
 from game.values.exceptions import InsufficientFundsException
+from game.values.locations import Locations
 from lobby.consumers_common import save_game, reconstruct_game, create_send_response_to_client
 from lobby.server_message_types import PLAYER_STATUS_UPDATE_RESPONSE, BEGIN_TURN_RESPONSE, SERVER_RESPONSE, \
-    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, END_TURN, WINNER_ALERT
+    DICE_ROLLS_RESPONSE, CARD_STORE_RESPONSE, YIELD_ALERT, YIELD_FORCE_ALERT, END_TURN, WINNER_ALERT
 
 
 def dice_vals_log_message(player_name, values):
@@ -138,7 +143,7 @@ class GameConsumer(WebsocketConsumer):
             player.update_energy_by(1000)
             state.add_player(player)
 
-        # hack to start game after 2 players join
+            # hack to start game after 2 players join
         temp_max_players = 2
         if len(state.players.players) == temp_max_players:
             self.start_web_game(room, state, username)
@@ -146,6 +151,11 @@ class GameConsumer(WebsocketConsumer):
             msg = "Joined, waiting on additional players"
             self.send_to_client(SERVER_RESPONSE, username,
                                 room, username + msg)
+
+        self.update_player_status(state, username, room, game)
+
+    def update_player_status(self, state, username, room, game):
+        state.players.apply_eater_of_dead_action()
 
         player_summaries = player_status_summary_to_JSON(state.players)
         self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
@@ -205,9 +215,8 @@ class GameConsumer(WebsocketConsumer):
         # a method to end a players turn and let the next guy go
         username, room, game, state = reconstruct_game(data)
         state.post_roll_actions(state.players.current_player)
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                            username, room, player_summaries)
+
+        self.update_player_status(state, username, room, game)
 
         next_player: Player = state.get_next_player_turn()
 
@@ -260,9 +269,8 @@ class GameConsumer(WebsocketConsumer):
 
             state.players.reset_allowed_to_yield()
 
-            player_summaries = player_status_summary_to_JSON(state.players)
-            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                                username, room, player_summaries)
+            self.update_player_status(state, username, room, game)
+
             self.send_to_client(
                 END_TURN, state.players.current_player.username, room, "allow end turn")
         else:
@@ -297,11 +305,7 @@ class GameConsumer(WebsocketConsumer):
         dice_resolution(state.dice_handler.dice_values, state.players.get_current_player(),
                         state.players.get_all_alive_players_minus_current_player())
 
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                            username, room, player_summaries)
-
-        save_game(game, state)
+        self.update_player_status(state, username, room, game)
 
         self.trigger_yield_popup_if_necessary(state, room)
 
@@ -318,6 +322,13 @@ class GameConsumer(WebsocketConsumer):
         if not awaiting_yield_response:
             self.send_to_client(
                 END_TURN, state.players.current_player.username, room, "allow end turn")
+
+    def trigger_force_yield_choice(self, username, state, room):
+        players_in_tokyo = []
+        for player in state.players.get_all_alive_players_minus_current_player():
+            if player.location != Locations.OUTSIDE:
+                players_in_tokyo.append(player.username)
+        self.send_to_client(YIELD_FORCE_ALERT, username, room, players_in_tokyo)
 
     def buy_card_request_handler(self, data):
         username, room, game, state = reconstruct_game(data)
@@ -337,13 +348,19 @@ class GameConsumer(WebsocketConsumer):
                                                            state.players.current_player.energy,
                                                            state.players.current_player.current_health)
 
+            if isinstance(bought, DropFromHighAltitude):
+                if state.players.get_count_in_tokyo_ignore_current_player() > 1:
+                    self.trigger_force_yield_choice(username, state, room)
+                else:
+                    move_players_out_of_tokyo(state.players.get_all_alive_players_minus_current_player())
+                    state.players.current_player.move_to_tokyo()
+
             current_card_store = state.deck_handler.json_store()
             self.send_to_client(CARD_STORE_RESPONSE,
                                 username, room, current_card_store)
 
-            player_summaries = player_status_summary_to_JSON(state.players)
-            self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                                username, room, player_summaries)
+            self.update_player_status(state, username, room, game)
+
             self.send_to_client(SERVER_RESPONSE, username, room,
                                 "{} bought {}!".format(
                                     state.players.current_player.username, bought.name))
@@ -385,15 +402,20 @@ class GameConsumer(WebsocketConsumer):
         else:
             print("{} tried to sweep out of turn!".format(username))
 
-        player_summaries = player_status_summary_to_JSON(state.players)
-        self.send_to_client(PLAYER_STATUS_UPDATE_RESPONSE,
-                            username, room, player_summaries)
+        self.update_player_status(state, username, room, game)
 
         selected_cards_ui_message = state.deck_handler.json_store()
         self.send_to_client(CARD_STORE_RESPONSE, username,
                             room, selected_cards_ui_message)
 
         save_game(game, state)
+
+    def force_yield_tokyo_request_handler(self, data):
+        username, room, game, state = reconstruct_game(data)
+        yielding_player = data['payload']
+        DropFromHighAltitude().immediate_effect(state.players.get_player_by_username_from_alive(username),
+                                                state.players.get_player_by_username_from_alive(yielding_player))
+        self.update_player_status(state, username, room, game)
 
     commands = {
         'init_user_request': init_chat_handler,
@@ -407,5 +429,6 @@ class GameConsumer(WebsocketConsumer):
         'yield_tokyo_request': yield_tokyo_request_handler,
         'keep_tokyo_request': keep_tokyo_request_handler,
         'sweep_card_store_request': card_store_sweep_request_handler,
-        'buy_card_request': buy_card_request_handler
+        'buy_card_request': buy_card_request_handler,
+        'force_yield_tokyo_request': force_yield_tokyo_request_handler
     }

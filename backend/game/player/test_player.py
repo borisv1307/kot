@@ -167,3 +167,11 @@ def test_generate_player_status_summary(player):
     assert summary["victory_points"] == constants.DEATH_HIT_POINT
     assert summary["energy"] == constants.DEFAULT_ENERGY_CUBE
     print(summary)
+
+
+def test_newly_dead():
+    player = Player("test")
+    assert not player.is_newly_dead
+    player.update_health_by(-player.current_health)
+    assert player.is_newly_dead
+    assert not player.is_newly_dead

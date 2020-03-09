@@ -104,6 +104,11 @@ class GameService {
         EventEmitter.on("yield_alert", yieldCallback);
     }
 
+    
+    addYieldForcedCallback(yieldForcedCallback) {
+        EventEmitter.on("yield_force_alert", yieldForcedCallback);
+    }
+
     addWinnerCallback(winnerCallback) {
         EventEmitter.on("winner_alert", winnerCallback);
     }
