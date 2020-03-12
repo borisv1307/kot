@@ -1,7 +1,6 @@
 import datetime
 
 from django.test import TestCase
-
 from game.models import Game
 from game.models import User
 

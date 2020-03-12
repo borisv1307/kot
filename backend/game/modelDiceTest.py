@@ -6,7 +6,6 @@ from game.models import User
 from game.models import Dice
 
 
-
 class DiceModelTest(TestCase):
 
     @classmethod
