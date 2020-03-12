@@ -36,19 +36,11 @@ Frontend documentation see \kot\frontend\README.md.
 - <http://localhost:8000/api/v1/game/detail/?/>
   Get games by the room name ?
 
-#### User Model Api's
-
-#### Dice Model Api's
-
-#### Play Model Api's
-
 ## Quick Start
 
 - Install dependencies then build production React build
 
 > `cd \kot\frontend\` </br> > `npm install` </br> > `npm run build` </br>
-
--
 
 ## Setup Details
 
