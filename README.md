@@ -25,23 +25,6 @@ Frontend documentation see \kot\frontend\README.md.
 - <http://localhost:8000/admin/>
 - <http://localhost:8000/users/>
 
-## Api's
-
-#### Game Model Api's
-
-- <http://localhost:8000/api/v1/game/view/>
-  Get all the games and create game
-- <http://localhost:8000/api/v1/game/list/>
-  Get all the games and create game (alternate version)
-- <http://localhost:8000/api/v1/game/detail/?/>
-  Get games by the room name ?
-
-#### User Model Api's
-
-#### Dice Model Api's
-
-#### Play Model Api's
-
 ## Quick Start
 
 - Install dependencies then build production React build
