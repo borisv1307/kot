@@ -13,48 +13,27 @@ Frontend documentation see \kot\frontend\README.md.
 - Production: React website hosted via Django server.
 
   - Build React: `npm build` copies static content to frontend/build/static.
-  - Run Python `python manage.py runserver` hosts static content via django server.
+  - Run Python `python manage.py runserver` to host static content via django server.
 
 - Development:
   - Run React: `npm start` to run development server.
   - Run Python `python manage.py runserver` to run python development server.
 
-## Site Map
+## Site Map Development
 
-- <http://localhost:8000/>
-- <http://localhost:8000/admin/>
-- <http://localhost:8000/users/>
+- Node.Js React Server: <http://localhost:3000/>
+- Django Server: <http://localhost:8000/>
+- Django DB Access: <http://localhost:8000/admin/>
 
-## Api's
+## Setup Development Environments
 
-#### Game Model Api's
+Do this once after first cloning KOT...
 
-- <http://localhost:8000/api/v1/game/view/>
-  Get all the games and create game
-- <http://localhost:8000/api/v1/game/list/>
-  Get all the games and create game (alternate version)
-- <http://localhost:8000/api/v1/game/detail/?/>
-  Get games by the room name ?
+## Frontend (React) Environment
 
-#### User Model Api's
+- Install NPM dependencies then build production React build </br> > `cd \kot\frontend\` </br> > `npm install` </br> > `npm build` </br>
 
-#### Dice Model Api's
-
-#### Play Model Api's
-
-## Quick Start
-
-- Install dependencies then build production React build
-
-> `cd \kot\frontend\` </br> > `npm install` </br> > `npm run build` </br>
-
--
-
-## Setup Details
-
-## Setup Environments
-
-- Do this once after first cloning KOT...
+## Backen (Python) Environment
 
 - Option 1: Use Setup Python Virtual Environment (recommended) </br> > `cd \kot\` </br> > `python -m venv env` </br> > `.\env\Scripts\activate` </br> > `pip install -r requirements.txt`</br> > `python -m pip install --upgrade pip`</br> > `cd \kot\backend\`</br> > `python manage.py runserver` </br>
 
