@@ -7,17 +7,7 @@ class PlayerHandDisplay extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.updateCards();
-  }
-
-  updateCards() {
-    let cards = {};
-    if (this.props.data) {
-      try {
-        cards = JSON.parse(this.props.data);
-      } catch (e) {}
-    }
-
+    let cards = this.updateCards(this.props.data);
     this.state = {
       username: this.props.currentUser,
       gameRoom: this.props.currentRoom,
@@ -25,9 +15,26 @@ class PlayerHandDisplay extends React.Component {
     };
   }
 
-  render() {
-    this.updateCards();
+  updateCards(data) {
+    let cards = {};
+    if (this.props.data) {
+      try {
+        cards = JSON.parse(data);
+      } catch (e) {}
+    }
+    return cards;
+  }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.data !== prevProps.data) {
+      let cards = this.updateCards(this.props.data);
+      this.setState({
+        data: cards
+      });
+    }
+  }
+
+  render() {
     if (this.state.data && this.state.data.length > 0) {
       return (
         <div>
