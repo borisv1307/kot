@@ -46,6 +46,7 @@ from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team 
 from game.cards.keep_cards.victory_point_manipulation_cards.eater_of_the_dead import EaterOfTheDead
 from game.cards.keep_cards.victory_point_manipulation_cards.gourmet import Gourmet
 from game.cards.keep_cards.victory_point_manipulation_cards.omnivore import Omnivore
+from game.cards.keep_cards.victory_point_manipulation_cards.rooting_for_the_underdog import RootingForTheUnderdog
 
 
 def get_all_cards():
@@ -85,7 +86,7 @@ def get_all_cards():
         ItHasAChild(), EvenBigger(), Regeneration(), ArmorPlating()]
 
     keep_victory_point_manipulation_cards = [
-        CompleteDestruction(), DedicatedNewsTeam(), Gourmet(), Omnivore(), EaterOfTheDead()]
+        CompleteDestruction(), DedicatedNewsTeam(), Gourmet(), Omnivore(), EaterOfTheDead(), RootingForTheUnderdog()]
 
     keep_turn_manipulation_cards = [GiantBrain()]
 
