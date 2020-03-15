@@ -7,6 +7,7 @@ from game.cards.keep_cards.energy_manipulation_cards.were_only_making_it_stronge
 from game.cards.keep_cards.health_manipulation_cards.it_has_a_child import ItHasAChild
 from game.cards.keep_cards.health_manipulation_cards.regeneration import Regeneration
 from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
+from game.cards.keep_cards.health_manipulation_cards.armor_plating import ArmorPlating
 from game.player.player_status_resolver import json_players_hand
 from game.values import constants
 from game.values.locations import Locations
@@ -67,6 +68,8 @@ class Player:
             WereOnlyMakingItStronger().special_effect(self, None)
         if self.has_instance_of_card(Regeneration()):
             change_integer = Regeneration().special_effect(self, change_integer)
+        if self.has_instance_of_card(ArmorPlating()):
+            change_integer = ArmorPlating().special_effect(self, change_integer)
         self.current_health += change_integer
         if self.current_health > self.maximum_health:
             self.current_health = self.maximum_health

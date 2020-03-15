@@ -9,6 +9,7 @@ from game.cards.discard_cards.health_manipulation_cards.high_altitude_bombing im
 from game.cards.keep_cards.health_manipulation_cards.it_has_a_child import ItHasAChild
 from game.cards.keep_cards.health_manipulation_cards.even_bigger import EvenBigger
 from game.cards.keep_cards.health_manipulation_cards.regeneration import Regeneration
+from game.cards.keep_cards.health_manipulation_cards.armor_plating import ArmorPlating
 
 # Multi-Manipulation Cards
 from game.cards.discard_cards.multi_manipulation_cards.gas_refinery import GasRefinery
@@ -81,7 +82,7 @@ def get_all_cards():
         EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger(), AlienMetabolism()]
 
     keep_health_manipulation_cards = [
-        ItHasAChild(), EvenBigger(), Regeneration()]
+        ItHasAChild(), EvenBigger(), Regeneration(), ArmorPlating()]
 
     keep_victory_point_manipulation_cards = [
         CompleteDestruction(), DedicatedNewsTeam(), Gourmet(), Omnivore(), EaterOfTheDead()]
