@@ -10,10 +10,8 @@ from game.engine.board import BoardGame
 from game.engine.dice_msg_translator import decode_selected_dice_indexes, dice_values_message_create
 from game.irepository.irepository_dice import IRepositoryDice
 from game.irepository.irepository_game import IRepositoryGame
-from game.irepository.irepository_player import IRepositoryPlayer
-from game.irepository.irepository_dice import IRepositoryDice
 from game.irepository.irepository_play import IRepositoryPlay
-
+from game.irepository.irepository_player import IRepositoryPlayer
 from game.models import User, GameState
 from game.player.player import Player
 from game.player.player_status_resolver import player_status_summary_to_JSON
@@ -125,13 +123,7 @@ class GameConsumer(WebsocketConsumer):
         username = data['user']
         room = data['room']
 
-        self.get_or_create_game(username, room)
-
-        game = GameState.objects.get(room_name=room)
-        if not game.board:
-            state = BoardGame()
-        else:
-            state = pickle.loads(game.board)
+        game, state = self.get_state(room, username)
 
         player: Player = Player(username)
         if player not in state.players.players and not state.is_game_active():
@@ -144,8 +136,8 @@ class GameConsumer(WebsocketConsumer):
             state.add_player(player)
 
             # hack to start game after 2 players join
-        temp_max_players = 2
-        if len(state.players.players) == temp_max_players:
+        temp_max_players = 4
+        if len(state.players.players) >= temp_max_players:
             self.start_web_game(room, state, username)
         else:
             msg = "Joined, waiting on additional players"
@@ -153,6 +145,15 @@ class GameConsumer(WebsocketConsumer):
                                 room, username + msg)
 
         self.update_player_status(state, username, room, game)
+
+    def get_state(self, room, username):
+        self.get_or_create_game(username, room)
+        game = GameState.objects.get(room_name=room)
+        if not game.board:
+            state = BoardGame()
+        else:
+            state = pickle.loads(game.board)
+        return game, state
 
     def update_player_status(self, state, username, room, game):
         state.players.apply_eater_of_dead_action()
@@ -416,7 +417,16 @@ class GameConsumer(WebsocketConsumer):
                                                 state.players.get_player_by_username_from_alive(yielding_player))
         self.update_player_status(state, username, room, game)
 
+    def start_game_handler(self, data):
+        username = data['user']
+        room = data['room']
+        print("request received from {}".format(username))
+        game, state = self.get_state(room, username)
+        self.start_web_game(room, state, username)
+        self.update_player_status(state, username, room, game)
+
     commands = {
+        'start_game_request': start_game_handler,
         'init_user_request': init_chat_handler,
         'gamelog_send_request': gamelog_send_handler,
         'selected_dice_request': selected_dice_handler,
