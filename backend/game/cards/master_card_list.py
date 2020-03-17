@@ -42,6 +42,7 @@ from game.cards.keep_cards.energy_manipulation_cards.alien_metabolism import Ali
 from game.cards.keep_cards.turn_manipulation_cards.GiantBrain import GiantBrain
 
 # Keep Victory Point Manipulation Cards
+from game.cards.keep_cards.victory_point_manipulation_cards.alpha_monster import AlphaMonster
 from game.cards.keep_cards.victory_point_manipulation_cards.complete_destruction import CompleteDestruction
 from game.cards.keep_cards.victory_point_manipulation_cards.dedicated_news_team import DedicatedNewsTeam
 from game.cards.keep_cards.victory_point_manipulation_cards.eater_of_the_dead import EaterOfTheDead
@@ -85,8 +86,8 @@ def get_all_cards():
     keep_health_manipulation_cards = [
         ItHasAChild(), EvenBigger(), Regeneration(), ArmorPlating()]
 
-    keep_victory_point_manipulation_cards = [
-        CompleteDestruction(), DedicatedNewsTeam(), Gourmet(), Omnivore(), EaterOfTheDead()]
+    keep_victory_point_manipulation_cards = [AlphaMonster(),
+                                             CompleteDestruction(), DedicatedNewsTeam(), Gourmet(), Omnivore(), EaterOfTheDead()]
 
     keep_turn_manipulation_cards = [GiantBrain()]
 

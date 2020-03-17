@@ -23,6 +23,7 @@ class DiceRoller extends React.Component {
     this.AttemptReroll = this.AttemptReroll.bind(this);
     this.EndTurn = this.EndTurn.bind(this);
     this.ResolveDice = this.ResolveDice.bind(this);
+    this.StartGame = this.StartGame.bind(this);
     GameInstance.addDiceCallback(this.diceRollerHandler.bind(this));
     GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
     GameInstance.addAllowEndTurnCallback(this.allowEndTurnHandler.bind(this));
@@ -89,6 +90,19 @@ class DiceRoller extends React.Component {
   allowEndTurnHandler(message) {
     if (this.state.its_my_turn) {
       this.setState({ allowEndTurn: true });
+    }
+  }
+
+  StartGame(/*e*/) {
+    try {
+      GameInstance.sendMessage({
+        command: "start_game_request",
+        user: this.state.username,
+        room: this.state.gameRoom,
+        payload: this.state.username
+      });
+    } catch (exception) {
+      console.log(exception);
     }
   }
 
@@ -219,6 +233,18 @@ class DiceRoller extends React.Component {
     if (!this.gameStarted()) {
       msg = <p>Waiting for more players, Please wait.</p>;
     }
+    let startButton = null;
+    if (!this.gameStarted()) {
+      startButton = (
+        <Button
+          className="btn btn-secondary"
+          disabled={this.gameStarted()}
+          onClick={this.StartGame}
+        >
+          Start Game
+        </Button>
+      );
+    }
     return (
       <div className="DiceRoller">
         {msg}
@@ -252,6 +278,7 @@ class DiceRoller extends React.Component {
         >
           End Turn
         </Button>
+        {startButton}
       </div>
     );
   }
