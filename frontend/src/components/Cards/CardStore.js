@@ -17,14 +17,18 @@ class CardStore extends React.Component {
       username: props.currentUser,
       gameRoom: props.currentRoom,
       value: [],
+      currentTurnUser: "",
       selectedCard: [],
       data: props.data,
-      allowEndTurn: true
+      allowSweepStore: false,
+      its_my_turn: false
     };
 
     this.cardStoreRequest = this.cardStoreRequest.bind(this);
     this.sweepStore = this.sweepStore.bind(this);
     GameInstance.addCardCallback(this.cardUpdateHandler.bind(this));
+    GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
+    GameInstance.addAllowSweepStoreCallback(this.allowSweepStoreHandler.bind(this));
   }
 
   componentDidMount() {
@@ -51,9 +55,11 @@ class CardStore extends React.Component {
     )
       return;
 
-    let its_my_turn = username_whos_turn_it_is === this.state.username;
+    // let its_my_turn = username_whos_turn_it_is === this.state.username;
 
-    this.setState({ allowEndTurn: its_my_turn });
+    this.setState({ allowSweepStore: false,
+                    currentTurnUser: username_whos_turn_it_is
+                  });
 
   }
 
@@ -109,6 +115,25 @@ class CardStore extends React.Component {
     });
   }
 
+  gameStarted() {
+    return "" !== this.state.currentTurnUser;
+  }
+
+  allowSweepStoreHandler(message) {
+    const username_whos_turn_it_is = message.user;
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    this.setState({
+      its_my_turn: its_my_turn,
+      allowSweepStore: its_my_turn,
+      currentTurnUser: username_whos_turn_it_is
+    });
+
+    if (this.state.its_my_turn) {
+      this.setState({ allowSweepStore: true });
+    }
+  }
+
   render() {
     if (this.state.selectedCard) {
       return (
@@ -131,7 +156,9 @@ class CardStore extends React.Component {
                   ))
                 }
               </div>
-                    <Button onClick={this.sweepStore} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button>
+                    {/* <Button onClick={this.sweepStore} className="btn btn-secondary">Sweep Store{this.state.allowShuffleCards}</Button> */}
+                    <Button disabled={!this.gameStarted() || !this.state.allowSweepStore} onClick={this.sweepStore} className="btn btn-secondary">Sweep Store</Button>
+
             </div>
           </div>
         </div>
