@@ -96,6 +96,10 @@ class GameService {
         EventEmitter.on("allow_end_turn_response", endTurnCallback)
     }
 
+    addAllowSweepStoreCallback(sweepStoreCallback) {
+        EventEmitter.on("allow_sweep_store_response", sweepStoreCallback)
+    }
+
     addCardCallback(cardStoreCallback) {
         EventEmitter.on("card_store_response", cardStoreCallback);
     }
