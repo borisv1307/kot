@@ -27,6 +27,7 @@ class CardStore extends React.Component {
     this.cardStoreRequest = this.cardStoreRequest.bind(this);
     this.sweepStore = this.sweepStore.bind(this);
     GameInstance.addCardCallback(this.cardUpdateHandler.bind(this));
+    GameInstance.addBeginTurnCallback(this.beginTurnHandler.bind(this));
     GameInstance.addAllowSweepStoreCallback(this.allowSweepStoreHandler.bind(this));
   }
 
@@ -54,9 +55,11 @@ class CardStore extends React.Component {
     )
       return;
 
-    let its_my_turn = username_whos_turn_it_is === this.state.username;
+    // let its_my_turn = username_whos_turn_it_is === this.state.username;
 
-    this.setState({ allowEndTurn: its_my_turn });
+    this.setState({ allowSweepStore: false,
+                    currentTurnUser: username_whos_turn_it_is
+                  });
 
   }
 
@@ -117,6 +120,15 @@ class CardStore extends React.Component {
   }
 
   allowSweepStoreHandler(message) {
+    const username_whos_turn_it_is = message.user;
+    let its_my_turn = username_whos_turn_it_is === this.state.username;
+
+    this.setState({
+      its_my_turn: its_my_turn,
+      allowSweepStore: its_my_turn,
+      currentTurnUser: username_whos_turn_it_is
+    });
+
     if (this.state.its_my_turn) {
       this.setState({ allowSweepStore: true });
     }
