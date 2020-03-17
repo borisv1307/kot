@@ -1,5 +1,6 @@
 # Attack Manipulation Cards
 from game.cards.keep_cards.attack_manipulation_cards.nova_breath import NovaBreath
+from game.cards.keep_cards.attack_manipulation_cards.spiked_tail import SpikedTail
 
 # Energy Manipulation Cards
 from game.cards.discard_cards.energy_manipulation_cards.energize import Energize
@@ -76,7 +77,7 @@ def get_all_cards():
 
     keep_cards = []
 
-    keep_attack_manipulation_cards = [NovaBreath()]
+    keep_attack_manipulation_cards = [NovaBreath(), SpikedTail()]
 
     keep_energy_manipulation_cards = [
         EnergyHoarder(), FriendOfChildren(), SolarPowered(), WereOnlyMakingItStronger(), AlienMetabolism()]

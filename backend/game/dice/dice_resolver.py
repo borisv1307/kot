@@ -4,6 +4,7 @@ from game.dice.dice import DieValue
 from game.turn_actions.attack import get_attackable_players, attack_players
 from game.turn_actions.player_movement import move_to_tokyo_if_empty
 from game.turn_actions.heal import heal_self_from_dice
+from game.cards.keep_cards.attack_manipulation_cards.spiked_tail import SpikedTail
 from game.cards.keep_cards.victory_point_manipulation_cards.complete_destruction import CompleteDestruction
 from game.cards.keep_cards.victory_point_manipulation_cards.urbavore import Urbavore
 from game.cards.keep_cards.victory_point_manipulation_cards.gourmet import Gourmet
@@ -41,6 +42,8 @@ def resolve_attack_dice(dice_counter, attacking_player, other_players):
     attack = calculate_attack_from_dice(dice_counter)
     if attacking_player.has_instance_of_card(Urbavore()):
         attack = Urbavore.attack_dice_special_effect(attacking_player, attack)
+    if attacking_player.has_instance_of_card(SpikedTail()):
+        attack = SpikedTail().attack_dice_special_effect(attacking_player, attack)
     attackable_players = get_attackable_players(
         attacking_player, other_players)
     attack_players(attacking_player, attackable_players, attack)
