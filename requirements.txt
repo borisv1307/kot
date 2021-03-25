@@ -45,7 +45,7 @@ pytest-cov==2.8.1
 pytest-django==3.8.0
 python-coveralls==2.9.3
 pytz==2019.3
-PyYAML==5.1.2
+PyYAML==5.4
 requests==2.22.0
 service-identity==18.1.0
 six==1.14.0
