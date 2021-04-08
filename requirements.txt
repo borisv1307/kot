@@ -15,7 +15,7 @@ constantly==15.1.0
 coverage==4.5.4
 cryptography==2.8
 daphne==2.4.1
-Django==3.0.3
+Django==3.0.14
 django-cors-headers==3.1.1
 djangorestframework==3.10.3
 hyperlink==19.0.0
