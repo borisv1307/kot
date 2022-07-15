@@ -9,7 +9,7 @@ certifi==2019.9.11
 cffi==1.13.2
 channels==2.4.0
 chardet==3.0.4
-codecov==2.0.15
+codecov==2.0.16
 colorama==0.4.3
 constantly==15.1.0
 coverage==4.5.4
